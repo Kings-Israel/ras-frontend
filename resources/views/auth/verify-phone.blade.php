@@ -1,0 +1,79 @@
+<x-guest-layout>
+    <div class="flex flex-col text-center py-10">
+        <h1 class="text-3xl font-bold p-2">Enter the Code</h1>
+        <span class="p-1">Enter the 5-digit code sent to your phone. Be careful not to share the code with anyone</span>
+    </div>
+
+    <form method="POST" action="{{ route('password.confirm') }}">
+        @csrf
+
+        <div class="">
+            <div class="flex justify-evenly gap-3 w-full mt-1">
+                <x-text-input id="verify-code-input-1" class="w-1/5 border-slate-400 dark:border-slate-400 bg-slate-200 dark:bg-slate-200 text-center text-3xl font-bold"
+                                type="number"
+                                name="number[]"
+                                required
+                />
+
+                <x-text-input id="verify-code-input-2" class="w-1/5 border-slate-400 dark:border-slate-400 bg-slate-200 dark:bg-slate-200 text-center text-3xl font-bold"
+                                type="number"
+                                name="number[]"
+                                required />
+
+                <x-text-input id="verify-code-input-3" class="w-1/5 border-slate-400 dark:border-slate-400 bg-slate-200 dark:bg-slate-200 text-center text-3xl font-bold"
+                                type="number"
+                                name="number[]"
+                                required />
+
+                <x-text-input id="verify-code-input-4" class="w-1/5 border-slate-400 dark:border-slate-400 bg-slate-200 dark:bg-slate-200 text-center text-3xl font-bold"
+                                type="number"
+                                name="number[]"
+                                required />
+
+                <x-text-input id="verify-code-input-5" class="w-1/5 border-slate-400 dark:border-slate-400 bg-slate-200 dark:bg-slate-200 text-center text-3xl font-bold"
+                                type="number"
+                                name="number[]"
+                                required />
+            </div>
+
+            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        </div>
+
+        <div class="flex mt-10">
+            <a href="#" class="">
+                <x-secondary-outline-button>
+                    {{ __('Help') }}
+                </x-secondary-outline-button>
+            </a>
+
+            <x-primary-button class="w-full ml-2" id="confirm-btn">
+                {{ __('Confirm Code') }}
+            </x-primary-button>
+        </div>
+    </form>
+    @push('scripts')
+        <script>
+            const first_number_el = document.getElementById('verify-code-input-1');
+            const second_number_el = document.getElementById('verify-code-input-2');
+            const third_number_el = document.getElementById('verify-code-input-3');
+            const fourth_number_el = document.getElementById('verify-code-input-4');
+            const fifth_number_el = document.getElementById('verify-code-input-5');
+            const confirm_btn = document.getElementById('confirm-btn');
+            first_number_el.addEventListener('input', function() {
+                second_number_el.focus()
+            })
+            second_number_el.addEventListener('input', function() {
+                third_number_el.focus()
+            })
+            third_number_el.addEventListener('input', function() {
+                fourth_number_el.focus()
+            })
+            fourth_number_el.addEventListener('input', function() {
+                fifth_number_el.focus()
+            })
+            fifth_number_el.addEventListener('input', function() {
+                confirm_btn.focus()
+            })
+        </script>
+    @endpush
+</x-guest-layout>

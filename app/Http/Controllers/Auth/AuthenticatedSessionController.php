@@ -12,12 +12,28 @@ use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
 {
+    public function selectedType(Request $request)
+    {
+        $request->validate([
+            'account_type' => 'required',
+        ], [
+            'account_type' => 'Please select an account type'
+        ]);
+
+        return redirect()->route('login', ['type' => $request->account_type]);
+    }
+
+    public function verifyPhone(): View
+    {
+        return view('auth.verify-phone');
+    }
+    
     /**
      * Display the login view.
      */
-    public function create(): View
+    public function create($type = 'vendor'): View
     {
-        return view('auth.login');
+        return view('auth.login', compact('type'));
     }
 
     /**
