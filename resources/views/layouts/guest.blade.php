@@ -22,21 +22,32 @@
                     </a>
                 </div>
                 @if (Route::is('login'))
-                    <a href="{{ route('register') }}">
-                        <x-secondary-button class="px-8">
-                            Sign Up
-                        </x-secondary-button>
-                    </a>
-                @else
+                    <div class="flex">
+                        <a href="{{ route('select-type') }}">
+                            <h2 class="mr-3 text-white my-auto font-extrabold text-2xl">Swtich User</h2>
+                        </a>
+                        <a href="{{ route('register') }}">
+                            <x-secondary-button class="px-8">
+                                Sign Up
+                            </x-secondary-button>
+                        </a>
+                    </div>
+                @elseif (Route::is('register'))
                     <a href="{{ route('login') }}">
                         <x-secondary-button class="px-8">
                             Login
                         </x-secondary-button>
                     </a>
+                @elseif (Route::is('select-type'))
+                    <a href="{{ route('register') }}">
+                        <x-secondary-button class="px-8">
+                            Sign Up
+                        </x-secondary-button>
+                    </a>
                 @endif
             </x-guest-nav>
             <div class="flex flex-col sm:justify-center items-center lg:mt-20 pt-6 sm:pt-0 bg-transparent">
-                <div class="w-1/4 sm:max-w-md px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+                <div class="lg:w-1/4 sm:max-w-md px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
                     {{ $slot }}
                 </div>
             </div>
