@@ -30,30 +30,42 @@
                         <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
                     </a>
                 </div>
-                @if (Route::is('login') || Route::is('verify-phone'))
-                    <div class="flex">
-                        <a href="{{ route('select-type') }}">
-                            <h2 class="mr-3 text-white lg:my-auto font-bold lg:text-2xl md:text-lg md:mt-2 sm:mt-10">Switch User</h2>
+                @guest
+                    @if (Route::is('login') || Route::is('verify-phone'))
+                        <div class="flex">
+                            <a href="{{ route('select-type') }}">
+                                <h2 class="mr-3 text-white lg:my-auto font-bold lg:text-2xl md:text-lg md:mt-2 sm:mt-10">Switch User</h2>
+                            </a>
+                            <a href="{{ route('register') }}">
+                                <x-secondary-button class="px-8">
+                                    Sign Up
+                                </x-secondary-button>
+                            </a>
+                        </div>
+                    @elseif (Route::is('register'))
+                        <a href="{{ route('login') }}">
+                            <x-secondary-button class="px-8">
+                                Login
+                            </x-secondary-button>
                         </a>
+                    @elseif (Route::is('select-type'))
                         <a href="{{ route('register') }}">
                             <x-secondary-button class="px-8">
                                 Sign Up
                             </x-secondary-button>
                         </a>
-                    </div>
-                @elseif (Route::is('register'))
-                    <a href="{{ route('login') }}">
-                        <x-secondary-button class="px-8">
-                            Login
-                        </x-secondary-button>
-                    </a>
-                @elseif (Route::is('select-type'))
-                    <a href="{{ route('register') }}">
-                        <x-secondary-button class="px-8">
-                            Sign Up
-                        </x-secondary-button>
-                    </a>
-                @endif
+                    @endif
+                @else
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">
+                            <x-secondary-button class="px-8">
+                                Sign Out
+                            </x-secondary-button>
+                        </a>
+                    </form>
+                @endguest
             </x-guest-nav>
             <div class="flex flex-col sm:justify-center items-center lg:mt-20 pt-6 sm:pt-0 bg-transparent">
                 <div class="lg:w-1/4 sm:max-w-md px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">

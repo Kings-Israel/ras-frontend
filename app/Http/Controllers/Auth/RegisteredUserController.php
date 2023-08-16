@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\NumberGenerator;
 use App\Http\Controllers\Controller;
+use App\Jobs\SendSMS;
+use App\Models\Otp;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -10,6 +13,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
@@ -25,6 +29,10 @@ class RegisteredUserController extends Controller
      */
     public function create($type = 'vendor'): View
     {
+        if (Session::get('type')) {
+            $type = Session::get('type');
+        }
+
         return view('auth.register', compact('type'));
     }
 
@@ -38,9 +46,9 @@ class RegisteredUserController extends Controller
         $request->validate([
             'role' => ['required'],
             'name' => ['required', 'string', 'max:255'],
-            'phone_number' => ['required'. 'string'],
+            'phone_number' => ['required', 'string', 'unique:'.User::class],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
@@ -54,8 +62,12 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
+        $otp = Otp::generate($user->phone_number, 10);
+
+        SendSMS::dispatchAfterResponse($user->phone_number, 'Your verification code is '.$otp->token);
+
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect(RouteServiceProvider::VERIFY_PHONE);
     }
 }

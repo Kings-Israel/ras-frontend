@@ -9,17 +9,17 @@
 
     <form method="POST" action="{{ route('login') }}">
         @csrf
-
+        <input type="hidden" name="role" value="{{ $type }}">
         <!-- Email Address -->
         <div>
-            <x-input-label for="email" :value="__('Name')" />
+            <x-input-label for="email" :value="__('Email or Phone Number')" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Password -->
         <div class="mt-4">
-            <x-input-label for="password" :value="__('Phone Number')" />
+            <x-input-label for="password" :value="__('Password')" />
 
             <x-text-input id="password" class="block mt-1 w-full"
                             type="password"
@@ -54,8 +54,8 @@
             </x-primary-button>
         </div>
 
-        <div class="mt-4 text-center">
-            <h3 class="">Have no Account Yet? <a href="{{ route('register') }}" class="underline decoration-orange-500 text-orange-400 font-bold hover:text-orange-500 focus:text-orange-600 transition ease-in-out duration-150">Join Us</a></h3>
-        </div>
     </form>
+    <div class="mt-4 text-center">
+        <h3 class="">Have no Account Yet? <a href="{{ route('register') }}" class="underline decoration-orange-500 text-orange-400 font-bold hover:text-orange-500 focus:text-orange-600 transition ease-in-out duration-150">Join Us</a></h3>
+    </div>
 </x-guest-layout>
