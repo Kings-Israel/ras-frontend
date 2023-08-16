@@ -4,11 +4,11 @@
         <span class="p-1">Enter the 5-digit code sent to your phone. Be careful not to share the code with anyone</span>
     </div>
 
-    <form method="POST" action="{{ route('password.confirm') }}">
+    <form method="POST" action="{{ route('verification-phone') }}" class="py-5">
         @csrf
 
         <div class="">
-            <div class="flex justify-evenly gap-3 w-full mt-1">
+            <div class="flex justify-evenly gap-3 w-full-mt-3">
                 <x-text-input id="verify-code-input-1" class="w-1/5 border-slate-400 dark:border-slate-400 bg-slate-200 dark:bg-slate-200 text-center text-3xl font-bold"
                                 type="number"
                                 name="number[]"
@@ -39,7 +39,7 @@
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
-        <div class="flex mt-10">
+        <div class="flex mt-20">
             <a href="#" class="">
                 <x-secondary-outline-button>
                     {{ __('Help') }}
@@ -51,6 +51,9 @@
             </x-primary-button>
         </div>
     </form>
+    <div class="mt-4 text-center">
+        <h3 class=""><a href="{{ route('resend-phone-code') }}" class="underline">Resend Code</a></h3>
+    </div>
     @push('scripts')
         <script>
             const first_number_el = document.getElementById('verify-code-input-1');
