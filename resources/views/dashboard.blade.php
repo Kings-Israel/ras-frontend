@@ -172,7 +172,6 @@
         <script>
             // ApexCharts options and config
             window.addEventListener("load", function() {
-                console.log('Loaded')
                 const getChartOptions = () => {
                     return {
                         series: [35.1, 23.5, 2.4, 5.4],

@@ -1,0 +1,16 @@
+{
+  "public/assets/img/6CeuCO.jpg": {
+    "file": "assets/6CeuCO-fd67f134.jpg",
+    "src": "public/assets/img/6CeuCO.jpg"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-be05fcee.css",
+    "isEntry": true,
+    "src": "resources/css/app.css"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-4a08c204.js",
+    "isEntry": true,
+    "src": "resources/js/app.js"
+  }
+}
