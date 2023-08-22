@@ -76,6 +76,7 @@
             })
             fifth_number_el.addEventListener('input', function() {
                 confirm_btn.focus()
+                confirm_btn.click()
             })
         </script>
     @endpush

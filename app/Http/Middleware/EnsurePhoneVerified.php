@@ -14,12 +14,12 @@ class EnsurePhoneVerified
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next)
     {
-        if ($request->user()->phone_verified_at == NULL) {
+        if ($request->user()->phone_verified_at === NULL) {
             return redirect(RouteServiceProvider::VERIFY_PHONE);
         }
-        
+
         return $next($request);
     }
 }
