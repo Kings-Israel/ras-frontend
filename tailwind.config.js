@@ -18,11 +18,6 @@ export default {
             backgroundImage: {
                 'auth': "url('/public/assets/img/6CeuCO.jpg')",
             },
-            button: {
-                'btn-lg': "h-12 px-6 m-2 text-lg",
-                'btn-md': "h-10 px-5 m-2",
-                'btn-sm': "h-8 px-4 text-sm",
-            },
         },
     },
 
