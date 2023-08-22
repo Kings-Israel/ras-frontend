@@ -1,0 +1,59 @@
+<div class="px-2">
+    <div class="flex justify-between">
+        <h2 class="font-extrabold text-lg my-auto">Statistics</h2>
+        <select name="reports-date-select" id="" class="border-b-2 border-r-0 border-l-0 border-t-0 focus:ring-0">
+            <option value="#">30 Days</option>
+            <option value="#">60 Days</option>
+        </select>
+    </div>
+    <div class="mt-10 space-y-4">
+        <div class="bg-lime-100 dark:bg-lime-100 p-3 rounded-md flex gap-2 mx-2">
+            <span class="inline-flex items-center justify-center px-4 py-2 ml-2 text-yellow-500 text-xl bg-white rounded-full">
+                <i class="fas fa-shopping-bag"></i>
+            </span>
+            <div class="ml-2">
+                <span class="text-sm">Orders</span>
+                <h1 class="text-xl font-extrabold">368</h1>
+            </div>
+        </div>
+        <div class="bg-pink-100 dark:bg-pink-100 p-3 rounded-md flex gap-2 mx-2">
+            <span class="inline-flex items-center justify-center px-4 py-2 ml-2 text-pink-600 text-xl bg-white rounded-full">
+                <i class="fas fa-wallet"></i>
+            </span>
+            <div class="ml-2">
+                <span class="text-sm">Revenue</span>
+                <h1 class="text-xl font-extrabold">Ksh.30,685,338</h1>
+            </div>
+        </div>
+        <div class="bg-gray-200 dark:bg-gray-200 p-3 rounded-md flex gap-2 mx-2">
+            <span class="inline-flex items-center justify-center px-4 py-2 ml-2 text-green-600 text-xl bg-white rounded-full">
+                <i class="fas fa-money-bill-alt"></i>
+            </span>
+            <div class="ml-2">
+                <span class="text-sm">Wallet Balance</span>
+                <h1 class="text-xl font-extrabold">Ksh.3,685,338</h1>
+            </div>
+        </div>
+    </div>
+    <div class="mt-10">
+        <h2 class="font-extrabold text-sm">Top Countries</h2>
+        <ul class="grid grid-cols-2 list-none">
+            <li class="flex flex-col">
+                <span class="text-sm text-gray-500">Namibia</span>
+                <span class="font-bold">65%</span>
+            </li>
+            <li class="flex flex-col">
+                <span class="text-sm text-gray-500">Tanzania</span>
+                <span class="font-bold">18%</span>
+            </li>
+            <li class="flex flex-col">
+                <span class="text-sm text-gray-500">Zimbabwe</span>
+                <span class="font-bold">12%</span>
+            </li>
+            <li class="flex flex-col">
+                <span class="text-sm text-gray-500">Rwanda</span>
+                <span class="font-bold">2%%</span>
+            </li>
+        </ul>
+    </div>
+</div>

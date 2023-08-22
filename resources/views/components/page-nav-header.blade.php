@@ -1,4 +1,4 @@
-<div class="p-4 sm:ml-72 flex">
+<div class="p-3 sm:ml-72 md:flex">
     <div class="pr-20 lg:1/5 md:w-3/5 sm:w-full">
         <h1 class="font-extrabold text-xl">{{ $mainTitle }}</h1>
         <h3>{{ $subTitle }}</h3>
