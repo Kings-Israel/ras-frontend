@@ -11,18 +11,18 @@
             <div class="flex pt-4 pb-10">
                 <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded-full w-16 h-16 object-cover" alt="avatar">
                 <div class="pl-2">
-                    <h3>{{ auth()->user()->name }}</h3>
+                    <h3>Hello, Aloo</h3>
                 </div>
             </div>
             <div>
                 <h5 class="">Earnings</h5>
-                <h3 class="font-extrabold text-lg">Ksh.3,794.883</h3>
+                <h3 class="font-extrabold text-lg">Ksh.3,794,883</h3>
             </div>
         </div>
         <ul class="-mt-2 pt-8 font-medium">
             <li>
-                <x-nav-item :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                    @if (request()->routeIs('dashboard'))
+                <x-nav-item :href="route('vendor.dashboard')" :active="request()->routeIs('vendor.dashboard')">
+                    @if (request()->routeIs('vendor.dashboard'))
                         <svg class="w-5 h-5 text-orange-500 transition duration-75 dark:text-orange-500 group-hover:text-orange-500 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
                             <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z"/>
                             <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z"/>
@@ -37,13 +37,13 @@
                 </x-nav-item>
             </li>
             <li>
-                <x-nav-item>
+                <x-nav-item :href="route('vendor.products')" :active="request()->routeIs('vendor.products')">
                     <i class="w-5 h-5 fas fa-layer-group"></i>
                     <span class="ml-3 truncate">Products</span>
                 </x-nav-item>
             </li>
             <li>
-                <x-nav-item>
+                <x-nav-item :href="route('vendor.orders')" :active="request()->routeIs('vendor.orders')">
                     <i class="w-5 h-5 fas fa-shopping-bag"></i>
                     <span class="flex-1 ml-3 truncate">Orders</span>
                     <span class="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-gray-400 bg-red-900 rounded-full">100</span>
@@ -87,15 +87,21 @@
                 </x-nav-item>
             </li>
             <li>
-                <form method="POST" action="{{ route('logout') }}">
+                {{-- <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <x-nav-item :href="route('logout')" :active="request()->routeIs('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
                         <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-500 group-hover:text-gray-500 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"/>
                         </svg>
-                        <span class="flex-1 ml-3 truncate">Sign Out of Real African Sources</span>
+                        <span class="flex-1 ml-3 truncate">Sign Out</span>
                     </x-nav-item>
-                </form>
+                </form> --}}
+                <x-nav-item :href="route('test.logout')" :active="request()->routeIs('logout')">
+                    <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-500 group-hover:text-gray-500 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"/>
+                    </svg>
+                    <span class="flex-1 ml-3 truncate">Sign Out</span>
+                </x-nav-item>
             </li>
         </ul>
         <div class="flex justify-center">

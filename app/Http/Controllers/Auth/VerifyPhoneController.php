@@ -65,13 +65,21 @@ class VerifyPhoneController extends Controller
         toastr()->success('', 'Verification Successful');
 
         if ($request->user()->hasVerifiedEmail()) {
-            return redirect()->intended(RouteServiceProvider::HOME);
+            if ($request->user()->hasRole('vendor')) {
+                return redirect()->intended(RouteServiceProvider::VENDOR_HOME);
+            }
+
+            return redirect()->intended(RouteServiceProvider::BUYER_HOME);
         }
 
         if ($request->user()->markEmailAsVerified()) {
             event(new Verified($request->user()));
         }
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        if ($request->user()->hasRole('vendor')) {
+            return redirect()->intended(RouteServiceProvider::VENDOR_HOME);
+        }
+
+        return redirect()->intended(RouteServiceProvider::BUYER_HOME);
     }
 }

@@ -1,10 +1,16 @@
 <div class="px-2">
     <div class="flex justify-between">
         <h2 class="font-extrabold text-lg my-auto">Statistics</h2>
-        <select name="reports-date-select" id="" class="border-b-2 border-r-0 border-l-0 border-t-0 focus:ring-0">
-            <option value="#">30 Days</option>
-            <option value="#">60 Days</option>
-        </select>
+        <form action="#" method="POST" class="flex">
+            <label for="" class="text-gray-400 font-extrabold my-auto">Last:</label>
+            <div class="relative">
+                <i class="fas fa-calendar absolute inset-y-0 left-0 flex items-center pl-1 pointer-events-none text-sm text-bold"></i>
+                <select name="reports-date-select" id="" class="border-none focus:ring-0 text-sm text-bold pl-7">
+                    <option value="#">30 Days</option>
+                    <option value="#">60 Days</option>
+                </select>
+            </div>
+        </form>
     </div>
     <div class="mt-10 space-y-4">
         <div class="bg-lime-100 dark:bg-lime-100 p-3 rounded-md flex gap-2 mx-2">
