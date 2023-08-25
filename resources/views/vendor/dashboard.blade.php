@@ -2,69 +2,72 @@
     <!-- Page Heading -->
     <x-page-nav-header main-title="Dashboard" sub-title="Everything is Here..." />
     <div class="p-3 sm:ml-64 lg:grid lg:grid-cols-4 lg:divide-x">
-        <div class="p-3 md:col-span-3">
-            <div class="grid grid-cols-3 gap-4 mb-4">
-                <div class="rounded col-span-2">
-                    <div class="w-full bg-white shadow dark:bg-gray-800">
+        <div class="p-3 lg:col-span-3">
+            <div class="lg:grid lg:grid-cols-3 lg:gap-4 mb-4">
+                <div class="lg:col-span-2 sm:pb-2">
+                    <div class="w-full">
                         <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white p-2">Sales Report</h5>
-                        <div class="grid grid-cols-1 items-center justify-between">
-                            <div class="flex gap-2 items-center pt-5">
-                                <span class="font-bold text-gray-400 pl-2">Showing For:</span>
-                                <!-- Button -->
-                                <button
-                                    id="dropdownDefaultButton"
-                                    data-dropdown-toggle="lastDaysdropdown"
-                                    data-dropdown-placement="bottom"
-                                    class="text-sm font-medium text-gray-700 dark:text-gray-500 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white"
-                                    type="button"
-                                >
-                                    Last 7 days
-                                    <svg class="w-2.5 m-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                                    </svg>
-                                </button>
-                                <!-- Dropdown menu -->
-                                <div id="lastDaysdropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-                                        <li>
-                                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Yesterday</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Today</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 7 days</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 30 days</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 90 days</a>
-                                        </li>
-                                    </ul>
+                        <div class="bg-gray-100 border border-gray-300 rounded-lg dark:bg-gray-800 py-2">
+                            <div class="grid grid-cols-1 items-center justify-between">
+                                <div class="flex gap-2 items-center">
+                                    <span class="font-bold text-gray-400 pl-2">Showing For:</span>
+                                    <!-- Button -->
+                                    <button
+                                        id="dropdownDefaultButton"
+                                        data-dropdown-toggle="lastDaysdropdown"
+                                        data-dropdown-placement="bottom"
+                                        class="text-sm font-medium text-gray-700 dark:text-gray-500 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white"
+                                        type="button"
+                                    >
+                                        Last 7 days
+                                        <svg class="w-2.5 m-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                                        </svg>
+                                    </button>
+                                    <!-- Dropdown menu -->
+                                    <div id="lastDaysdropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                                            <li>
+                                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Yesterday</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Today</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 7 days</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 30 days</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 90 days</a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
+                            <!-- Line Chart -->
+                            <div id="area-chart"></div>
+                            <a
+                                href="#"
+                                class="text-sm font-semibold inline-flex items-center rounded-lg text-gray-600 px-3 pt-6">
+                                Product Sales Earnings
+                            </a>
                         </div>
-                        <!-- Line Chart -->
-                        <div id="area-chart"></div>
-                        <a
-                            href="#"
-                            class="text-sm font-semibold inline-flex items-center rounded-lg text-gray-600  px-3 py-2">
-                            Product Sales Earnings
-                        </a>
                     </div>
                 </div>
-                <div class="rounded bg-white dark:bg-gray-800">
-                    <div class="max-w-sm w-full bg-white shadow dark:bg-gray-800 md:p-2">
-                        <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white pr-1">Earnings</h5>
-
-                        <!-- Line Chart -->
-                        <div class="py-6" id="donut-chart"></div>
+                <div class="rounded bg-white dark:bg-gray-800 sm:mt-2">
+                    <div class="max-w-sm w-full md:p-2">
+                        <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white pb-2">Earnings</h5>
+                        <div class="bg-gray-100 border border-gray-300 rounded-lg dark:bg-gray-800 ">
+                            <!-- Line Chart -->
+                            <div class="py-6" id="donut-chart"></div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="">
-                <div class="flex gap-2">
+                <div class="flex gap-6">
                     <span class="font-extrabold text-orange-400 underline underline-offset-2 decoration-4">All Orders</span>
                     <span class="font-extrabold text-gray-400">Paid</span>
                     <span class="font-extrabold text-gray-400">Unpaid</span>
@@ -253,7 +256,7 @@
                 const getChartOptions = () => {
                     return {
                         series: [2938349, 874783, 84738, 34748],
-                        colors: ["#1C64F2", "#16BDCA", "#FDBA8C", "#E74694"],
+                        colors: ["#03A63C", "#D3D3D3", "#025939", "#F2C225"],
                         chart: {
                             height: 335,
                             width: "100%",
@@ -272,7 +275,7 @@
                                             show: true,
                                             fontFamily: "Inter, sans-serif",
                                             fontSize: '8px',
-                                            offsetY: 20,
+                                            offsetY: -20,
                                         },
                                         total: {
                                             showAlways: true,
@@ -291,13 +294,13 @@
                                             show: true,
                                             fontFamily: "Inter, sans-serif",
                                             fontSize: '8px',
-                                            offsetY: -20,
+                                            offsetY: 0,
                                             formatter: function (value) {
                                                 return "Ksh."+value.toLocaleString()
                                             },
                                         },
                                     },
-                                    size: "85%",
+                                    size: "80%",
                                 },
                             },
                         },
@@ -375,8 +378,8 @@
 
                 let options = {
                     chart: {
-                        height: "100%",
-                        maxWidth: "100%",
+                        height: "120%",
+                        maxWidth: "120%",
                         type: "area",
                         fontFamily: "Inter, sans-serif",
                         dropShadow: {
@@ -411,8 +414,8 @@
                         show: true,
                         strokeDashArray: 4,
                         padding: {
-                            left: 6,
-                            right: 7,
+                            left: 4,
+                            right: 4,
                             top: 0
                         },
                     },

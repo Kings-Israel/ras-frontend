@@ -3,26 +3,28 @@
     <x-page-nav-header main-title="Products" sub-title="All Your Products Are Here..." />
     <div class="p-3 sm:ml-64 lg:grid lg:grid-cols-4 lg:divide-x">
         <div class="p-3 md:col-span-3">
-            <x-primary-button class="font-light tracking-tight -mt-2 mb-2" data-toggle="modal" data-target="add_product">Add Product</x-primary-button>
-            <x-modal name="add_product">
-                <form action="#" method="post">
-                    <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="name" />
-                    <div class="footer flex justify-end gap-3">
-                        <x-secondary-outline-button class="tracking-light font-light">Discard</x-secondary-outline-button>
-                        <x-primary-button class="tracking-light font-light">Proceed</x-primary-button>
-                    </div>
-                </form>
-            </x-modal>
+            <div x-data="{ show: false }">
+                <x-primary-button class="font-light bg-orange-600 tracking-tight -mt-2 mb-2 focus:ring-2 focus:ring-orange-600" x-on:click="show = !show">Add Product</x-primary-button>
+                {{-- <x-modal name="add_product" show="show">
+                    <form action="#" method="post">
+                        <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="name" />
+                        <div class="footer flex justify-end gap-3">
+                            <x-secondary-outline-button class="tracking-light font-light">Discard</x-secondary-outline-button>
+                            <x-primary-button class="tracking-light font-light">Proceed</x-primary-button>
+                        </div>
+                    </form>
+                </x-modal> --}}
+            </div>
             <div class="">
                 <div class="flex justify-between my-2">
                     <div class="flex gap-6">
-                        <x-primary-outline-button class="text-sm text-orange-500">Bulk Actions <i class="fas fa-chevron-down ml-3"></i></x-primary-outline-button>
-                        <x-primary-outline-button class="text-sm text-orange-500">Filter <i class="fas fa-chevron-down ml-3"></i></x-primary-outline-button>
+                        <x-primary-outline-button class="text-sm border-orange-700 text-orange-700">Bulk Actions <i class="fas fa-chevron-down ml-3"></i></x-primary-outline-button>
+                        <x-primary-outline-button class="text-sm border-orange-700 text-orange-700">Filter <i class="fas fa-chevron-down ml-3"></i></x-primary-outline-button>
                     </div>
                     <div class="flex gap-2 align-middle">
-                        <a href="#" class="border border-orange-500 rounded-md h-7 w-7 my-auto text-center pt-0.5 hover:bg-orange-400"><i class="fas fa-chevron-left"></i></a>
+                        <a href="#" class="border-2 border-orange-700 rounded-md h-7 w-7 my-auto text-center pt-0.5 hover:bg-orange-400"><i class="fas fa-chevron-left"></i></a>
                         <span class="my-auto text-center">1/13</span>
-                        <a href="#" class="border border-orange-500 rounded-md h-7 w-7 my-auto text-center pt-0.5 hover:bg-orange-400"><i class="fas fa-chevron-right"></i></a>
+                        <a href="#" class="border-2 border-orange-700 rounded-md h-7 w-7 my-auto text-center pt-0.5 hover:bg-orange-400"><i class="fas fa-chevron-right"></i></a>
                     </div>
                 </div>
                 <table class="w-full table-auto text-sm text-left text-gray-800 font-bold dark:text-gray-400 truncate">
@@ -382,9 +384,9 @@
                     </tbody>
                 </table>
                 <div class="flex gap-2 mt-2">
-                    <a href="#" class="border border-orange-500 rounded-md h-7 w-7 my-auto text-center pt-0.5 hover:bg-orange-400"><i class="fas fa-chevron-left"></i></a>
+                    <a href="#" class="border-2 border-orange-700 rounded-md h-7 w-7 my-auto text-center pt-0.5 hover:bg-orange-700"><i class="fas fa-chevron-left"></i></a>
                     <span class="my-auto text-center">1/13</span>
-                    <a href="#" class="border border-orange-500 rounded-md h-7 w-7 my-auto text-center pt-0.5 hover:bg-orange-400"><i class="fas fa-chevron-right"></i></a>
+                    <a href="#" class="border-2 border-orange-700 rounded-md h-7 w-7 my-auto text-center pt-0.5 hover:bg-orange-700"><i class="fas fa-chevron-right"></i></a>
                 </div>
             </div>
         </div>

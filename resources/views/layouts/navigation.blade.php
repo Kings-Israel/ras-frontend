@@ -6,9 +6,9 @@
 </button>
 
 <aside id="default-sidebar" class="fixed top-2 left-3 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
-    <div class="h-[97%] px-4 py-2 grid grid-cols-1 divide-gray-400 divide-y-2 overflow-y-auto rounded-xl bg-gray-200 dark:bg-gray-800">
+    <div class="h-[98%] px-4 py-2 grid grid-cols-1 divide-gray-400 divide-y-2 overflow-y-auto rounded-xl bg-gray-200 dark:bg-gray-800">
         <div>
-            <div class="flex pt-4 pb-10">
+            <div class="flex pt-4 md:pb-5">
                 <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded-full w-16 h-16 object-cover" alt="avatar">
                 <div class="pl-2">
                     <h3>Hello, Aloo</h3>
@@ -19,7 +19,7 @@
                 <h3 class="font-extrabold text-lg">Ksh.3,794,883</h3>
             </div>
         </div>
-        <ul class="-mt-2 pt-8 font-medium">
+        <ul class="md:pt-5 font-medium">
             <li>
                 <x-nav-item :href="route('vendor.dashboard')" :active="request()->routeIs('vendor.dashboard')">
                     @if (request()->routeIs('vendor.dashboard'))
