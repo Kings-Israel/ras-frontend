@@ -4,8 +4,8 @@
     <div class="p-3 sm:ml-64 lg:grid lg:grid-cols-4 lg:divide-x">
         <div class="p-3 md:col-span-3">
             <h3 class="text-xl font-bold my-2">Orders In Progress</h3>
-            <table class="table w-full table-auto text-sm text-left text-gray-800 font-bold dark:text-gray-400 truncate">
-                <thead class="text-xs text-gray-500 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-t-2 border-b-2 rounded-md">
+            <table class="table w-full table-auto text-sm text-left text-gray-800 font-bold dark:text-gray-400 truncate rounded-tl-lg rounded-tr-lg">
+                <thead class="text-xs text-gray-500 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400 border-2">
                     <tr>
                         <th scope="col" class="px-2 py-3">
                             ID
@@ -34,7 +34,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer mb-3" onclick="showRow()">
+                    <tr class="bg-gray-50 border-t-2 border-r-2 border-l-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer mb-3" onclick="showRow()">
                         <th scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             A94858
                         </th>
@@ -60,7 +60,7 @@
                             Ksh.237,948
                         </td>
                     </tr>
-                    <tr class="">
+                    <tr class="bg-gray-50 border-b-2 border-r-2 border-l-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
                         <td colspan="8">
                             <ol class="flex items-center w-full">
                                 <li class="flex w-full items-center text-orange-600 dark:text-orange-500 after:content-[''] after:w-full after:h-1 after:border-b after:border-orange-100 after:border-4 after:inline-block dark:after:border-orange-800">
@@ -87,7 +87,7 @@
                             </ol>
                         </td>
                     </tr>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
+                    <tr class="bg-gray-50 border-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
                         <th scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             D38748
                         </th>
@@ -113,7 +113,7 @@
                             Ksh.384,473
                         </td>
                     </tr>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
+                    <tr class="bg-gray-50 border-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
                         <th scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             E47783
                         </th>
@@ -143,15 +143,15 @@
             </table>
 
             <h3 class="text-xl font-bold my-2 mt-4">Recent Orders</h3>
-            <div class="flex gap-2">
+            <div class="flex gap-6">
                 <span class="font-extrabold text-orange-400 underline underline-offset-2 decoration-4">All Orders</span>
                 <span class="font-extrabold text-gray-400">Paid</span>
                 <span class="font-extrabold text-gray-400">Unpaid</span>
                 <span class="font-extrabold text-gray-400">Cancelled</span>
                 <span class="font-extrabold text-gray-400">In Progress</span>
             </div>
-            <table class="w-full table-auto text-sm text-left text-gray-800 font-bold dark:text-gray-400 truncate">
-                <thead class="text-xs text-gray-500 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-t-2 border-b-2">
+            <table class="w-full table-auto text-sm text-left text-gray-800 font-bold dark:text-gray-400 truncate rounded-tl-lg rounded-tr-lg">
+                <thead class="text-xs text-gray-500 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400 border-2">
                     <tr>
                         <th scope="col" class="px-2 py-3">
                             ID
@@ -180,7 +180,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
+                    <tr class="bg-gray-50 border-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
                         <th scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             348758
                         </th>
@@ -206,7 +206,7 @@
                             Ksh.235,387
                         </td>
                     </tr>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
+                    <tr class="bg-gray-50 border-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
                         <th scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             349854
                         </th>
@@ -232,7 +232,7 @@
                             Ksh.452,453
                         </td>
                     </tr>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
+                    <tr class="bg-gray-50 border-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
                         <th scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             56858
                         </th>
@@ -258,7 +258,7 @@
                             Ksh.235,387
                         </td>
                     </tr>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
+                    <tr class="bg-gray-50 border-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
                         <th scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             349854
                         </th>
@@ -284,7 +284,7 @@
                             Ksh.452,453
                         </td>
                     </tr>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
+                    <tr class="bg-gray-50 border-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
                         <th scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             565434
                         </th>

@@ -2,11 +2,11 @@
     <!-- Page Heading -->
     <x-page-nav-header main-title="Dashboard" sub-title="Everything is Here..." />
     <div class="p-3 sm:ml-64 lg:grid lg:grid-cols-4 lg:divide-x">
-        <div class="p-3 lg:col-span-3">
-            <div class="lg:grid lg:grid-cols-3 lg:gap-4 mb-4">
+        <div class="p-3 lg:col-span-3 lg:ml-2">
+            <div class="lg:grid lg:grid-cols-3 lg:gap-4 lg:mb-3">
                 <div class="lg:col-span-2 sm:pb-2">
                     <div class="w-full">
-                        <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white p-2">Sales Report</h5>
+                        <h5 class="text-xl font-bold pb-2 leading-none text-gray-900 dark:text-white">Sales Report</h5>
                         <div class="bg-gray-100 border border-gray-300 rounded-lg dark:bg-gray-800 py-2">
                             <div class="grid grid-cols-1 items-center justify-between">
                                 <div class="flex gap-2 items-center">
@@ -57,8 +57,8 @@
                     </div>
                 </div>
                 <div class="rounded bg-white dark:bg-gray-800 sm:mt-2">
-                    <div class="max-w-sm w-full md:p-2">
-                        <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white pb-2">Earnings</h5>
+                    <div class="max-w-sm w-full">
+                        <h5 class="text-xl pb-2 font-bold leading-none text-gray-900 dark:text-white">Earnings</h5>
                         <div class="bg-gray-100 border border-gray-300 rounded-lg dark:bg-gray-800 ">
                             <!-- Line Chart -->
                             <div class="py-6" id="donut-chart"></div>

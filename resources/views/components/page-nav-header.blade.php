@@ -4,7 +4,7 @@
         <h3>{{ $subTitle }}</h3>
     </div>
     <form action="#" method="POST" class="w-full">
-        <div class="relative lg:w-3/5 lg:-ml-24 md:w-full sm:w-full">
+        <div class="relative lg:w-3/5 lg:-ml-72 md:w-full sm:w-full">
             <i class="fas fa-search absolute inset-y-0 left-0 flex items-center pl-1 pointer-events-none text-2xl"></i>
             <x-text-input class="w-full pl-10 border-b-2 border-t-0 border-r-0 border-l-0 border-gray-200 rounded-none bg-white focus:border-b-3 focus:ring-0 transition duration-150" placeholder="Search Anything..."></x-text-input>
         </div>

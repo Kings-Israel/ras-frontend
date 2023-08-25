@@ -4,8 +4,8 @@
     <div class="p-3 sm:ml-64 lg:grid lg:grid-cols-4 lg:divide-x">
         <div class="p-3 md:col-span-3">
             <div x-data="{ show: false }">
-                <x-primary-button class="font-light bg-orange-600 tracking-tight -mt-2 mb-2 focus:ring-2 focus:ring-orange-600" x-on:click="show = !show">Add Product</x-primary-button>
-                {{-- <x-modal name="add_product" show="show">
+                <x-primary-button class="font-light bg-orange-600 tracking-tight -mt-2 mb-2 focus:ring-2 focus:ring-orange-600 px-8 text-sm" x-on:click="show = !show">Add Product</x-primary-button>
+                <x-modal name="add_product">
                     <form action="#" method="post">
                         <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="name" />
                         <div class="footer flex justify-end gap-3">
@@ -13,10 +13,10 @@
                             <x-primary-button class="tracking-light font-light">Proceed</x-primary-button>
                         </div>
                     </form>
-                </x-modal> --}}
+                </x-modal>
             </div>
             <div class="">
-                <div class="flex justify-between my-2">
+                <div class="md:flex md:justify-between space-y-2 my-2">
                     <div class="flex gap-6">
                         <x-primary-outline-button class="text-sm border-orange-700 text-orange-700">Bulk Actions <i class="fas fa-chevron-down ml-3"></i></x-primary-outline-button>
                         <x-primary-outline-button class="text-sm border-orange-700 text-orange-700">Filter <i class="fas fa-chevron-down ml-3"></i></x-primary-outline-button>
@@ -27,8 +27,8 @@
                         <a href="#" class="border-2 border-orange-700 rounded-md h-7 w-7 my-auto text-center pt-0.5 hover:bg-orange-400"><i class="fas fa-chevron-right"></i></a>
                     </div>
                 </div>
-                <table class="w-full table-auto text-sm text-left text-gray-800 font-bold dark:text-gray-400 truncate">
-                    <thead class="text-xs text-gray-500 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-t-2 border-b-2">
+                <table class="w-full table-auto text-sm text-left text-gray-800 font-bold dark:text-gray-400 truncate rounded-tl-lg rounded-tr-lg">
+                    <thead class="text-sm text-gray-500 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400 border-2">
                         <tr>
                             <th scope="col" class="p-2">
                                 <div class="flex items-center">
@@ -57,7 +57,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
+                        <tr class="bg-gray-50 border-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
                             <td class="w-4 p-2">
                                 <div class="flex items-center">
                                     <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -84,7 +84,7 @@
                                 <i class="fas fa-edit"></i>
                             </td>
                         </tr>
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
+                        <tr class="bg-gray-50 border-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
                             <td class="w-4 p-2">
                                 <div class="flex items-center">
                                     <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -111,7 +111,7 @@
                                 <i class="fas fa-edit"></i>
                             </td>
                         </tr>
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
+                        <tr class="bg-gray-50 border-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
                             <td class="w-4 p-2">
                                 <div class="flex items-center">
                                     <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -138,7 +138,7 @@
                                 <i class="fas fa-edit"></i>
                             </td>
                         </tr>
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
+                        <tr class="bg-gray-50 border-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
                             <td class="w-4 p-2">
                                 <div class="flex items-center">
                                     <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -165,7 +165,7 @@
                                 <i class="fas fa-edit"></i>
                             </td>
                         </tr>
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
+                        <tr class="bg-gray-50 border-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
                             <td class="w-4 p-2">
                                 <div class="flex items-center">
                                     <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -192,7 +192,7 @@
                                 <i class="fas fa-edit"></i>
                             </td>
                         </tr>
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
+                        <tr class="bg-gray-50 border-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
                             <td class="w-4 p-2">
                                 <div class="flex items-center">
                                     <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -219,7 +219,7 @@
                                 <i class="fas fa-edit"></i>
                             </td>
                         </tr>
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
+                        <tr class="bg-gray-50 border-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
                             <td class="w-4 p-2">
                                 <div class="flex items-center">
                                     <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -246,7 +246,7 @@
                                 <i class="fas fa-edit"></i>
                             </td>
                         </tr>
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
+                        <tr class="bg-gray-50 border-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
                             <td class="w-4 p-2">
                                 <div class="flex items-center">
                                     <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -273,7 +273,7 @@
                                 <i class="fas fa-edit"></i>
                             </td>
                         </tr>
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
+                        <tr class="bg-gray-50 border-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
                             <td class="w-4 p-2">
                                 <div class="flex items-center">
                                     <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -300,7 +300,7 @@
                                 <i class="fas fa-edit"></i>
                             </td>
                         </tr>
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
+                        <tr class="bg-gray-50 border-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
                             <td class="w-4 p-2">
                                 <div class="flex items-center">
                                     <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -327,7 +327,7 @@
                                 <i class="fas fa-edit"></i>
                             </td>
                         </tr>
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
+                        <tr class="bg-gray-50 border-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
                             <td class="w-4 p-2">
                                 <div class="flex items-center">
                                     <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -354,7 +354,7 @@
                                 <i class="fas fa-edit"></i>
                             </td>
                         </tr>
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
+                        <tr class="bg-gray-50 border-2 rounded-bl-xl rounded-br-xl dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
                             <td class="w-4 p-2">
                                 <div class="flex items-center">
                                     <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">

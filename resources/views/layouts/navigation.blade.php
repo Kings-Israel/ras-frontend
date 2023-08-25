@@ -50,7 +50,7 @@
                 </x-nav-item>
             </li>
             <li>
-                <x-nav-item>
+                <x-nav-item :href="route('vendor.messages')" :active="request()->routeIs('vendor.messages')">
                     <i class="w-5 h-5 fas fa-comment"></i>
                     <span class="flex-1 ml-3 truncate">Messages</span>
                     <span class="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-gray-400 bg-red-900 rounded-full">3</span>
