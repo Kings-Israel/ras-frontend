@@ -18,8 +18,8 @@
             <div class="">
                 <div class="md:flex md:justify-between space-y-2 my-2">
                     <div class="flex gap-6">
-                        <x-primary-outline-button class="text-sm border-orange-700 text-orange-700">Bulk Actions <i class="fas fa-chevron-down ml-3"></i></x-primary-outline-button>
-                        <x-primary-outline-button class="text-sm border-orange-700 text-orange-700">Filter <i class="fas fa-chevron-down ml-3"></i></x-primary-outline-button>
+                        <x-primary-outline-button class="text-sm border-orange-700 text-orange-700 px-6 h-8">Bulk Actions <i class="fas fa-chevron-down ml-3"></i></x-primary-outline-button>
+                        <x-primary-outline-button class="text-sm border-orange-700 text-orange-700 px-6 h-8">Filter <i class="fas fa-chevron-down ml-3"></i></x-primary-outline-button>
                     </div>
                     <div class="flex gap-2 align-middle">
                         <a href="#" class="border-2 border-orange-700 rounded-md h-7 w-7 my-auto text-center pt-0.5 hover:bg-orange-400"><i class="fas fa-chevron-left"></i></a>

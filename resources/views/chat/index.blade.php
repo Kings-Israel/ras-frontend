@@ -1,10 +1,10 @@
 <x-app-layout>
     <!-- Page Heading -->
     <x-page-nav-header main-title="Messages" sub-title="All Customer Messages Are Here" />
-    <div class="p-3 sm:ml-64 lg:grid lg:grid-cols-4 lg:divide-x mt-2 h-[98%]">
-        <div class="md:col-span-3 lg:mx-3 border-2 border-gray-300 rounded-lg">
-            <div class="grid grid-cols-3 h-full">
-                <div class="col-span-1 pb-0 border-r-2 border-gray-300">
+    <div class="p-3 sm:ml-64 lg:grid lg:grid-cols-4 lg:divide-x mt-2">
+        <div class="md:col-span-3 lg:mx-3 sm:ml-3 border-2 border-gray-300 rounded-lg messages">
+            <div class="lg:grid lg:grid-cols-3 h-full">
+                <div class="lg:col-span-1 pb-0 border-r-2 border-gray-300">
                     <form action="#" method="POST" class="m-3">
                         <div class="relative md:w-full sm:w-full">
                             <i class="fas fa-search absolute inset-y-0 left-1 flex items-center pl-1 pointer-events-none text-2xl"></i>
@@ -74,7 +74,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="col-span-2 border-none">
+                <div class="lg:col-span-2 border-none lg:block md:hidden sm:hidden">
                     <div class="border-b-2 border-t-0 border-gray-400 w-full px-4 py-2 flex justify-between">
                         <h2 class="text-2xl font-extrabold text-gray-800">Felix Onapi</h2>
                         <form action="#" method="POST" class="my-auto">
@@ -96,13 +96,15 @@
                             </li>
                         </ul>
                         <div class="">
-                            <form action="#" method="POST" class="mx-3 my-16 flex">
+                            <form action="#" method="POST" class="mx-3 lg:my-16 flex">
                                 <div class="md:w-full sm:w-full">
-                                    <x-text-input class="border-2 border-gray-400 rounded w-[98%] focus:border-b-3 focus:ring-0 transition duration-150" placeholder="Type Your Message Here..."></x-text-input>
+                                    <x-text-input class="border-2 border-gray-400 rounded lg:w-[98%] focus:border-b-3 focus:ring-0 transition duration-150" placeholder="Type Your Message Here..."></x-text-input>
                                 </div>
-                                <i class="fas fa-paperclip text-gray-400 text-xl my-auto mr-2"></i>
-                                <button type="submit" class="text-xl bg-orange-500 text-white rounded-full mx-auto my-auto w-12 h-10">
-                                    <i class="fas fa-paper-plane mx-auto"></i>
+                                <i class="fas fa-paperclip text-gray-400 text-xl my-auto lg:mr-2"></i>
+                                <button type="submit" class="bg-orange-500 text-white rounded-full mx-auto my-auto w-12 h-10">
+                                    <svg class="mx-auto pl-1" xmlns="http://www.w3.org/2000/svg" width="25.5" height="20" viewBox="0 0 31.5 27">
+                                        <path id="send_icon" d="M3.015,31.5,34.5,18,3.015,4.5,3,15l22.5,3L3,21Z" transform="translate(-3 -4.5)" fill="#fff"/>
+                                    </svg>
                                 </button>
                             </form>
                         </div>

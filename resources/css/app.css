@@ -27,3 +27,23 @@
 .hidden-row {
     display: none;
 }
+
+.apexcharts-text.apexcharts-datalabel-value {
+    font-size: 22px !important;
+    font-weight: 600 !important;
+}
+
+.profile-form {
+    z-index: 99 !important;
+}
+
+@media only screen and (min-width: 767px)  {
+    .messages {
+        min-height: 700px !important;
+        max-height: 720px !important;
+    }
+}
+
+@media only screen and (max-width: 767px)  {
+
+}

@@ -57,7 +57,7 @@
                 </x-nav-item>
             </li>
             <li>
-                <x-nav-item>
+                <x-nav-item :href="route('vendor.warehouses')" :active="request()->routeIs('vendor.warehouses')">
                     <i class="fas fa-warehouse"></i>
                     <span class="ml-3 truncate">Warehouse Services</span>
                 </x-nav-item>
@@ -69,19 +69,19 @@
                 </x-nav-item>
             </li>
             <li>
-                <x-nav-item>
+                <x-nav-item :href="route('vendor.customers')" :active="request()->routeIs('vendor.customers')">
                     <i class="fas fa-user-friends"></i>
                     <span class="ml-3 truncate">Customers</span>
                 </x-nav-item>
             </li>
             <li>
-                <x-nav-item>
+                <x-nav-item :href="route('vendor.suppliers')" :active="request()->routeIs('vendor.suppliers')">
                     <i class="fas fa-briefcase"></i>
                     <span class="ml-3 truncate">Suppliers</span>
                 </x-nav-item>
             </li>
             <li>
-                <x-nav-item>
+                <x-nav-item :href="route('vendor.profile')" :active="request()->routeIs('vendor.profile')">
                     <i class="fas fa-cog"></i>
                     <span class="ml-3 truncate">Settings</span>
                 </x-nav-item>

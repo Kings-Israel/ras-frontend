@@ -31,6 +31,18 @@ Route::middleware([])->group(function () {
         Route::get('/messages', function () {
             return view('chat.index');
         })->name('messages');
+        Route::get('/customers', function () {
+            return view('vendor.customers');
+        })->name('customers');
+        Route::get('/warehouses', function () {
+            return view('vendor.warehouses');
+        })->name('warehouses');
+        Route::get('/suppliers', function () {
+            return view('vendor.suppliers');
+        })->name('suppliers');
+        Route::get('/profile', function() {
+            return view('vendor.profile');
+        })->name('profile');
     });
     // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

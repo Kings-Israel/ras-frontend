@@ -22,7 +22,7 @@
                 <h1 class="text-xl font-extrabold">368</h1>
             </div>
         </div>
-        <div class="bg-pink-100 dark:bg-pink-100 p-3 rounded-md flex gap-2 mx-2">
+        <div class="bg-rose-200 dark:bg-pink-100 p-3 rounded-md flex gap-2 mx-2">
             <span class="inline-flex items-center justify-center px-4 py-2 ml-2 text-pink-600 text-xl bg-white rounded-full">
                 <i class="fas fa-wallet"></i>
             </span>
