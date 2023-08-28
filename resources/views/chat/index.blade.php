@@ -1,8 +1,8 @@
 <x-app-layout>
     <!-- Page Heading -->
     <x-page-nav-header main-title="Messages" sub-title="All Customer Messages Are Here" />
-    <div class="p-3 sm:ml-64 lg:grid lg:grid-cols-4 lg:divide-x mt-2">
-        <div class="md:col-span-3 lg:mx-3 sm:ml-3 border-2 border-gray-300 rounded-lg messages">
+    <div class="p-3 sm:ml-64 lg:grid lg:grid-cols-4 lg:divide-x">
+        <div class="md:col-span-3 lg:mx-3 sm:ml-3 mt-2 border-2 border-gray-300 rounded-lg messages">
             <div class="lg:grid lg:grid-cols-3 h-full">
                 <div class="lg:col-span-1 pb-0 border-r-2 border-gray-300">
                     <form action="#" method="POST" class="m-3">

@@ -39,7 +39,7 @@
 
 @media only screen and (min-width: 767px)  {
     .messages {
-        min-height: 700px !important;
+        min-height: 620px !important;
         max-height: 720px !important;
     }
 }
