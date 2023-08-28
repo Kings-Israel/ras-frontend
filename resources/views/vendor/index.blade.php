@@ -70,8 +70,8 @@
             <div>
                 <span class="text-sm">Avg Response Time: <span class="text-green-400">&#60;24Hrs</span></span>
                 <div class="flex space-x-3">
-                    <x-primary-button class="h-5 font-extralight tracking-tighter px-24 -pt-2 pb-6 bg-orange-400 border border-orange-400 text-white rounded-full hover:bg-orange-800 hover:border-orange-800">Make Inquiry</x-primary-button>
-                    <x-primary-outline-button class="h-5 font-extralight tracking-tighter px-24 py-3 text-orange-400 rounded-3xl">Chat</x-primary-outline-button>
+                    <x-primary-button class="h-5 font-extralight tracking-tighter px-20 -pt-2 pb-6 bg-orange-400 border border-orange-400 text-white rounded-full hover:bg-orange-800 hover:border-orange-800">Make Inquiry</x-primary-button>
+                    <x-primary-outline-button class="h-5 font-extralight tracking-tighter px-20 py-3 text-orange-400 rounded-3xl">Chat</x-primary-outline-button>
                 </div>
             </div>
             <div class="mt-10">
