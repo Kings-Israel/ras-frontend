@@ -4,7 +4,7 @@
     <div class="p-3 sm:ml-64 lg:grid lg:grid-cols-4 lg:divide-x">
         <div class="p-3 lg:col-span-3 lg:ml-2">
             <div class="lg:grid lg:grid-cols-3 lg:gap-4 lg:mb-3">
-                <div class="lg:col-span-2 sm:pb-2">
+                <div class="lg:col-span-2 sm:pb-2 md:mt-2">
                     <div class="w-full">
                         <h5 class="text-xl font-bold pb-2 leading-none text-gray-900 dark:text-white">Sales Report</h5>
                         <div class="bg-gray-100 border border-gray-300 rounded-lg dark:bg-gray-800 py-2">

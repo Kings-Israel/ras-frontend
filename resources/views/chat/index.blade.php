@@ -11,9 +11,9 @@
                             <x-text-input class="pl-10 h-9 border-none rounded w-[99%] focus:border-b-3 focus:ring-0 transition duration-150" placeholder="Search Anything..."></x-text-input>
                         </div>
                     </form>
-                    <ul class="list-disc">
-                        <li class="flex px-2 bg-yellow-200 mx-3 rounded-lg py-2">
-                            <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded-full border-2 border-orange-600 w-12 h-12 object-cover" alt="" srcset="">
+                    <ul class="list-disc px-2 space-y-2">
+                        <li class="flex px-2 bg-yellow-200 rounded-lg py-1">
+                            <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded-full border-2 border-orange-600 w-10 h-10 object-cover" alt="" srcset="">
                             <div class="px-2 flex flex-col w-[87%]">
                                 <div class="flex justify-between">
                                     <span class="text-lg font-extrabold text-gray-900 mb-1">
@@ -24,8 +24,8 @@
                                 <span class="font-light text-sm truncate">I need 20 bags of Dangote Cement. I am currently in Nairobi.</span>
                             </div>
                         </li>
-                        <li class="flex px-2 mx-3 rounded-lg py-2">
-                            <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded-full w-14 h-14 object-cover" alt="" srcset="">
+                        <li class="flex px-2 rounded-lg py-1">
+                            <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded-full w-10 h-10 object-cover" alt="" srcset="">
                             <div class="px-2 flex flex-col w-[87%]">
                                 <div class="flex justify-between">
                                     <span class="text-lg font-extrabold text-gray-900 mb-1">
@@ -36,8 +36,8 @@
                                 <span class="font-light text-sm truncate">We will have a short group discussion and get back to you</span>
                             </div>
                         </li>
-                        <li class="flex px-2 mx-3 rounded-lg py-2">
-                            <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded-full w-14 h-14 object-cover" alt="" srcset="">
+                        <li class="flex px-2 rounded-lg py-1">
+                            <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded-full w-10 h-10 object-cover" alt="" srcset="">
                             <div class="px-2 flex flex-col w-[87%]">
                                 <div class="flex justify-between">
                                     <span class="text-lg font-extrabold text-gray-900 mb-1">
@@ -48,8 +48,8 @@
                                 <span class="font-light text-sm truncate">Hi. Did you get my email. Please reach out ASAP</span>
                             </div>
                         </li>
-                        <li class="flex px-2 mx-3 rounded-lg py-2">
-                            <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded-full w-14 h-14 object-cover" alt="" srcset="">
+                        <li class="flex px-2 rounded-lg py-1">
+                            <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded-full w-10 h-10 object-cover" alt="" srcset="">
                             <div class="px-2 flex flex-col w-[87%]">
                                 <div class="flex justify-between">
                                     <span class="text-lg font-extrabold text-gray-900 mb-1">
@@ -60,12 +60,12 @@
                                 <span class="font-light text-sm truncate">Good Morning. Is it possible to change warehouse?</span>
                             </div>
                         </li>
-                        <li class="flex px-2 mx-3 rounded-lg py-2">
-                            <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded-full w-14 h-14 object-cover" alt="" srcset="">
+                        <li class="flex px-2 rounded-lg py-1">
+                            <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded-full w-10 h-10 object-cover" alt="" srcset="">
                             <div class="px-2 flex flex-col w-[87%]">
                                 <div class="flex justify-between">
                                     <span class="text-lg font-extrabold text-gray-900 mb-1">
-                                        ALice Liu
+                                        Alice Liu
                                     </span>
                                     <span class="text-xs font-bold my-auto">2:23a.m</span>
                                 </div>
@@ -85,16 +85,28 @@
                         </form>
                     </div>
                     <div class="h-full flex flex-col justify-between">
-                        <ul class="list-none space-y-3 p-2">
-                            <li class="bg-yellow-200 border-none p-2 max-w-sm rounded-lg">
-                                <span class="">
+                        <div class="space-y-2 p-2 text-sm">
+                            <div>
+                                <div class="bg-yellow-200 border-none p-2 max-w-sm rounded-lg">
                                     Hi Oloo. I need 200 bags of Dangote cement delivered to Kilifi. Can we have this delivered before 25th?
-                                </span>
-                            </li>
-                            <li class="bg-gray-300 border-none p-2 max-w-sm rounded-lg float-right">
-                                Hi Oloo. I need 200 bags of Dangote cement delivered to Kilifi. Can we have this delivered before 25th?
-                            </li>
-                        </ul>
+                                </div>
+                                <span class="text-xs">7:35am</span>
+                            </div>
+                            <div class="flex flex-col">
+                                <div class="flex flex-row-reverse">
+                                    <div class="bg-gray-300 border-none p-2 max-w-sm rounded-lg">
+                                        Hi. I can ship a maximum of 180 bags. Can we make a deal? Please reach through email
+                                    </div>
+                                </div>
+                                <span class="text-xs text-right">8:40am</span>
+                            </div>
+                            <div>
+                                <div class="bg-yellow-200 border-none p-2 max-w-sm rounded-lg">
+                                    Hi Oloo. I need 200 bags of Dangote cement delivered to Kilifi. Can we have this delivered before 25th?
+                                </div>
+                                <span class="text-xs">9:50am</span>
+                            </div>
+                        </div>
                         <div class="">
                             <form action="#" method="POST" class="mx-3 lg:my-16 flex">
                                 <div class="md:w-full sm:w-full">

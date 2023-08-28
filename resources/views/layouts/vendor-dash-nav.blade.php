@@ -9,9 +9,10 @@
     <div class="h-[98%] px-4 py-2 grid grid-cols-1 divide-gray-400 divide-y-2 overflow-y-auto rounded-xl bg-gray-200 dark:bg-gray-800">
         <div>
             <div class="flex pt-4 md:pb-5">
-                <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded-full w-16 h-16 object-cover" alt="avatar">
+                <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded-full w-12 h-12 object-cover" alt="avatar">
                 <div class="pl-2">
                     <h3>Hello, Aloo</h3>
+                    <h4 class="font-extrabold text-lg">Oloo's Store</h4>
                 </div>
             </div>
             <div>
@@ -46,14 +47,14 @@
                 <x-nav-item :href="route('vendor.orders')" :active="request()->routeIs('vendor.orders')">
                     <i class="w-5 h-5 fas fa-shopping-bag"></i>
                     <span class="flex-1 ml-3 truncate">Orders</span>
-                    <span class="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-gray-400 bg-red-900 rounded-full">100</span>
+                    <span class="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-gray-200 bg-red-900 rounded-full">100</span>
                 </x-nav-item>
             </li>
             <li>
                 <x-nav-item :href="route('vendor.messages')" :active="request()->routeIs('vendor.messages')">
                     <i class="w-5 h-5 fas fa-comment"></i>
                     <span class="flex-1 ml-3 truncate">Messages</span>
-                    <span class="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-gray-400 bg-red-900 rounded-full">3</span>
+                    <span class="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-gray-200 bg-red-900 rounded-full">3</span>
                 </x-nav-item>
             </li>
             <li>

@@ -7,8 +7,10 @@
             <i class="fas fa-bell"></i>
         </span>
     </div>
-    <x-primary-outline-button class="text-sm text-orange-500 bg-orange-200">
-        View Storefront
-        <i class="fas fa-chevron-right pl-2"></i>
-    </x-primary-outline-button>
+    <a href="{{ route('vendor.storefront') }}">
+        <x-primary-outline-button class="text-sm text-orange-500 bg-orange-200">
+            View Storefront
+            <i class="fas fa-chevron-right pl-2"></i>
+        </x-primary-outline-button>
+    </a>
 </div>

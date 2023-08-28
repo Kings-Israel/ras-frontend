@@ -43,6 +43,9 @@ Route::middleware([])->group(function () {
         Route::get('/profile', function() {
             return view('vendor.profile');
         })->name('profile');
+        Route::get('/storefront', function() {
+            return view('vendor.index');
+        })->name('storefront');
     });
     // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

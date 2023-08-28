@@ -4,7 +4,7 @@
     <div class="p-3 sm:ml-64 lg:grid lg:grid-cols-4 lg:divide-x">
         <div class="p-3 md:col-span-3">
             <div x-data="{ show: false }">
-                <x-primary-button class="font-light bg-orange-600 tracking-tight -mt-2 mb-2 focus:ring-2 focus:ring-orange-600 px-8 text-sm" x-on:click="show = !show">Add Product</x-primary-button>
+                <x-primary-button class="py-2 font-light bg-orange-600 tracking-tight -mt-2 mb-2 focus:ring-2 focus:ring-orange-600 px-8 text-sm" x-on:click="show = !show">Add Product</x-primary-button>
                 <x-modal name="add_product">
                     <form action="#" method="post">
                         <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="name" />

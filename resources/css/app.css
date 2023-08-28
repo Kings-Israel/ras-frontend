@@ -37,9 +37,13 @@
     z-index: 99 !important;
 }
 
+.message-response {
+    margin-right: auto;
+}
+
 @media only screen and (min-width: 767px)  {
     .messages {
-        min-height: 620px !important;
+        min-height: 610px !important;
         max-height: 720px !important;
     }
 }

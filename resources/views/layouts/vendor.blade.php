@@ -17,12 +17,11 @@
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-white">
-            @include('layouts.vendor-dash-nav')
-            @include('layouts.nav-header')
-            <!-- Page Content -->
-            <main>
+            @include('layouts.vendor-header')
+            <main class="mb-32">
                 {{ $slot }}
             </main>
+            @include('layouts.footer')
         </div>
         <script defer src="https://unpkg.com/alpinejs@3.10.3/dist/cdn.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.0/flowbite.min.js"></script>
