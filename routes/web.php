@@ -44,8 +44,14 @@ Route::middleware([])->group(function () {
             return view('vendor.profile');
         })->name('profile');
         Route::get('/storefront', function() {
-            return view('vendor.index');
+            return view('vendor.storefront.index');
         })->name('storefront');
+        Route::get('/storefront/products', function() {
+            return view('vendor.storefront.products');
+        })->name('storefront.products');
+        Route::get('/storefront/compliance', function() {
+            return view('vendor.storefront.compliance');
+        })->name('storefront.compliance');
     });
     // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

@@ -28,7 +28,7 @@
                 <li class="text-sm">About Us</li>
                 <li class="text-sm">Help</li>
                 <li class="text-sm">Vendors</li>
-                <li class="text-sm">Finaciers</li>
+                <li class="text-sm">Financiers</li>
                 <li class="text-sm">Shipping</li>
                 <li class="text-sm">Orders</li>
                 <li class="text-sm">Privacy</li>
