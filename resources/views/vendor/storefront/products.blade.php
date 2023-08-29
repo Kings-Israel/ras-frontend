@@ -1,33 +1,167 @@
 <x-vendor>
     <x-storefront-header></x-storefront-header>
     <div>
-        <img src="{{ asset('assets/img/skLbbi.jpg') }}" alt="" class="h-52 w-full object-cover">
+        <img src="{{ asset('assets/img/skLbbi.jpg') }}" alt="" class="h-32 w-full object-cover">
     </div>
     <div class="flex gap-3 px-28 py-4">
-        <div class="basis-1/4">
-            <img src="{{ asset('assets/img/skLbbi.jpg') }}" class="w-96 h-96 rounded-lg object-cover" alt="">
-        </div>
-        <div class="basis-3/4">
-            <h1 class="font-black text-2xl text-gray-700">We Strive to Ship the Best Products Globally</h1>
-            <div class="flex gap-2">
-                <h2 class="text-sm my-auto">15 Years Experience</h2>
-                <span class="uppercase text-gray-400 text-xl">I</span>
-                <h2 class="text-sm my-auto">Releasing Over 2000 products per year</h2>
-            </div>
-            <div>
-                <span class="text-sm">Avg Response Time: <span class="text-green-400">&#60;24Hrs</span></span>
-                <div class="flex space-x-3">
-                    <x-primary-button class="h-5 font-extralight tracking-tighter px-20 -pt-2 pb-6 bg-orange-400 border border-orange-400 text-white rounded-full hover:bg-orange-800 hover:border-orange-800">Make Inquiry</x-primary-button>
-                    <x-primary-outline-button class="h-5 font-extralight tracking-tighter px-20 py-3 text-orange-400 rounded-3xl">Chat</x-primary-outline-button>
+        <div class="basis-1/6">
+            <div class="border-2 border-gray-300 rounded-md flex flex-col space-y-2 py-2">
+                <h2 class="font-extrabold text-gray-500 text-lg px-2">Product Categories</h2>
+                <div class="flex justify-between px-2 bg-gray-300 text-gray-500">
+                    <h2 class="font-bold">All Categories (31)</h2>
+                    <span><i class="fas fa-chevron-right"></i></span>
+                </div>
+                <div class="flex justify-between px-2 text-gray-600 text-sm">
+                    <h2 class="font-bold">Gold (10)</h2>
+                    <span><i class="fas fa-chevron-right"></i></span>
+                </div>
+                <div class="flex justify-between px-2 text-gray-600 text-sm">
+                    <h2 class="font-bold">Diamond (10)</h2>
+                    <span><i class="fas fa-chevron-right"></i></span>
+                </div>
+                <div class="flex justify-between px-2 text-gray-600 text-sm">
+                    <h2 class="font-bold">Uranium (2)</h2>
+                    <span><i class="fas fa-chevron-right"></i></span>
+                </div>
+                <div class="flex justify-between px-2 text-gray-600 text-sm">
+                    <h2 class="font-bold">Mercury (1)</h2>
+                    <span><i class="fas fa-chevron-right"></i></span>
+                </div>
+                <div class="flex justify-between px-2 text-gray-600 text-sm">
+                    <h2 class="font-bold">Tanzanite (10)</h2>
+                    <span><i class="fas fa-chevron-right"></i></span>
+                </div>
+                <div class="flex justify-between px-2 text-gray-600 text-sm">
+                    <h2 class="font-bold">Gemstones (1)</h2>
+                    <span><i class="fas fa-chevron-right"></i></span>
+                </div>
+                <div class="flex justify-between px-2 text-gray-600 text-sm">
+                    <h2 class="font-bold">Platinum (12)</h2>
+                    <span><i class="fas fa-chevron-right"></i></span>
                 </div>
             </div>
-            <div class="mt-10">
-                <h4 class="text-sm font-extrabold">Our Advantages</h4>
-                <p class="text-xs mt-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt optio vitae quam corrupti eius fuga, sunt sint magni, atque sapiente eos sequi veritatis porro nisi totam dolore numquam tenetur minus. Quos velit maiores, ea numquam reiciendis veniam voluptatum blanditiis, aut ratione mollitia omnis minus nisi vero incidunt, tenetur tempora sed?</p>
+            {{-- <x-card class="border-2 border-gray-400 grid grid-cols-1 p-1">
+                <h2 class="font-extrabold text-lg text-gray-900 -mt-4 mb-4">Product Categories</h2>
+                <ul class="w-full">
+                    <li class="flex justify-between bg-gray-300 w-full">
+                        <span class="font-extrabold text-gray-900 -my-3">All Products Categories</span>
+                        <i class="fas fa-chevron-right my-auto -mt-2"></i>
+                    </li>
+                </ul>
+            </x-card> --}}
+        </div>
+        <div class="basis-5/6">
+            <div class="">
+                <div class="flex justify-between">
+                    <h3 class="font-extrabold tracking-wide">Gold</h3>
+                    <h4 class="font-bold text-sm">View More <i class="fas fa-arrow-circle-right"></i></h4>
+                </div>
+                <div class="flex justify-between gap-2 py-4">
+                    <div>
+                        <img src="{{ asset('assets/img/6CeuCO.jpg') }}" class="rounded border border-gray-200 w-56 h-52 object-cover" alt="">
+                        <div class="">
+                            <h4 class="font-extrabold text-gray-500">Gold Bars</h4>
+                            <h4 class="font-extrabold uppercase text-gray-700">US $ 10.20 - US $ 400.37</h4>
+                            <h5 class="text-sm text-gray-500 font-bold">Minimum Order: 20 Pieces</h5>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded border border-gray-200 w-56 h-52 object-cover" alt="">
+                        <div class="">
+                            <h4 class="font-extrabold text-gray-500">Diamond</h4>
+                            <h4 class="font-extrabold uppercase text-gray-700">US $ 10.20 - US $ 400.37</h4>
+                            <h5 class="text-sm text-gray-500 font-bold">Minimum Order: 100 Pieces</h5>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="{{ asset('assets/img/skLbbi.jpg') }}" class="rounded border border-gray-200 w-56 h-52 object-cover" alt="">
+                        <div class="">
+                            <h4 class="font-extrabold text-gray-500">Platinum</h4>
+                            <h4 class="font-extrabold uppercase text-gray-700">US $ 100 - US $ 2000</h4>
+                            <h5 class="text-sm text-gray-500 font-bold">Minimum Order: 50 Pieces</h5>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="{{ asset('assets/img/W8ZUrJ.jpg') }}" class="rounded border border-gray-200 w-56 h-52 object-cover" alt="">
+                        <div class="">
+                            <h4 class="font-extrabold text-gray-500">Iron Ore</h4>
+                            <h4 class="font-extrabold uppercase text-gray-700">US $ 2.20 - US $ 3.37</h4>
+                            <h5 class="text-sm text-gray-500 font-bold">Minimum Order: 10 Pieces</h5>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="{{ asset('assets/img/6CeuCO.jpg') }}" class="rounded border border-gray-200 w-56 h-52 object-cover" alt="">
+                        <div class="">
+                            <h4 class="font-extrabold text-gray-500">Blue Tanzanite</h4>
+                            <h4 class="font-extrabold uppercase text-gray-700">US $ 3.80 - US $ 6.00</h4>
+                            <h5 class="text-sm text-gray-500 font-bold">Minimum Order: 50 Pieces</h5>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="mt-10">
-                <h4 class="text-sm font-extrabold">Contact Us</h4>
-                <p class="text-xs mt-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium, eos repellendus autem voluptas maxime magni velit facere eum, doloremque ab quam excepturi labore laboriosam sapiente accusantium accusamus corporis nobis dignissimos.</p>
+            <div class="">
+                <div class="flex justify-between">
+                    <h3 class="font-extrabold tracking-wide">Diamond</h3>
+                    <h4 class="font-bold text-sm">View More <i class="fas fa-arrow-circle-right"></i></h4>
+                </div>
+                <div class="flex justify-between gap-2 py-4">
+                    <div>
+                        <img src="{{ asset('assets/img/6CeuCO.jpg') }}" class="rounded border border-gray-200 w-56 h-52 object-cover" alt="">
+                        <div class="">
+                            <h4 class="font-extrabold text-gray-500">Gold Bars</h4>
+                            <h4 class="font-extrabold uppercase text-gray-700">US $ 10.20 - US $ 400.37</h4>
+                            <h5 class="text-sm text-gray-500 font-bold">Minimum Order: 20 Pieces</h5>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="{{ asset('assets/img/6CeuCO.jpg') }}" class="rounded border border-gray-200 w-56 h-52 object-cover" alt="">
+                        <div class="">
+                            <h4 class="font-extrabold text-gray-500">Uranium</h4>
+                            <h4 class="font-extrabold uppercase text-gray-700">US $ 10.20 - US $ 400.37</h4>
+                            <h5 class="text-sm text-gray-500 font-bold">Minimum Order: 100 Pieces</h5>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="{{ asset('assets/img/W8ZUrJ.jpg') }}" class="rounded border border-gray-200 w-56 h-52 object-cover" alt="">
+                        <div class="">
+                            <h4 class="font-extrabold text-gray-500">Platinum</h4>
+                            <h4 class="font-extrabold uppercase text-gray-700">US $ 100 - US $ 2000</h4>
+                            <h5 class="text-sm text-gray-500 font-bold">Minimum Order: 50 Pieces</h5>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="{{ asset('assets/img/skLbbi.jpg') }}" class="rounded border border-gray-200 w-56 h-52 object-cover" alt="">
+                        <div class="">
+                            <h4 class="font-extrabold text-gray-500">Iron Ore</h4>
+                            <h4 class="font-extrabold uppercase text-gray-700">US $ 2.20 - US $ 3.37</h4>
+                            <h5 class="text-sm text-gray-500 font-bold">Minimum Order: 10 Pieces</h5>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded border border-gray-200 w-56 h-52 object-cover" alt="">
+                        <div class="">
+                            <h4 class="font-extrabold text-gray-500">Blue Tanzanite</h4>
+                            <h4 class="font-extrabold uppercase text-gray-700">US $ 3.80 - US $ 6.00</h4>
+                            <h5 class="text-sm text-gray-500 font-bold">Minimum Order: 50 Pieces</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="">
+                <div class="flex justify-between">
+                    <h3 class="font-extrabold tracking-wide">Uranium</h3>
+                    <h4 class="font-bold text-sm">View More <i class="fas fa-arrow-circle-right"></i></h4>
+                </div>
+                <div class="flex justify-between gap-2 py-4">
+                    <div>
+                        <img src="{{ asset('assets/img/6CeuCO.jpg') }}" class="rounded border border-gray-200 w-56 h-52 object-cover" alt="">
+                        <div class="">
+                            <h4 class="font-extrabold text-gray-500">Gold Bars</h4>
+                            <h4 class="font-extrabold uppercase text-gray-700">US $ 10.20 - US $ 400.37</h4>
+                            <h5 class="text-sm text-gray-500 font-bold">Minimum Order: 20 Pieces</h5>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
