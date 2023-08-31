@@ -17,6 +17,7 @@ export default {
             },
             backgroundImage: {
                 'auth': "url('/public/assets/img/6CeuCO.jpg')",
+                'hero': "url('/public/assets/img/index.jpg')",
             },
             h1: {
                 'h1': 'text-2xl font-gray-500'

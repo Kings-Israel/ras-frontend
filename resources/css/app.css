@@ -41,6 +41,10 @@
     margin-right: auto;
 }
 
+.hero-main-text {
+    font-weight: 900 !important;
+}
+
 @media only screen and (min-width: 767px)  {
     .messages {
         min-height: 610px !important;

@@ -3,8 +3,12 @@
     "file": "assets/6CeuCO-fd67f134.jpg",
     "src": "public/assets/img/6CeuCO.jpg"
   },
+  "public/assets/img/index.jpg": {
+    "file": "assets/index-8f5ddfc7.jpg",
+    "src": "public/assets/img/index.jpg"
+  },
   "resources/css/app.css": {
-    "file": "assets/app-b3355931.css",
+    "file": "assets/app-9eed7721.css",
     "isEntry": true,
     "src": "resources/css/app.css"
   },
