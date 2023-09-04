@@ -106,7 +106,9 @@
             </li>
         </ul>
         <div class="flex justify-center">
-            <img src="{{ asset('assets/img/Logo.png') }}" class="w-40 object-contain" alt="">
+            <a href="{{ url('/') }}">
+                <x-application-logo class="w-32 h-32 fill-current text-gray-500" />
+            </a>
         </div>
     </div>
 </aside>

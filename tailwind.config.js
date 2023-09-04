@@ -19,8 +19,8 @@ export default {
                 'auth': "url('/ras/assets/img/6CeuCO.jpg')",
                 'hero': "url('/ras/assets/img/index.jpg')",
             },
-            h1: {
-                'h1': 'text-2xl font-gray-500'
+            screens: {
+                '4xl': '1900px'
             }
         },
     },
