@@ -1,5 +1,7 @@
 <div {{ $attributes->merge(['class' => 'sticky top-0 flex flex-wrap items-center justify-between mx-auto pt-2 py-2 px-32 bg-white z-50']) }}>
-    <img src="{{ asset('assets/img/Logo.png') }}" alt="" class="w-12 h-12 object-fill rounded-lg">
+    <a href="{{ url('/') }}">
+        <x-application-logo class="w-12 h-12 fill-current text-gray-500" />
+    </a>
     <div class="flex space-x-2">
         <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-8 h-8 rounded-full object-cover">
         <button id="dropdown-button" data-dropdown-toggle="dropdown" class="flex gap-2">

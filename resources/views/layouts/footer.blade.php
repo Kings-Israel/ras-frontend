@@ -21,7 +21,9 @@
         </div>
 
         <div class="flex justify-between">
-            <img src="{{ asset('assets/img/Logo.png') }}" class="w-12 h-12 object-fit mt-4" alt="">
+            <a href="{{ url('/') }}">
+                <x-application-logo class="w-12 h-12 fill-current text-white" />
+            </a>
             <ul class="list-none flex space-x-6 my-auto">
                 <li class="text-sm">Overview</li>
                 <li class="text-sm">Features</li>
