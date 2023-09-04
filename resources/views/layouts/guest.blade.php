@@ -23,7 +23,7 @@
         </style>
     </head>
     <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen bg-auth bg-no-repeat bg-cover">
+        <div class="min-h-screen bg-[url('/public/assets/img/6CeuCO.jpg')] bg-no-repeat bg-cover">
             <x-guest-nav>
                 <div>
                     <a href="/">
