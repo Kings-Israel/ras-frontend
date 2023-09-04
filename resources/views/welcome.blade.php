@@ -105,7 +105,7 @@
         </div>
         <div class="px-24 flex gap-10 mt-5">
             <div class="basis-1/6 w-32">
-                <div class="border border-gray-300 rounded-md flex flex-col space-y-2 py-2">
+                <div class="border border-gray-300 rounded-md flex flex-col space-y-2 py-2 sticky top-24">
                     <div class="flex text-sm px-2">
                         <i class="fas fa-map-marker-alt my-auto text-red-600 mr-1"></i>
                         <h2 class="font-extrabold text-gray-500 truncate">Show products/suppliers available in</h2>
@@ -443,8 +443,10 @@
                 if (scroll > scrollThreshold) {
                     // Apply the background color to the body element
                     $('#main-header').css('background-color', '#ffffff');
+                    $('#main-header').css('border-bottom', '2px solid #ea580c');
                 } else {
                     $('#main-header').css('background-color', 'transparent');
+                    $('#main-header').css('border-bottom', 'none');
                 }
             });
 
