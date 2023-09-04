@@ -16,8 +16,8 @@ export default {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
             backgroundImage: {
-                'auth': "url('/public/assets/img/6CeuCO.jpg')",
-                'hero': "url('/public/assets/img/index.jpg')",
+                'auth': "url('/ras/public/assets/img/6CeuCO.jpg')",
+                'hero': "url('/ras/public/assets/img/index.jpg')",
             },
             h1: {
                 'h1': 'text-2xl font-gray-500'
