@@ -360,7 +360,7 @@
                             <div class="">
                                 <h4 class="font-extrabold text-gray-500">Gold Bars</h4>
                                 <h4 class="font-extrabold uppercase text-gray-700">US $ 10.20 - US $ 400.37</h4>
-                                <h5 class="text-sm text-gray-500 font-bold">Minimum Order: 20 Pieces</h5>
+                                <h5 class="text-sm text-gray-500 font-semibold">Minimum Order: 20 Pieces</h5>
                             </div>
                         </div>
                         <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
@@ -368,7 +368,7 @@
                             <div class="">
                                 <h4 class="font-extrabold text-gray-500">Diamond</h4>
                                 <h4 class="font-extrabold uppercase text-gray-700">US $ 10.20 - US $ 400.37</h4>
-                                <h5 class="text-sm text-gray-500 font-bold">Minimum Order: 100 Pieces</h5>
+                                <h5 class="text-sm text-gray-500 font-semibold">Minimum Order: 100 Pieces</h5>
                             </div>
                         </div>
                         <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
@@ -376,7 +376,7 @@
                             <div class="">
                                 <h4 class="font-extrabold text-gray-500">Platinum</h4>
                                 <h4 class="font-extrabold uppercase text-gray-700">US $ 100 - US $ 2000</h4>
-                                <h5 class="text-sm text-gray-500 font-bold">Minimum Order: 50 Pieces</h5>
+                                <h5 class="text-sm text-gray-500 font-semibold">Minimum Order: 50 Pieces</h5>
                             </div>
                         </div>
                         <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
@@ -384,7 +384,7 @@
                             <div class="">
                                 <h4 class="font-extrabold text-gray-500">Iron Ore</h4>
                                 <h4 class="font-extrabold uppercase text-gray-700">US $ 2.20 - US $ 3.37</h4>
-                                <h5 class="text-sm text-gray-500 font-bold">Minimum Order: 10 Pieces</h5>
+                                <h5 class="text-sm text-gray-500 font-semibold">Minimum Order: 10 Pieces</h5>
                             </div>
                         </div>
                         <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
@@ -392,7 +392,7 @@
                             <div class="">
                                 <h4 class="font-extrabold text-gray-500">Blue Tanzanite</h4>
                                 <h4 class="font-extrabold uppercase text-gray-700">US $ 3.80 - US $ 6.00</h4>
-                                <h5 class="text-sm text-gray-500 font-bold">Minimum Order: 50 Pieces</h5>
+                                <h5 class="text-sm text-gray-500 font-semibold">Minimum Order: 50 Pieces</h5>
                             </div>
                         </div>
                     </div>
