@@ -15,7 +15,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="antialiased">
-        <div class="bg-[url('/public/assets/img/index.jpg')] bg-cover bg-no-repeat h-[450px]">
+        <div class="bg-hero bg-cover bg-no-repeat h-[450px]">
             <div class="sticky top-0 flex flex-wrap items-center justify-between mx-auto pt-2 py-2 px-32 z-50">
                 <a href="/">
                     <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
