@@ -5,7 +5,7 @@
     </div>
     <div class="flex gap-3 px-28 py-4">
         <div class="basis-1/6">
-            <div class="border-2 border-gray-300 rounded-md flex flex-col space-y-2 py-2">
+            <div class="border-2 border-gray-300 rounded-md flex flex-col space-y-2 py-2 sticky top-32">
                 <h2 class="font-extrabold text-gray-500 text-lg px-2">Product Categories</h2>
                 <div class="flex justify-between px-2 bg-gray-300 text-gray-500">
                     <h2 class="font-bold">All Categories (31)</h2>
@@ -40,15 +40,6 @@
                     <span><i class="fas fa-chevron-right"></i></span>
                 </div>
             </div>
-            {{-- <x-card class="border-2 border-gray-400 grid grid-cols-1 p-1">
-                <h2 class="font-extrabold text-lg text-gray-900 -mt-4 mb-4">Product Categories</h2>
-                <ul class="w-full">
-                    <li class="flex justify-between bg-gray-300 w-full">
-                        <span class="font-extrabold text-gray-900 -my-3">All Products Categories</span>
-                        <i class="fas fa-chevron-right my-auto -mt-2"></i>
-                    </li>
-                </ul>
-            </x-card> --}}
         </div>
         <div class="basis-5/6">
             <div class="">
