@@ -19,6 +19,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/product', function () {
+    return view('product');
+})->name('product');
+
 Route::get('/dashboard', function () {
     return view('vendor.dashboard');
 })->name('dashboard');
