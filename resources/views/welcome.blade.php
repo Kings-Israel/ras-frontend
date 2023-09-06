@@ -368,4 +368,32 @@
             </div>
         </div>
     </div>
+    <script>
+        const switchToggle = document.querySelector('#switch-toggle');
+        const productsToggle = document.querySelector('#products-toggle');
+        const vendorsToggle = document.querySelector('#vendors-toggle');
+        let isProductmode = false
+
+        function toggleTheme (){
+            isProductmode = !isProductmode
+            localStorage.setItem('isProductmode', isProductmode)
+            switchTheme()
+        }
+
+        function switchTheme (){
+        if (isProductmode) {
+            productsToggle.classList.remove('bg-orange-500', 'px-3', 'rounded-full', 'ml-1', 'text-white')
+            productsToggle.classList.add('text-black', 'ml-2')
+            vendorsToggle.classList.add('bg-orange-500', 'px-3', 'rounded-full', 'text-white', 'mr-1')
+            vendorsToggle.classList.remove('mr-2')
+            } else {
+            productsToggle.classList.add('bg-orange-500', 'px-3', 'rounded-full', 'text-white', 'ml-1');
+            productsToggle.classList.remove('text-black', 'ml-2')
+            vendorsToggle.classList.remove('bg-orange-500', 'px-3', 'rounded-full', 'text-white')
+            vendorsToggle.classList.add('text-black', 'mr-2')
+            }
+        }
+
+        switchTheme()
+    </script>
 </x-main>

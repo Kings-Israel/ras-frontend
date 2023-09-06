@@ -45,6 +45,28 @@
     font-weight: 900 !important;
 }
 
+.review__info .review__star {
+    display: inline-block;
+    position: relative;
+}
+
+.review__info .review__star i {
+    color: #e6dcdc;
+}
+
+.review__info .review__star span {
+    position: absolute;
+    left: 0;
+    top: 0;
+    white-space: nowrap;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.review__info .review__star span i {
+    color: #f9760b;
+}
+
 @media only screen and (min-width: 767px)  {
     .messages {
         min-height: 610px !important;
