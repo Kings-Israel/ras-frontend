@@ -25,37 +25,10 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/fontawesome.min.js" integrity="sha512-64O4TSvYybbO2u06YzKDmZfLj/Tcr9+oorWhxzE3yDnmBRf7wvDgQweCzUf5pm2xYTgHMMyk5tW8kWU92JENng==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js" integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
         <script>
-            const switchToggle = document.querySelector('#switch-toggle');
-            const productsToggle = document.querySelector('#products-toggle');
-            const vendorsToggle = document.querySelector('#vendors-toggle');
-            let isProductmode = false
-
-            function toggleTheme (){
-              isProductmode = !isProductmode
-              localStorage.setItem('isProductmode', isProductmode)
-              switchTheme()
-            }
-
-            function switchTheme (){
-            if (isProductmode) {
-                productsToggle.classList.remove('bg-orange-500', 'px-3', 'rounded-full', 'ml-1', 'text-white')
-                productsToggle.classList.add('text-black', 'ml-2')
-                vendorsToggle.classList.add('bg-orange-500', 'px-3', 'rounded-full', 'text-white', 'mr-1')
-                vendorsToggle.classList.remove('mr-2')
-              } else {
-                productsToggle.classList.add('bg-orange-500', 'px-3', 'rounded-full', 'text-white', 'ml-1');
-                productsToggle.classList.remove('text-black', 'ml-2')
-                vendorsToggle.classList.remove('bg-orange-500', 'px-3', 'rounded-full', 'text-white')
-                vendorsToggle.classList.add('text-black', 'mr-2')
-              }
-            }
-
-            switchTheme()
-
             $(window).scroll(function () {
                 const scroll = $(window).scrollTop();
 
-                let scrollThreshold = 20;
+                let scrollThreshold = 0.5;
 
                 if (scroll > scrollThreshold) {
                     // Apply the background color to the body element
