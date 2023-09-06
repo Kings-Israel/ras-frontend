@@ -38,12 +38,12 @@
             <p class="text-gray-600">Gold</p>
         </span>
         <div class="flex gap-3 mt-3">
-            <div>
+            <div class="bg-gray-50">
                 <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-[390px] h-[450px] object-cover rounded-md">
                 <div class="flex justify-between mt-2">
-                    <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-28 h-28 object-cover rounded-md">
-                    <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-28 h-28 object-cover rounded-md">
-                    <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-28 h-28 object-cover rounded-md">
+                    <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-28 h-28 object-cover rounded-md border border-orange-400">
+                    <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-28 h-28 object-cover rounded-md border border-orange-400">
+                    <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-28 h-28 object-cover rounded-md border border-orange-400">
                 </div>
             </div>
             <div class="space-y-4 bg-gray-50 p-2 rounded-md">
@@ -76,7 +76,7 @@
                             <h4 class="text-sm font-semibold text-blue-500">Similar Products from Enock's Mining Co.</h4>
                         </div>
                     </div>
-                    <div class="border border-gray-300 p-3 px-5 rounded-lg mt-2">
+                    <div class="border border-gray-300 p-3 px-5 rounded-lg mt-2 bg-white">
                         <div class="flex gap-2 justify-between">
                             <div class="flex flex-col gap-1">
                                 <h4 class="font-semibold text-gray-400">10 - 39 Pieces</h4>
@@ -119,8 +119,8 @@
                     <div class="flex gap-2">
                         <h4 class="text-sm font-bold text-gray-600">Payments:</h4>
                         <div class="flex gap-1">
-                            <h4 class="text-sm font-semibold text-gray-500">VISA</h4>
-                            <h4 class="text-sm font-semibold text-gray-500">MASTERCARD</h4>
+                            <h4 class="text-sm font-semibold text-blue-500">VISA</h4>
+                            <h4 class="text-sm font-semibold text-blue-500">MASTERCARD</h4>
                             <h4 class="text-sm font-semibold text-blue-500">MPESA</h4>
                         </div>
                     </div>
@@ -149,7 +149,7 @@
                     <h5 class="font-thin text-gray-500 text-sm">Order Within: <span class="text-green-600">19h 38min</span></h5>
                     <x-primary-button class="w-full my-2 py-1">Place Order</x-primary-button>
                     <x-primary-outline-button class="w-full my-2 py-1 text-orange-400 justify-center gap-1">
-                        <i class="fas fa-plus text-sm"></i>
+                        {{-- <i class="fas fa-plus text-sm"></i> --}}
                         <span class="tracking-tight">
                             Add To Cart
                         </span>
@@ -161,8 +161,8 @@
                     </x-primary-outline-button>
                 </div>
                 <div class="pt-5">
-                    <h5 class="text-sm font-bold text-gray-500">Vendor:</h5>
-                    <h3 class="text-xl text-gray-600 font-semibold">Enock's Mining Co.</h3>
+                    <h5 class="text-sm font-semibold text-gray-500">Vendor:</h5>
+                    <h3 class="text-2xl text-gray-500 font-bold underline-offset-2">Enock's Mining Co.</h3>
                     <h6 class="text-sm text-gray-400">Verified</h6>
                     <h5 class="font-semibold text-gray-500 text-sm">Response Time: <span class="text-gray-700 font-bold">2h</span></h5>
                     <h5 class="font-semibold text-gray-500 text-sm">Order Fulfilment: <span class="text-gray-700 font-bold">98%</span></h5>
