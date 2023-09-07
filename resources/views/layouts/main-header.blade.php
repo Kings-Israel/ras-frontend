@@ -1,9 +1,9 @@
-<div class="sticky top-0 bg-transparent flex flex-wrap items-center justify-between mx-auto pt-2 py-2 px-24 z-50 duration-200" id="main-header">
+<div class="sticky top-0 bg-transparent flex lg:flex-wrap lg:items-center justify-between mx-auto pt-2 py-2 lg:px-24 md:px-16 sm:px-8 z-50 duration-200" id="main-header">
     <a href="{{ url('/') }}">
         <x-application-logo class="w-16 h-16 fill-current text-gray-500" />
     </a>
     <div class="flex space-x-2">
-        <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-8 h-8 rounded-full object-cover">
+        <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-8 h-8 rounded-full object-cover my-auto">
         <button id="dropdown-button" data-dropdown-toggle="dropdown" class="flex gap-2">
             <span class="font-semibold my-auto">My Account</span>
             <i class="fas fa-chevron-down my-auto text-sm"></i>
@@ -15,10 +15,10 @@
                 </li>
             </ul>
         </div>
-        <div class="text-gray-800 bg-gray-300 rounded-full w-8 text-center pt-1">
+        <div class="text-gray-800 bg-gray-300 rounded-full w-7 h-7 my-auto lg:my-0 md:w-8 text-center lg:pt-1">
             <i class="w-5 h-5 fas fa-bell"></i>
         </div>
-        <div class="text-gray-800 bg-gray-300 rounded-full w-8 text-center pt-1">
+        <div class="text-gray-800 bg-gray-300 rounded-full w-7 h-7 my-auto lg:my-0 md:w-8 text-center lg:pt-1">
             <i class="w-5 h-5 fas fa-shopping-bag"></i>
         </div>
     </div>
