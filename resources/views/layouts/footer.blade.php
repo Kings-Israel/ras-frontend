@@ -1,11 +1,11 @@
 <div class="bg-red-800">
-    <div class="px-52 py-6 text-white">
-        <div class="flex justify-between">
+    <div class="px-2 md:px-8 lg:px-52 py-6 text-white">
+        <div class="grid md:flex md:justify-between">
             <div>
                 <h3 class="text-lg font-thin text-slate-200">Join Us</h3>
                 <h5 class="text-sm text-slate-300">We'll send you daily special offers</h5>
             </div>
-            <div class="flex flex-col w-2/5">
+            <div class="grid md:flex md:flex-col lg:w-2/5">
                 <form action="#">
                     <div class="flex flex-row-reverse">
                         <div class="relative w-full">
@@ -16,15 +16,15 @@
                         </div>
                     </div>
                 </form>
-                <span class="text-xs text-right mt-3">We Care About Your Privacy. Read Our <span class="underline underline-offset-2">Privacy Policy</span>
+                <span class="text-xs text-center md:text-right mt-3">We Care About Your Privacy. Read Our <span class="underline underline-offset-2">Privacy Policy</span>
             </div>
         </div>
 
-        <div class="flex justify-between">
-            <a href="{{ url('/') }}">
+        <div class="grid md:flex md:justify-between">
+            <a href="{{ url('/') }}" class="mx-auto py-2 md:mx-0 md:py-0">
                 <x-application-logo class="w-12 h-12 fill-current text-white" />
             </a>
-            <ul class="list-none flex space-x-6 my-auto">
+            <ul class="md:list-none flex flex-wrap justify-center md:justify-end space-x-2 md:space-x-4 lg:space-x-6 my-auto">
                 <li class="text-sm">Overview</li>
                 <li class="text-sm">Features</li>
                 <li class="text-sm">About Us</li>

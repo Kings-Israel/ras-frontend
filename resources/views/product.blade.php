@@ -30,7 +30,7 @@
             </div>
         </form>
     </div>
-    <div class="mx-auto px-36 my-5">
+    <div class="mx-auto px-40 my-5">
         <span class="flex gap-2 text-sm">
             <p class="text-gray-400">Home ></p>
             <p class="text-gray-400">Natural Resources ></p>

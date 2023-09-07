@@ -8,7 +8,7 @@
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,600,900,1100&display=swap" rel="stylesheet" />
+        <link href="https://fonts.bunny.net/css?family=figtree:400,600,800,900,1100&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="{{ asset('assets/fontawesome/css/all.min.css') }}">
 
         <!-- Scripts -->

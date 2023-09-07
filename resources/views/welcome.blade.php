@@ -1,8 +1,8 @@
 <x-main>
-    <div class="bg-hero bg-cover bg-no-repeat h-[500px] -mt-24 pt-24">
-        <div class="flex flex-col mx-auto py-8 px-32 z-50 space-y-3">
-            <h1 class="text-4xl font-[1100] text-center hero-main-text">Find The Best Products, From Top Notch Suppliers</h1>
-            <h5 class="text-center px-52">Real African Sources is where to go to easily access raw materials and business opportunities from vetted suppliers across Africa.</h5>
+    <div class="bg-hero bg-cover bg-no-repeat lg:h-[500px] -mt-24 pt-24">
+        <div class="flex flex-col mx-auto py-8 sm:px-20 md:px-24 lg:px-32 z-50 space-y-3">
+            <h1 class="text-2xl md:text-2xl lg:text-4xl font-[600] md:font-[800] lg:font-[1100] text-center hero-main-text">Find The Best Products, From Top Notch Suppliers</h1>
+            <h5 class="text-center px-8 md:px-12 lg:px-52">Real African Sources is where to go to easily access raw materials and business opportunities from vetted suppliers across Africa.</h5>
             <label for="themeSwitcherThree" class="themeSwitcherThree relative inline-flex cursor-pointer select-none items-center justify-center my-2">
                 <input type="checkbox" name="themeSwitcherThree" id="themeSwitcherThree" class="sr-only">
 
@@ -11,7 +11,7 @@
                     <h4 id="vendors-toggle" class="mr-2 transition duration-200 ease-out font-semibold">Vendors</h4>
                 </div>
             </label>
-            <div class="w-3/5 mx-auto">
+            <div class="lg:w-3/5 mx-2 lg:mx-auto">
                 <form class="">
                     <div class="flex">
                         <button id="dropdown-button" data-dropdown-toggle="store-dropdown" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-2 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600" type="button">
@@ -43,8 +43,8 @@
                     </div>
                 </form>
             </div>
-            <div class="w-3/5 mx-auto">
-                <div class="flex flex-wrap gap-2 mt-2">
+            <div class="lg:w-3/5 mx-2 lg:mx-auto">
+                <div class="flex flex-wrap justify-center lg:justify-start gap-1 lg:gap-2 mt-2">
                     <x-badge class="bg-violet-100 font-thin" text="Minerals"></x-badge>
                     <x-badge class="bg-violet-100 font-thin" text="Natural"></x-badge>
                     <x-badge class="bg-violet-100 font-thin" text="Wines"></x-badge>
@@ -62,7 +62,7 @@
             </div>
         </div>
     </div>
-    <div class="px-24 flex gap-10 mt-5">
+    <div class="px-2 md:px-8 lg:px-24 lg:flex gap-10 mt-5">
         <div class="basis-1/6">
             <div class="border border-gray-300 rounded-md flex flex-col space-y-2 py-2 sticky top-24">
                 <div class="flex text-sm px-2">
@@ -112,9 +112,9 @@
             </div>
         </div>
         <div class="basis-5/6 space-y-2">
-            <div class="grid sm:grid-cols-1 md:grid-cols-2 4xl:grid-cols-3">
+            <div class="hidden md:grid md:grid-cols-1 lg:grid-cols-2 4xl:grid-cols-3">
                 <div>
-                    <div class="flex gap-1">
+                    <div class="md:flex gap-1">
                         <h3 class="font-semibold text-lg">New Buying Leads</h3>
                         <h4 class="font-thin text-lg">(12)</h4>
                     </div>
@@ -313,10 +313,10 @@
                     <h3 class="font-extrabold tracking-wide">Top Picks For You</h3>
                     <h4 class="font-semibold text-sm">See All <i class="fas fa-arrow-circle-right"></i></h4>
                 </div>
-                <div class="grid grid-cols-4 gap-2 py-4">
+                <div class="space-y-2 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-4 gap-2 py-4">
                     <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
                         <a href="{{ route('product') }}">
-                            <img src="{{ asset('assets/img/6CeuCO.jpg') }}" class="rounded border-gray-200 w-60 h-52 object-cover" alt="">
+                            <img src="{{ asset('assets/img/6CeuCO.jpg') }}" class="rounded border-gray-200 w-full lg:w-60 h-52 object-cover" alt="">
                             <div class="">
                                 <h4 class="font-extrabold text-gray-500">Gold Bars</h4>
                                 <h4 class="font-extrabold uppercase text-gray-700">US $ 10.20 - US $ 400.37</h4>
@@ -326,7 +326,7 @@
                     </div>
                     <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
                         <a href="{{ route('product') }}">
-                            <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded border border-gray-200 w-60 h-52 object-cover" alt="">
+                            <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded border border-gray-200 w-full lg:w-60 h-52 object-cover" alt="">
                             <div class="">
                                 <h4 class="font-extrabold text-gray-500">Diamond</h4>
                                 <h4 class="font-extrabold uppercase text-gray-700">US $ 10.20 - US $ 400.37</h4>
@@ -336,7 +336,7 @@
                     </div>
                     <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
                         <a href="{{ route('product') }}">
-                            <img src="{{ asset('assets/img/skLbbi.jpg') }}" class="rounded border border-gray-200 w-60 h-52 object-cover" alt="">
+                            <img src="{{ asset('assets/img/skLbbi.jpg') }}" class="rounded border border-gray-200 w-full lg:w-60 h-52 object-cover" alt="">
                             <div class="">
                                 <h4 class="font-extrabold text-gray-500">Platinum</h4>
                                 <h4 class="font-extrabold uppercase text-gray-700">US $ 100 - US $ 2000</h4>
@@ -346,7 +346,7 @@
                     </div>
                     <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
                         <a href="{{ route('product') }}">
-                            <img src="{{ asset('assets/img/W8ZUrJ.jpg') }}" class="rounded border border-gray-200 w-60 h-52 object-cover" alt="">
+                            <img src="{{ asset('assets/img/W8ZUrJ.jpg') }}" class="rounded border border-gray-200 w-full lg:w-60 h-52 object-cover" alt="">
                             <div class="">
                                 <h4 class="font-extrabold text-gray-500">Iron Ore</h4>
                                 <h4 class="font-extrabold uppercase text-gray-700">US $ 2.20 - US $ 3.37</h4>
@@ -356,7 +356,7 @@
                     </div>
                     <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
                         <a href="{{ route('product') }}">
-                            <img src="{{ asset('assets/img/6CeuCO.jpg') }}" class="rounded border border-gray-200 w-60 h-52 object-cover" alt="">
+                            <img src="{{ asset('assets/img/6CeuCO.jpg') }}" class="rounded border border-gray-200 w-full lg:w-60 h-52 object-cover" alt="">
                             <div class="">
                                 <h4 class="font-extrabold text-gray-500">Blue Tanzanite</h4>
                                 <h4 class="font-extrabold uppercase text-gray-700">US $ 3.80 - US $ 6.00</h4>
