@@ -135,7 +135,7 @@
                         <h4 class="text-sm font-bold text-gray-600">Returns And Refunds:</h4>
                         <h4 class="text-sm font-semibold text-gray-500">
                             For Returns, Refunds and Other Product Issues
-                            <span class="text-sm font-semibold text-blue-500">Click Here</span>
+                            <span class="text-sm font-semibold text-blue-500 underline underline-offset-2">Click Here</span>
                         </h4>
                     </div>
                 </div>
@@ -171,6 +171,171 @@
                             Message Vendor
                         </span>
                     </x-primary-outline-button>
+                </div>
+            </div>
+        </div>
+        <div class="w-full md:w-[70%]">
+            <div class="flex gap-4">
+                <h4 class="text-lg font-semibold text-gray-600 p-2 bg-gray-100">Product Details</h4>
+                <h4 class="text-lg font-semibold text-gray-600 p-2">Vendor Details</h4>
+                <h4 class="text-lg font-semibold text-gray-600 p-2">Customer Reviews</h4>
+            </div>
+            <div class="bg-gray-100">
+                <div class="grid grid-cols-3 divide-x divide-gray-400 p-2">
+                    <div class="space-y-3">
+                        <h5 class="text-sm font-bold text-gray-700">Overview</h5>
+                        <p class="text-sm text-gray-600">Material: <strong class="text-sm text-gray-700">Gold</strong></p>
+                        <p class="text-sm text-gray-600">Type: <strong class="text-sm text-gray-700">Mineral</strong></p>
+                        <p class="text-sm text-gray-600">Product Type: <strong class="text-sm text-gray-700">Badge & Emblem</strong></p>
+                        <p class="text-sm text-gray-600">Technique: <strong class="text-sm text-gray-700">Carving</strong></p>
+                        <p class="text-sm text-gray-600">Style: <strong class="text-sm text-gray-700">Natural</strong></p>
+                        <p class="text-sm text-gray-600">Use: <strong class="text-sm text-gray-700">Business Gift</strong></p>
+                        <p class="text-sm text-gray-600">Theme: <strong class="text-sm text-gray-700">Patriotism</strong></p>
+                        <p class="text-sm text-gray-600">Regional Feature: <strong class="text-sm text-gray-700">Africa</strong></p>
+                    </div>
+                    <div class="space-y-3 px-8 pt-8">
+                        <p class="text-sm text-gray-600">Place of Origin: <strong class="text-sm text-gray-700">Kakamega</strong></p>
+                        <p class="text-sm text-gray-600">Brand Name: <strong class="text-sm text-gray-700">KK</strong></p>
+                        <p class="text-sm text-gray-600">Model Number: <strong class="text-sm text-gray-700">#38HJHD</strong></p>
+                        <p class="text-sm text-gray-600">Usage: <strong class="text-sm text-gray-700">Home Decoration Gift</strong></p>
+                        <p class="text-sm text-gray-600">Product Name: <strong class="text-sm text-gray-700">Natural</strong></p>
+                        <p class="text-sm text-gray-600">Plating: <strong class="text-sm text-gray-700">None</strong></p>
+                        <p class="text-sm text-gray-600">Shaping: <strong class="text-sm text-gray-700">Rectangle</strong></p>
+                        <p class="text-sm text-gray-600">Design: <strong class="text-sm text-gray-700">100% Custom Made</strong></p>
+                    </div>
+                    <div class="space-y-3 px-8 pt-8">
+                        <p class="text-sm text-gray-600">Color: <strong class="text-sm text-gray-700">Gold</strong></p>
+                        <p class="text-sm text-gray-600">MOQ: <strong class="text-sm text-gray-700">10 Pieces</strong></p>
+                        <p class="text-sm text-gray-600">Payment: <strong class="text-sm text-gray-700">T/T</strong></p>
+                    </div>
+                </div>
+                <div class="p-2 space-y-3">
+                    <h5 class="text-sm font-bold text-gray-700">Supply Ability</h5>
+                    <p class="text-sm text-gray-600">Supply Ability: <strong class="text-sm text-gray-700">20,000 Piece/Pieces Per Month</strong></p>
+                </div>
+                <div class="p-2 space-y-3">
+                    <h5 class="text-sm font-bold text-gray-700">Packaging & Delivery</h5>
+                    <div class="border border-gray-300 p-1 px-2 rounded-lg mt-2 bg-white w-[50%]">
+                        <div class="flex justify-between divide-x divide-gray-300">
+                            <div class="flex flex-col gap-1 -mr-10">
+                                <h4 class="font-semibold text-gray-400">10 - 39 Pieces</h4>
+                                <h5 class="font-bold text-gray-600">$5.03</h5>
+                            </div>
+                            <div class="flex flex-col gap-1 pl-4 -mr-10">
+                                <h4 class="font-semibold text-gray-400">40 - 69 Pieces</h4>
+                                <h5 class="font-bold text-gray-600">$3.40</h5>
+                            </div>
+                            <div class="flex flex-col gap-1 px-2">
+                                <h4 class="font-semibold text-gray-400">70 Pieces <i class="far fa-arrow-alt-circle-up"></i></h4>
+                                <h5 class="font-bold text-gray-600">$2.38</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-2 space-y-3">
+                    <h5 class="text-sm font-bold text-gray-700">Product Images</h5>
+                    <div class="flex gap-2">
+                        <img src="{{ asset('assets/img/6CeuCO.jpg') }}" alt="" class="w-70 h-48 object-contain">
+                        <div class="grid grid-cols-2 gap-3">
+                            <img src="{{ asset('assets/img/6CeuCO.jpg') }}" alt="" class="w-48 h-32 object-cover">
+                            <img src="{{ asset('assets/img/skLbbi.jpg') }}" alt="" class="w-48 h-32 object-cover">
+                            <img src="{{ asset('assets/img/W8ZUrJ.jpg') }}" alt="" class="w-48 h-32 object-cover">
+                            <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-48 h-32 object-cover">
+                        </div>
+                    </div>
+                </div>
+                <div class="p-2 space-y-3">
+                    <h5 class="text-sm font-bold text-gray-700">Product Videos</h5>
+                </div>
+                <div class="p-2 space-y-3">
+                    <h5 class="text-sm font-bold text-gray-700">Related Items</h5>
+                    <div class="space-y-2 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-4 gap-2 py-2">
+                        <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
+                            <a href="{{ route('product') }}">
+                                <img src="{{ asset('assets/img/6CeuCO.jpg') }}" class="rounded border border-gray-200 w-full h-36 object-cover" alt="">
+                                <div class="">
+                                    <h4 class="font-bold text-gray-500">Gold Bars</h4>
+                                    <h4 class="font-bold uppercase text-gray-700">US $ 10.20 - US $ 400.37</h4>
+                                    <h5 class="text-sm text-gray-500 font-semibold">Minimum Order: 20 Pieces</h5>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
+                            <a href="{{ route('product') }}">
+                                <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded border border-gray-200 w-full h-36 object-cover" alt="">
+                                <div class="">
+                                    <h4 class="font-bold text-gray-500">Diamond</h4>
+                                    <h4 class="font-bold uppercase text-gray-700">US $ 10.20 - US $ 400.37</h4>
+                                    <h5 class="text-sm text-gray-500 font-semibold">Minimum Order: 100 Pieces</h5>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
+                            <a href="{{ route('product') }}">
+                                <img src="{{ asset('assets/img/skLbbi.jpg') }}" class="rounded border border-gray-200 w-full h-36 object-cover" alt="">
+                                <div class="">
+                                    <h4 class="font-bold text-gray-500">Platinum</h4>
+                                    <h4 class="font-bold uppercase text-gray-700">US $ 100 - US $ 2000</h4>
+                                    <h5 class="text-sm text-gray-500 font-semibold">Minimum Order: 50 Pieces</h5>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
+                            <a href="{{ route('product') }}">
+                                <img src="{{ asset('assets/img/W8ZUrJ.jpg') }}" class="rounded border border-gray-200 w-full h-36 object-cover" alt="">
+                                <div class="">
+                                    <h4 class="font-bold text-gray-500">Iron Ore</h4>
+                                    <h4 class="font-bold uppercase text-gray-700">US $ 2.20 - US $ 3.37</h4>
+                                    <h5 class="text-sm text-gray-500 font-semibold">Minimum Order: 10 Pieces</h5>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-2 space-y-3">
+                    <h5 class="text-sm font-bold text-gray-700">Vendor's Popular Products</h5>
+                    <div class="space-y-2 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-4 gap-2 py-2">
+                        <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
+                            <a href="{{ route('product') }}">
+                                <img src="{{ asset('assets/img/6CeuCO.jpg') }}" class="rounded border-gray-200 w-full h-36 object-cover" alt="">
+                                <div class="">
+                                    <h4 class="font-bold text-gray-500">Gold Bars</h4>
+                                    <h4 class="font-bold uppercase text-gray-700">US $ 10.20 - US $ 400.37</h4>
+                                    <h5 class="text-sm text-gray-500 font-semibold">Minimum Order: 20 Pieces</h5>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
+                            <a href="{{ route('product') }}">
+                                <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded border border-gray-200 w-full h-36 object-cover" alt="">
+                                <div class="">
+                                    <h4 class="font-bold text-gray-500">Diamond</h4>
+                                    <h4 class="font-bold uppercase text-gray-700">US $ 10.20 - US $ 400.37</h4>
+                                    <h5 class="text-sm text-gray-500 font-semibold">Minimum Order: 100 Pieces</h5>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
+                            <a href="{{ route('product') }}">
+                                <img src="{{ asset('assets/img/skLbbi.jpg') }}" class="rounded border border-gray-200 w-full h-36 object-cover" alt="">
+                                <div class="">
+                                    <h4 class="font-bold text-gray-500">Platinum</h4>
+                                    <h4 class="font-bold uppercase text-gray-700">US $ 100 - US $ 2000</h4>
+                                    <h5 class="text-sm text-gray-500 font-semibold">Minimum Order: 50 Pieces</h5>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
+                            <a href="{{ route('product') }}">
+                                <img src="{{ asset('assets/img/W8ZUrJ.jpg') }}" class="rounded border border-gray-200 w-full h-36 object-cover" alt="">
+                                <div class="">
+                                    <h4 class="font-bold text-gray-500">Iron Ore</h4>
+                                    <h4 class="font-bold uppercase text-gray-700">US $ 2.20 - US $ 3.37</h4>
+                                    <h5 class="text-sm text-gray-500 font-semibold">Minimum Order: 10 Pieces</h5>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
