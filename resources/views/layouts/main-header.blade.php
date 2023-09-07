@@ -4,11 +4,11 @@
     </a>
     <div class="flex space-x-2">
         <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-8 h-8 rounded-full object-cover my-auto">
-        <button id="dropdown-button" data-dropdown-toggle="dropdown" class="flex gap-2">
+        <button id="dropdown-button" data-dropdown-toggle="account-dropdown" data-dropdown-placement="bottom" class="flex gap-2" type="button">
             <span class="font-semibold my-auto">My Account</span>
             <i class="fas fa-chevron-down my-auto text-sm"></i>
         </button>
-        <div id="dropdown" class="z-10 hidden bg-gray-200 divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+        <div id="account-dropdown" class="z-10 hidden bg-gray-200 divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
             <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-button">
                 <li>
                     <a href="{{ route('vendor.dashboard') }}" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
