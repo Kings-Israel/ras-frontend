@@ -15,10 +15,10 @@
                 </li>
             </ul>
         </div>
-        <div class="text-gray-800 bg-gray-300 rounded-full w-7 h-7 my-auto lg:my-0 md:w-8 text-center lg:pt-1">
+        <div class="text-gray-800 bg-gray-300 rounded-full w-7 h-7 my-auto lg:my-0 md:w-8 md:h-8 text-center pt-0.5 md:pt-1">
             <i class="w-5 h-5 fas fa-bell"></i>
         </div>
-        <div class="text-gray-800 bg-gray-300 rounded-full w-7 h-7 my-auto lg:my-0 md:w-8 text-center lg:pt-1">
+        <div class="text-gray-800 bg-gray-300 rounded-full w-7 h-7 my-auto lg:my-0 md:w-8 md:h-8 text-center pt-0.5 md:pt-1">
             <i class="w-5 h-5 fas fa-shopping-bag"></i>
         </div>
     </div>
