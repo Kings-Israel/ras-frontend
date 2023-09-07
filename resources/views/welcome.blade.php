@@ -316,7 +316,7 @@
                 <div class="space-y-2 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-4 gap-2 py-4">
                     <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
                         <a href="{{ route('product') }}">
-                            <img src="{{ asset('assets/img/6CeuCO.jpg') }}" class="rounded border-gray-200 w-full lg:w-60 h-52 object-cover" alt="">
+                            <img src="{{ asset('assets/img/6CeuCO.jpg') }}" class="rounded border-gray-200 w-full h-52 object-cover" alt="">
                             <div class="">
                                 <h4 class="font-extrabold text-gray-500">Gold Bars</h4>
                                 <h4 class="font-extrabold uppercase text-gray-700">US $ 10.20 - US $ 400.37</h4>
@@ -326,7 +326,7 @@
                     </div>
                     <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
                         <a href="{{ route('product') }}">
-                            <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded border border-gray-200 w-full lg:w-60 h-52 object-cover" alt="">
+                            <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded border border-gray-200 w-full h-52 object-cover" alt="">
                             <div class="">
                                 <h4 class="font-extrabold text-gray-500">Diamond</h4>
                                 <h4 class="font-extrabold uppercase text-gray-700">US $ 10.20 - US $ 400.37</h4>
@@ -336,7 +336,7 @@
                     </div>
                     <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
                         <a href="{{ route('product') }}">
-                            <img src="{{ asset('assets/img/skLbbi.jpg') }}" class="rounded border border-gray-200 w-full lg:w-60 h-52 object-cover" alt="">
+                            <img src="{{ asset('assets/img/skLbbi.jpg') }}" class="rounded border border-gray-200 w-full h-52 object-cover" alt="">
                             <div class="">
                                 <h4 class="font-extrabold text-gray-500">Platinum</h4>
                                 <h4 class="font-extrabold uppercase text-gray-700">US $ 100 - US $ 2000</h4>
@@ -346,7 +346,7 @@
                     </div>
                     <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
                         <a href="{{ route('product') }}">
-                            <img src="{{ asset('assets/img/W8ZUrJ.jpg') }}" class="rounded border border-gray-200 w-full lg:w-60 h-52 object-cover" alt="">
+                            <img src="{{ asset('assets/img/W8ZUrJ.jpg') }}" class="rounded border border-gray-200 w-full h-52 object-cover" alt="">
                             <div class="">
                                 <h4 class="font-extrabold text-gray-500">Iron Ore</h4>
                                 <h4 class="font-extrabold uppercase text-gray-700">US $ 2.20 - US $ 3.37</h4>
@@ -356,7 +356,7 @@
                     </div>
                     <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
                         <a href="{{ route('product') }}">
-                            <img src="{{ asset('assets/img/6CeuCO.jpg') }}" class="rounded border border-gray-200 w-full lg:w-60 h-52 object-cover" alt="">
+                            <img src="{{ asset('assets/img/6CeuCO.jpg') }}" class="rounded border border-gray-200 w-full h-52 object-cover" alt="">
                             <div class="">
                                 <h4 class="font-extrabold text-gray-500">Blue Tanzanite</h4>
                                 <h4 class="font-extrabold uppercase text-gray-700">US $ 3.80 - US $ 6.00</h4>
