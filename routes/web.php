@@ -27,6 +27,10 @@ Route::get('/dashboard', function () {
     return view('vendor.dashboard');
 })->name('dashboard');
 
+Route::get('/cart', function() {
+    return view('cart');
+})->name('cart');
+
 Route::middleware([])->group(function () {
     Route::group(['prefix' => 'vendor/', 'as' => 'vendor.'], function() {
         Route::get('/', [VendorController::class, 'dashboard'])->name('dashboard');

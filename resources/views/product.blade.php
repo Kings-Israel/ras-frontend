@@ -1,4 +1,19 @@
 <x-main>
+    <style>
+        input[type='number']::-webkit-inner-spin-button,
+        input[type='number']::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .custom-number-input input:focus {
+            outline: none !important;
+        }
+
+        .custom-number-input button:focus {
+            outline: none !important;
+        }
+    </style>
     <div class="bg-gray-200 mx-auto px-1 md:px-8 lg:px-24 py-1 sticky top-20 z-30">
         <form class="md:w-2/5 md:my-auto">
             <div class="flex">
@@ -41,9 +56,9 @@
             <div class="bg-gray-50 p-2">
                 <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-[290px] h-[350px] mx-auto md:w-[390px] md:h-[450px] md:mx-0 object-cover rounded-md">
                 <div class="flex justify-between mt-2 mx-8 md:mx-0">
-                    <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-20 h-20 lg:w-28 lg:h-28 object-cover rounded-md border border-orange-400">
-                    <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-20 h-20 lg:w-28 lg:h-28 object-cover rounded-md border border-orange-400">
-                    <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-20 h-20 lg:w-28 lg:h-28 object-cover rounded-md border border-orange-400">
+                    <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-20 h-20 lg:w-24 lg:h-24 object-cover rounded-md border border-orange-400">
+                    <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-20 h-20 lg:w-24 lg:h-24 object-cover rounded-md border border-orange-400">
+                    <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-20 h-20 lg:w-24 lg:h-24 object-cover rounded-md border border-orange-400">
                 </div>
             </div>
             <div class="space-y-4 bg-gray-50 p-2 rounded-md">
@@ -87,7 +102,7 @@
                                 <h5 class="font-bold text-gray-600">$3.40</h5>
                             </div>
                             <div class="flex flex-col gap-1">
-                                <h4 class="font-semibold text-gray-400">70 Pieces</h4>
+                                <h4 class="font-semibold text-gray-400">70 Pieces <i class="far fa-arrow-alt-circle-up"></i></h4>
                                 <h5 class="font-bold text-gray-600">$2.38</h5>
                             </div>
                         </div>
@@ -103,6 +118,23 @@
                         <h4 class="text-sm font-bold text-gray-600">Color:</h4>
                         <div class="flex gap-3">
                             <h4 class="text-sm font-semibold text-gray-500">Gold</h4>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <h4 class="text-sm font-bold text-gray-600 my-auto">Your Order:</h4>
+                        <div class="custom-number-input h-10 w-32">
+                            <div class="flex flex-row h-8 w-full rounded-lg relative bg-transparent mt-1">
+                                <button data-action="decrement" class=" bg-gray-200 mr-0.5 border-2 rounded-tl-lg rounded-bl-lg border-gray-400 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none">
+                                    <span class="m-auto text-xl font-thin">-</span>
+                                </button>
+                                <input type="number" class="border-0 outline-none focus:outline-none text-center w-full bg-gray-300 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700" name="custom-input-number" value="2" />
+                                <button data-action="increment" class="bg-gray-200 ml-0.5 border-2 rounded-tr-lg rounded-br-lg border-gray-400 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer">
+                                    <span class="m-auto text-xl font-thin">+</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="my-auto">
+                            <h3 class="font-bold text-gray-500">US$50.86</h3>
                         </div>
                     </div>
                     <div class="flex gap-2">
@@ -235,12 +267,12 @@
                 <div class="p-2 space-y-3">
                     <h5 class="text-sm font-bold text-gray-700">Product Images</h5>
                     <div class="flex gap-2">
-                        <img src="{{ asset('assets/img/6CeuCO.jpg') }}" alt="" class="w-70 h-48 object-contain">
+                        <img src="{{ asset('assets/img/6CeuCO.jpg') }}" alt="" class="w-96 h-60 object-contain">
                         <div class="grid grid-cols-2 gap-3">
-                            <img src="{{ asset('assets/img/6CeuCO.jpg') }}" alt="" class="w-48 h-32 object-cover">
-                            <img src="{{ asset('assets/img/skLbbi.jpg') }}" alt="" class="w-48 h-32 object-cover">
-                            <img src="{{ asset('assets/img/W8ZUrJ.jpg') }}" alt="" class="w-48 h-32 object-cover">
-                            <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-48 h-32 object-cover">
+                            <img src="{{ asset('assets/img/6CeuCO.jpg') }}" alt="" class="w-40 h-28 object-cover">
+                            <img src="{{ asset('assets/img/skLbbi.jpg') }}" alt="" class="w-40 h-28 object-cover">
+                            <img src="{{ asset('assets/img/W8ZUrJ.jpg') }}" alt="" class="w-40 h-28 object-cover">
+                            <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-40 h-28 object-cover">
                         </div>
                     </div>
                 </div>
@@ -340,4 +372,41 @@
             </div>
         </div>
     </div>
+    <script>
+        function decrement(e) {
+          const btn = e.target.parentNode.parentElement.querySelector(
+            'button[data-action="decrement"]'
+          );
+          const target = btn.nextElementSibling;
+          let value = Number(target.value);
+          value--;
+          target.value = value;
+        }
+
+        function increment(e) {
+          const btn = e.target.parentNode.parentElement.querySelector(
+            'button[data-action="decrement"]'
+          );
+          const target = btn.nextElementSibling;
+          let value = Number(target.value);
+          value++;
+          target.value = value;
+        }
+
+        const decrementButtons = document.querySelectorAll(
+          `button[data-action="decrement"]`
+        );
+
+        const incrementButtons = document.querySelectorAll(
+          `button[data-action="increment"]`
+        );
+
+        decrementButtons.forEach(btn => {
+          btn.addEventListener("click", decrement);
+        });
+
+        incrementButtons.forEach(btn => {
+          btn.addEventListener("click", increment);
+        });
+      </script>
 </x-main>
