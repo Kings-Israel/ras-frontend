@@ -46,7 +46,7 @@
         </form>
     </div>
     <div class="flex px-32 p-4 gap-12">
-        <div class="basis-3/5 bg-gray-50 p-2 rounded-lg">
+        <div class="basis-2/3 bg-gray-50 p-2 rounded-lg">
             <div>
                 <h3 class="text-3xl text-gray-600 font-bold">Shopping Cart</h3>
                 <span class="flex gap-2 divide-x-2 divide-gray-300">
@@ -104,7 +104,7 @@
                         </div>
                         <span class="flex gap-1 my-auto">
                             <i class="fas fa-map-marker-alt my-auto text-red-600"></i>
-                            <p class="text-sm font-bold text-blue-500 tracking-tight">Add Your Address</p>
+                            <p class="text-sm font-bold text-blue-500 tracking-tight underline underline-offset-2">Add Your Address</p>
                         </span>
                     </div>
                 </div>
@@ -143,7 +143,7 @@
                 </div>
             </div>
         </div>
-        <div class="basis-2/5">
+        <div class="basis-1/3">
             <div class="border border-gray-300 p-4 space-y-4 rounded-lg">
                 <div>
                     <h4 class="text-sm font-bold">Cart Subtotal:</h4>
