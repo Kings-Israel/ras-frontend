@@ -313,7 +313,7 @@
                     <h3 class="font-extrabold tracking-wide">Top Picks For You</h3>
                     <h4 class="font-semibold text-sm">See All <i class="fas fa-arrow-circle-right"></i></h4>
                 </div>
-                <div class="space-y-2 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-4 gap-2 py-4">
+                <div class="space-y-2 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-4 4xl:grid-cols-5 gap-2 py-4">
                     <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
                         <a href="{{ route('product') }}">
                             <img src="{{ asset('assets/img/6CeuCO.jpg') }}" class="rounded border-gray-200 w-full h-52 object-cover" alt="">
