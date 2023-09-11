@@ -57,7 +57,7 @@
                     </div>
                 </div>
                 <div class="rounded bg-white dark:bg-gray-800 sm:mt-2">
-                    <div class="max-w-sm w-full">
+                    <div class="w-full">
                         <h5 class="text-xl pb-2 font-bold leading-none text-gray-900 dark:text-white">Earnings</h5>
                         <div class="bg-gray-100 border border-gray-300 rounded-lg dark:bg-gray-800 ">
                             <!-- Line Chart -->
@@ -66,7 +66,7 @@
                     </div>
                 </div>
             </div>
-            <div class="">
+            <div class="mt-4">
                 <div class="flex gap-6">
                     <span class="font-extrabold text-orange-400 underline underline-offset-2 decoration-4">All Orders</span>
                     <span class="font-extrabold text-gray-400">Paid</span>

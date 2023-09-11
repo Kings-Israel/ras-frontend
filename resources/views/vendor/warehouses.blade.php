@@ -10,8 +10,8 @@
                     </div>
                 </div>
             </div>
-            <div class="flex gap-2 flex-wrap">
-                <x-card class="bg-rose-200 py-3 px-3 flex flex-col justify-between w-[240px] h-[150px]">
+            <div class="flex md:grid md:grid-cols-2 lg:flex gap-2 flex-wrap">
+                <x-card class="bg-rose-200 py-3 px-3 flex flex-col justify-between w-[240px] h-[150px] md:w-[220px] md:h-[120px] lg:w-[240px] lg:h-[150px]">
                     <div class="flex justify-between w-full">
                         <h2 class="font-bold uppercase">Sebuleni</h2>
                         <i class="fas fa-ellipsis-v text-center"></i>
@@ -21,7 +21,7 @@
                         <h5 class="text-sm mt-5">Nairobi, KE</h5>
                     </div>
                 </x-card>
-                <x-card class="bg-rose-200 py-3 px-3 flex flex-col justify-between w-[240px] h-[150px]">
+                <x-card class="bg-rose-200 py-3 px-3 flex flex-col justify-between w-[240px] h-[150px] md:w-[220px] md:h-[120px] lg:w-[240px] lg:h-[150px]">
                     <div class="flex justify-between w-full">
                         <h2 class="font-bold uppercase">Charlo's Place</h2>
                         <i class="fas fa-ellipsis-v text-center"></i>
@@ -31,7 +31,7 @@
                         <h5 class="text-sm mt-5">Arusha, TZ</h5>
                     </div>
                 </x-card>
-                <x-card class="bg-rose-200 py-3 px-3 flex flex-col justify-between w-[240px] h-[150px]">
+                <x-card class="bg-rose-200 py-3 px-3 flex flex-col justify-between w-[240px] h-[150px] md:w-[220px] md:h-[120px] lg:w-[240px] lg:h-[150px]">
                     <div class="flex justify-between w-full">
                         <h2 class="font-bold uppercase">Franz</h2>
                         <i class="fas fa-ellipsis-v text-center"></i>
@@ -41,7 +41,7 @@
                         <h5 class="text-sm mt-5">Durban, ZA</h5>
                     </div>
                 </x-card>
-                <x-card class="bg-rose-200 py-3 px-3 flex flex-col justify-between w-[240px] h-[150px]">
+                <x-card class="bg-rose-200 py-3 px-3 flex flex-col justify-between w-[240px] h-[150px] md:w-[220px] md:h-[120px] lg:w-[240px] lg:h-[150px]">
                     <div class="flex justify-between w-full">
                         <h2 class="font-bold uppercase">Dot Zero</h2>
                         <i class="fas fa-ellipsis-v text-center"></i>
@@ -51,7 +51,7 @@
                         <h5 class="text-sm mt-5">Kigali, RW</h5>
                     </div>
                 </x-card>
-                <x-card class="bg-rose-200 py-3 px-3 flex flex-col justify-between w-[240px] h-[150px]">
+                <x-card class="bg-rose-200 py-3 px-3 flex flex-col justify-between w-[240px] h-[150px] md:w-[220px] md:h-[120px] lg:w-[240px] lg:h-[150px]">
                     <div class="flex justify-between w-full">
                         <h2 class="font-bold uppercase">Oga Ohms</h2>
                         <i class="fas fa-ellipsis-v text-center"></i>
@@ -61,7 +61,7 @@
                         <h5 class="text-sm mt-5">Lagos, Nigeria</h5>
                     </div>
                 </x-card>
-                <x-card class="bg-rose-200 py-3 px-3 flex flex-col justify-between w-[240px] h-[150px]">
+                <x-card class="bg-rose-200 py-3 px-3 flex flex-col justify-between w-[240px] h-[150px] md:w-[220px] md:h-[120px] lg:w-[240px] lg:h-[150px]">
                     <div class="flex justify-between w-full">
                         <h2 class="font-bold uppercase">Chinku Paradise</h2>
                         <i class="fas fa-ellipsis-v text-center"></i>
@@ -71,7 +71,7 @@
                         <h5 class="text-sm mt-5">Adama, ET</h5>
                     </div>
                 </x-card>
-                <x-card class="bg-rose-200 py-3 px-3 flex flex-col justify-between w-[240px] h-[150px]">
+                <x-card class="bg-rose-200 py-3 px-3 flex flex-col justify-between w-[240px] h-[150px] md:w-[220px] md:h-[120px] lg:w-[240px] lg:h-[150px]">
                     <div class="flex justify-between w-full">
                         <h2 class="font-bold uppercase">Wode</h2>
                         <i class="fas fa-ellipsis-v text-center"></i>
@@ -81,7 +81,7 @@
                         <h5 class="text-sm mt-5">Accrs, GH</h5>
                     </div>
                 </x-card>
-                <x-card class="bg-rose-200 py-3 px-3 flex flex-col justify-between w-[240px] h-[150px]">
+                <x-card class="bg-rose-200 py-3 px-3 flex flex-col justify-between w-[240px] h-[150px] md:w-[220px] md:h-[120px] lg:w-[240px] lg:h-[150px]">
                     <div class="flex justify-between w-full">
                         <h2 class="font-bold uppercase">Didi Three</h2>
                         <i class="fas fa-ellipsis-v text-center"></i>
@@ -91,7 +91,7 @@
                         <h5 class="text-sm mt-5">Kampala, UG</h5>
                     </div>
                 </x-card>
-                <x-card class="bg-rose-200 py-3 px-3 flex flex-col justify-between w-[240px] h-[150px]">
+                <x-card class="bg-rose-200 py-3 px-3 flex flex-col justify-between w-[240px] h-[150px] md:w-[220px] md:h-[120px] lg:w-[240px] lg:h-[150px]">
                     <div class="flex justify-between w-full">
                         <h2 class="font-bold uppercase">Ogogo</h2>
                         <i class="fas fa-ellipsis-v text-center"></i>
@@ -101,7 +101,7 @@
                         <h5 class="text-sm mt-5">Goma, DRC</h5>
                     </div>
                 </x-card>
-                <x-card class="bg-rose-200 py-3 px-3 flex flex-col justify-between w-[240px] h-[150px]">
+                <x-card class="bg-rose-200 py-3 px-3 flex flex-col justify-between w-[240px] h-[150px] md:w-[220px] md:h-[120px] lg:w-[240px] lg:h-[150px]">
                     <div class="flex justify-between w-full">
                         <h2 class="font-bold uppercase">Ubuntu</h2>
                         <i class="fas fa-ellipsis-v text-center"></i>

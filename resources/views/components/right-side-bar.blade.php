@@ -41,7 +41,7 @@
             </div>
         </div>
     </div>
-    <div class="mt-10 lg:sticky lg:top-64">
+    <div class="mt-10">
         <h2 class="font-extrabold text-sm">Top Countries</h2>
         <ul class="grid grid-cols-2 list-disc">
             <li class="flex gap-2">
