@@ -4,7 +4,7 @@
     <div class="p-3 sm:ml-64 lg:grid lg:grid-cols-4 lg:divide-x">
         <div class="p-3 md:col-span-3">
             <div x-data="{ show: false }">
-                <x-primary-button class="py-2 font-light bg-orange-600 tracking-tight -mt-2 mb-2 focus:ring-2 focus:ring-orange-600 px-8 text-sm" x-on:click="show = !show">Add Product</x-primary-button>
+                <x-primary-button class="py-2 font-light bg-orange-600 tracking-wide -mt-2 mb-2 focus:ring-2 focus:ring-orange-600 px-8 text-sm" x-on:click="show = !show">Add Product</x-primary-button>
                 <x-modal name="add_product">
                     <form action="#" method="post">
                         <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="name" />
@@ -21,10 +21,10 @@
                         <x-primary-outline-button class="text-sm border-orange-700 text-orange-700 px-6 h-8">Bulk Actions <i class="fas fa-chevron-down ml-3"></i></x-primary-outline-button>
                         <x-primary-outline-button class="text-sm border-orange-700 text-orange-700 px-6 h-8">Filter <i class="fas fa-chevron-down ml-3"></i></x-primary-outline-button>
                     </div>
-                    <div class="flex gap-2 align-middle">
-                        <a href="#" class="border-2 border-orange-700 rounded-md h-7 w-7 my-auto text-center pt-0.5 hover:bg-orange-400"><i class="fas fa-chevron-left"></i></a>
-                        <span class="my-auto text-center">1/13</span>
-                        <a href="#" class="border-2 border-orange-700 rounded-md h-7 w-7 my-auto text-center pt-0.5 hover:bg-orange-400"><i class="fas fa-chevron-right"></i></a>
+                    <div class="flex gap-2">
+                        <a href="#" class="border-2 border-orange-700 rounded-md my-auto text-center px-2 h-7 hover:bg-orange-400"><i class="fas fa-chevron-left text-sm"></i></a>
+                        <span class="my-auto text-center">1/1</span>
+                        <a href="#" class="border-2 border-orange-700 rounded-md my-auto text-center px-2 h-7 hover:bg-orange-400"><i class="fas fa-chevron-right text-sm"></i></a>
                     </div>
                 </div>
                 <table class="w-full table-auto text-sm text-left text-gray-800 font-bold dark:text-gray-400 truncate rounded-tl-lg rounded-tr-lg">
@@ -384,9 +384,9 @@
                     </tbody>
                 </table>
                 <div class="flex gap-2 mt-2">
-                    <a href="#" class="border-2 border-orange-700 rounded-md h-7 w-7 my-auto text-center pt-0.5 hover:bg-orange-700"><i class="fas fa-chevron-left"></i></a>
-                    <span class="my-auto text-center">1/13</span>
-                    <a href="#" class="border-2 border-orange-700 rounded-md h-7 w-7 my-auto text-center pt-0.5 hover:bg-orange-700"><i class="fas fa-chevron-right"></i></a>
+                    <a href="#" class="border-2 border-orange-700 rounded-md my-auto text-center px-2 h-7 hover:bg-orange-400"><i class="fas fa-chevron-left text-sm"></i></a>
+                    <span class="my-auto text-center">1/1</span>
+                    <a href="#" class="border-2 border-orange-700 rounded-md my-auto text-center px-2 h-7 hover:bg-orange-400"><i class="fas fa-chevron-right text-sm"></i></a>
                 </div>
             </div>
         </div>
