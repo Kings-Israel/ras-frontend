@@ -308,9 +308,9 @@
                 </div> --}}
             </div>
 
-            <div class="">
+            <div class="products">
                 <div class="flex justify-between">
-                    <h3 class="font-extrabold tracking-wide">Top Picks For You</h3>
+                    <h3 class="font-extrabold tracking-wide">Top Product Picks For You</h3>
                     <h4 class="font-semibold text-sm">See All <i class="fas fa-arrow-circle-right"></i></h4>
                 </div>
                 <div class="space-y-2 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-4 4xl:grid-cols-5 gap-2 py-4">
@@ -366,12 +366,223 @@
                     </div>
                 </div>
             </div>
+
+            <div class="vendors hidden">
+                <div class="flex justify-between">
+                    <h3 class="font-extrabold tracking-wide">Top Vendors Picks For You</h3>
+                    <h4 class="font-semibold text-sm">See All <i class="fas fa-arrow-circle-right"></i></h4>
+                </div>
+                <div class="grid grid-cols-2 gap-4 py-4">
+                    <x-card class="border-2 border-gray-400 grid grid-cols-2">
+                        <div>
+                            <a href="{{ route('vendor.storefront') }}">
+                                <div class="flex gap-1">
+                                    <span class="w-12 h-12 bg-gray-300 rounded-full text-center pt-3 font-bold text-white">E</span>
+                                    <div class="-space-y-1">
+                                        <h1 class="font-bold text-sm">Enock's Mining Co.</h1>
+                                        <h4 class="text-sm text-gray-400">Verified</h4>
+                                        <h5 class="text-sm text-gray-500">2 Years</h5>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="flex gap-2">
+                                <h4 class="text-sm font-bold text-gray-600">Rating:</h4>
+                                <div class="review__info">
+                                    <div class="review__star">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <span style="width: 40%">
+                                           <i class="fa fa-star"></i>
+                                           <i class="fa fa-star"></i>
+                                           <i class="fa fa-star"></i>
+                                           <i class="fa fa-star"></i>
+                                           <i class="fa fa-star"></i>
+                                        </span>
+                                     </div>
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <h4 class="text-sm font-bold text-gray-600">Vendor Info:</h4>
+                                <div class="flex flex-col gap2">
+                                    <span class="text-sm">
+                                        HQ Nairobi Industrial Area
+                                    </span>
+                                    <span class="text-sm">
+                                        Products: Gold, Diamond, Platinum
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-3">
+                            <img src="{{ asset('assets/img/skLbbi.jpg') }}" alt="" class="w-60 h-44 object-cover rounded-md">
+                            <x-secondary-outline-button class="text-center bg-orange-500 text-orange-600 tracking-tighter font-thin justify-center hover:bg-orange-300 hover:border-orange-400">
+                                Message Vendor
+                            </x-secondary-outline-button>
+                        </div>
+                    </x-card>
+                    <x-card class="border-2 border-gray-400 grid grid-cols-2">
+                        <div>
+                            <a href="{{ route('vendor.storefront') }}">
+                                <div class="flex gap-1">
+                                    <span class="w-12 h-12 bg-gray-300 rounded-full text-center pt-3 font-bold text-white">N</span>
+                                    <div class="-space-y-1">
+                                        <h1 class="font-bold text-sm">Neptune Traders.</h1>
+                                        <h4 class="text-sm text-gray-400">Verified</h4>
+                                        <h5 class="text-sm text-gray-500">3 Years</h5>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="flex gap-2">
+                                <h4 class="text-sm font-bold text-gray-600">Rating:</h4>
+                                <div class="review__info">
+                                    <div class="review__star">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <span style="width: 40%">
+                                           <i class="fa fa-star"></i>
+                                           <i class="fa fa-star"></i>
+                                           <i class="fa fa-star"></i>
+                                           <i class="fa fa-star"></i>
+                                           <i class="fa fa-star"></i>
+                                        </span>
+                                     </div>
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <h4 class="text-sm font-bold text-gray-600">Vendor Info:</h4>
+                                <div class="flex flex-col gap2">
+                                    <span class="text-sm">
+                                        HQ: Nairobi Industrial Area
+                                    </span>
+                                    <span class="text-sm">
+                                        Products: Minerals
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-3">
+                            <img src="{{ asset('assets/img/6CeuCO.jpg') }}" alt="" class="w-60 h-44 object-cover rounded-md">
+                            <x-secondary-outline-button class="text-center bg-orange-500 text-orange-600 tracking-tighter font-thin justify-center hover:bg-orange-300 hover:border-orange-400">
+                                Message Vendor
+                            </x-secondary-outline-button>
+                        </div>
+                    </x-card>
+                    <x-card class="border-2 border-gray-400 grid grid-cols-2">
+                        <div>
+                            <a href="{{ route('vendor.storefront') }}">
+                                <div class="flex gap-1">
+                                    <span class="w-12 h-12 bg-gray-300 rounded-full text-center pt-3 font-bold text-white">E</span>
+                                    <div class="-space-y-1">
+                                        <h1 class="font-bold text-sm">Imani Fluid Co.</h1>
+                                        <h4 class="text-sm text-gray-400">Verified</h4>
+                                        <h5 class="text-sm text-gray-500">1 Years</h5>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="flex gap-2">
+                                <h4 class="text-sm font-bold text-gray-600">Rating:</h4>
+                                <div class="review__info">
+                                    <div class="review__star">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <span style="width: 40%">
+                                           <i class="fa fa-star"></i>
+                                           <i class="fa fa-star"></i>
+                                           <i class="fa fa-star"></i>
+                                           <i class="fa fa-star"></i>
+                                           <i class="fa fa-star"></i>
+                                        </span>
+                                     </div>
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <h4 class="text-sm font-bold text-gray-600">Vendor Info:</h4>
+                                <div class="flex flex-col gap2">
+                                    <span class="text-sm">
+                                        HQ Nairobi Industrial Area
+                                    </span>
+                                    <span class="text-sm">
+                                        Products: Gold, Mercury
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-3">
+                            <img src="{{ asset('assets/img/W8ZUrJ.jpg') }}" alt="" class="w-60 h-44 object-cover rounded-md">
+                            <x-secondary-outline-button class="text-center bg-orange-500 text-orange-600 tracking-tighter font-thin justify-center hover:bg-orange-300 hover:border-orange-400">
+                                Message Vendor
+                            </x-secondary-outline-button>
+                        </div>
+                    </x-card>
+                    <x-card class="border-2 border-gray-400 grid grid-cols-2">
+                        <div>
+                            <a href="{{ route('vendor.storefront') }}">
+                                <div class="flex gap-1">
+                                    <span class="w-12 h-12 bg-gray-300 rounded-full text-center pt-3 font-bold text-white">E</span>
+                                    <div class="-space-y-1">
+                                        <h1 class="font-bold text-sm">Kraken Traders</h1>
+                                        <h4 class="text-sm text-gray-400">Verified</h4>
+                                        <h5 class="text-sm text-gray-500">1.2 Years</h5>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="flex gap-2">
+                                <h4 class="text-sm font-bold text-gray-600">Rating:</h4>
+                                <div class="review__info">
+                                    <div class="review__star">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <span style="width: 40%">
+                                           <i class="fa fa-star"></i>
+                                           <i class="fa fa-star"></i>
+                                           <i class="fa fa-star"></i>
+                                           <i class="fa fa-star"></i>
+                                           <i class="fa fa-star"></i>
+                                        </span>
+                                     </div>
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <h4 class="text-sm font-bold text-gray-600">Vendor Info:</h4>
+                                <div class="flex flex-col gap2">
+                                    <span class="text-sm">
+                                        HQ Nairobi Industrial Area
+                                    </span>
+                                    <span class="text-sm">
+                                        Products: Gold, Diamond, Platinum
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-3">
+                            <img src="{{ asset('assets/img/skLbbi.jpg') }}" alt="" class="w-60 h-44 object-cover rounded-md">
+                            <x-secondary-outline-button class="text-center bg-orange-500 text-orange-600 tracking-tighter font-thin justify-center hover:bg-orange-300 hover:border-orange-400">
+                                Message Vendor
+                            </x-secondary-outline-button>
+                        </div>
+                    </x-card>
+                </div>
+            </div>
         </div>
     </div>
     <script>
         const switchToggle = document.querySelector('#switch-toggle');
         const productsToggle = document.querySelector('#products-toggle');
         const vendorsToggle = document.querySelector('#vendors-toggle');
+        const productsList = document.querySelector('.products')
+        const vendorsList = document.querySelector('.vendors')
         let isProductmode = false
 
         function toggleTheme (){
@@ -381,16 +592,20 @@
         }
 
         function switchTheme (){
-        if (isProductmode) {
-            productsToggle.classList.remove('bg-orange-500', 'px-3', 'rounded-full', 'ml-1', 'text-white')
-            productsToggle.classList.add('text-black', 'ml-2')
-            vendorsToggle.classList.add('bg-orange-500', 'px-3', 'rounded-full', 'text-white', 'mr-1')
-            vendorsToggle.classList.remove('mr-2')
+            if (isProductmode) {
+                productsToggle.classList.remove('bg-orange-500', 'px-3', 'rounded-full', 'ml-1', 'text-white')
+                productsToggle.classList.add('text-black', 'ml-2')
+                productsList.classList.add('hidden')
+                vendorsToggle.classList.add('bg-orange-500', 'px-3', 'rounded-full', 'text-white', 'mr-1')
+                vendorsToggle.classList.remove('mr-2')
+                vendorsList.classList.remove('hidden')
             } else {
-            productsToggle.classList.add('bg-orange-500', 'px-3', 'rounded-full', 'text-white', 'ml-1');
-            productsToggle.classList.remove('text-black', 'ml-2')
-            vendorsToggle.classList.remove('bg-orange-500', 'px-3', 'rounded-full', 'text-white')
-            vendorsToggle.classList.add('text-black', 'mr-2')
+                productsToggle.classList.add('bg-orange-500', 'px-3', 'rounded-full', 'text-white', 'ml-1');
+                productsToggle.classList.remove('text-black', 'ml-2')
+                vendorsToggle.classList.remove('bg-orange-500', 'px-3', 'rounded-full', 'text-white')
+                vendorsToggle.classList.add('text-black', 'mr-2')
+                productsList.classList.remove('hidden')
+                vendorsList.classList.add('hidden')
             }
         }
 

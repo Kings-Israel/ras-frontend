@@ -10,7 +10,7 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,600,800,900,1100&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="{{ asset('assets/fontawesome/css/all.min.css') }}">
-
+        @livewireStyles
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
@@ -18,7 +18,6 @@
         @include('layouts.main-header')
         {{ $slot }}
         @include('layouts.footer')
-        <script defer src="https://unpkg.com/alpinejs@3.10.3/dist/cdn.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.0/flowbite.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -40,6 +39,7 @@
                 }
             });
         </script>
+        @livewireScripts
         @stack('scripts')
     </body>
 </html>
