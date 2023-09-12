@@ -110,7 +110,7 @@
                         <div class="">
                             <form action="#" method="POST" class="mx-3 lg:my-16 flex">
                                 <div class="md:w-full sm:w-full">
-                                    <x-text-input class="border-2 border-gray-400 rounded lg:w-[98%] focus:border-b-3 focus:ring-0 transition duration-150" placeholder="Type Your Message Here..."></x-text-input>
+                                    <x-text-input class="border-2 border-gray-400 rounded lg:w-[98%] focus:border-b-3 focus:ring-0 transition duration-150" placeholder="Type Your Message Here..." autofocus></x-text-input>
                                 </div>
                                 <i class="fas fa-paperclip text-gray-400 text-xl my-auto lg:mr-2"></i>
                                 <button type="submit" class="bg-orange-500 text-white rounded-full mx-auto my-auto w-12 h-10">

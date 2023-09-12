@@ -186,11 +186,76 @@
                             Add To Cart
                         </span>
                     </x-primary-outline-button>
-                    <x-primary-outline-button class="w-full my-2 py-1 text-orange-400 justify-center gap-1">
+                    <x-primary-outline-button class="w-full my-2 py-1 text-orange-400 justify-center gap-1" data-modal-target="get-quote-modal" data-modal-toggle="get-quote-modal">
                         <span class="tracking-tight">
                             Get Quotation
                         </span>
                     </x-primary-outline-button>
+                    <x-modal modal_id="get-quote-modal">
+                        <div class="relative w-full max-w-4xl max-h-full">
+                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                <button type="button" class="absolute top-1 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="get-quote-modal">
+                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                    </svg>
+                                    <span class="sr-only">Close modal</span>
+                                </button>
+                                <div class="px-6 py-6">
+                                    <div class="lg:col-span-2 border-none lg:block md:hidden sm:hidden">
+                                        <div class="w-full py-2 flex flex-col justify-between">
+                                            <h2 class="text-2xl font-extrabold text-gray-800">Request Quotation</h2>
+                                            <span class="flex gap-2 divide-x-2 divide-gray-300">
+                                                <div class="flex gap-2">
+                                                    <h3 class="text-gray-500 font-bold">Enock's Mining Co.</h3>
+                                                    <h6 class="text-sm text-gray-500">Verified</h6>
+                                                </div>
+                                                <h6 class="text-sm text-gray-500 pl-2">2 Years</h6>
+                                            </span>
+                                        </div>
+                                        <form action="#" method="POST" class="flex flex-col justify-between space-y-4">
+                                            <div class="flex flex-col border-2 border-gray-400 rounded-lg">
+                                                <div class="flex gap-2 border-b-2 border-gray-400">
+                                                    <div class="flex gap-3 p-4">
+                                                        <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-10 h-10 lg:w-20 lg:h-20 object-cover rounded-md border border-orange-400">
+                                                        <span class="text-gray-500 text-sm my-auto">24K Gold Plated Customized Metal Bar</span>
+                                                    </div>
+                                                    <div class="flex gap-3 p-4 w-[30%]">
+                                                        <div class="custom-number-input h-10 w-32 my-auto">
+                                                            <div class="flex flex-row h-8 w-full rounded-lg relative bg-transparent mt-1">
+                                                                <button data-action="decrement" class=" bg-gray-200 mr-0.5 border-2 rounded-tl-lg rounded-bl-lg border-gray-400 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none">
+                                                                    <span class="m-auto text-xl font-thin">-</span>
+                                                                </button>
+                                                                <input type="number" class="border-0 outline-none focus:outline-none text-center w-full bg-gray-300 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700" name="custom-input-number" value="2" />
+                                                                <button data-action="increment" class="bg-gray-200 ml-0.5 border-2 rounded-tr-lg rounded-br-lg border-gray-400 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer">
+                                                                    <span class="m-auto text-xl font-thin">+</span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <span class="text-gray-500 text-sm font-bold my-auto mr-1">Pieces</span>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <textarea name="quote_message" id="" rows="5" class="w-full border-none focus:ring-0 placeholder-gray-300" placeholder="Enter your Message Here, you can include size, color, materials and other requirements"></textarea>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <x-input-label class="font-thin">Your Email Address</x-input-label>
+                                                <x-text-input class="w-full bg-gray-50" name="quote_email"></x-text-input>
+                                            </div>
+                                            <div>
+                                                <div class="flex gap-2 md:px-2 text-gray-500">
+                                                    <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                                                    <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                                                    <h2 class="font-thin text-sm">Save Message as a template</h2>
+                                                </div>
+                                            </div>
+                                            <x-primary-button class="md:w-[40%] py-1">Request Quotation</x-primary-button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </x-modal>
                 </div>
                 <div class="sm:pt-5 md:pt-0 lg:pt-0 sm:w-full md:w-1/2 lg:w-full">
                     <h5 class="sm:text-sm md:text-lg lg:text-sm sm:font-semibold md:font-bold lg:font-semibold sm:text-gray-500 md:text-gray-700 lg:text-gray-500">Vendor:</h5>
@@ -198,11 +263,67 @@
                     <h6 class="text-sm text-gray-400">Verified</h6>
                     <h5 class="font-semibold text-gray-500 text-sm">Response Time: <span class="text-gray-700 font-bold">2h</span></h5>
                     <h5 class="font-semibold text-gray-500 text-sm">Order Fulfilment: <span class="text-gray-700 font-bold">98%</span></h5>
-                    <x-primary-outline-button class="w-full my-2 py-1 text-orange-500 justify-center bg-orange-300">
+                    <x-primary-outline-button class="w-full my-2 py-1 text-orange-500 justify-center bg-orange-300" data-modal-target="message_vendor_modal" data-modal-toggle="message_vendor_modal">
                         <span class="tracking-tight">
                             Message Vendor
                         </span>
                     </x-primary-outline-button>
+                    <x-modal modal_id="message_vendor_modal" modal_placement="bottom-right">
+                        <div class="relative w-full max-w-2xl max-h-full">
+                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                <button type="button" class="absolute top-1 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="message_vendor_modal">
+                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                    </svg>
+                                    <span class="sr-only">Close modal</span>
+                                </button>
+                                <div class="px-2 py-2 lg:px-4">
+                                    <div class="lg:col-span-2 border-none lg:block md:hidden sm:hidden">
+                                        <div class="border-b-2 border-t-0 border-gray-400 w-full px-4 py-2 flex justify-between">
+                                            <h2 class="text-2xl font-extrabold text-gray-800">Enock's Mining Co</h2>
+                                        </div>
+                                        <div class="h-full flex flex-col justify-between">
+                                            <div class="space-y-2 p-2 text-sm">
+                                                <div>
+                                                    <div class="bg-yellow-200 border-none p-2 max-w-sm rounded-lg">
+                                                        Hi Oloo. I need 200 bags of Dangote cement delivered to Kilifi. Can we have this delivered before 25th?
+                                                    </div>
+                                                    <span class="text-xs">7:35am</span>
+                                                </div>
+                                                <div class="flex flex-col">
+                                                    <div class="flex flex-row-reverse">
+                                                        <div class="bg-gray-300 border-none p-2 max-w-sm rounded-lg">
+                                                            Hi. I can ship a maximum of 180 bags. Can we make a deal? Please reach through email
+                                                        </div>
+                                                    </div>
+                                                    <span class="text-xs text-right">8:40am</span>
+                                                </div>
+                                                <div>
+                                                    <div class="bg-yellow-200 border-none p-2 max-w-sm rounded-lg">
+                                                        Hi Oloo. I need 200 bags of Dangote cement delivered to Kilifi. Can we have this delivered before 25th?
+                                                    </div>
+                                                    <span class="text-xs">9:50am</span>
+                                                </div>
+                                            </div>
+                                            <div class="">
+                                                <form action="#" method="POST" class="mx-3 lg:my-2 flex">
+                                                    <div class="md:w-full sm:w-full">
+                                                        <x-text-input class="border-2 border-gray-400 rounded lg:w-[98%] focus:border-b-3 focus:ring-0 transition duration-150" placeholder="Type Your Message Here..." autofocus></x-text-input>
+                                                    </div>
+                                                    <i class="fas fa-paperclip text-gray-400 text-xl my-auto lg:mr-2"></i>
+                                                    <button type="submit" class="bg-orange-500 text-white rounded-full mx-auto my-auto w-12 h-10">
+                                                        <svg class="mx-auto pl-1" xmlns="http://www.w3.org/2000/svg" width="25.5" height="20" viewBox="0 0 31.5 27">
+                                                            <path id="send_icon" d="M3.015,31.5,34.5,18,3.015,4.5,3,15l22.5,3L3,21Z" transform="translate(-3 -4.5)" fill="#fff"/>
+                                                        </svg>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </x-modal>
                 </div>
             </div>
         </div>

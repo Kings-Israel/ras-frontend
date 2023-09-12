@@ -279,7 +279,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="flex gap-2 mt-2">
+                <div class="flex gap-2">
                     <a href="#" class="border-2 border-orange-700 rounded-md my-auto text-center px-2 h-7 hover:bg-orange-400"><i class="fas fa-chevron-left text-sm"></i></a>
                     <span class="my-auto text-center">1/1</span>
                     <a href="#" class="border-2 border-orange-700 rounded-md my-auto text-center px-2 h-7 hover:bg-orange-400"><i class="fas fa-chevron-right text-sm"></i></a>

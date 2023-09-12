@@ -42,6 +42,9 @@ Route::middleware([])->group(function () {
         Route::get('/customers', function () {
             return view('vendor.customers');
         })->name('customers');
+        Route::get('/payments', function () {
+            return view('vendor.payments');
+        })->name('payments');
         Route::get('/warehouses', function () {
             return view('vendor.warehouses');
         })->name('warehouses');

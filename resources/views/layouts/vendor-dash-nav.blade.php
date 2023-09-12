@@ -64,9 +64,9 @@
                 </x-nav-item>
             </li>
             <li>
-                <x-nav-item>
+                <x-nav-item :href="route('vendor.payments')" :active="request()->routeIs('vendor.payments')">
                     <i class="fas fa-money-bill-alt"></i>
-                    <span class="ml-3 truncate">Payment</span>
+                    <span class="ml-3 truncate">Payments</span>
                 </x-nav-item>
             </li>
             <li>
