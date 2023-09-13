@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="{{ asset('assets/fontawesome/css/all.min.css') }}">
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-        @livewireStyles
+        {{-- @livewireStyles --}}
     </head>
     <body class="antialiased">
         @include('layouts.main-header')
@@ -40,6 +40,6 @@
             });
         </script>
         @stack('scripts')
-        @livewireScripts
+        {{-- @livewireScripts --}}
     </body>
 </html>
