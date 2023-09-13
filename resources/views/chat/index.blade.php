@@ -119,6 +119,7 @@
     @push('scripts')
         <script type="text/javascript">
             const conversations = JSON.parse({!! json_encode($test) !!})
+            const base_url = {!! json_encode(config('app.url')) !!}
             const auth_id = 1
             var messages = new Vue({
                 el: '#messages-container',
@@ -137,7 +138,7 @@
                 },
                 methods: {
                     async getConversation(id) {
-                        const response = await axios.get('/vendor/messages/chat')
+                        const response = await axios.get(base_url+'/vendor/messages/chat')
                         this.conversation_log = JSON.parse(response.data.conversations)
                         this.$nextTick(() => {
                             var container = this.$refs.refChatLogPS
