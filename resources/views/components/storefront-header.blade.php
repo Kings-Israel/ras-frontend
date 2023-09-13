@@ -1,5 +1,5 @@
-<div class="mx-auto px-32 py-6 border-t-2 border-gray-200">
-    <div class="h-10 flex justify-between">
+<div class="mx-auto px-2 md:px-8 lg:px-32 py-6 border-t-2 border-gray-200">
+    <div class="md:h-10 md:flex justify-between">
         <div class="flex gap-1">
             <span class="w-12 h-12 bg-gray-300 rounded-full text-center pt-3 font-bold text-white">E</span>
             <div class="-space-y-1">
@@ -8,7 +8,7 @@
                 <h5 class="text-sm text-gray-500">2 Years</h5>
             </div>
         </div>
-        <form class="w-2/5 my-auto">
+        <form class="pt-2 md:pt-0 md:w-3/5 my-auto">
             <div class="flex">
                 <button id="dropdown-button" data-dropdown-toggle="store-dropdown" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600" type="button">
                     This Store
@@ -42,25 +42,29 @@
         </form>
     </div>
 </div>
-<div class="bg-red-800 mx-auto px-32 py-2 sticky top-16 z-30">
-    <div class="h-8 flex">
-        <ul class="list-desc flex gap-8 text-white font-sans my-auto">
+<div class="bg-red-800 mx-auto px-2 md:px-8 lg:px-32 py-2 sticky top-16 z-30">
+    <div class="h-8 flex justify-center lg:justify-start">
+        <ul class="list-desc flex gap-4 md:gap-8 text-white font-sans my-auto">
             <li class="cursor-pointer">
-                <a href="{{ route('vendor.storefront') }}" class="@if(request()->routeIs('vendor.storefront')) font-extrabold @endif">
+                <a href="{{ route('vendor.storefront') }}" class="@if(request()->routeIs('vendor.storefront')) font-extrabold @endif text-sm md:text-base">
                     Home
                 </a>
             </li>
             <li class="cursor-pointer">
-                <a href="{{ route('vendor.storefront.products') }}" class="@if(request()->routeIs('vendor.storefront.products')) font-extrabold @endif">
+                <a href="{{ route('vendor.storefront.products') }}" class="@if(request()->routeIs('vendor.storefront.products')) font-extrabold @endif text-sm md:text-base">
                     Products
                 </a>
             </li>
             <li class="cursor-pointer">
-                <a href="{{ route('vendor.storefront.compliance') }}" class="@if(request()->routeIs('vendor.storefront.compliance')) font-extrabold @endif">
+                <a href="{{ route('vendor.storefront.compliance') }}" class="@if(request()->routeIs('vendor.storefront.compliance')) font-extrabold @endif text-sm md:text-base">
                     Compliance Documents
                 </a>
             </li>
-            <li>Contact Us</li>
+            <li>
+                <a href="#" class="text-sm md:text-base">
+                    Contact Us
+                </a>
+            </li>
         </ul>
     </div>
 </div>
