@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Vendor\VendorController;
 use Illuminate\Support\Facades\Route;
+use Livewire\Livewire;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,5 +73,11 @@ Route::middleware([])->group(function () {
 Route::get('/test/logout', function() {
     return view('welcome');
 })->name('test.logout');
+
+if (config('app.env') == 'production') {
+    Livewire::setUpdateRoute(function ($handle) {
+        return Route::post('/ras/livewire/update', $handle);
+    });
+}
 
 require __DIR__.'/auth.php';
