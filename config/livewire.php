@@ -157,6 +157,4 @@ return [
     'pagination_theme' => 'tailwind',
 
     'asset_url' => config('app.url'),
-
-    'app_url' => config('app.url'),
 ];
