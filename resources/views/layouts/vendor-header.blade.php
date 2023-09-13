@@ -1,4 +1,4 @@
-<div {{ $attributes->merge(['class' => 'sticky top-0 flex flex-wrap items-center justify-between mx-auto pt-2 py-2 px-32 bg-white z-50']) }}>
+<div {{ $attributes->merge(['class' => 'sticky top-0 flex flex-wrap items-center justify-between mx-auto pt-2 py-2 px-2 md:px-8 lg:px-32 bg-white z-50']) }}>
     <a href="{{ url('/') }}">
         <x-application-logo class="w-12 h-12 fill-current text-gray-500" />
     </a>
@@ -18,8 +18,8 @@
         <div class="text-gray-800 bg-gray-300 rounded-full w-8 text-center pt-1">
             <i class="w-5 h-5 fas fa-bell"></i>
         </div>
-        <div class="text-gray-800 bg-gray-300 rounded-full w-8 text-center pt-1">
+        {{-- <div class="text-gray-800 bg-gray-300 rounded-full w-8 text-center pt-1">
             <i class="w-5 h-5 fas fa-shopping-bag"></i>
-        </div>
+        </div> --}}
     </div>
 </div>
