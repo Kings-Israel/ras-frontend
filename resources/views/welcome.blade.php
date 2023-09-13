@@ -372,16 +372,16 @@
                     <h3 class="font-extrabold tracking-wide">Top Vendors Picks For You</h3>
                     <h4 class="font-semibold text-sm">See All <i class="fas fa-arrow-circle-right"></i></h4>
                 </div>
-                <div class="grid grid-cols-2 gap-4 py-4">
-                    <x-card class="border-2 border-gray-400 grid grid-cols-2">
+                <div class="grid md:grid-cols-1 lg:grid-cols-2 4xl:grid-cols-3 gap-4 py-4">
+                    <x-card class="border-2 border-gray-400 grid md:grid-cols-2">
                         <div>
                             <a href="{{ route('vendor.storefront') }}">
                                 <div class="flex gap-1">
                                     <span class="w-12 h-12 bg-gray-300 rounded-full text-center pt-3 font-bold text-white">E</span>
-                                    <div class="-space-y-1">
+                                    <div class="">
                                         <h1 class="font-bold text-sm">Enock's Mining Co.</h1>
-                                        <h4 class="text-sm text-gray-400">Verified</h4>
-                                        <h5 class="text-sm text-gray-500">2 Years</h5>
+                                        <h4 class="text-xs text-gray-400">Verified</h4>
+                                        <h5 class="text-xs text-gray-500">2 Years</h5>
                                     </div>
                                 </div>
                             </a>
@@ -406,7 +406,7 @@
                             </div>
                             <div class="flex gap-2">
                                 <h4 class="text-sm font-bold text-gray-600">Vendor Info:</h4>
-                                <div class="flex flex-col gap2">
+                                <div class="flex flex-col gap-2">
                                     <span class="text-sm">
                                         HQ Nairobi Industrial Area
                                     </span>
@@ -417,21 +417,21 @@
                             </div>
                         </div>
                         <div class="flex flex-col gap-3">
-                            <img src="{{ asset('assets/img/skLbbi.jpg') }}" alt="" class="w-60 h-44 object-cover rounded-md">
+                            <img src="{{ asset('assets/img/skLbbi.jpg') }}" alt="" class="w-full h-44 object-cover rounded-md">
                             <x-secondary-outline-button class="text-center bg-orange-500 text-orange-600 tracking-tighter font-thin justify-center hover:bg-orange-300 hover:border-orange-400">
                                 Message Vendor
                             </x-secondary-outline-button>
                         </div>
                     </x-card>
-                    <x-card class="border-2 border-gray-400 grid grid-cols-2">
+                    <x-card class="border-2 border-gray-400 grid md:grid-cols-2">
                         <div>
                             <a href="{{ route('vendor.storefront') }}">
                                 <div class="flex gap-1">
                                     <span class="w-12 h-12 bg-gray-300 rounded-full text-center pt-3 font-bold text-white">N</span>
-                                    <div class="-space-y-1">
+                                    <div class="">
                                         <h1 class="font-bold text-sm">Neptune Traders.</h1>
-                                        <h4 class="text-sm text-gray-400">Verified</h4>
-                                        <h5 class="text-sm text-gray-500">3 Years</h5>
+                                        <h4 class="text-xs text-gray-400">Verified</h4>
+                                        <h5 class="text-xs text-gray-500">3 Years</h5>
                                     </div>
                                 </div>
                             </a>
@@ -456,7 +456,7 @@
                             </div>
                             <div class="flex gap-2">
                                 <h4 class="text-sm font-bold text-gray-600">Vendor Info:</h4>
-                                <div class="flex flex-col gap2">
+                                <div class="flex flex-col gap-2">
                                     <span class="text-sm">
                                         HQ: Nairobi Industrial Area
                                     </span>
@@ -467,21 +467,21 @@
                             </div>
                         </div>
                         <div class="flex flex-col gap-3">
-                            <img src="{{ asset('assets/img/6CeuCO.jpg') }}" alt="" class="w-60 h-44 object-cover rounded-md">
+                            <img src="{{ asset('assets/img/6CeuCO.jpg') }}" alt="" class="w-full h-44 object-cover rounded-md">
                             <x-secondary-outline-button class="text-center bg-orange-500 text-orange-600 tracking-tighter font-thin justify-center hover:bg-orange-300 hover:border-orange-400">
                                 Message Vendor
                             </x-secondary-outline-button>
                         </div>
                     </x-card>
-                    <x-card class="border-2 border-gray-400 grid grid-cols-2">
+                    <x-card class="border-2 border-gray-400 grid md:grid-cols-2">
                         <div>
                             <a href="{{ route('vendor.storefront') }}">
                                 <div class="flex gap-1">
                                     <span class="w-12 h-12 bg-gray-300 rounded-full text-center pt-3 font-bold text-white">E</span>
-                                    <div class="-space-y-1">
+                                    <div class="">
                                         <h1 class="font-bold text-sm">Imani Fluid Co.</h1>
-                                        <h4 class="text-sm text-gray-400">Verified</h4>
-                                        <h5 class="text-sm text-gray-500">1 Years</h5>
+                                        <h4 class="text-xs text-gray-400">Verified</h4>
+                                        <h5 class="text-xs text-gray-500">1 Years</h5>
                                     </div>
                                 </div>
                             </a>
@@ -506,7 +506,7 @@
                             </div>
                             <div class="flex gap-2">
                                 <h4 class="text-sm font-bold text-gray-600">Vendor Info:</h4>
-                                <div class="flex flex-col gap2">
+                                <div class="flex flex-col gap-2">
                                     <span class="text-sm">
                                         HQ Nairobi Industrial Area
                                     </span>
@@ -517,21 +517,21 @@
                             </div>
                         </div>
                         <div class="flex flex-col gap-3">
-                            <img src="{{ asset('assets/img/W8ZUrJ.jpg') }}" alt="" class="w-60 h-44 object-cover rounded-md">
+                            <img src="{{ asset('assets/img/W8ZUrJ.jpg') }}" alt="" class="w-full h-44 object-cover rounded-md">
                             <x-secondary-outline-button class="text-center bg-orange-500 text-orange-600 tracking-tighter font-thin justify-center hover:bg-orange-300 hover:border-orange-400">
                                 Message Vendor
                             </x-secondary-outline-button>
                         </div>
                     </x-card>
-                    <x-card class="border-2 border-gray-400 grid grid-cols-2">
+                    <x-card class="border-2 border-gray-400 grid md:grid-cols-2">
                         <div>
                             <a href="{{ route('vendor.storefront') }}">
                                 <div class="flex gap-1">
                                     <span class="w-12 h-12 bg-gray-300 rounded-full text-center pt-3 font-bold text-white">E</span>
-                                    <div class="-space-y-1">
+                                    <div class="">
                                         <h1 class="font-bold text-sm">Kraken Traders</h1>
-                                        <h4 class="text-sm text-gray-400">Verified</h4>
-                                        <h5 class="text-sm text-gray-500">1.2 Years</h5>
+                                        <h4 class="text-xs text-gray-400">Verified</h4>
+                                        <h5 class="text-xs text-gray-500">1.2 Years</h5>
                                     </div>
                                 </div>
                             </a>
@@ -556,7 +556,7 @@
                             </div>
                             <div class="flex gap-2">
                                 <h4 class="text-sm font-bold text-gray-600">Vendor Info:</h4>
-                                <div class="flex flex-col gap2">
+                                <div class="flex flex-col gap-2">
                                     <span class="text-sm">
                                         HQ Nairobi Industrial Area
                                     </span>
@@ -567,7 +567,7 @@
                             </div>
                         </div>
                         <div class="flex flex-col gap-3">
-                            <img src="{{ asset('assets/img/skLbbi.jpg') }}" alt="" class="w-60 h-44 object-cover rounded-md">
+                            <img src="{{ asset('assets/img/skLbbi.jpg') }}" alt="" class="w-full h-44 object-cover rounded-md">
                             <x-secondary-outline-button class="text-center bg-orange-500 text-orange-600 tracking-tighter font-thin justify-center hover:bg-orange-300 hover:border-orange-400">
                                 Message Vendor
                             </x-secondary-outline-button>
