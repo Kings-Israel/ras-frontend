@@ -156,5 +156,5 @@ return [
 
     'pagination_theme' => 'tailwind',
 
-    // 'asset_url' => '/ras',
+    'asset_url' => config('app.env') === 'production' ? 'ras/livewire/livewire.js' : '',
 ];
