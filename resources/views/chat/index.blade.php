@@ -95,10 +95,10 @@
                                 </div> --}}
                             </div>
                         </div>
-                        <div class="pb-2 lg:fixed lg:bottom-6 w-[94%] lg:w-[40%] 4xl:w-[42%]">
-                            <form action="#" method="POST" class="mx-3 lg:my-2 w-full flex gap-1">
+                        <div class="pb-2 lg:pb-0 lg:fixed lg:bottom-6 w-[94%] lg:w-[40%] 4xl:w-[42%]">
+                            <form action="#" method="POST" class="mx-3 lg:my-2 w-full lg:w-[96%] flex gap-1">
                                 <x-text-input class="w-[98%] md:w-full border-2 border-gray-400 rounded focus:border-b-3 focus:ring-0" placeholder="Type Your Message Here..." autofocus></x-text-input>
-                                <i class="fas fa-paperclip text-gray-400 text-xl my-auto lg:mr-2 w-[5%]"></i>
+                                <i class="fas fa-paperclip text-gray-400 text-xl my-auto w-[5%]"></i>
                                 <button type="submit" class="bg-orange-500 text-white rounded-full md:mx-auto my-auto w-[15%] md:w-12 h-10">
                                     <svg class="mx-auto pl-1" xmlns="http://www.w3.org/2000/svg" width="25.5" height="20" viewBox="0 0 31.5 27">
                                         <path id="send_icon" d="M3.015,31.5,34.5,18,3.015,4.5,3,15l22.5,3L3,21Z" transform="translate(-3 -4.5)" fill="#fff"/>
