@@ -155,4 +155,6 @@ return [
     */
 
     'pagination_theme' => 'tailwind',
+
+    'asset_url' => 'http://172.104.245.14/ras'
 ];
