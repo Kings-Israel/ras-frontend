@@ -9,7 +9,7 @@
                     <i class="fas fa-camera mr-1"></i> Change Cover
                 </x-secondary-outline-button>
             </div>
-            <div class="flex flex-row gap-2 w-[90%] mx-auto -mt-24 profile-form relative">
+            <div class="lg:flex lg:flex-row gap-2 lg:w-[90%] mx-auto mt-4 lg:-mt-24 profile-form lg:relative">
                 <div class="basis-1/4 border border-gray-300 rounded-lg py-6 divide-y-2 bg-white h-[20%]">
                     <div class="flex flex-col pb-5">
                         <img src="{{ asset('assets/img/skLbbi.jpg') }}" alt="" class="rounded-full w-16 h-16 mx-auto">
@@ -20,13 +20,13 @@
                         <p class="text-gray-600 text-left px-3 text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, possimus.</p>
                     </div>
                 </div>
-                <div class="basis-3/4 border border-gray-300 rounded-lg bg-white py-4 px-4 divide-y-4">
+                <div class="mt-2 lg:mt-0 lg:basis-3/4 border border-gray-300 rounded-lg bg-white py-4 px-4 divide-y-4">
                     <div class="flex gap-6">
                         <span class="font-extrabold text-orange-400 underline underline-offset-4 decoration-4">Account Settings</span>
                         <span class="font-extrabold text-gray-400">Notifications</span>
                     </div>
                     <form action="#">
-                        <div class="grid grid-cols-2 gap-2">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
                             <div>
                                 <x-input-label for="email" :value="__('First Name')" class="text-gray-500" />
                                 <x-text-input id="first_name" class="block mt-1 w-full" type="text" name="first_name" :value="old('first_name')" required autofocus autocomplete="username" value="Aloo"/>
