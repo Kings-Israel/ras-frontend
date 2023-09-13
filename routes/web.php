@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Vendor\VendorController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
+use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,8 +39,21 @@ Route::middleware([])->group(function () {
         Route::get('/products', [VendorController::class, 'products'])->name('products');
         Route::get('/orders', [VendorController::class, 'orders'])->name('orders');
         Route::get('/messages', function () {
-            return view('chat.index');
+            return view('chat.index', [
+                'test' => file_get_contents('../chat.json')
+            ]);
         })->name('messages');
+        Route::get('/messages/chat', function () {
+            if(request()->wantsJson()) {
+                return response()->json([
+                    'conversations' => file_get_contents('../chat-log.json')
+                ], 200);
+            } else {
+                return view('chat.index', [
+                    'conversations' => file_get_contents('../chat-log.json')
+                ]);
+            }
+        })->name('messages.chat');
         Route::get('/customers', function () {
             return view('vendor.customers');
         })->name('customers');

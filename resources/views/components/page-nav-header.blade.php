@@ -1,5 +1,5 @@
 <div class="ml-5 md:ml-72 lg:flex md:mt-1 md:-mb-2">
-    <div class="pr-20 lg:1/5 md:w-3/5 sm:w-full">
+    <div class="pr-20 lg:1/5 w-full">
         <h1 class="font-extrabold text-xl">{{ $mainTitle }}</h1>
         <h3>{{ $subTitle }}</h3>
     </div>
