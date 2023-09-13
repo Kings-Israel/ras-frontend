@@ -156,7 +156,7 @@ return [
 
     'pagination_theme' => 'tailwind',
 
-    'asset_url' => '/ras/livewire',
+    'asset_url' => config('app.url'),
 
-    'app_url' => '/ras/livewire',
+    'app_url' => config('app.url'),
 ];
