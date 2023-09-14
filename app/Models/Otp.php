@@ -10,17 +10,12 @@ class Otp extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that aren't mass assignable.
-     *
-     * @var array
-     */
     protected $guarded = [];
 
     public static function generate(string $identifier, int $validity_period): Otp
     {
         self::where('identifier', $identifier)->delete();
-        
+
         return self::create([
             'identifier' => $identifier,
             'token' => NumberGenerator::generateUniqueNumber(Otp::class, 'token'),

@@ -8,12 +8,12 @@
     "src": "public/assets/img/index.jpg"
   },
   "resources/css/app.css": {
-    "file": "assets/app-b5d75c11.css",
+    "file": "assets/app-d5a2b377.css",
     "isEntry": true,
     "src": "resources/css/app.css"
   },
   "resources/js/app.js": {
-    "file": "assets/app-4a08c204.js",
+    "file": "assets/app-0d91dc04.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   }

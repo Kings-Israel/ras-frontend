@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OtpController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Vendor\VendorController;
 use Illuminate\Support\Facades\Route;
@@ -32,7 +33,7 @@ Route::get('/cart', function() {
     return view('cart');
 })->name('cart');
 
-Route::middleware([])->group(function () {
+Route::middleware(['auth', 'role:vendor'])->group(function () {
     Route::group(['prefix' => 'vendor/', 'as' => 'vendor.'], function() {
         Route::get('/', [VendorController::class, 'dashboard'])->name('dashboard');
         Route::get('/products', [VendorController::class, 'products'])->name('products');

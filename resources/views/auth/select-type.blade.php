@@ -41,13 +41,13 @@
         </div>
 
         <div class="flex mt-4">
-            <x-primary-button class="w-full">
-                {{ __('Proceed to Login') }}
+            <x-primary-button class="w-full py-2">
+                {{ __('Proceed to Register') }}
             </x-primary-button>
         </div>
 
         <div class="mt-4 text-center">
-            <h3 class="">Have no Account Yet? <a href="{{ route('register') }}" class="underline decoration-orange-500 text-orange-400 font-bold hover:text-orange-500 focus:text-orange-600 transition ease-in-out duration-150">Join Us</a></h3>
+            <h3 class="">Already Have an Account? <a href="{{ route('register') }}" class="underline decoration-orange-500 text-orange-400 font-bold hover:text-orange-500 focus:text-orange-600 transition ease-in-out duration-150">Login</a></h3>
         </div>
     </form>
 </x-guest-layout>

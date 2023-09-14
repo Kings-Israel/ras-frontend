@@ -25,7 +25,7 @@ class AuthenticatedSessionController extends Controller
 
         Session::put('type', $request->account_type);
 
-        return redirect()->route('login', ['type' => $request->account_type]);
+        return redirect()->route('register', ['type' => $request->account_type]);
     }
 
     public function verifyPhone(): View

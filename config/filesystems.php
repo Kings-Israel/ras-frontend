@@ -56,6 +56,22 @@ return [
             'throw' => false,
         ],
 
+        'user' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/user'),
+            'url' => env('APP_URL').'/storage/user',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
+        'vendor' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/vendor'),
+            'url' => env('APP_URL').'/storage/vendor',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
     ],
 
     /*
