@@ -3,7 +3,7 @@
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <div class="flex flex-col text-center py-10">
-        <h1 class="text-3xl font-bold p-2">{{ Str::ucfirst($type) }} Login</h1>
+        <h1 class="text-3xl font-bold p-2">Login</h1>
         <span class="p-1">Your Gateway to Finding Awesome Products Across The Continent</span>
     </div>
 

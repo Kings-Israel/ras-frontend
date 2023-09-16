@@ -11,8 +11,8 @@
             <div class="flex pt-4 md:pb-5">
                 <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded-full w-12 h-12 object-cover" alt="avatar">
                 <div class="pl-2">
-                    <h3>Hello, Aloo</h3>
-                    <h4 class="font-extrabold text-lg">Oloo's Store</h4>
+                    <h3>Hello, {{ auth()->user()->last_name }}</h3>
+                    <h4 class="font-extrabold text-lg">{{ auth()->user()->last_name }}'s Store</h4>
                 </div>
             </div>
             <div>
@@ -88,7 +88,7 @@
                 </x-nav-item>
             </li>
             <li>
-                {{-- <form method="POST" action="{{ route('logout') }}">
+                <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <x-nav-item :href="route('logout')" :active="request()->routeIs('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
                         <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-500 group-hover:text-gray-500 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
@@ -96,13 +96,13 @@
                         </svg>
                         <span class="flex-1 ml-3 truncate">Sign Out</span>
                     </x-nav-item>
-                </form> --}}
-                <x-nav-item :href="route('test.logout')" :active="request()->routeIs('logout')">
+                </form>
+                {{-- <x-nav-item :href="route('logout')" :active="request()->routeIs('logout')">
                     <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-500 group-hover:text-gray-500 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"/>
                     </svg>
                     <span class="flex-1 ml-3 truncate">Sign Out</span>
-                </x-nav-item>
+                </x-nav-item> --}}
             </li>
         </ul>
         <div class="flex justify-center">

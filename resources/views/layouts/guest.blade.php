@@ -32,22 +32,22 @@
                 </div>
                 @guest
                     @if (Route::is('login') || Route::is('verify-phone'))
+                        <a href="{{ route('register') }}">
+                            <x-secondary-button class="px-8">
+                                Sign Up
+                            </x-secondary-button>
+                        </a>
+                        @elseif (Route::is('register'))
                         <div class="flex">
                             <a href="{{ route('select-type') }}">
                                 <h2 class="mr-3 text-white lg:my-auto font-bold lg:text-2xl md:text-lg md:mt-2 sm:mt-10">Switch User</h2>
                             </a>
-                            <a href="{{ route('register') }}">
+                            <a href="{{ route('login') }}">
                                 <x-secondary-button class="px-8">
-                                    Sign Up
+                                    Login
                                 </x-secondary-button>
                             </a>
                         </div>
-                    @elseif (Route::is('register'))
-                        <a href="{{ route('login') }}">
-                            <x-secondary-button class="px-8">
-                                Login
-                            </x-secondary-button>
-                        </a>
                     @elseif (Route::is('select-type'))
                         <a href="{{ route('register') }}">
                             <x-secondary-button class="px-8">

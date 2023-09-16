@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
 use Ramsey\Uuid\Uuid;
 use Spatie\Permission\Traits\HasRoles;
@@ -23,7 +24,8 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'phone_number',
         'password',
@@ -50,4 +52,12 @@ class User extends Authenticatable implements MustVerifyEmail
         'phone_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function getAvatarAttribute($value)
+    {
+        if ($value != NULL) {
+            return config('app.url').'/storage/user/avatars/'.$value;
+        }
+        return public_path().'/assets/img/user.png';
+    }
 }
