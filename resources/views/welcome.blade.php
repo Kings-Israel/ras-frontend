@@ -373,15 +373,18 @@
                     <h4 class="font-semibold text-sm">See All <i class="fas fa-arrow-circle-right"></i></h4>
                 </div>
                 <div class="grid md:grid-cols-1 lg:grid-cols-2 4xl:grid-cols-3 gap-4 py-4">
-                    <x-card class="border-2 border-gray-400 grid md:grid-cols-2">
+                    <x-card class="border-2 border-gray-400 grid md:grid-cols-2 gap-1">
                         <div>
                             <a href="{{ route('vendor.storefront') }}">
                                 <div class="flex gap-1">
                                     <span class="w-12 h-12 bg-gray-300 rounded-full text-center pt-3 font-bold text-white">E</span>
                                     <div class="">
                                         <h1 class="font-bold text-sm">Enock's Mining Co.</h1>
-                                        <h4 class="text-xs text-gray-400">Verified</h4>
-                                        <h5 class="text-xs text-gray-500">2 Years</h5>
+                                        <div class="flex gap-2">
+                                            <h4 class="text-xs text-gray-500">Verified</h4>
+                                            <i class="fas fa-shield-alt"></i>
+                                        </div>
+                                        <h5 class="text-xs text-gray-400">2 Years</h5>
                                     </div>
                                 </div>
                             </a>
@@ -389,29 +392,29 @@
                                 <h4 class="text-sm font-bold text-gray-600">Rating:</h4>
                                 <div class="review__info">
                                     <div class="review__star">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
                                         <span style="width: 40%">
-                                           <i class="fa fa-star"></i>
-                                           <i class="fa fa-star"></i>
-                                           <i class="fa fa-star"></i>
-                                           <i class="fa fa-star"></i>
-                                           <i class="fa fa-star"></i>
+                                           <i class="fas fa-star"></i>
+                                           <i class="fas fa-star"></i>
+                                           <i class="fas fa-star"></i>
+                                           <i class="fas fa-star"></i>
+                                           <i class="fas fa-star"></i>
                                         </span>
                                      </div>
                                 </div>
                             </div>
-                            <div class="flex gap-2">
+                            <div class="">
                                 <h4 class="text-sm font-bold text-gray-600">Vendor Info:</h4>
-                                <div class="flex flex-col gap-2">
+                                <div class="flex flex-col gap-1">
                                     <span class="text-sm">
-                                        HQ Nairobi Industrial Area
+                                        <strong>HQ:</strong> Nairobi Industrial Area
                                     </span>
                                     <span class="text-sm">
-                                        Products: Gold, Diamond, Platinum
+                                        <strong>Products:</strong> Gold, Diamond, Platinum
                                     </span>
                                 </div>
                             </div>
@@ -430,7 +433,10 @@
                                     <span class="w-12 h-12 bg-gray-300 rounded-full text-center pt-3 font-bold text-white">N</span>
                                     <div class="">
                                         <h1 class="font-bold text-sm">Neptune Traders.</h1>
-                                        <h4 class="text-xs text-gray-400">Verified</h4>
+                                        <div class="flex gap-2">
+                                            <h4 class="text-xs text-gray-500">Verified</h4>
+                                            <i class="fas fa-shield-alt"></i>
+                                        </div>
                                         <h5 class="text-xs text-gray-500">3 Years</h5>
                                     </div>
                                 </div>
@@ -439,29 +445,29 @@
                                 <h4 class="text-sm font-bold text-gray-600">Rating:</h4>
                                 <div class="review__info">
                                     <div class="review__star">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <span style="width: 40%">
-                                           <i class="fa fa-star"></i>
-                                           <i class="fa fa-star"></i>
-                                           <i class="fa fa-star"></i>
-                                           <i class="fa fa-star"></i>
-                                           <i class="fa fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <span style="width: 60%">
+                                           <i class="fas fa-star"></i>
+                                           <i class="fas fa-star"></i>
+                                           <i class="fas fa-star"></i>
+                                           <i class="fas fa-star"></i>
+                                           <i class="fas fa-star"></i>
                                         </span>
                                      </div>
                                 </div>
                             </div>
-                            <div class="flex gap-2">
+                            <div class="">
                                 <h4 class="text-sm font-bold text-gray-600">Vendor Info:</h4>
                                 <div class="flex flex-col gap-2">
                                     <span class="text-sm">
-                                        HQ: Nairobi Industrial Area
+                                        <strong>HQ:</strong> Nairobi Industrial Area
                                     </span>
                                     <span class="text-sm">
-                                        Products: Minerals
+                                        <strong>Products:</strong> Minerals
                                     </span>
                                 </div>
                             </div>
@@ -480,7 +486,10 @@
                                     <span class="w-12 h-12 bg-gray-300 rounded-full text-center pt-3 font-bold text-white">E</span>
                                     <div class="">
                                         <h1 class="font-bold text-sm">Imani Fluid Co.</h1>
-                                        <h4 class="text-xs text-gray-400">Verified</h4>
+                                        <div class="flex gap-2">
+                                            <h4 class="text-xs text-gray-500">Verified</h4>
+                                            <i class="fas fa-shield-alt"></i>
+                                        </div>
                                         <h5 class="text-xs text-gray-500">1 Years</h5>
                                     </div>
                                 </div>
@@ -489,29 +498,29 @@
                                 <h4 class="text-sm font-bold text-gray-600">Rating:</h4>
                                 <div class="review__info">
                                     <div class="review__star">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <span style="width: 40%">
-                                           <i class="fa fa-star"></i>
-                                           <i class="fa fa-star"></i>
-                                           <i class="fa fa-star"></i>
-                                           <i class="fa fa-star"></i>
-                                           <i class="fa fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <span style="width: 30%">
+                                           <i class="fas fa-star"></i>
+                                           <i class="fas fa-star"></i>
+                                           <i class="fas fa-star"></i>
+                                           <i class="fas fa-star"></i>
+                                           <i class="fas fa-star"></i>
                                         </span>
                                      </div>
                                 </div>
                             </div>
-                            <div class="flex gap-2">
+                            <div class="">
                                 <h4 class="text-sm font-bold text-gray-600">Vendor Info:</h4>
                                 <div class="flex flex-col gap-2">
                                     <span class="text-sm">
-                                        HQ Nairobi Industrial Area
+                                        <strong>HQ:</strong> Nairobi Industrial Area
                                     </span>
                                     <span class="text-sm">
-                                        Products: Gold, Mercury
+                                        <strong>Products:</strong> Gold, Mercury
                                     </span>
                                 </div>
                             </div>
@@ -530,7 +539,10 @@
                                     <span class="w-12 h-12 bg-gray-300 rounded-full text-center pt-3 font-bold text-white">E</span>
                                     <div class="">
                                         <h1 class="font-bold text-sm">Kraken Traders</h1>
-                                        <h4 class="text-xs text-gray-400">Verified</h4>
+                                        <div class="flex gap-2">
+                                            <h4 class="text-xs text-gray-500">Verified</h4>
+                                            <i class="fas fa-shield-alt"></i>
+                                        </div>
                                         <h5 class="text-xs text-gray-500">1.2 Years</h5>
                                     </div>
                                 </div>
@@ -539,29 +551,29 @@
                                 <h4 class="text-sm font-bold text-gray-600">Rating:</h4>
                                 <div class="review__info">
                                     <div class="review__star">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <span style="width: 40%">
-                                           <i class="fa fa-star"></i>
-                                           <i class="fa fa-star"></i>
-                                           <i class="fa fa-star"></i>
-                                           <i class="fa fa-star"></i>
-                                           <i class="fa fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <span style="width: 50%">
+                                           <i class="fas fa-star"></i>
+                                           <i class="fas fa-star"></i>
+                                           <i class="fas fa-star"></i>
+                                           <i class="fas fa-star"></i>
+                                           <i class="fas fa-star"></i>
                                         </span>
                                      </div>
                                 </div>
                             </div>
-                            <div class="flex gap-2">
+                            <div class="">
                                 <h4 class="text-sm font-bold text-gray-600">Vendor Info:</h4>
                                 <div class="flex flex-col gap-2">
                                     <span class="text-sm">
-                                        HQ Nairobi Industrial Area
+                                        <strong>HQ:</strong> Nairobi Industrial Area
                                     </span>
                                     <span class="text-sm">
-                                        Products: Gold, Diamond, Platinum
+                                        <strong>Products:</strong> Gold, Diamond, Platinum
                                     </span>
                                 </div>
                             </div>
@@ -593,19 +605,19 @@
 
         function switchTheme (){
             if (isProductmode) {
-                productsToggle.classList.remove('bg-orange-500', 'px-3', 'rounded-full', 'ml-1', 'text-white')
-                productsToggle.classList.add('text-black', 'ml-2')
-                productsList.classList.add('hidden')
-                vendorsToggle.classList.add('bg-orange-500', 'px-3', 'rounded-full', 'text-white', 'mr-1')
-                vendorsToggle.classList.remove('mr-2')
-                vendorsList.classList.remove('hidden')
-            } else {
                 productsToggle.classList.add('bg-orange-500', 'px-3', 'rounded-full', 'text-white', 'ml-1');
                 productsToggle.classList.remove('text-black', 'ml-2')
                 vendorsToggle.classList.remove('bg-orange-500', 'px-3', 'rounded-full', 'text-white')
                 vendorsToggle.classList.add('text-black', 'mr-2')
                 productsList.classList.remove('hidden')
                 vendorsList.classList.add('hidden')
+            } else {
+                productsToggle.classList.remove('bg-orange-500', 'px-3', 'rounded-full', 'ml-1', 'text-white')
+                productsToggle.classList.add('text-black', 'ml-2')
+                productsList.classList.add('hidden')
+                vendorsToggle.classList.add('bg-orange-500', 'px-3', 'rounded-full', 'text-white', 'mr-1')
+                vendorsToggle.classList.remove('mr-2')
+                vendorsList.classList.remove('hidden')
             }
         }
 

@@ -8,7 +8,7 @@
                 <h5 class="text-sm text-gray-500">2 Years</h5>
             </div>
         </div>
-        <form class="pt-2 md:pt-0 md:w-3/5 my-auto">
+        <form class="pt-2 md:pt-0 md:w-3/5 lg:w-2/5 my-auto">
             <div class="flex">
                 <button id="dropdown-button" data-dropdown-toggle="store-dropdown" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600" type="button">
                     This Store

@@ -64,7 +64,7 @@
                             <x-input-error :messages="$errors->get('password')" class="mt-2" />
                         </div>
 
-                        <x-primary-button class="mt-2 font-thin tracking-tighter px-8">
+                        <x-primary-button class="mt-2 font-thin px-8 py-2">
                             {{ __('Update Details') }}
                         </x-primary-button>
                     </form>
