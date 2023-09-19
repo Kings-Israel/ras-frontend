@@ -262,7 +262,11 @@
                 <div class="sm:pt-5 md:pt-0 lg:pt-0 sm:w-full md:w-1/2 lg:w-full">
                     <h5 class="sm:text-sm md:text-lg lg:text-sm sm:font-semibold md:font-bold lg:font-semibold sm:text-gray-500 md:text-gray-700 lg:text-gray-500">Vendor:</h5>
                     <h3 class="text-2xl text-gray-500 font-bold underline-offset-2">Enock's Mining Co.</h3>
-                    <h6 class="text-sm text-gray-400">Verified</h6>
+                    {{-- <h6 class="text-sm text-gray-400">Verified</h6> --}}
+                    <div class="flex gap-2">
+                        <h6 class="text-sm text-gray-500">Verified</h6>
+                        <i class="text-sm fas fa-shield-alt text-red-800"></i>
+                    </div>
                     <h5 class="font-semibold text-gray-500 text-sm">Response Time: <span class="text-gray-700 font-bold">2h</span></h5>
                     <h5 class="font-semibold text-gray-500 text-sm">Order Fulfilment: <span class="text-gray-700 font-bold">98%</span></h5>
                     <x-primary-outline-button class="w-full my-2 py-1 text-orange-500 justify-center bg-orange-300" data-modal-target="message_vendor_modal" data-modal-toggle="message_vendor_modal">
