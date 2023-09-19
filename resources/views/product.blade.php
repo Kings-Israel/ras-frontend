@@ -68,17 +68,17 @@
                         <h4 class="text-sm font-bold text-gray-600">Rating:</h4>
                         <div class="review__info">
                             <div class="review__star">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <span style="width: 40%">
-                                   <i class="fa fa-star"></i>
-                                   <i class="fa fa-star"></i>
-                                   <i class="fa fa-star"></i>
-                                   <i class="fa fa-star"></i>
-                                   <i class="fa fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span style="width: 75%">
+                                   <i class="fas fa-star"></i>
+                                   <i class="fas fa-star"></i>
+                                   <i class="fas fa-star"></i>
+                                   <i class="fas fa-star"></i>
+                                   <i class="fas fa-star"></i>
                                 </span>
                              </div>
                         </div>
@@ -149,11 +149,13 @@
                 <div class="space-y-2 lg:space-y-5">
                     <h3 class="text-bold text-gray-600">Purchase Details</h3>
                     <div class="flex gap-2">
-                        <h4 class="text-sm font-bold text-gray-600">Payments:</h4>
+                        <h4 class="text-sm font-bold text-gray-600 my-auto">Payments:</h4>
                         <div class="flex gap-1">
-                            <h4 class="text-sm font-semibold text-blue-500">VISA</h4>
-                            <h4 class="text-sm font-semibold text-blue-500">MASTERCARD</h4>
-                            <h4 class="text-sm font-semibold text-blue-500">MPESA</h4>
+                            <img src="{{ asset('assets/img/visa_icon.png') }}" alt="" class="w-14 h-10 object-contain">
+                            <img src="{{ asset('assets/img/mastercard_payment_icon.png') }}" alt="" class="w-14 h-10 object-contain">
+                            {{-- <h4 class="text-sm font-semibold text-blue-500">VISA</h4> --}}
+                            {{-- <h4 class="text-sm font-semibold text-blue-500">MASTERCARD</h4> --}}
+                            <h4 class="text-sm font-semibold text-blue-500 my-auto">MPESA</h4>
                         </div>
                     </div>
                     <div class="flex gap-2">
@@ -179,9 +181,9 @@
                     <h4 class="font-semibold text-gray-400">No Import Fees Deposit & $23.64 Shipping to Kenya</h4>
                     <h4 class="text-gray-500">Delivery: <strong class="font-bold">Friday, August 18</strong></h4>
                     <h5 class="font-thin text-gray-500 text-sm">Order Within: <span class="text-green-600">19h 38min</span></h5>
-                    <x-primary-button class="w-full my-2 py-1">Place Order</x-primary-button>
+                    <x-primary-button class="w-full my-2 py-2 tracking-wide">Place Order</x-primary-button>
                     <x-primary-outline-button class="w-full my-2 py-1 text-orange-400 justify-center gap-1">
-                        {{-- <i class="fas fa-plus text-sm"></i> --}}
+                        <i class="fas fa-plus text-sm"></i>
                         <span class="tracking-tight">
                             Add To Cart
                         </span>
@@ -268,7 +270,7 @@
                             Message Vendor
                         </span>
                     </x-primary-outline-button>
-                    <x-modal modal_id="message_vendor_modal" modal_placement="bottom-right">
+                    <x-modal modal_id="message_vendor_modal" modal_placement="bottom-right" class="">
                         <div class="relative w-full max-w-2xl max-h-full">
                             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                                 <button type="button" class="absolute top-1 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="message_vendor_modal">
@@ -278,12 +280,12 @@
                                     <span class="sr-only">Close modal</span>
                                 </button>
                                 <div class="px-2 py-2 lg:px-4">
-                                    <div class="lg:col-span-2 border-none lg:block md:hidden sm:hidden">
+                                    <div class="lg:col-span-2 border-none">
                                         <div class="border-b-2 border-t-0 border-gray-400 w-full px-4 py-2 flex justify-between">
                                             <h2 class="text-2xl font-extrabold text-gray-800">Enock's Mining Co</h2>
                                         </div>
-                                        <div class="h-full flex flex-col justify-between">
-                                            <div class="space-y-2 p-2 text-sm">
+                                        <div class="overflow-scroll h-[33rem] 4xl:h-[50rem] mb-12">
+                                            <div class="space-y-2 p-2 text-sm" id="messages">
                                                 <div>
                                                     <div class="bg-yellow-200 border-none p-2 max-w-sm rounded-lg">
                                                         Hi Oloo. I need 200 bags of Dangote cement delivered to Kilifi. Can we have this delivered before 25th?
@@ -304,21 +306,55 @@
                                                     </div>
                                                     <span class="text-xs">9:50am</span>
                                                 </div>
-                                            </div>
-                                            <div class="">
-                                                <form action="#" method="POST" class="mx-3 lg:my-2 flex">
-                                                    <div class="md:w-full sm:w-full">
-                                                        <x-text-input class="border-2 border-gray-400 rounded lg:w-[98%] focus:border-b-3 focus:ring-0 transition duration-150" placeholder="Type Your Message Here..." autofocus></x-text-input>
+                                                <div>
+                                                    <div class="bg-yellow-200 border-none p-2 max-w-sm rounded-lg">
+                                                        Hi Oloo. I need 200 bags of Dangote cement delivered to Kilifi. Can we have this delivered before 25th? Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit, fugit!
                                                     </div>
-                                                    <i class="fas fa-paperclip text-gray-400 text-xl my-auto lg:mr-2"></i>
-                                                    <button type="submit" class="bg-orange-500 text-white rounded-full mx-auto my-auto w-12 h-10">
-                                                        <svg class="mx-auto pl-1" xmlns="http://www.w3.org/2000/svg" width="25.5" height="20" viewBox="0 0 31.5 27">
-                                                            <path id="send_icon" d="M3.015,31.5,34.5,18,3.015,4.5,3,15l22.5,3L3,21Z" transform="translate(-3 -4.5)" fill="#fff"/>
-                                                        </svg>
-                                                    </button>
-                                                </form>
+                                                    <span class="text-xs">9:50am</span>
+                                                </div>
+                                                <div class="flex flex-col">
+                                                    <div class="flex flex-row-reverse">
+                                                        <div class="bg-gray-300 border-none p-2 max-w-sm rounded-lg">
+                                                            Hi. I can ship a maximum of 180 bags. Can we make a deal? Please reach through email. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor, porro?
+                                                        </div>
+                                                    </div>
+                                                    <span class="text-xs text-right">8:50am</span>
+                                                </div>
+                                                <div class="flex flex-col">
+                                                    <div class="flex flex-row-reverse">
+                                                        <div class="bg-gray-300 border-none p-2 max-w-sm rounded-lg">
+                                                            Hi. I can ship a maximum of 180 bags. Can we make a deal? Please reach through email. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor, porro?
+                                                        </div>
+                                                    </div>
+                                                    <span class="text-xs text-right">8:50am</span>
+                                                </div>
+                                                <div class="flex flex-col">
+                                                    <div class="flex flex-row-reverse">
+                                                        <div class="bg-gray-300 border-none p-2 max-w-sm rounded-lg">
+                                                            Hi. I can ship a maximum of 180 bags. Can we make a deal? Please reach through email. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor, porro?
+                                                        </div>
+                                                    </div>
+                                                    <span class="text-xs text-right">8:50am</span>
+                                                </div>
+                                                <div>
+                                                    <div class="bg-yellow-200 border-none p-2 max-w-sm rounded-lg">
+                                                        Hi Oloo. I need 200 bags of Dangote cement delivered to Kilifi. Can we have this delivered before 25th? Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit, fugit!
+                                                    </div>
+                                                    <span class="text-xs">9:50am</span>
+                                                </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="pb-2 lg:pb-0 lg:fixed lg:bottom-6 w-[94%] lg:w-[42%] 4xl:w-[42%]">
+                                        <form action="#" method="POST" class="mx-3 lg:my-2 w-full lg:w-[96%] flex gap-1">
+                                            <x-text-input class="w-[98%] md:w-full border-2 border-gray-400 rounded focus:border-b-3 focus:ring-0" placeholder="Type Your Message Here..." autofocus></x-text-input>
+                                            <i class="fas fa-paperclip text-gray-400 text-xl my-auto w-[5%]"></i>
+                                            <button type="submit" class="bg-orange-500 text-white rounded-full md:mx-auto my-auto w-[15%] md:w-12 h-10">
+                                                <svg class="mx-auto pl-1" xmlns="http://www.w3.org/2000/svg" width="25.5" height="20" viewBox="0 0 31.5 27">
+                                                    <path id="send_icon" d="M3.015,31.5,34.5,18,3.015,4.5,3,15l22.5,3L3,21Z" transform="translate(-3 -4.5)" fill="#fff"/>
+                                                </svg>
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -327,14 +363,14 @@
                 </div>
             </div>
         </div>
-        <div class="w-full md:w-[70%]">
+        <div class="w-full lg:w-[70%]">
             <div class="flex gap-4">
                 <h4 class="text-lg font-semibold text-gray-600 p-2 bg-gray-100">Product Details</h4>
                 <h4 class="text-lg font-semibold text-gray-600 p-2">Vendor Details</h4>
                 <h4 class="text-lg font-semibold text-gray-600 p-2">Customer Reviews</h4>
             </div>
             <div class="bg-gray-100">
-                <div class="grid grid-cols-3 divide-x divide-gray-400 p-2">
+                <div class="grid grid-cols-1 md:grid-cols-3 md:divide-x md:divide-gray-400 p-2">
                     <div class="space-y-3">
                         <h5 class="text-sm font-bold text-gray-700">Overview</h5>
                         <p class="text-sm text-gray-600">Material: <strong class="text-sm text-gray-700">Gold</strong></p>
@@ -346,7 +382,7 @@
                         <p class="text-sm text-gray-600">Theme: <strong class="text-sm text-gray-700">Patriotism</strong></p>
                         <p class="text-sm text-gray-600">Regional Feature: <strong class="text-sm text-gray-700">Africa</strong></p>
                     </div>
-                    <div class="space-y-3 px-8 pt-8">
+                    <div class="space-y-3 md:px-4 lg:px-8 pt-2 md:pt-8">
                         <p class="text-sm text-gray-600">Place of Origin: <strong class="text-sm text-gray-700">Kakamega</strong></p>
                         <p class="text-sm text-gray-600">Brand Name: <strong class="text-sm text-gray-700">KK</strong></p>
                         <p class="text-sm text-gray-600">Model Number: <strong class="text-sm text-gray-700">#38HJHD</strong></p>
@@ -356,7 +392,7 @@
                         <p class="text-sm text-gray-600">Shaping: <strong class="text-sm text-gray-700">Rectangle</strong></p>
                         <p class="text-sm text-gray-600">Design: <strong class="text-sm text-gray-700">100% Custom Made</strong></p>
                     </div>
-                    <div class="space-y-3 px-8 pt-8">
+                    <div class="space-y-3 md:px-4 lg:px-8 pt-2 md:pt-8">
                         <p class="text-sm text-gray-600">Color: <strong class="text-sm text-gray-700">Gold</strong></p>
                         <p class="text-sm text-gray-600">MOQ: <strong class="text-sm text-gray-700">10 Pieces</strong></p>
                         <p class="text-sm text-gray-600">Payment: <strong class="text-sm text-gray-700">T/T</strong></p>
@@ -368,7 +404,7 @@
                 </div>
                 <div class="p-2 space-y-3">
                     <h5 class="text-sm font-bold text-gray-700">Packaging & Delivery</h5>
-                    <div class="border border-gray-300 p-1 px-2 rounded-lg mt-2 bg-white w-[50%]">
+                    <div class="border border-gray-300 p-1 px-2 rounded-lg mt-2 bg-white md:w-[50%]">
                         <div class="flex justify-between divide-x divide-gray-300">
                             <div class="flex flex-col gap-1 -mr-10">
                                 <h4 class="font-semibold text-gray-400">10 - 39 Pieces</h4>
@@ -387,8 +423,8 @@
                 </div>
                 <div class="p-2 space-y-3">
                     <h5 class="text-sm font-bold text-gray-700">Product Images</h5>
-                    <div class="flex gap-2">
-                        <img src="{{ asset('assets/img/6CeuCO.jpg') }}" alt="" class="w-96 h-60 object-contain">
+                    <div class="md:flex gap-2">
+                        <img src="{{ asset('assets/img/6CeuCO.jpg') }}" alt="" class="w-96 h-60 object-contain mb-3 md:mb-0">
                         <div class="grid grid-cols-2 gap-3">
                             <img src="{{ asset('assets/img/6CeuCO.jpg') }}" alt="" class="w-40 h-28 object-cover">
                             <img src="{{ asset('assets/img/skLbbi.jpg') }}" alt="" class="w-40 h-28 object-cover">
@@ -529,5 +565,8 @@
         incrementButtons.forEach(btn => {
           btn.addEventListener("click", increment);
         });
+        var container = document.getElementById("messages");
+        console.log(container);
+        container.scrollTop = container.scrollHeight
       </script>
 </x-main>

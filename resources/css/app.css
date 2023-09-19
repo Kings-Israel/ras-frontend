@@ -46,7 +46,7 @@
 }
 
 .review__info .review__star {
-    display: inline-block;
+    /* display: inline-block; */
     position: relative;
 }
 
