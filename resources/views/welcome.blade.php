@@ -382,7 +382,7 @@
                                         <h1 class="font-bold text-sm">Enock's Mining Co.</h1>
                                         <div class="flex gap-2">
                                             <h4 class="text-xs text-gray-500">Verified</h4>
-                                            <i class="fas fa-shield-alt"></i>
+                                            <i class="fas fa-shield-alt text-sm text-red-800"></i>
                                         </div>
                                         <h5 class="text-xs text-gray-400">2 Years</h5>
                                     </div>
@@ -435,7 +435,7 @@
                                         <h1 class="font-bold text-sm">Neptune Traders.</h1>
                                         <div class="flex gap-2">
                                             <h4 class="text-xs text-gray-500">Verified</h4>
-                                            <i class="fas fa-shield-alt"></i>
+                                            <i class="fas fa-shield-alt text-sm text-red-800"></i>
                                         </div>
                                         <h5 class="text-xs text-gray-500">3 Years</h5>
                                     </div>
@@ -488,7 +488,7 @@
                                         <h1 class="font-bold text-sm">Imani Fluid Co.</h1>
                                         <div class="flex gap-2">
                                             <h4 class="text-xs text-gray-500">Verified</h4>
-                                            <i class="fas fa-shield-alt"></i>
+                                            <i class="text-sm fas fa-shield-alt text-red-800"></i>
                                         </div>
                                         <h5 class="text-xs text-gray-500">1 Years</h5>
                                     </div>
@@ -541,7 +541,7 @@
                                         <h1 class="font-bold text-sm">Kraken Traders</h1>
                                         <div class="flex gap-2">
                                             <h4 class="text-xs text-gray-500">Verified</h4>
-                                            <i class="fas fa-shield-alt"></i>
+                                            <i class="fas fa-shield-alt text-red-800 text-sm"></i>
                                         </div>
                                         <h5 class="text-xs text-gray-500">1.2 Years</h5>
                                     </div>
@@ -595,7 +595,7 @@
         const vendorsToggle = document.querySelector('#vendors-toggle');
         const productsList = document.querySelector('.products')
         const vendorsList = document.querySelector('.vendors')
-        let isProductmode = false
+        let isProductmode = true
 
         function toggleTheme (){
             isProductmode = !isProductmode
