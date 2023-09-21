@@ -1,8 +1,8 @@
 [
     {
         "read_at": null,
-        "created_at": "2023-07-12T17:53:21.000000Z",
-        "updated_at": "2023-07-12T17:53:21.000000Z",
+        "created_at": "08:25 p.m",
+        "updated_at": "08:25 p.m",
         "deleted_at": null,
         "messageable_id": 1,
         "notification_id": 128,
@@ -49,14 +49,14 @@
                 "location_lat": "-1.2968506",
                 "location_long": "36.7874932"
             },
-            "created_at": "2023-07-12T17:53:21.000000Z",
-            "updated_at": "2023-07-12T17:53:21.000000Z"
+            "created_at": "08:25 p.m",
+            "updated_at": "08:25 p.m"
         }
     },
     {
         "read_at": null,
-        "created_at": "2023-07-12T17:53:44.000000Z",
-        "updated_at": "2023-07-12T17:53:44.000000Z",
+        "created_at": "09:00 p.m",
+        "updated_at": "09:00 p.m",
         "deleted_at": null,
         "messageable_id": 16,
         "notification_id": 130,
@@ -103,14 +103,14 @@
                 "location_lat": "-1.2968506",
                 "location_long": "36.7874932"
             },
-            "created_at": "2023-07-12T17:53:21.000000Z",
-            "updated_at": "2023-07-12T17:53:21.000000Z"
+            "created_at": "09:00 p.m",
+            "updated_at": "09:00 p.m"
         }
     },
     {
         "read_at": null,
-        "created_at": "2023-07-12T17:55:25.000000Z",
-        "updated_at": "2023-07-12T17:55:25.000000Z",
+        "created_at": "09.20 p.m",
+        "updated_at": "09.20 p.m",
         "deleted_at": null,
         "messageable_id": 1,
         "notification_id": 132,
@@ -183,8 +183,8 @@
     },
     {
         "read_at": null,
-        "created_at": "2023-07-12T17:55:25.000000Z",
-        "updated_at": "2023-07-12T17:55:25.000000Z",
+        "created_at": "10.00 p.m",
+        "updated_at": "10.00 p.m",
         "deleted_at": null,
         "messageable_id": 1,
         "notification_id": 132,
@@ -257,8 +257,8 @@
     },
     {
         "read_at": null,
-        "created_at": "2023-07-12T17:53:44.000000Z",
-        "updated_at": "2023-07-12T17:53:44.000000Z",
+        "created_at": "09:00 p.m",
+        "updated_at": "09:00 p.m",
         "deleted_at": null,
         "messageable_id": 16,
         "notification_id": 130,
@@ -311,8 +311,8 @@
     },
     {
         "read_at": null,
-        "created_at": "2023-07-12T17:55:25.000000Z",
-        "updated_at": "2023-07-12T17:55:25.000000Z",
+        "created_at": "10.20 p.m",
+        "updated_at": "10.20 p.m",
         "deleted_at": null,
         "messageable_id": 1,
         "notification_id": 132,
@@ -385,8 +385,8 @@
     },
     {
         "read_at": null,
-        "created_at": "2023-07-12T17:53:44.000000Z",
-        "updated_at": "2023-07-12T17:53:44.000000Z",
+        "created_at": "10.40 p.m",
+        "updated_at": "10.40 p.m",
         "deleted_at": null,
         "messageable_id": 16,
         "notification_id": 130,
@@ -433,8 +433,8 @@
                 "location_lat": "-1.2968506",
                 "location_long": "36.7874932"
             },
-            "created_at": "2023-07-12T17:53:21.000000Z",
-            "updated_at": "2023-07-12T17:53:21.000000Z"
+            "created_at": "10.40 p.m",
+            "updated_at": "10.40 p.m"
         }
     }
 ]
