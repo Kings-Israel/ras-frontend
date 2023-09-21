@@ -261,7 +261,9 @@
                 </div>
                 <div class="sm:pt-5 md:pt-0 lg:pt-0 sm:w-full md:w-1/2 lg:w-full">
                     <h5 class="sm:text-sm md:text-lg lg:text-sm sm:font-semibold md:font-bold lg:font-semibold sm:text-gray-500 md:text-gray-700 lg:text-gray-500">Vendor:</h5>
-                    <h3 class="text-2xl text-gray-500 font-bold underline-offset-2">Enock's Mining Co.</h3>
+                    <a href="{{ route('vendor.storefront') }}">
+                        <h3 class="text-2xl text-gray-500 font-bold underline-offset-2 hover:text-gray-600 transition duration-150 ease-in">Enock's Mining Co.</h3>
+                    </a>
                     {{-- <h6 class="text-sm text-gray-400">Verified</h6> --}}
                     <div class="flex gap-2">
                         <h6 class="text-sm text-gray-500">Verified</h6>

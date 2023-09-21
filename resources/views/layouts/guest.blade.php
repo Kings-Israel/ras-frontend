@@ -67,7 +67,7 @@
                     </form>
                 @endguest
             </x-guest-nav>
-            <div class="flex flex-col sm:justify-center items-center lg:mt-20 pt-6 sm:pt-0 bg-transparent">
+            <div class="flex flex-col sm:justify-center items-center lg:mt-10 pt-6 sm:pt-0 bg-transparent">
                 <div class="lg:w-1/4 sm:max-w-md px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
                     {{ $slot }}
                 </div>

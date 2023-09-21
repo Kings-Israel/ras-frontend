@@ -22,4 +22,15 @@
             <i class="w-5 h-5 fas fa-shopping-bag"></i>
         </div> --}}
     </div>
+    {{-- @auth
+    @else
+        <div class="flex gap-3">
+            <a href="{{ route('login') }}">
+                <x-primary-button class="py-2">Login</x-primary-button>
+            </a>
+            <a href="{{ route('register') }}">
+                <x-primary-outline-button>Register</x-primary-outline-button>
+            </a>
+        </div>
+    @endauth --}}
 </div>
