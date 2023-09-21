@@ -27,7 +27,7 @@
                                 </div>
                             </div>
                             <div v-else class="flex px-2 rounded-lg py-1 hover:bg-gray-200">
-                                <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded-full border-2 border-orange-600 w-10 h-10 object-cover" alt="">
+                                <img src="{{ asset('assets/img/6CeuCO.jpg') }}" class="rounded-full w-10 h-10 object-cover" alt="">
                                 <div class="px-2 flex flex-col w-[87%]">
                                     <div class="flex justify-between">
                                         <span class="text-lg font-extrabold text-gray-900 mb-1 truncate">
@@ -40,7 +40,7 @@
                             </div>
                         </li>
                         <li class="flex px-2 rounded-lg py-1">
-                            <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded-full w-10 h-10 object-cover" alt="" srcset="">
+                            <img src="{{ asset('assets/img/skLbbi.jpg') }}" class="rounded-full w-10 h-10 object-cover" alt="" srcset="">
                             <div class="px-2 flex flex-col w-[87%]">
                                 <div class="flex justify-between">
                                     <span class="text-lg font-extrabold text-gray-900 mb-1">
@@ -59,7 +59,7 @@
                     <div class="border-b-2 border-t-0 border-gray-400 w-full px-4 py-2 flex justify-between">
                         <div class="flex gap-2 lg:block">
                             <i class="fas fa-arrow-left my-auto lg:hidden hover:cursor-pointer" v-on:click="viewContacts"></i>
-                            <h2 class="text-2xl font-extrabold text-gray-800">Felix Onapi</h2>
+                            <h2 class="text-2xl font-extrabold text-gray-800">Wence Connor</h2>
                         </div>
                         <form action="#" method="POST" class="hidden md:block my-auto">
                             <div class="relative md:w-full sm:w-full">
@@ -81,7 +81,7 @@
                                         <span class="text-xs text-right">@{{ log.created_at }}</span>
                                     </div>
                                     <div v-else class="mb-2">
-                                        <div class="bg-yellow-200 border-none p-2 max-w-sm rounded-lg">
+                                        <div class="bg-yellow-200 w-fit max-w-sm border-none p-2 rounded-lg">
                                             @{{ log.body }}
                                         </div>
                                         <span class="text-xs">@{{ log.created_at }}</span>

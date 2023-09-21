@@ -19,13 +19,13 @@
             "updated_at": "2023-09-12 03:12:00",
             "from_now": "2 Days Ago",
             "flagged": true,
-            "body": "Test message",
+            "body": "Can I get 10 kgs of gold by Friday?",
             "type": "text",
             "data": "",
             "sender": {
                 "id": 1,
-                "first_name": "Test",
-                "last_name": "Sender",
+                "first_name": "Felix",
+                "last_name": "Onapi",
                 "email": "test@sender.com",
                 "phone_number": "0707848473"
             }
@@ -41,8 +41,8 @@
                 "updated_at": "2023-09-12 03:12:00",
                 "messageable": {
                     "id": 2,
-                    "first_name": "Test",
-                    "last_name": "Sender",
+                    "first_name": "Felix",
+                    "last_name": "Onapi",
                     "email": "test@sender.com",
                     "phone_number": "0707848473"
                 }
@@ -85,13 +85,13 @@
             "updated_at": "2023-08-12 14:45:00",
             "from_now": "1 Day Ago",
             "flagged": true,
-            "body": "Another test message",
+            "body": "Please share a quote for 200 bags of cement",
             "type": "text",
             "data": "",
             "sender": {
                 "id": 3,
-                "first_name": "Test 2",
-                "last_name": "Sender 2",
+                "first_name": "Wence",
+                "last_name": "Connor",
                 "email": "test2@sender2.com",
                 "phone_number": "0707848473"
             }
