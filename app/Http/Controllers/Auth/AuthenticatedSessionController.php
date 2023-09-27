@@ -36,13 +36,9 @@ class AuthenticatedSessionController extends Controller
     /**
      * Display the login view.
      */
-    public function create($type = 'vendor'): View
+    public function create(): View
     {
-        if (Session::get('type')) {
-            $type = Session::get('type');
-        }
-
-        return view('auth.login', compact('type'));
+        return view('auth.login');
     }
 
     /**
@@ -54,15 +50,28 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        auth()->user()->update([
-            'phone_verified_at' => NULL,
-        ]);
+        info(now()->diffInMonths(auth()->user()->last_login));
 
-        $otp = Otp::generate(auth()->user()->phone_number, 10);
+        if (auth()->user()->last_login === NULL || now()->diffInMonths(auth()->user()->last_login) > 3) {
+            auth()->user()->update([
+                'phone_verified_at' => NULL,
+            ]);
 
-        SendSMS::dispatchAfterResponse(auth()->user()->phone_number, 'Your verification code is '.$otp->token);
+            $otp = Otp::generate(auth()->user()->phone_number, 10);
 
-        return redirect()->intended(RouteServiceProvider::VERIFY_PHONE);
+            SendSMS::dispatchAfterResponse(auth()->user()->phone_number, 'Your verification code is '.$otp->token);
+        } else {
+            auth()->user()->update([
+                'last_login' => now(),
+                'phone_verified_at' => now(),
+            ]);
+        }
+
+        if (auth()->user()->hasRole('vendor')) {
+            return redirect()->intended(RouteServiceProvider::VENDOR_HOME);
+        }
+
+        return redirect()->intended(RouteServiceProvider::BUYER_HOME);
     }
 
     /**
@@ -70,9 +79,11 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        auth()->user()->update([
-            'phone_verified_at' => NULL
-        ]);
+        if (now()->diffInMonths(auth()->user()->last_login) > 3) {
+            auth()->user()->update([
+                'phone_verified_at' => NULL
+            ]);
+        }
 
         Auth::guard('web')->logout();
 

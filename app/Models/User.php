@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
@@ -30,6 +31,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'phone_number',
         'password',
         'phone_verified_at',
+        'last_login'
     ];
 
     /**
@@ -59,5 +61,13 @@ class User extends Authenticatable implements MustVerifyEmail
             return config('app.url').'/storage/user/avatars/'.$value;
         }
         return public_path().'/assets/img/user.png';
+    }
+
+    /**
+     * Get the business associated with the User
+     */
+    public function business(): HasOne
+    {
+        return $this->hasOne(Business::class);
     }
 }

@@ -11,10 +11,8 @@
             <div class="flex pt-4 md:pb-5">
                 <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded-full w-12 h-12 object-cover" alt="avatar">
                 <div class="pl-2">
-                    {{-- <h3>Hello, {{ auth()->user()->last_name }}</h3>
-                    <h4 class="font-extrabold text-lg">{{ auth()->user()->last_name }}'s Store</h4> --}}
-                    <h3>Hello, Oloo</h3>
-                    <h4 class="font-extrabold text-lg">Aloo's Store</h4>
+                    <h3>Hello, {{ auth()->user()->last_name }}</h3>
+                    <h4 class="font-extrabold text-lg">{{ auth()->user()->business->name }}</h4>
                 </div>
             </div>
             <div>

@@ -58,6 +58,7 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'phone_number' => $request->phone_number,
             'password' => Hash::make($request->password),
+            'last_login' => now(),
         ]);
 
         $user->assignRole($request->role);
@@ -65,11 +66,10 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         $otp = Otp::generate($user->phone_number, 10);
-
         SendSMS::dispatchAfterResponse($user->phone_number, 'Your verification code is '.$otp->token);
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::VERIFY_PHONE);
+        return redirect()->route('verify-phone');
     }
 }
