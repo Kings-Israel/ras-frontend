@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Auth\VerifyPhoneController;
+use App\Http\Controllers\Vendor\VendorController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -44,11 +45,11 @@ Route::middleware('guest')->group(function () {
             });
 
 Route::middleware('auth')->group(function () {
-    Route::get('verify-phone', [VerifyPhoneController::class, 'showVerifyForm'])->name('verify-phone');
+    Route::get('/verify-phone', [VerifyPhoneController::class, 'showVerifyForm'])->name('verify-phone');
 
-    Route::get('resend-code', [VerifyPhoneController::class, 'resend'])->name('resend-phone-code');
+    Route::get('/resend-code', [VerifyPhoneController::class, 'resend'])->name('resend-phone-code');
 
-    Route::post('verify-phone', [VerifyPhoneController::class, 'verify'])->name('verification-phone');
+    Route::post('/verify-phone', [VerifyPhoneController::class, 'verify'])->name('verification-phone');
 
     Route::get('verify-email', EmailVerificationPromptController::class)
             ->name('verification.notice');
@@ -67,6 +68,12 @@ Route::middleware('auth')->group(function () {
     Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
 
     Route::put('password', [PasswordController::class, 'update'])->name('password.update');
+
+    Route::post('/business/create', [VendorController::class, 'create'])->name('auth.business.create');
+
+    Route::get('/business/create', [VendorController::class, 'showCreateProfileForm'])->name('auth.business.create.show');
+
+    // Route::get('/product/add', [VendorController::class, 'addProduct'])->name('auth.product.add');
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');

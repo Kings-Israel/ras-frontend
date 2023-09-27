@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OtpController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Vendor\VendorController;
@@ -17,9 +18,7 @@ use Livewire\Livewire;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+Route::get('/', [HomeController::class, 'index'])->name('welcome');
 
 Route::get('/product', function () {
     return view('product');
@@ -29,64 +28,65 @@ Route::get('/dashboard', function () {
     return view('vendor.dashboard');
 })->name('dashboard');
 
-Route::get('/cart', function() {
-    return view('cart');
-})->name('cart');
+Route::middleware(['auth', 'phone_verified', 'role:buyer'])->group(function () {
+    Route::get('/cart', function() {
+        return view('cart');
+    })->name('cart');
+});
 
-Route::group(['prefix' => 'vendor', 'as' => 'vendor.'], function() {
+Route::group(['prefix' => 'vendor', 'as' => 'vendor.'], function () {
     Route::get('/storefront', function() {
-        return view('vendor.storefront.index');
+        return view('business.storefront.index');
     })->name('storefront');
     Route::get('/storefront/products', function() {
-        return view('vendor.storefront.products');
+        return view('business.storefront.products');
     })->name('storefront.products');
     Route::get('/storefront/compliance', function() {
-        return view('vendor.storefront.compliance');
+        return view('business.storefront.compliance');
     })->name('storefront.compliance');
 });
 
-
-Route::group(['prefix' => 'vendor/', 'as' => 'vendor.'], function() {
-    Route::get('/', [VendorController::class, 'dashboard'])->name('dashboard');
-    Route::get('/products', [VendorController::class, 'products'])->name('products');
-    Route::get('/orders', [VendorController::class, 'orders'])->name('orders');
-    Route::get('/messages', function () {
-        return view('chat.index', [
-            'test' => file_get_contents('../chat.json')
-        ]);
-    })->name('messages');
-    Route::get('/messages/chat', function () {
-        if(request()->wantsJson()) {
-            return response()->json([
-                'conversations' => file_get_contents('../chat-log.json')
-            ], 200);
-        } else {
+Route::middleware(['auth', 'phone_verified', 'role:vendor', 'has_registered_business'])->group(function () {
+    Route::group(['prefix' => 'vendor/', 'as' => 'vendor.'], function() {
+        Route::get('/', [VendorController::class, 'dashboard'])->name('dashboard');
+        Route::get('/products', [VendorController::class, 'products'])->name('products');
+        Route::get('/orders', [VendorController::class, 'orders'])->name('orders');
+        Route::get('/messages', function () {
             return view('chat.index', [
-                'conversations' => file_get_contents('../chat-log.json')
+                'test' => file_get_contents('../chat.json')
             ]);
-        }
-    })->name('messages.chat');
-    Route::get('/customers', function () {
-        return view('vendor.customers');
-    })->name('customers');
-    Route::get('/payments', function () {
-        return view('vendor.payments');
-    })->name('payments');
-    Route::get('/warehouses', function () {
-        return view('vendor.warehouses');
-    })->name('warehouses');
-    Route::get('/suppliers', function () {
-        return view('vendor.suppliers');
-    })->name('suppliers');
-    Route::get('/profile', function() {
-        return view('vendor.profile');
-    })->name('profile');
-});
-// Route::middleware(['auth', 'role:vendor'])->group(function () {
+        })->name('messages');
+        Route::get('/messages/chat', function () {
+            if(request()->wantsJson()) {
+                return response()->json([
+                    'conversations' => file_get_contents('../chat-log.json')
+                ], 200);
+            } else {
+                return view('chat.index', [
+                    'conversations' => file_get_contents('../chat-log.json')
+                ]);
+            }
+        })->name('messages.chat');
+        Route::get('/customers', function () {
+            return view('vendor.customers');
+        })->name('customers');
+        Route::get('/payments', function () {
+            return view('vendor.payments');
+        })->name('payments');
+        Route::get('/warehouses', function () {
+            return view('vendor.warehouses');
+        })->name('warehouses');
+        Route::get('/suppliers', function () {
+            return view('vendor.suppliers');
+        })->name('suppliers');
+        Route::get('/profile', function() {
+            return view('vendor.profile');
+        })->name('profile');
+    });
     // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// });
+});
 
 Route::get('/test/logout', function() {
     return view('welcome');

@@ -12,10 +12,8 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="{{ asset('assets/fontawesome/css/all.min.css') }}">
         <script type = "text/javascript" src = "https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-        @livewireStyles
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-        {{-- @inertiaHead --}}
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-white">
@@ -26,7 +24,6 @@
                 {{ $slot }}
             </main>
         </div>
-        @livewireScripts
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.0/flowbite.min.js"></script>

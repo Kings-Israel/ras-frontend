@@ -60,16 +60,22 @@ class VerifyPhoneController extends Controller
 
         auth()->user()->update([
             'phone_verified_at' => now(),
+            'last_login' => now(),
         ]);
 
         toastr()->success('', 'Verification Successful');
 
         if ($request->user()->hasVerifiedEmail()) {
             if ($request->user()->hasRole('vendor')) {
-                return redirect()->intended(RouteServiceProvider::VENDOR_HOME);
+                // Create business if account is new
+                if (!$request->user()->business) {
+                    return redirect()->route('auth.business.create');
+                }
+
+                return redirect()->intended('vendor.dashboard');
             }
 
-            return redirect()->intended(RouteServiceProvider::BUYER_HOME);
+            return redirect()->intended('dashboard');
         }
 
         if ($request->user()->markEmailAsVerified()) {
@@ -77,9 +83,14 @@ class VerifyPhoneController extends Controller
         }
 
         if ($request->user()->hasRole('vendor')) {
-            return redirect()->intended(RouteServiceProvider::VENDOR_HOME);
+            // Create business if account is new
+            if (!$request->user()->business) {
+                return redirect()->route('auth.business.create');
+            }
+
+            return redirect()->intended('vendor.dashboard');
         }
 
-        return redirect()->intended(RouteServiceProvider::BUYER_HOME);
+        return redirect()->intended('dashboard');
     }
 }

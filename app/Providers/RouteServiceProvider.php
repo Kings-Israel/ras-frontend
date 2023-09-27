@@ -19,7 +19,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public const VENDOR_HOME = '/vendor/';
     public const BUYER_HOME = '/';
-    public const VERIFY_PHONE = '/verify-phone';
+    public const VERIFY_PHONE = 'verify-phone';
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.

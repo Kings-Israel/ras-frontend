@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-guest-layout class="w-full md:w-[60%] lg:w-[30%]">
     <div class="flex flex-col text-center py-10">
         <h1 class="text-3xl font-bold p-2">Enter the Code</h1>
         <span class="p-1">Enter the 5-digit code sent to your phone. Be careful not to share the code with anyone</span>

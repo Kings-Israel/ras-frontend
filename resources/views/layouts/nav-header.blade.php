@@ -16,7 +16,7 @@
         @csrf
      </form>
     <a href="{{ route('vendor.storefront') }}" class="">
-        <x-primary-outline-button class="text-sm text-orange-500 bg-orange-200">
+        <x-primary-outline-button class="text-sm text-orange-500 bg-orange-200 focus:text-white">
             View Storefront
             <i class="fas fa-chevron-right pl-2"></i>
         </x-primary-outline-button>

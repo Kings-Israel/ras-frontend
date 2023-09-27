@@ -2,7 +2,6 @@
 
 namespace App\Http;
 
-use App\Http\Middleware\EnsurePhoneVerified;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -65,7 +64,8 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'phone_verified' => EnsurePhoneVerified::class,
+        'phone_verified' => \App\Http\Middleware\EnsurePhoneVerified::class,
+        'has_registered_business' => \App\Http\Middleware\HasRegisteredBusiness::class,
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
     ];
 }

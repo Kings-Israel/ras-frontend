@@ -1,22 +1,31 @@
-<x-guest-layout>
+<x-guest-layout class="w-full md:w-[70%] lg:w-[40%]">
     <div class="flex flex-col text-center py-3">
         <h1 class="text-3xl font-bold p-2">{{ Str::ucfirst($type) }} Sign Up</h1>
-        <span class="p-1">Your Gateway to Finding Awesome Products Across The Continent</span>
+        <span class="p-1">Your Gateway to Finding and Selling Awesome Products Across The Continent</span>
     </div>
     <form method="POST" action="{{ route('register') }}">
         @csrf
         <input type="hidden" name="role" value="{{ $type }}">
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+            <!-- First Name -->
+            <div>
+                <x-input-label for="first_name" :value="__('First Name')" />
+                <x-text-input id="first_name" class="block mt-1 w-full" type="text" name="first_name" :value="old('first_name')" required autofocus autocomplete="first_name" />
+                <x-input-error :messages="$errors->get('first_name')" class="mt-2" />
+            </div>
+
+            <!-- Last Name -->
+            <div>
+                <x-input-label for="last_name" :value="__('Last Name')" />
+                <x-text-input id="last_name" class="block mt-1 w-full" type="text" name="last_name" :value="old('last_name')" required autocomplete="last_name" />
+                <x-input-error :messages="$errors->get('last_name')" class="mt-2" />
+            </div>
         </div>
 
         <!-- Email Address -->
         <div class="mt-3">
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
+            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="email" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
@@ -39,7 +48,7 @@
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
-        <div class="flex mt-3">
+        <div class="flex mt-3 justify-between">
             <a href="#" class="">
                 <x-secondary-outline-button>
                     {{ __('Help') }}

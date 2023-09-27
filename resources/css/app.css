@@ -67,13 +67,16 @@
     color: #f9760b;
 }
 
-@media only screen and (min-width: 767px)  {
-    /* .messages {
-        min-height: 610px !important;
-        max-height: 720px !important;
-    } */
+#FileUpload.active {
+    box-shadow: 0 0 0 3px rgba(164, 202, 254, 0.45);
+    border-color: #a4cafe;
 }
 
-@media only screen and (max-width: 767px)  {
+@media(max-width:1699.98px) {
+}
 
+@media(max-width:575.98px) {
+}
+
+@media(max-width:369.98px) {
 }

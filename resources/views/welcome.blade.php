@@ -45,18 +45,9 @@
             </div>
             <div class="lg:w-3/5 mx-2 lg:mx-auto">
                 <div class="flex flex-wrap justify-center lg:justify-start gap-1 lg:gap-2 mt-2">
-                    <x-badge class="bg-violet-100 font-thin" text="Minerals"></x-badge>
-                    <x-badge class="bg-violet-100 font-thin" text="Natural"></x-badge>
-                    <x-badge class="bg-violet-100 font-thin" text="Wines"></x-badge>
-                    <x-badge class="bg-violet-100 font-thin" text="Fruits"></x-badge>
-                    <x-badge class="bg-violet-100 font-thin" text="Seedlings"></x-badge>
-                    <x-badge class="bg-violet-100 font-thin" text="Ornaments"></x-badge>
-                    <x-badge class="bg-violet-100 font-thin" text="Building Material"></x-badge>
-                    <x-badge class="bg-violet-100 font-thin" text="Automobile"></x-badge>
-                    <x-badge class="bg-violet-100 font-thin" text="Paint"></x-badge>
-                    <x-badge class="bg-violet-100 font-thin" text="Stationery"></x-badge>
-                    <x-badge class="bg-violet-100 font-thin" text="Machinery"></x-badge>
-                    <x-badge class="bg-violet-100 font-thin" text="Animal Food"></x-badge>
+                    @foreach ($categories as $category)
+                        <x-badge class="bg-violet-100 font-thin" text="{{ $category->name }}"></x-badge>
+                    @endforeach
                     <x-badge class="bg-orange-500 text-white font-thin" text="All Categories"></x-badge>
                 </div>
             </div>
@@ -69,60 +60,21 @@
                     <i class="fas fa-map-marker-alt my-auto text-red-600 mr-1"></i>
                     <h2 class="font-extrabold text-gray-500 truncate">Show products/suppliers available in</h2>
                 </div>
-                <form class="">
-                    <div class="flex px-1">
-                        <div class="relative w-full">
-                            <i class="fas fa-search absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none text-xl"></i>
-                            <input type="search" id="search-dropdown" class="pl-8 shadow-md block w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-md border-2 border-gray-200 focus:ring-1 focus:ring-orange-500 focus:border-orange-500 dark:bg-orange-700 dark:border-l-orange-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-orange-500 transition duration-250" placeholder="Search Location" required>
-                        </div>
-                    </div>
-                </form>
-                <div class="flex gap-2 px-2 text-gray-500">
-                    <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
-                    <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                    <h2 class="font-bold">Kenya</h2>
-                </div>
-                <div class="flex gap-2 px-2 text-gray-600 text-sm">
-                    <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
-                    <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                    <h2 class="font-bold">Ethiopia</h2>
-                </div>
-                <div class="flex gap-2 px-2 text-gray-600 text-sm">
-                    <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
-                    <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                    <h2 class="font-bold">Rwanda</h2>
-                </div>
-                <div class="flex gap-2 px-2 text-gray-600 text-sm">
-                    <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
-                    <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                    <h2 class="font-bold">South Africa</h2>
-                </div>
-                <div class="flex gap-2 px-2 text-gray-600 text-sm">
-                    <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
-                    <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                    <h2 class="font-bold">Ghana</h2>
-                </div>
-                <div class="flex gap-2 px-1 text-gray-600 text-sm">
-                    <a
-                        href="#"
-                        class="text-sm font-semibold inline-flex items-center rounded-lg text-orange-400 hover:text-orange-500 dark:hover:text-orange-500  hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-1">
-                        Show More
-                    </a>
-                </div>
+                <livewire:home-countries-view />
             </div>
         </div>
         <div class="basis-5/6 space-y-2">
-            <div class="hidden md:grid md:grid-cols-1 lg:grid-cols-2 4xl:grid-cols-3">
-                <div>
+            <div class="hidden md:grid md:grid-cols-1 lg:grid-cols-2 4xl:flex">
+                <div class="4xl:basis-1/2">
                     <div class="md:flex gap-1">
                         <h3 class="font-semibold text-lg">New Buying Leads</h3>
                         <h4 class="font-thin text-lg">(12)</h4>
                     </div>
                     <div class="relative" id="default-carousel" data-carousel="static">
-                        <div class="relative overflow-hidden rounded-lg h-32">
+                        <div class="relative overflow-hidden rounded-lg h-40">
                             <div class="hidden" data-carousel-item>
-                                <div class="grid grid-cols-3 space-x-1 ml-2 mr-2 pl-10 border border-gray-300 rounded-md p-5 min-h-[128px]">
-                                    <div class="space-y-2 w-32 my-auto">
+                                <div class="grid grid-cols-3 space-x-1 ml-2 mr-2 pl-10 border border-gray-300 rounded-md p-5 h-40 min-h-[128px]">
+                                    <div class="space-y-6 w-32 my-auto">
                                         <div class="flex gap-2">
                                             <img src="https://flagcdn.com/w40/ug.png" srcset="https://flagcdn.com/w40/ug.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
                                             <div class="my-auto">
@@ -132,7 +84,7 @@
                                         </div>
                                         <h4 class="text-sm text-gray-500">We Buy Crude Oil</h4>
                                     </div>
-                                    <div class="space-y-2 w-32 my-auto">
+                                    <div class="space-y-6 w-32 my-auto">
                                         <div class="flex gap-2">
                                             <img src="https://flagcdn.com/w40/ng.png" srcset="https://flagcdn.com/w40/ng.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
                                             <div class="my-auto">
@@ -142,7 +94,7 @@
                                         </div>
                                         <h4 class="text-sm text-gray-500 whitespace-normal">We Buy Refined Coconut Oil</h4>
                                     </div>
-                                    <div class="space-y-2 w-32 my-auto">
+                                    <div class="space-y-6 w-32 my-auto">
                                         <div class="flex gap-2">
                                             <img src="https://flagcdn.com/w40/ke.png" srcset="https://flagcdn.com/w40/ke.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
                                             <div class="my-auto">
@@ -155,8 +107,8 @@
                                 </div>
                             </div>
                             <div class="hidden" data-carousel-item>
-                                <div class="grid grid-cols-3 space-x-1 ml-2 mr-2 pl-10 border border-gray-300 rounded-md p-5 min-h-[128px]">
-                                    <div class="space-y-2 pr-2 w-32 my-auto">
+                                <div class="grid grid-cols-3 space-x-1 ml-2 mr-2 pl-10 border border-gray-300 rounded-md p-5 h-40 min-h-[128px]">
+                                    <div class="space-y-6 pr-2 w-32 my-auto">
                                         <div class="flex gap-2">
                                             <img src="https://flagcdn.com/w40/tz.png" srcset="https://flagcdn.com/w40/tz.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
                                             <div class="my-auto">
@@ -166,7 +118,7 @@
                                         </div>
                                         <h4 class="text-sm text-gray-500">We Buy Crude Oil</h4>
                                     </div>
-                                    <div class="space-y-2 pr-2 w-32 my-auto">
+                                    <div class="space-y-6 pr-2 w-32 my-auto">
                                         <div class="flex gap-2">
                                             <img src="https://flagcdn.com/w40/za.png" srcset="https://flagcdn.com/w40/za.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
                                             <div class="my-auto">
@@ -176,7 +128,7 @@
                                         </div>
                                         <h4 class="text-sm text-gray-500 whitespace-normal">We Buy Refined Coconut Oil</h4>
                                     </div>
-                                    <div class="space-y-2 w-32 my-auto">
+                                    <div class="space-y-6 w-32 my-auto">
                                         <div class="flex gap-2">
                                             <img src="https://flagcdn.com/w40/et.png" srcset="https://flagcdn.com/w40/et.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
                                             <div class="my-auto">
@@ -191,29 +143,29 @@
                         </div>
                         <!-- Slider controls -->
                         <button type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full cursor-pointer group focus:outline-none" data-carousel-prev>
-                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 dark:group-focus:ring-gray-800/70 group-focus:outline-none">
                                 <i class="fas fa-chevron-left"></i>
                                 <span class="sr-only">Previous</span>
                             </span>
                         </button>
                         <button type="button" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full cursor-pointer group focus:outline-none" data-carousel-next>
-                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 dark:group-focus:ring-gray-800/70 group-focus:outline-none">
                                 <i class="fas fa-chevron-right"></i>
                                 <span class="sr-only">Next</span>
                             </span>
                         </button>
                     </div>
                 </div>
-                <div>
+                <div class="4xl:basis-1/2">
                     <div class="flex gap-1">
                         <h3 class="font-semibold text-lg">New Selling Leads</h3>
                         <h4 class="font-thin text-lg">(387)</h4>
                     </div>
                     <div class="relative" id="default-carousel" data-carousel="static">
-                        <div class="relative overflow-hidden rounded-lg h-32">
+                        <div class="relative overflow-hidden rounded-lg h-40">
                             <div class="hidden" data-carousel-item>
-                                <div class="grid grid-cols-3 space-x-1 ml-2 mr-2 pl-10 border border-gray-300 min-h-[128px] rounded-md p-5">
-                                    <div class="space-y-2 w-32 my-auto">
+                                <div class="grid grid-cols-3 space-x-1 ml-2 mr-2 pl-10 border border-gray-300 h-40 min-h-[128px] rounded-md p-5">
+                                    <div class="space-y-6 w-32 my-auto">
                                         <div class="flex gap-2">
                                             <img src="https://flagcdn.com/w40/gh.png" srcset="https://flagcdn.com/w40/gh.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
                                             <div class="my-auto">
@@ -223,7 +175,7 @@
                                         </div>
                                         <h4 class="text-sm text-gray-500">We Sell Oil</h4>
                                     </div>
-                                    <div class="space-y-2 w-32 my-auto">
+                                    <div class="space-y-6 w-32 my-auto">
                                         <div class="flex gap-2">
                                             <img src="https://flagcdn.com/w40/cd.png" srcset="https://flagcdn.com/w40/cd.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
                                             <div class="my-auto">
@@ -233,7 +185,7 @@
                                         </div>
                                         <h4 class="text-sm text-gray-500 whitespace-normal">We Sell Diamonds</h4>
                                     </div>
-                                    <div class="space-y-2 w-32 my-auto">
+                                    <div class="space-y-6 w-32 my-auto">
                                         <div class="flex gap-2">
                                             <img src="https://flagcdn.com/w40/na.png" srcset="https://flagcdn.com/w40/na.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
                                             <div class="my-auto">
@@ -246,8 +198,8 @@
                                 </div>
                             </div>
                             <div class="hidden" data-carousel-item>
-                                <div class="grid grid-cols-3 space-x-1 ml-2 mr-2 pl-10 border border-gray-300 rounded-md p-5 min-h-[128px]">
-                                    <div class="space-y-2 pr-2 w-32 my-auto">
+                                <div class="grid grid-cols-3 space-x-1 ml-2 mr-2 pl-10 border border-gray-300 rounded-md p-5 h-40 min-h-[128px]">
+                                    <div class="space-y-6 pr-2 w-32 my-auto">
                                         <div class="flex gap-2">
                                             <img src="https://flagcdn.com/w40/rw.png" srcset="https://flagcdn.com/w40/rw.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
                                             <div class="my-auto">
@@ -257,7 +209,7 @@
                                         </div>
                                         <h4 class="text-sm text-gray-500">We Sell Gold</h4>
                                     </div>
-                                    <div class="space-y-2 pr-2 w-32 my-auto">
+                                    <div class="space-y-6 pr-2 w-32 my-auto">
                                         <div class="flex gap-2">
                                             <img src="https://flagcdn.com/w40/za.png" srcset="https://flagcdn.com/w40/za.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
                                             <div class="my-auto">
@@ -267,7 +219,7 @@
                                         </div>
                                         <h4 class="text-sm text-gray-500 whitespace-normal">We Sell Bananas</h4>
                                     </div>
-                                    <div class="space-y-2 w-32 my-auto">
+                                    <div class="space-y-6 w-32 my-auto">
                                         <div class="flex gap-2">
                                             <img src="https://flagcdn.com/w40/et.png" srcset="https://flagcdn.com/w40/et.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
                                             <div class="my-auto">
@@ -282,30 +234,35 @@
                         </div>
                         <!-- Slider controls -->
                         <button type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full cursor-pointer group focus:outline-none" data-carousel-prev>
-                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 dark:group-focus:ring-gray-800/70 group-focus:outline-none">
                                 <i class="fas fa-chevron-left"></i>
                                 <span class="sr-only">Previous</span>
                             </span>
                         </button>
                         <button type="button" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full cursor-pointer group focus:outline-none" data-carousel-next>
-                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 dark:group-focus:ring-gray-800/70 group-focus:outline-none">
                                 <i class="fas fa-chevron-right"></i>
                                 <span class="sr-only">Next</span>
                             </span>
                         </button>
                     </div>
                 </div>
-                {{-- <div class="">
-                    <div class="flex gap-1">
-                        <h3 class="font-semibold text-lg">Your Buying Requests</h3>
-                    </div>
-                    <x-card class="bg-gray-300 rounded-md">
-                        <div class="flex gap-2 w-full justify-end">
-                            <h6 class="text-sm">Email</h6>
-                            <h6 class="text-sm">oolooaloo@dist.co.ke</h6>
+                @auth
+                    <div class="hidden 4xl:block 4xl:basis-1/3">
+                        <div class="flex gap-1">
+                            <h3 class="font-semibold text-lg">Your Buying Requests</h3>
                         </div>
-                    </x-card>
-                </div> --}}
+                        <div class="bg-gray-200 rounded-md p-2">
+                            <div class="flex gap-2 w-full justify-end">
+                                <h6 class="text-sm">Email:</h6>
+                                <h6 class="text-sm font-bold">oolooaloo@dist.co.ke</h6>
+                                <i class="fas fa-chevron-down text-sm"></i>
+                            </div>
+                            <textarea name="" rows="3" class="w-full border border-gray-300 rounded-lg placeholder-gray-400" placeholder="Enter Your Message Here..."></textarea>
+                            <x-primary-button class="w-full">Submit</x-primary-button>
+                        </div>
+                    </div>
+                @endauth
             </div>
 
             <div class="products">
