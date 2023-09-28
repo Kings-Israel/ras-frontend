@@ -45,9 +45,9 @@
         <h2 class="font-extrabold text-sm">Top Countries</h2>
         <ul class="grid grid-cols-2 list-disc">
             <li class="flex gap-2">
-                <i class="fas fa-circle mt-1 text-green-400 text-xs"></i>
+                <i class="fas fa-circle mt-1 text-secondary-six text-xs"></i>
                 <div class="flex flex-col">
-                    <span class="text-sm text-gray-500">
+                    <span class="text-sm font-semibold text-gray-500">
                         Namibia
                     </span>
                     <span class="font-bold">65%</span>
@@ -56,21 +56,21 @@
             <li class="flex gap-2">
                 <i class="fas fa-circle mt-1 text-green-800 text-xs"></i>
                 <div class="flex flex-col">
-                    <span class="text-sm text-gray-500">Tanzania</span>
+                    <span class="text-sm font-semibold text-gray-500">Tanzania</span>
                     <span class="font-bold">18%</span>
                 </div>
             </li>
             <li class="flex gap-2">
-                <i class="fas fa-circle text-yellow-600 text-xs mt-1"></i>
+                <i class="fas fa-circle text-primary-two text-xs mt-1"></i>
                 <div class="flex flex-col">
-                    <span class="text-sm text-gray-500">Zimbabwe</span>
+                    <span class="text-sm font-semibold text-gray-500">Zimbabwe</span>
                     <span class="font-bold">12%</span>
                 </div>
             </li>
             <li class="flex gap-2">
-                <i class="fas fa-circle mt-1 text-cyan-400 text-xs"></i>
+                <i class="fas fa-circle mt-1 text-secondary-five text-xs"></i>
                 <div class="flex flex-col">
-                    <span class="text-sm text-gray-500">Rwanda</span>
+                    <span class="text-sm font-semibold text-gray-500">Rwanda</span>
                     <span class="font-bold">2%%</span>
                 </div>
             </li>

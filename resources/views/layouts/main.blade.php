@@ -8,7 +8,7 @@
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,600,800,900,1100&display=swap" rel="stylesheet" />
+        <link href="https://fonts.bunny.net/css?family=figtree:200,400,500,600,700,800,900,1100&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="{{ asset('assets/fontawesome/css/all.min.css') }}">
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -32,7 +32,7 @@
                 if (scroll > scrollThreshold) {
                     // Apply the background color to the body element
                     $('#main-header').css('background-color', '#ffffff');
-                    $('#main-header').css('border-bottom', '2px solid #ea580c');
+                    $('#main-header').css('border-bottom', '2px solid #EE5D32');
                 } else {
                     $('#main-header').css('background-color', 'transparent');
                     $('#main-header').css('border-bottom', 'none');

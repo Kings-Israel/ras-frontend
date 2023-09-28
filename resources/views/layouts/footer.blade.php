@@ -21,8 +21,9 @@
         </div>
 
         <div class="grid md:flex md:justify-between">
-            <a href="{{ url('/') }}" class="mx-auto py-2 md:mx-0 md:py-0">
-                <x-application-logo class="w-12 h-12 fill-current text-white" />
+            <a href="{{ url('/') }}" class="mx-auto md:mx-0 md:py-0">
+                {{-- <x-application-logo class="w-12 h-12 object-cover" /> --}}
+                <img src="{{ asset('assets/img/logo-alt.png') }}" class="w-[10rem] h-[10rem] object-contain -my-6" alt="">
             </a>
             <ul class="md:list-none flex flex-wrap justify-center md:justify-end space-x-2 md:space-x-4 lg:space-x-6 my-auto">
                 <li class="text-sm">Overview</li>
