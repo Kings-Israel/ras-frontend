@@ -24,10 +24,6 @@ Route::get('/product', function () {
     return view('product');
 })->name('product');
 
-Route::get('/dashboard', function () {
-    return view('vendor.dashboard');
-})->name('dashboard');
-
 Route::middleware(['auth', 'phone_verified', 'role:buyer'])->group(function () {
     Route::get('/cart', function() {
         return view('cart');
@@ -68,19 +64,19 @@ Route::middleware(['auth', 'phone_verified', 'role:vendor', 'has_registered_busi
             }
         })->name('messages.chat');
         Route::get('/customers', function () {
-            return view('vendor.customers');
+            return view('business.customers');
         })->name('customers');
         Route::get('/payments', function () {
-            return view('vendor.payments');
+            return view('business.payments');
         })->name('payments');
         Route::get('/warehouses', function () {
-            return view('vendor.warehouses');
+            return view('business.warehouses');
         })->name('warehouses');
         Route::get('/suppliers', function () {
-            return view('vendor.suppliers');
+            return view('business.suppliers');
         })->name('suppliers');
         Route::get('/profile', function() {
-            return view('vendor.profile');
+            return view('business.profile');
         })->name('profile');
     });
     // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -72,10 +72,10 @@ class VerifyPhoneController extends Controller
                     return redirect()->route('auth.business.create');
                 }
 
-                return redirect()->intended('vendor.dashboard');
+                return redirect()->intended('/vendor');
             }
 
-            return redirect()->intended('dashboard');
+            return redirect()->intended('/');
         }
 
         if ($request->user()->markEmailAsVerified()) {
@@ -88,9 +88,9 @@ class VerifyPhoneController extends Controller
                 return redirect()->route('auth.business.create');
             }
 
-            return redirect()->intended('vendor.dashboard');
+            return redirect()->intended('/vendor');
         }
 
-        return redirect()->intended('dashboard');
+        return redirect()->intended('/');
     }
 }
