@@ -1,4 +1,4 @@
-<div class="mx-auto px-2 md:px-8 lg:px-32 py-6 border-t-2 border-gray-200">
+<div class="mx-auto px-2 md:px-8 lg:px-24 py-6 border-t-2 border-gray-200">
     <div class="md:h-10 md:flex justify-between">
         <div class="flex gap-1">
             <span class="w-12 h-12 bg-gray-300 rounded-full text-center pt-3 font-bold text-white">E</span>
@@ -42,7 +42,7 @@
         </form>
     </div>
 </div>
-<div class="bg-red-800 mx-auto px-2 md:px-8 lg:px-32 py-2 sticky top-16 z-30">
+<div class="bg-red-800 mx-auto px-2 md:px-8 lg:px-24 py-2 sticky top-20 z-30">
     <div class="h-8 flex justify-center lg:justify-start">
         <ul class="list-desc flex gap-4 md:gap-8 text-white font-sans my-auto">
             <li class="cursor-pointer">

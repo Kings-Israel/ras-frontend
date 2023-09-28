@@ -68,7 +68,7 @@
             </div>
             <div class="mt-4">
                 <div class="flex gap-6">
-                    <span class="font-extrabold text-orange-400 underline underline-offset-2 decoration-4">All Orders</span>
+                    <span class="font-extrabold text-primary-one underline underline-offset-2 decoration-4">All Orders</span>
                     <span class="font-extrabold text-gray-400">Paid</span>
                     <span class="font-extrabold text-gray-400">Unpaid</span>
                     <span class="font-extrabold text-gray-400">Cancelled</span>
@@ -381,7 +381,7 @@
                         height: "120%",
                         maxWidth: "120%",
                         type: "area",
-                        fontFamily: "Inter, sans-serif",
+                        fontFamily: "Century Gothic, sans-serif",
                         dropShadow: {
                             enabled: false,
                         },
@@ -401,7 +401,7 @@
                             opacityFrom: 0.4,
                             opacityTo: 0,
                             shade: "#fb923c",
-                            gradientToColors: ["#f97316"],
+                            gradientToColors: ["#EE5D32"],
                         },
                     },
                     dataLabels: {
@@ -423,7 +423,7 @@
                         {
                             name: "Sales",
                             data: [6500, 6418, 6456, 6526, 6356, 6456],
-                            color: "#f97316",
+                            color: "#EE5D32",
                         },
                     ],
                     xaxis: {

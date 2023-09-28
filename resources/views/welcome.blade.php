@@ -2,19 +2,19 @@
     <div class="bg-hero bg-cover bg-no-repeat lg:h-[500px] -mt-24 pt-24">
         <div class="flex flex-col mx-auto py-8 sm:px-20 md:px-24 lg:px-32 z-50 space-y-3">
             <h1 class="text-2xl md:text-2xl lg:text-4xl font-[600] md:font-[800] lg:font-[1100] text-center hero-main-text">Find The Best Products, From Top Notch Suppliers</h1>
-            <h5 class="text-center px-8 md:px-12 lg:px-52">Real African Sources is where to go to easily access raw materials and business opportunities from vetted suppliers across Africa.</h5>
+            <h5 class="text-center font-semibold px-8 md:px-12 lg:px-52">Real African Sources is where to go to easily access raw materials and business opportunities from vetted suppliers across Africa.</h5>
             <label for="themeSwitcherThree" class="themeSwitcherThree relative inline-flex cursor-pointer select-none items-center justify-center my-2">
                 <input type="checkbox" name="themeSwitcherThree" id="themeSwitcherThree" class="sr-only">
 
-                <div class="shadow-card flex h-[32px] w-[172px] items-center justify-between rounded-full bg-white border border-orange-500" id="switch-toggle" onclick="toggleTheme()">
-                    <h4 id="products-toggle" class="bg-orange-500 px-3 rounded-full text-white ml-1 transition duration-200 ease-out font-semibold">Products</h4>
-                    <h4 id="vendors-toggle" class="mr-2 transition duration-200 ease-out font-semibold">Vendors</h4>
+                <div class="shadow-card flex h-[40px] w-[186px] items-center justify-between rounded-full bg-white border border-orange-500" id="switch-toggle" onclick="toggleTheme()">
+                    <h4 id="products-toggle" class="bg-orange-500 px-4 py-1 rounded-full text-white ml-1 transition duration-200 ease-out font-semibold">Products</h4>
+                    <h4 id="vendors-toggle" class="mr-2 transition duration-200 ease-out">Vendors</h4>
                 </div>
             </label>
             <div class="lg:w-3/5 mx-2 lg:mx-auto">
                 <form class="">
                     <div class="flex">
-                        <button id="dropdown-button" data-dropdown-toggle="store-dropdown" data-dropdown-placement="bottom" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-2 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600" type="button">
+                        <button id="dropdown-button" data-dropdown-toggle="store-dropdown" data-dropdown-placement="bottom" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-bold text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-2 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600" type="button">
                             All Items
                             <svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
@@ -38,7 +38,7 @@
                         </div>
                         <div class="relative w-full">
                             <i class="fas fa-search absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none text-xl"></i>
-                            <input type="search" id="search-dropdown" class="pl-10 block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-200 focus:ring-orange-500 focus:border-orange-500 dark:bg-orange-700 dark:border-l-orange-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500 transition duration-250" placeholder="What Are You Looking For..." required>
+                            <input type="search" id="search-dropdown" class="pl-10 block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-200 placeholder:font-semibold focus:ring-primary-one focus:border-primary-one dark:bg-orange-700 dark:border-l-orange-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-primary-one transition duration-250" placeholder="What Are You Looking For..." required>
                         </div>
                     </div>
                 </form>
@@ -46,9 +46,9 @@
             <div class="lg:w-3/5 mx-2 lg:mx-auto">
                 <div class="flex flex-wrap justify-center lg:justify-start gap-1 lg:gap-2 mt-2">
                     @foreach ($categories as $category)
-                        <x-badge class="bg-violet-100 font-thin" text="{{ $category->name }}"></x-badge>
+                        <x-badge class="bg-violet-100 font-semibold" text="{{ $category->name }}"></x-badge>
                     @endforeach
-                    <x-badge class="bg-orange-500 text-white font-thin" text="All Categories"></x-badge>
+                    <x-badge class="bg-orange-500 text-white font-semibold" text="All Categories"></x-badge>
                 </div>
             </div>
         </div>
@@ -562,17 +562,17 @@
 
         function switchTheme (){
             if (isProductmode) {
-                productsToggle.classList.add('bg-orange-500', 'px-3', 'rounded-full', 'text-white', 'ml-1');
+                productsToggle.classList.add('bg-orange-500', 'px-4', 'py-1', 'rounded-full', 'text-white', 'ml-1', 'font-semibold');
                 productsToggle.classList.remove('text-black', 'ml-2')
-                vendorsToggle.classList.remove('bg-orange-500', 'px-3', 'rounded-full', 'text-white')
+                vendorsToggle.classList.remove('bg-orange-500', 'px-4', 'py-1', 'rounded-full', 'text-white', 'font-semibold')
                 vendorsToggle.classList.add('text-black', 'mr-2')
                 productsList.classList.remove('hidden')
                 vendorsList.classList.add('hidden')
             } else {
-                productsToggle.classList.remove('bg-orange-500', 'px-3', 'rounded-full', 'ml-1', 'text-white')
+                productsToggle.classList.remove('bg-orange-500', 'px-4', 'py-1', 'rounded-full', 'ml-1', 'text-white', 'font-semibold')
                 productsToggle.classList.add('text-black', 'ml-2')
                 productsList.classList.add('hidden')
-                vendorsToggle.classList.add('bg-orange-500', 'px-3', 'rounded-full', 'text-white', 'mr-1')
+                vendorsToggle.classList.add('bg-orange-500', 'px-4', 'py-1', 'rounded-full', 'text-white', 'mr-1', 'font-semibold')
                 vendorsToggle.classList.remove('mr-2')
                 vendorsList.classList.remove('hidden')
             }

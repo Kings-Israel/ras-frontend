@@ -13,15 +13,25 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['Century Gothic', ...defaultTheme.fontFamily.sans],
             },
             backgroundImage: {
                 'auth': "url('/public/assets/img/6CeuCO.jpg')",
-                'hero': "url('/public/assets/img/index.jpg')",
+                'hero': "url('/public/assets/img/banner.png')",
             },
             screens: {
                 '4xl': '1900px'
-            }
+            },
+            colors: {
+                'primary-one': '#EE5D32',
+                'primary-two': '#6F1310',
+                'secondary-one': '#FFE5D3',
+                'secondary-two': '#F2F2F2',
+                'secondary-three': '#FFFFFF',
+                'secondary-four': '#F9CB0B',
+                'secondary-five': '#30D1D1',
+                'secondary-six': '#00D666',
+            },
         },
     },
 
