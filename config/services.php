@@ -34,4 +34,9 @@ return [
         'key' => env('AFRICASTALKING_API_KEY'),
         'username' => env('AFRICASTALKING_USERNAME')
     ],
+    'jambopay' => [
+        // SMS
+        'sms_client_id' => env('JAMBOPAY_SMS_CLIENT_ID'),
+        'sms_client_secret' => env('JAMBOPAY_SMS_CLIENT_SECRET'),
+    ],
 ];
