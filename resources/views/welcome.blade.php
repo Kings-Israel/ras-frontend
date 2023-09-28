@@ -6,9 +6,9 @@
             <label for="themeSwitcherThree" class="themeSwitcherThree relative inline-flex cursor-pointer select-none items-center justify-center my-2">
                 <input type="checkbox" name="themeSwitcherThree" id="themeSwitcherThree" class="sr-only">
 
-                <div class="shadow-card flex h-[40px] w-[186px] items-center justify-between rounded-full bg-white border border-orange-500" id="switch-toggle" onclick="toggleTheme()">
-                    <h4 id="products-toggle" class="bg-orange-500 px-4 py-1 rounded-full text-white ml-1 transition duration-200 ease-out font-semibold">Products</h4>
-                    <h4 id="vendors-toggle" class="mr-2 transition duration-200 ease-out">Vendors</h4>
+                <div class="shadow-card flex h-[40px] w-[192px] items-center justify-between rounded-full bg-white border border-orange-500 p-1" id="switch-toggle" onclick="toggleTheme()">
+                    <h4 id="products-toggle" class="bg-orange-500 px-4 py-1 rounded-full text-white ml-3 transition duration-200 ease-out font-semibold">Products</h4>
+                    <h4 id="vendors-toggle" class="transition duration-200 ease-out mr-4">Vendors</h4>
                 </div>
             </label>
             <div class="lg:w-3/5 mx-2 lg:mx-auto">
@@ -562,18 +562,18 @@
 
         function switchTheme (){
             if (isProductmode) {
-                productsToggle.classList.add('bg-orange-500', 'px-4', 'py-1', 'rounded-full', 'text-white', 'ml-1', 'font-semibold');
-                productsToggle.classList.remove('text-black', 'ml-2')
+                productsToggle.classList.add('bg-orange-500', 'px-4', 'py-1', 'rounded-full', 'text-white', 'ml-3', 'font-semibold');
+                productsToggle.classList.remove('text-black', 'ml-3')
                 vendorsToggle.classList.remove('bg-orange-500', 'px-4', 'py-1', 'rounded-full', 'text-white', 'font-semibold')
-                vendorsToggle.classList.add('text-black', 'mr-2')
+                vendorsToggle.classList.add('text-black', 'mr-4')
                 productsList.classList.remove('hidden')
                 vendorsList.classList.add('hidden')
             } else {
-                productsToggle.classList.remove('bg-orange-500', 'px-4', 'py-1', 'rounded-full', 'ml-1', 'text-white', 'font-semibold')
-                productsToggle.classList.add('text-black', 'ml-2')
+                productsToggle.classList.remove('bg-orange-500', 'px-4', 'py-1', 'rounded-full', 'ml-3', 'text-white', 'font-semibold')
+                productsToggle.classList.add('text-black', 'ml-3')
                 productsList.classList.add('hidden')
-                vendorsToggle.classList.add('bg-orange-500', 'px-4', 'py-1', 'rounded-full', 'text-white', 'mr-1', 'font-semibold')
-                vendorsToggle.classList.remove('mr-2')
+                vendorsToggle.classList.add('bg-orange-500', 'px-4', 'py-1', 'rounded-full', 'text-white', 'font-semibold', 'mr-4')
+                vendorsToggle.classList.remove('mr-4')
                 vendorsList.classList.remove('hidden')
             }
         }

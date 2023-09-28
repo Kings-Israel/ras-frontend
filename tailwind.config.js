@@ -13,7 +13,7 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Century Gothic', ...defaultTheme.fontFamily.sans],
+                sans: ['CenturyGothic', ...defaultTheme.fontFamily.sans],
             },
             backgroundImage: {
                 'auth': "url('/public/assets/img/6CeuCO.jpg')",
