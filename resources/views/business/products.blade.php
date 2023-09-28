@@ -4,7 +4,7 @@
     <div class="p-3 sm:ml-64 lg:grid lg:grid-cols-4 lg:divide-x">
         <div class="p-3 md:col-span-3">
             <div x-data="{ show: false }">
-                <x-primary-button class="py-2 font-light bg-orange-600 tracking-wide -mt-2 mb-2 focus:ring-2 focus:ring-orange-600 px-8 text-sm" data-modal-target="add-product-modal" data-modal-toggle="add-product-modal">Add Product</x-primary-button>
+                <x-primary-button class="py-2 font-light bg-primary-one tracking-wide -mt-2 mb-2 focus:ring-2 focus:ring-primary-one px-8 text-sm" data-modal-target="add-product-modal" data-modal-toggle="add-product-modal">Add Product</x-primary-button>
 
                 <x-modal modal_id="add-product-modal">
                     <div class="relative w-full max-w-4xl max-h-full">

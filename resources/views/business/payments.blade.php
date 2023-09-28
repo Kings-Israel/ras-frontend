@@ -59,7 +59,7 @@
             </div>
             <h3 class="text-xl font-bold my-2 mt-4">Transaction</h3>
             <div class="flex gap-6">
-                <span class="font-extrabold text-orange-400 underline underline-offset-2 decoration-4">All Transaction</span>
+                <span class="font-extrabold text-primary-one underline underline-offset-2 decoration-4">All Transaction</span>
                 <span class="font-extrabold text-gray-400">Complete</span>
                 <span class="font-extrabold text-gray-400">Failed</span>
                 <span class="font-extrabold text-gray-400">In Progress</span>

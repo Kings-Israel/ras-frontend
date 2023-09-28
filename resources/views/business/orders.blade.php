@@ -94,9 +94,9 @@
                                 </li>
                             </ol>
                             <ol class="flex items-center w-full ml-5 my-3">
-                                <li class="flex w-full items-center text-orange-600 dark:text-orange-500 after:content-[''] after:w-full after:h-1 after:border-b after:border-orange-400 after:border-4 after:inline-block dark:after:border-orange-800">
+                                <li class="flex w-full items-center text-primary-one dark:text-primary-one after:content-[''] after:w-full after:h-1 after:border-b after:border-orange-400 after:border-4 after:inline-block dark:after:border-orange-800">
                                     <span class="flex items-center justify-center w-10 h-10 bg-orange-400 rounded-full lg:h-12 lg:w-12 dark:bg-orange-800 shrink-0">
-                                        <svg class="w-3.5 h-3.5 text-orange-600 lg:w-4 lg:h-4 dark:text-orange-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
+                                        <svg class="w-3.5 h-3.5 text-primary-one lg:w-4 lg:h-4 dark:text-primary-one" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5"/>
                                         </svg>
                                     </span>
@@ -141,9 +141,9 @@
                                     <div class="bg-gray-50 p-2">
                                         <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-52 h-40 mx-auto md:mx-0 object-cover rounded-md">
                                         <div class="flex justify-between mt-2 mx-8 md:mx-0">
-                                            <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-16 h-16 lg:w-18 lg:h-18 object-cover rounded-md border border-orange-400">
-                                            <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-16 h-16 lg:w-18 lg:h-18 object-cover rounded-md border border-orange-400">
-                                            <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-16 h-16 lg:w-18 lg:h-18 object-cover rounded-md border border-orange-400">
+                                            <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-16 h-16 lg:w-18 lg:h-18 object-cover rounded-md border border-primary-one">
+                                            <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-16 h-16 lg:w-18 lg:h-18 object-cover rounded-md border border-primary-one">
+                                            <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-16 h-16 lg:w-18 lg:h-18 object-cover rounded-md border border-primary-one">
                                         </div>
                                     </div>
                                 </div>
@@ -157,7 +157,7 @@
                                         <span class="text-gray-600">0000000</span>
                                     </div>
                                     <div class="flex justify-between py-2 gap-2">
-                                        <x-primary-outline-button class="w-full text-orange-400 justify-center">
+                                        <x-primary-outline-button class="w-full text-primary-one justify-center">
                                             <i class="fas fa-phone"></i>
                                             <span>Call</span>
                                         </x-primary-outline-button>
@@ -238,7 +238,7 @@
 
             <h3 class="text-xl font-bold my-2 mt-4">Recent Orders</h3>
             <div class="flex gap-6">
-                <span class="font-extrabold text-orange-400 underline underline-offset-2 decoration-4">All Orders</span>
+                <span class="font-extrabold text-primary-one underline underline-offset-2 decoration-4">All Orders</span>
                 <span class="font-extrabold text-gray-400">Paid</span>
                 <span class="font-extrabold text-gray-400">Unpaid</span>
                 <span class="font-extrabold text-gray-400">Cancelled</span>

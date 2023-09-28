@@ -12,12 +12,12 @@
                 <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded-full w-12 h-12 object-cover" alt="avatar">
                 <div class="pl-2">
                     <h3>Hello, {{ auth()->user()->last_name }}</h3>
-                    <h4 class="font-extrabold text-lg">{{ auth()->user()->business->name }}</h4>
+                    <h4 class="font-bold text-lg">{{ auth()->user()->business->name }}</h4>
                 </div>
             </div>
             <div>
                 <h5 class="">Earnings</h5>
-                <h3 class="font-extrabold text-lg">Ksh.3,794,883</h3>
+                <h3 class="font-bold text-lg">Ksh.3,794,883</h3>
             </div>
         </div>
         <ul class="md:pt-5 font-medium">
@@ -303,12 +303,12 @@
                                 clip-path: url(#clip-_1_5);
                                 }
 
-                                .dollar-bill {
-                                fill: #EE5D32;
+                                .cls-2 {
+                                fill: #fff;
                                 }
 
                                 .cls-3 {
-                                fill: #4f4f4f;
+                                fill: #EE5D32;
                                 }
                             </style>
                             <clipPath id="clip-_1_5">
@@ -317,7 +317,7 @@
                             </defs>
                             <g id="_1_5" data-name="1 – 5" class="cls-1">
                             <g id="Group_467" data-name="Group 467" transform="translate(4.071 7.119)">
-                                <rect id="Rectangle_1133" data-name="Rectangle 1133" class="dollar-bill" width="18" height="11" transform="translate(0.25 0.441)"/>
+                                <rect id="Rectangle_1133" data-name="Rectangle 1133" class="cls-2" width="18" height="11" transform="translate(0.25 0.441)"/>
                                 <path id="Icon_awesome-money-bill-alt" data-name="Icon awesome-money-bill-alt" class="cls-3" d="M10.371,11.1H9.9V8.507a.236.236,0,0,0-.236-.236h-.4a.706.706,0,0,0-.392.119l-.452.3a.236.236,0,0,0-.065.327l.262.392a.236.236,0,0,0,.327.065l.014-.009V11.1H8.486a.236.236,0,0,0-.236.236v.471a.236.236,0,0,0,.236.236h1.886a.236.236,0,0,0,.236-.236v-.471A.236.236,0,0,0,10.371,11.1Zm7.543-6.6H.943A.943.943,0,0,0,0,5.443v9.428a.943.943,0,0,0,.943.943H17.914a.943.943,0,0,0,.943-.943V5.443A.943.943,0,0,0,17.914,4.5Zm-16.5,9.9V12.514A1.886,1.886,0,0,1,3.3,14.4Zm0-6.6V5.914H3.3A1.886,1.886,0,0,1,1.414,7.8Zm8.014,5.657a3.092,3.092,0,0,1-2.829-3.3,3.092,3.092,0,0,1,2.829-3.3,3.092,3.092,0,0,1,2.829,3.3A3.092,3.092,0,0,1,9.428,13.457Zm8.014.943H15.557a1.886,1.886,0,0,1,1.886-1.886Zm0-6.6a1.886,1.886,0,0,1-1.886-1.886h1.886Z" transform="translate(0 -4.276)"/>
                             </g>
                             </g>

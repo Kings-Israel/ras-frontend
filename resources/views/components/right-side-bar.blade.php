@@ -1,8 +1,8 @@
 <div class="px-2">
     <div class="flex justify-between">
-        <h2 class="font-extrabold text-lg my-auto">Statistics</h2>
+        <h2 class="font-bold text-lg my-auto">Statistics</h2>
         <form action="#" method="POST" class="flex">
-            <label for="" class="text-gray-400 font-extrabold my-auto">Last:</label>
+            <label for="" class="text-gray-400 font-bold my-auto">Last:</label>
             <div class="relative">
                 <i class="fas fa-calendar absolute inset-y-0 left-0 flex items-center pl-1 pointer-events-none text-sm text-bold"></i>
                 <select name="reports-date-select" id="" class="border-none focus:ring-0 text-sm text-bold pl-7">
@@ -19,7 +19,7 @@
             </span>
             <div class="ml-2 overflow-x-auto">
                 <span class="text-sm">Orders</span>
-                <h1 class="text-xl font-extrabold">368</h1>
+                <h1 class="text-xl font-bold">368</h1>
             </div>
         </div>
         <div class="bg-rose-200 dark:bg-pink-100 p-3 rounded-md flex gap-2 mx-2">
@@ -28,7 +28,7 @@
             </span>
             <div class="ml-2 overflow-x-auto">
                 <span class="text-sm">Revenue</span>
-                <h1 class="text-xl font-extrabold">Ksh.30,685,338</h1>
+                <h1 class="text-xl font-bold">Ksh.30,685,338</h1>
             </div>
         </div>
         <div class="bg-gray-200 dark:bg-gray-200 p-3 rounded-md flex gap-2 mx-2">
@@ -37,12 +37,12 @@
             </span>
             <div class="ml-2 overflow-x-auto">
                 <span class="text-sm">Wallet Balance</span>
-                <h1 class="text-xl font-extrabold">Ksh.3,685,338</h1>
+                <h1 class="text-xl font-bold">Ksh.3,685,338</h1>
             </div>
         </div>
     </div>
     <div class="mt-10">
-        <h2 class="font-extrabold text-sm">Top Countries</h2>
+        <h2 class="font-bold text-sm">Top Countries</h2>
         <ul class="grid grid-cols-2 list-disc">
             <li class="flex gap-2">
                 <i class="fas fa-circle mt-1 text-secondary-six text-xs"></i>
