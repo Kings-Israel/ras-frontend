@@ -24,10 +24,6 @@ Route::get('/product', function () {
     return view('product');
 })->name('product');
 
-Route::get('/dashboard', function () {
-    return view('vendor.dashboard');
-})->name('dashboard');
-
 Route::middleware(['auth', 'phone_verified', 'role:buyer'])->group(function () {
     Route::get('/cart', function() {
         return view('cart');

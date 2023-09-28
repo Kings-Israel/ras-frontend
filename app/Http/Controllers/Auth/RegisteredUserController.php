@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Auth;
 use App\Helpers\NumberGenerator;
 use App\Http\Controllers\Controller;
 use App\Jobs\SendSMS;
+use App\Models\Country;
 use App\Models\Otp;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use App\Rules\PhoneNumber;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -33,6 +35,8 @@ class RegisteredUserController extends Controller
             $type = Session::get('type');
         }
 
+        // $countries = Country::orderBy('name', 'ASC')->get();
+
         return view('auth.register', compact('type'));
     }
 
@@ -47,7 +51,7 @@ class RegisteredUserController extends Controller
             'role' => ['required'],
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'phone_number' => ['required', 'string', 'unique:'.User::class],
+            'phone_number' => ['required', 'string', 'unique:'.User::class, new PhoneNumber],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', Rules\Password::defaults()],
         ]);

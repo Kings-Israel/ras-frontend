@@ -1,4 +1,4 @@
-<x-guest-layout class="my-auto">
+<x-guest-layout class="my-auto w-full md:w-[60%] lg:w-[30%]">
 
     <div class="flex flex-col text-center py-10">
         <h1 class="text-3xl font-bold p-2">Select Account Type</h1>
