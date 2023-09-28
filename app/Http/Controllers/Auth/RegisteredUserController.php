@@ -70,7 +70,7 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         $otp = Otp::generate($user->phone_number, 10);
-        // SendSMS::dispatchAfterResponse($user->phone_number, 'Your verification code is '.$otp->token);
+        SendSMS::dispatchAfterResponse($user->phone_number, 'Your verification code is '.$otp->token);
 
         Auth::login($user);
 
