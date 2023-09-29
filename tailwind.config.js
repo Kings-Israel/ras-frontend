@@ -20,6 +20,8 @@ export default {
                 // 'hero': "url('/ras/assets/img/index.jpg')",
                 'auth': "url('/ras/assets/img/6CeuCO.jpg')",
                 'hero': "url('/ras/assets/img/banner.png')",
+                'auth': "url('/ras/assets/img/6CeuCO.jpg')",
+                'auth-alt': "url('/ras/assets/img/auth-bg-1.png')",
             },
             screens: {
                 '4xl': '1900px'
