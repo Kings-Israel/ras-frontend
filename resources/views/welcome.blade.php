@@ -271,17 +271,25 @@
                     <h4 class="font-semibold text-sm">See All <i class="fas fa-arrow-circle-right"></i></h4>
                 </div>
                 <div class="space-y-2 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-4 4xl:grid-cols-5 gap-2 py-4">
-                    <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
-                        <a href="{{ route('product') }}">
-                            <img src="{{ asset('assets/img/6CeuCO.jpg') }}" class="rounded border-gray-200 w-full h-52 object-cover" alt="">
-                            <div class="">
-                                <h4 class="font-extrabold text-gray-500">Gold Bars</h4>
-                                <h4 class="font-extrabold uppercase text-gray-700">US $ 10.20 - US $ 400.37</h4>
-                                <h5 class="text-sm text-gray-500 font-semibold">Minimum Order: 20 Pieces</h5>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
+                    @foreach ($products as $product)
+                        <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
+                            <a href="{{ route('product', ['slug' => $product->slug]) }}">
+                                <img src="{{ $product->media->first()->file }}" class="rounded border-gray-200 w-full h-52 object-cover" alt="">
+                                <div class="">
+                                    <h4 class="font-extrabold text-gray-500">{{ $product->name }}</h4>
+                                    @if ($product->price)
+                                        <h4 class="font-extrabold uppercase text-gray-700">US $ {{ number_format($product->price) }}</h4>
+                                    @else
+                                        <h4 class="font-extrabold uppercase text-gray-700">US $ {{ number_format($product->min_price) }} - US $ {{ number_format($product->max_price) }}</h4>
+                                    @endif
+                                    @if ($product->min_order_quantity)
+                                        <h5 class="text-sm text-gray-500 font-semibold">Minimum Order: {{ $product->min_order_quantity }}</h5>
+                                    @endif
+                                </div>
+                            </a>
+                        </div>
+                    @endforeach
+                    {{-- <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
                         <a href="{{ route('product') }}">
                             <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded border border-gray-200 w-full h-52 object-cover" alt="">
                             <div class="">
@@ -320,7 +328,7 @@
                                 <h5 class="text-sm text-gray-500 font-semibold">Minimum Order: 50 Pieces</h5>
                             </div>
                         </a>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
 
@@ -330,60 +338,63 @@
                     <h4 class="font-semibold text-sm">See All <i class="fas fa-arrow-circle-right"></i></h4>
                 </div>
                 <div class="grid md:grid-cols-1 lg:grid-cols-2 4xl:grid-cols-3 gap-4 py-4">
-                    <x-card class="border-2 border-gray-400 grid md:grid-cols-2 gap-1">
-                        <div>
-                            <a href="{{ route('vendor.storefront') }}">
-                                <div class="flex gap-1">
-                                    <span class="w-12 h-12 bg-gray-300 rounded-full text-center pt-3 font-bold text-white">E</span>
-                                    <div class="">
-                                        <h1 class="font-bold text-sm">Enock's Mining Co.</h1>
-                                        <div class="flex gap-2">
-                                            <h4 class="text-xs text-gray-500">Verified</h4>
-                                            <i class="fas fa-shield-alt text-sm text-red-800"></i>
+                    @foreach ($businesses as $business)
+                        <x-card class="border-2 border-gray-400 grid md:grid-cols-2 gap-1">
+                            <div>
+                                <a href="{{ route('vendor.storefront', ['slug' => $business->slug]) }}">
+                                    <div class="flex gap-1">
+                                        {{-- <span class="w-12 h-12 bg-gray-300 rounded-full text-center pt-3 font-bold text-white">E</span> --}}
+                                        <img src="https://ui-avatars.com/api/?name={!! $business->name !!}&rounded=true&size=60" alt="" />
+                                        <div class="">
+                                            <h1 class="font-bold text-sm">{{ $business->name }}</h1>
+                                            <div class="flex gap-2">
+                                                <h4 class="text-xs text-gray-500">Verified</h4>
+                                                <i class="fas fa-shield-alt text-sm text-red-800"></i>
+                                            </div>
+                                            <h5 class="text-xs text-gray-400">{{ $business->created_at->diffForHumans() }}</h5>
                                         </div>
-                                        <h5 class="text-xs text-gray-400">2 Years</h5>
+                                    </div>
+                                </a>
+                                <div class="flex gap-2">
+                                    <h4 class="text-sm font-bold text-gray-600">Rating:</h4>
+                                    <div class="review__info">
+                                        <div class="review__star">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <span style="width: 40%">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
-                            </a>
-                            <div class="flex gap-2">
-                                <h4 class="text-sm font-bold text-gray-600">Rating:</h4>
-                                <div class="review__info">
-                                    <div class="review__star">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <span style="width: 40%">
-                                           <i class="fas fa-star"></i>
-                                           <i class="fas fa-star"></i>
-                                           <i class="fas fa-star"></i>
-                                           <i class="fas fa-star"></i>
-                                           <i class="fas fa-star"></i>
+                                <div class="">
+                                    <h4 class="text-sm font-bold text-gray-600">Vendor Info:</h4>
+                                    <div class="flex flex-col gap-1">
+                                        <span class="text-sm">
+                                            <strong>HQ:</strong> {{ $business->city ? $business->city->name : '' }}, {{ $business->country->name }}
                                         </span>
-                                     </div>
+                                        <span class="text-sm">
+                                            <strong>Products:</strong> Gold, Diamond, Platinum
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="">
-                                <h4 class="text-sm font-bold text-gray-600">Vendor Info:</h4>
-                                <div class="flex flex-col gap-1">
-                                    <span class="text-sm">
-                                        <strong>HQ:</strong> Nairobi Industrial Area
-                                    </span>
-                                    <span class="text-sm">
-                                        <strong>Products:</strong> Gold, Diamond, Platinum
-                                    </span>
-                                </div>
+                            <div class="flex flex-col gap-3">
+                                <img src="{{ $business->primary_cover_image }}" alt="" class="w-full h-44 object-cover rounded-md">
+                                <x-secondary-outline-button class="text-center text-primary-one font-semibold justify-center hover:bg-orange-300 hover:border-orange-400">
+                                    Message Vendor
+                                </x-secondary-outline-button>
                             </div>
-                        </div>
-                        <div class="flex flex-col gap-3">
-                            <img src="{{ asset('assets/img/skLbbi.jpg') }}" alt="" class="w-full h-44 object-cover rounded-md">
-                            <x-secondary-outline-button class="text-center bg-orange-500 text-orange-600 tracking-tighter font-thin justify-center hover:bg-orange-300 hover:border-orange-400">
-                                Message Vendor
-                            </x-secondary-outline-button>
-                        </div>
-                    </x-card>
-                    <x-card class="border-2 border-gray-400 grid md:grid-cols-2">
+                        </x-card>
+                    @endforeach
+                    {{-- <x-card class="border-2 border-gray-400 grid md:grid-cols-2">
                         <div>
                             <a href="{{ route('vendor.storefront') }}">
                                 <div class="flex gap-1">
@@ -541,7 +552,7 @@
                                 Message Vendor
                             </x-secondary-outline-button>
                         </div>
-                    </x-card>
+                    </x-card> --}}
                 </div>
             </div>
         </div>

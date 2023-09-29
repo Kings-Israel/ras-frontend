@@ -71,11 +71,18 @@ class RolesSeeder extends Seeder
             'delete transaction'
         ];
 
-        $roles = ['admin', 'buyer', 'vendor', 'warehouse manager', 'finance manager'];
+        $inspector_permissions = [
+            'view product',
+            'view warehouse',
+            'view order',
+            'edit order',
+        ];
+
+        $roles = ['admin', 'buyer', 'vendor', 'warehouse manager', 'financier', 'inspector'];
 
         collect($all_permissions)->each(fn ($permission) => Permission::firstOrCreate(['name' => $permission]));
 
-        collect($roles)->each(function ($role) use ($warehouse_permissions, $vendor_permissions, $buyer_permissions, $transaction_permissions){
+        collect($roles)->each(function ($role) use ($warehouse_permissions, $vendor_permissions, $buyer_permissions, $transaction_permissions, $inspector_permissions){
             $role = Role::firstOrCreate(['name' => $role]);
             if ($role->name === 'vendor') {
                 collect($vendor_permissions)->each(function ($permission) use ($role) {
@@ -93,8 +100,14 @@ class RolesSeeder extends Seeder
                 });
             }
 
-            if ($role == 'finance manager') {
+            if ($role == 'financier') {
                 collect($transaction_permissions)->each(function($permission) use ($role) {
+                    $role->givePermissionTo($permission);
+                });
+            }
+
+            if ($role == 'inspector') {
+                collect($inspector_permissions)->each(function($permission) use ($role) {
                     $role->givePermissionTo($permission);
                 });
             }

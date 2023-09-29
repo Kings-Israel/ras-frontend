@@ -33,7 +33,7 @@
                     Status
                 </th>
                 <th scope="col" class="px-2 py-3">
-                    Amount
+                    Price
                 </th>
                 <th scope="col" class="px-2 py-3">
                     Actions
@@ -62,7 +62,7 @@
                         {{ $product->is_available ? 'In stock' : 'Out of stock' }}
                     </td>
                     <td class="px-2 py-2">
-                        Ksh.{{ number_format($product->price) }}
+                        @if($product->price) USD.{{ number_format($product->price) }} @else USD.{{ number_format($product->min_price) }} - USD.{{ number_format($product->max_price) }} @endif
                     </td>
                     <td class="px-2 py-2 flex gap-3">
                         <i class="fas fa-trash"></i>

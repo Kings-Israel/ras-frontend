@@ -28,41 +28,37 @@
                 </button>
                 <div id="store-dropdown" class="z-40 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-button">
-                        <li>
-                            <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Diamonds</button>
-                        </li>
-                        <li>
-                            <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Tanzanite</button>
-                        </li>
-                        <li>
-                            <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Gold</button>
-                        </li>
-                        <li>
-                            <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Uranium</button>
-                        </li>
+                        @foreach ($categories as $category)
+                            <li>
+                                <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $category->name }}</button>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
         </form>
     </div>
-    <div class="mx-auto px-4 md:px-10 lg:px-40 my-5">
+    <div class="mx-auto px-4 md:px-10 lg:px-28 my-5">
         <span class="flex gap-2 text-sm">
             <p class="text-gray-400">Home ></p>
-            <p class="text-gray-400">Natural Resources ></p>
-            <p class="text-gray-400">Minerals ></p>
-            <p class="text-gray-600">Gold</p>
+            <p class="text-gray-400">{{ $product->category->name }} ></p>
+            <p class="text-gray-600">{{ $product->name }}</p>
         </span>
         <div class="md:grid md:grid-cols-2 lg:flex gap-3 mt-3">
             <div class="bg-gray-50 p-2">
-                <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-[290px] h-[350px] mx-auto md:w-[390px] md:h-[450px] md:mx-0 object-cover rounded-md">
+                @if ($product->media->first()->type === 'image')
+                    <img src="{{ $product->media->first()->file }}" alt="" class="w-[290px] h-[350px] mx-auto md:w-[390px] md:h-[450px] md:mx-0 object-cover rounded-md">
+                @endif
                 <div class="flex justify-between mt-2 mx-8 md:mx-0">
-                    <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-20 h-20 lg:w-24 lg:h-24 object-cover rounded-md border border-orange-400">
-                    <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-20 h-20 lg:w-24 lg:h-24 object-cover rounded-md border border-orange-400">
-                    <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-20 h-20 lg:w-24 lg:h-24 object-cover rounded-md border border-orange-400">
+                    @foreach ($product->media as $media)
+                        @if ($media->type == 'image')
+                            <img src="{{ $media->file }}" alt="" class="w-20 h-20 lg:w-24 lg:h-24 object-cover rounded-md border border-primary-one">
+                        @endif
+                    @endforeach
                 </div>
             </div>
             <div class="space-y-4 bg-gray-50 p-2 rounded-md">
-                <h2 class="text-xl font-bold text-gray-600">24K Gold Plated Customized Metal Bar</h2>
+                <h2 class="text-xl font-bold text-gray-600">{{ $product->name }}</h2>
                 <div class="border-b-2 space-y-2 lg:space-y-5 pb-6">
                     <div class="flex gap-2">
                         <h4 class="text-sm font-bold text-gray-600">Rating:</h4>
@@ -88,7 +84,7 @@
                         <div class="flex gap-3">
                             <h4 class="text-sm font-semibold text-blue-500">Raw Material</h4>
                             <h4 class="text-sm font-bold text-gray-400">I</h4>
-                            <h4 class="text-sm font-semibold text-blue-500">Similar Products from Enock's Mining Co.</h4>
+                            <h4 class="text-sm font-semibold text-blue-500">Similar Products from {{ $product->business->name }}</h4>
                         </div>
                     </div>
                     <div class="border border-gray-300 p-3 px-5 rounded-lg mt-2 bg-white">
@@ -117,7 +113,7 @@
                     <div class="flex gap-2">
                         <h4 class="text-sm font-bold text-gray-600">Color:</h4>
                         <div class="flex gap-3">
-                            <h4 class="text-sm font-semibold text-gray-500">Gold</h4>
+                            <h4 class="text-sm font-semibold text-gray-500">{{ $product->color }}</h4>
                         </div>
                     </div>
                     <div class="flex gap-2">
@@ -153,8 +149,6 @@
                         <div class="flex gap-1">
                             <img src="{{ asset('assets/img/visa_icon.png') }}" alt="" class="w-14 h-10 object-contain">
                             <img src="{{ asset('assets/img/mastercard_payment_icon.png') }}" alt="" class="w-14 h-10 object-contain">
-                            {{-- <h4 class="text-sm font-semibold text-blue-500">VISA</h4> --}}
-                            {{-- <h4 class="text-sm font-semibold text-blue-500">MASTERCARD</h4> --}}
                             <h4 class="text-sm font-semibold text-blue-500 my-auto">MPESA</h4>
                         </div>
                     </div>
@@ -208,10 +202,10 @@
                                             <h2 class="text-2xl font-extrabold text-gray-800">Request Quotation</h2>
                                             <span class="flex gap-2 divide-x-2 divide-gray-300">
                                                 <div class="flex gap-2">
-                                                    <h3 class="text-gray-500 font-bold">Enock's Mining Co.</h3>
+                                                    <h3 class="text-gray-500 font-bold">{{ $product->business->name }}</h3>
                                                     <h6 class="text-sm text-gray-500">Verified</h6>
                                                 </div>
-                                                <h6 class="text-sm text-gray-500 pl-2">2 Years</h6>
+                                                <h6 class="text-sm text-gray-500 pl-2">{{ $product->business->created_at->diffForHumans() }}</h6>
                                             </span>
                                         </div>
                                         <form action="#" method="POST" class="flex flex-col justify-between space-y-4">
@@ -219,7 +213,7 @@
                                                 <div class="flex gap-2 border-b-2 border-gray-400">
                                                     <div class="flex gap-3 p-4">
                                                         <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-10 h-10 lg:w-20 lg:h-20 object-cover rounded-md border border-orange-400">
-                                                        <span class="text-gray-500 text-sm my-auto">24K Gold Plated Customized Metal Bar</span>
+                                                        <span class="text-gray-500 text-sm my-auto">{{ $product->name }}</span>
                                                     </div>
                                                     <div class="flex gap-3 p-4 w-[30%]">
                                                         <div class="custom-number-input h-10 w-32 my-auto">
@@ -261,10 +255,9 @@
                 </div>
                 <div class="sm:pt-5 md:pt-0 lg:pt-0 sm:w-full md:w-1/2 lg:w-full">
                     <h5 class="sm:text-sm md:text-lg lg:text-sm sm:font-semibold md:font-bold lg:font-semibold sm:text-gray-500 md:text-gray-700 lg:text-gray-500">Vendor:</h5>
-                    <a href="{{ route('vendor.storefront') }}">
-                        <h3 class="text-2xl text-gray-500 font-bold underline-offset-2 hover:text-gray-600 transition duration-150 ease-in">Enock's Mining Co.</h3>
+                    <a href="{{ route('vendor.storefront', ['slug' => $product->business->slug]) }}">
+                        <h3 class="text-2xl text-gray-500 font-bold underline-offset-2 hover:text-gray-600 transition duration-150 ease-in">{{ $product->business->name }}</h3>
                     </a>
-                    {{-- <h6 class="text-sm text-gray-400">Verified</h6> --}}
                     <div class="flex gap-2">
                         <h6 class="text-sm text-gray-500">Verified</h6>
                         <i class="text-sm fas fa-shield-alt text-red-800"></i>
@@ -288,7 +281,7 @@
                                 <div class="px-2 py-2 lg:px-4">
                                     <div class="lg:col-span-2 border-none">
                                         <div class="border-b-2 border-t-0 border-gray-400 w-full px-4 py-2 flex justify-between">
-                                            <h2 class="text-2xl font-extrabold text-gray-800">Enock's Mining Co</h2>
+                                            <h2 class="text-2xl font-extrabold text-gray-800">{{ $product->business->name }}</h2>
                                         </div>
                                         <div class="overflow-scroll h-[33rem] 4xl:h-[50rem] mb-12">
                                             <div class="space-y-2 p-2 text-sm" id="messages">
@@ -389,9 +382,9 @@
                         <p class="text-sm text-gray-600">Regional Feature: <strong class="text-sm text-gray-700">Africa</strong></p>
                     </div>
                     <div class="space-y-3 md:px-4 lg:px-8 pt-2 md:pt-8">
-                        <p class="text-sm text-gray-600">Place of Origin: <strong class="text-sm text-gray-700">Kakamega</strong></p>
-                        <p class="text-sm text-gray-600">Brand Name: <strong class="text-sm text-gray-700">KK</strong></p>
-                        <p class="text-sm text-gray-600">Model Number: <strong class="text-sm text-gray-700">#38HJHD</strong></p>
+                        <p class="text-sm text-gray-600">Place of Origin: <strong class="text-sm text-gray-700">{{ $product->place_of_origin }}</strong></p>
+                        <p class="text-sm text-gray-600">Brand Name: <strong class="text-sm text-gray-700">{{ $product->brand }}</strong></p>
+                        <p class="text-sm text-gray-600">Model Number: <strong class="text-sm text-gray-700">#{{ $product->model_number }}</strong></p>
                         <p class="text-sm text-gray-600">Usage: <strong class="text-sm text-gray-700">Home Decoration Gift</strong></p>
                         <p class="text-sm text-gray-600">Product Name: <strong class="text-sm text-gray-700">Natural</strong></p>
                         <p class="text-sm text-gray-600">Plating: <strong class="text-sm text-gray-700">None</strong></p>
@@ -399,8 +392,8 @@
                         <p class="text-sm text-gray-600">Design: <strong class="text-sm text-gray-700">100% Custom Made</strong></p>
                     </div>
                     <div class="space-y-3 md:px-4 lg:px-8 pt-2 md:pt-8">
-                        <p class="text-sm text-gray-600">Color: <strong class="text-sm text-gray-700">Gold</strong></p>
-                        <p class="text-sm text-gray-600">MOQ: <strong class="text-sm text-gray-700">10 Pieces</strong></p>
+                        <p class="text-sm text-gray-600">Color: <strong class="text-sm text-gray-700">{{ $product->color }}</strong></p>
+                        <p class="text-sm text-gray-600">MOQ: <strong class="text-sm text-gray-700">{{ $product->min_order_quantity }}</strong></p>
                         <p class="text-sm text-gray-600">Payment: <strong class="text-sm text-gray-700">T/T</strong></p>
                     </div>
                 </div>
@@ -432,10 +425,11 @@
                     <div class="md:flex gap-2">
                         <img src="{{ asset('assets/img/6CeuCO.jpg') }}" alt="" class="w-96 h-60 object-contain mb-3 md:mb-0">
                         <div class="grid grid-cols-2 gap-3">
-                            <img src="{{ asset('assets/img/6CeuCO.jpg') }}" alt="" class="w-40 h-28 object-cover">
-                            <img src="{{ asset('assets/img/skLbbi.jpg') }}" alt="" class="w-40 h-28 object-cover">
-                            <img src="{{ asset('assets/img/W8ZUrJ.jpg') }}" alt="" class="w-40 h-28 object-cover">
-                            <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-40 h-28 object-cover">
+                            @foreach ($product->media as $media)
+                                @if ($media->type === 'image')
+                                    <img src="{{ $media->file }}" alt="" class="w-40 h-28 object-cover">
+                                @endif
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -446,7 +440,7 @@
                     <h5 class="text-sm font-bold text-gray-700">Related Items</h5>
                     <div class="space-y-2 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-4 gap-2 py-2">
                         <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
-                            <a href="{{ route('product') }}">
+                            <a href="#">
                                 <img src="{{ asset('assets/img/6CeuCO.jpg') }}" class="rounded border border-gray-200 w-full h-36 object-cover" alt="">
                                 <div class="">
                                     <h4 class="font-bold text-gray-500">Gold Bars</h4>
@@ -456,7 +450,7 @@
                             </a>
                         </div>
                         <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
-                            <a href="{{ route('product') }}">
+                            <a href="#">
                                 <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded border border-gray-200 w-full h-36 object-cover" alt="">
                                 <div class="">
                                     <h4 class="font-bold text-gray-500">Diamond</h4>
@@ -466,7 +460,7 @@
                             </a>
                         </div>
                         <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
-                            <a href="{{ route('product') }}">
+                            <a href="#">
                                 <img src="{{ asset('assets/img/skLbbi.jpg') }}" class="rounded border border-gray-200 w-full h-36 object-cover" alt="">
                                 <div class="">
                                     <h4 class="font-bold text-gray-500">Platinum</h4>
@@ -476,7 +470,7 @@
                             </a>
                         </div>
                         <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
-                            <a href="{{ route('product') }}">
+                            <a href="#">
                                 <img src="{{ asset('assets/img/W8ZUrJ.jpg') }}" class="rounded border border-gray-200 w-full h-36 object-cover" alt="">
                                 <div class="">
                                     <h4 class="font-bold text-gray-500">Iron Ore</h4>
@@ -491,7 +485,7 @@
                     <h5 class="text-sm font-bold text-gray-700">Vendor's Popular Products</h5>
                     <div class="space-y-2 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-4 gap-2 py-2">
                         <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
-                            <a href="{{ route('product') }}">
+                            <a href="#">
                                 <img src="{{ asset('assets/img/6CeuCO.jpg') }}" class="rounded border-gray-200 w-full h-36 object-cover" alt="">
                                 <div class="">
                                     <h4 class="font-bold text-gray-500">Gold Bars</h4>
@@ -501,7 +495,7 @@
                             </a>
                         </div>
                         <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
-                            <a href="{{ route('product') }}">
+                            <a href="#">
                                 <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded border border-gray-200 w-full h-36 object-cover" alt="">
                                 <div class="">
                                     <h4 class="font-bold text-gray-500">Diamond</h4>
@@ -511,7 +505,7 @@
                             </a>
                         </div>
                         <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
-                            <a href="{{ route('product') }}">
+                            <a href="#">
                                 <img src="{{ asset('assets/img/skLbbi.jpg') }}" class="rounded border border-gray-200 w-full h-36 object-cover" alt="">
                                 <div class="">
                                     <h4 class="font-bold text-gray-500">Platinum</h4>
@@ -521,7 +515,7 @@
                             </a>
                         </div>
                         <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
-                            <a href="{{ route('product') }}">
+                            <a href="#">
                                 <img src="{{ asset('assets/img/W8ZUrJ.jpg') }}" class="rounded border border-gray-200 w-full h-36 object-cover" alt="">
                                 <div class="">
                                     <h4 class="font-bold text-gray-500">Iron Ore</h4>

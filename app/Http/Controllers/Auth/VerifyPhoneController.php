@@ -69,6 +69,7 @@ class VerifyPhoneController extends Controller
             if ($request->user()->hasRole('vendor')) {
                 // Create business if account is new
                 if (!$request->user()->business) {
+                    activity()->causedBy(auth()->user())->log('create a vendor account');
                     return redirect()->route('auth.business.create');
                 }
 
@@ -85,6 +86,7 @@ class VerifyPhoneController extends Controller
         if ($request->user()->hasRole('vendor')) {
             // Create business if account is new
             if (!$request->user()->business) {
+                activity()->causedBy(auth()->user())->log('create a vendor account');
                 return redirect()->route('auth.business.create');
             }
 

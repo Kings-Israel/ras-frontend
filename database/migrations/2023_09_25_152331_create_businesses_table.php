@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('primary_cover_image')->nullable();
             $table->string('secondary_cover_image')->nullable();
+            $table->string('slug')->nullable();
             $table->timestamps();
         });
     }

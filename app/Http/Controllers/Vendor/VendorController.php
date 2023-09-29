@@ -73,4 +73,11 @@ class VendorController extends Controller
     {
         return view('business.orders');
     }
+
+    public function storefront($slug)
+    {
+        $business = Business::findBySlug($slug);
+
+        return view('business.storefront.index', compact('business'));
+    }
 }

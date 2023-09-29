@@ -35,7 +35,15 @@ class UsersSeeder extends Seeder
             'email' => 'finance@ras.com',
         ]);
 
-        $finance->assignRole('finance manager');
+        $finance->assignRole('financier');
+
+        $inspector = User::factory()->create([
+            'first_name' => 'Inspector',
+            'last_name' => 'Manager',
+            'email' => 'inspector@ras.com',
+        ]);
+
+        $inspector->assignRole('inspector');
 
         $user = User::factory()
             ->create([

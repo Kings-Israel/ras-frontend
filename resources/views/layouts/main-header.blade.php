@@ -1,6 +1,6 @@
-<div class="sticky top-0 bg-transparent flex lg:flex-wrap lg:items-center justify-between mx-auto pt-2 py-2 lg:px-24 md:px-16 sm:px-8 z-50 duration-200" id="main-header">
-    <a href="{{ url('/') }}" class="-my-12">
-        <x-application-logo class="w-[10rem] h-[10rem] object-contain" />
+<div class="sticky top-0 bg-transparent flex lg:flex-wrap lg:items-center justify-between mx-auto pt-1 py-1 lg:px-24 md:px-16 sm:px-8 z-50 duration-200" id="main-header">
+    <a href="{{ url('/') }}" class="">
+        <x-application-logo class="w-[10rem] object-contain" />
     </a>
     <div class="flex space-x-2">
         @auth
@@ -10,7 +10,7 @@
                 <i class="fas fa-chevron-down my-auto text-sm"></i>
             </button>
             <div id="account-dropdown" class="z-10 hidden bg-gray-200 divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                <ul class="py-2 font-bold text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-button">
+                <ul class="py-2 font-semibold text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-button">
                     @if (auth()->user()->hasRole('vendor'))
                         <li>
                             <a href="{{ route('vendor.dashboard') }}" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
