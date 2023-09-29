@@ -36,7 +36,7 @@ class ProductMedia extends StepComponent
         'images.*.mimes' => 'Supported image formats are: .png, .jpg, .jpeg',
         'video.mimes' => 'Supported video format is: .mp4',
         'images.*.max' => 'Max image size is 4MB',
-        'video.max' => 'Max video size is 5MB',
+        'video.max' => 'Max video size is 10MB',
     ];
 
     public function stepInfo(): array
@@ -50,6 +50,8 @@ class ProductMedia extends StepComponent
     {
         $this->warehouses = Warehouse::with('country', 'city')->get();
         $this->regions = ['Africa', 'USA', 'Europe', 'Middle East', 'Asia', 'Other'];
+        $this->images = [];
+        $this->video = null;
     }
 
     public function submit()
@@ -61,8 +63,10 @@ class ProductMedia extends StepComponent
             'name' => $this->state()->forStep('product-details')['name'],
             'category_id' => $this->state()->forStep('product-details')['category'],
             'price' => $this->state()->forStep('product-details')['price'],
-            'max_order_quantity' => $this->state()->forStep('product-details')['max_quantity_order'],
-            'min_order_quantity' => $this->state()->forStep('product-details')['min_quantity_order'],
+            'min_price' => $this->state()->forStep('product-details')['min_price'],
+            'max_price' => $this->state()->forStep('product-details')['max_price'],
+            'max_order_quantity' => $this->state()->forStep('product-details')['max_quantity_order'].' '.$this->state()->forStep('product-details')['max_quantity_order_unit'],
+            'min_order_quantity' => $this->state()->forStep('product-details')['min_quantity_order'].' '.$this->state()->forStep('product-details')['min_quantity_order_unit'],
             'color' => $this->state()->forStep('product-details')['color'],
             'shape' => $this->state()->forStep('product-details')['shape'],
             // 'usage' => $this->state()->forStep('product-details')['usage'],
@@ -91,6 +95,8 @@ class ProductMedia extends StepComponent
                 'type' => 'video',
             ]);
         }
+
+        activity()->causedBy(auth()->user())->performedOn($product)->log('add a new product');
 
         toastr()->success('', 'Product added successfully');
 

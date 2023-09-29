@@ -65,6 +65,8 @@ class Details extends StepComponent
             'secondary_cover_image' => $this->secondary_cover_image ? pathinfo($this->secondary_cover_image->store('cover_image', 'vendor'), PATHINFO_BASENAME) : NULL,
         ]);
 
+        activity()->causedBy(auth()->user())->performedOn($this->business)->log('registered a new business');
+
         $this->nextStep();
     }
 

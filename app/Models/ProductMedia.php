@@ -24,4 +24,15 @@ class ProductMedia extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    /**
+     * Get the file
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getFileAttribute($value)
+    {
+        return config('app.url').'/storage/vendor/product/'.$value;
+    }
 }

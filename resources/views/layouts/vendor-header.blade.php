@@ -1,6 +1,6 @@
-<div {{ $attributes->merge(['class' => 'sticky top-0 flex flex-wrap items-center justify-between mx-auto pt-2 py-2 px-2 md:px-8 lg:px-24 bg-white z-50']) }}>
-    <a href="{{ url('/') }}" class="-my-12">
-        <x-application-logo class="w-[10rem] h-[10rem] object-contain" />
+<div {{ $attributes->merge(['class' => 'sticky top-0 flex flex-wrap items-center justify-between mx-auto pt-1 py-1 px-2 md:px-8 lg:px-24 bg-white z-50']) }}>
+    <a href="{{ url('/') }}" class="">
+        <x-application-logo class="w-[10rem] object-contain" />
     </a>
     @auth
         <div class="flex space-x-2">

@@ -117,6 +117,6 @@
     </div>
     <div class="flex justify-end gap-2 mt-4">
         <x-secondary-outline-button class="text-center text-gray-800 gap-2 focus:ring-0" wire:click="previousStep"><i class="fas fa-arrow-left text-gray-800"></i> Back</x-secondary-outline-button>
-        <x-primary-button type="submit" class="w-2/5 font-thin rounded-lg px-5 py-2.5 text-center" wire:click="submit">Add Product</x-primary-button>
+        <x-primary-button type="submit" class="w-2/5 font-semibold rounded-lg px-5 py-2.5 text-center" wire:click="submit">Add Product</x-primary-button>
     </div>
 </div>

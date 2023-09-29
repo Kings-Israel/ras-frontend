@@ -15,7 +15,7 @@
     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
         @csrf
      </form>
-    <a href="{{ route('vendor.storefront') }}" class="">
+    <a href="{{ route('vendor.storefront', ['slug' => auth()->user()->business->slug]) }}" class="">
         <x-primary-outline-button class="text-sm text-orange-500 bg-orange-200 focus:text-white">
             View Storefront
             <i class="fas fa-chevron-right pl-2"></i>

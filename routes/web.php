@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OtpController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Vendor\VendorController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
@@ -20,9 +21,7 @@ use Livewire\Livewire;
 
 Route::get('/', [HomeController::class, 'index'])->name('welcome');
 
-Route::get('/product', function () {
-    return view('product');
-})->name('product');
+Route::get('/product/{slug}', [ProductController::class, 'viewProduct'])->name('product');
 
 Route::middleware(['auth', 'phone_verified', 'role:buyer'])->group(function () {
     Route::get('/cart', function() {
@@ -31,9 +30,7 @@ Route::middleware(['auth', 'phone_verified', 'role:buyer'])->group(function () {
 });
 
 Route::group(['prefix' => 'vendor', 'as' => 'vendor.'], function () {
-    Route::get('/storefront', function() {
-        return view('business.storefront.index');
-    })->name('storefront');
+    Route::get('/{slug}/storefront', [VendorController::class, 'storefront'])->name('storefront');
     Route::get('/storefront/products', function() {
         return view('business.storefront.products');
     })->name('storefront.products');
@@ -83,10 +80,6 @@ Route::middleware(['auth', 'phone_verified', 'role:vendor', 'has_registered_busi
     // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-Route::get('/test/logout', function() {
-    return view('welcome');
-})->name('test.logout');
 
 if (config('app.env') == 'production') {
     Livewire::setUpdateRoute(function ($handle) {

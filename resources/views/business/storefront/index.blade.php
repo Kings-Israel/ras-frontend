@@ -1,14 +1,16 @@
 <x-vendor>
-    <x-storefront-header></x-storefront-header>
+    <x-storefront-header :business="$business"></x-storefront-header>
     <div>
-        <img src="{{ asset('assets/img/skLbbi.jpg') }}" alt="" class="h-96 w-full object-cover">
+        <img src="{{ $business->primary_cover_image }}" alt="" class="h-96 w-full object-cover">
     </div>
     <div class="flex gap-3 px-2 md:px-8 lg:px-28 py-4">
-        <div class="hidden lg:block lg:basis-1/4">
-            <img src="{{ asset('assets/img/skLbbi.jpg') }}" class="w-96 h-96 rounded-lg object-cover" alt="">
-        </div>
+        @if ($business->secondary_cover_image)
+            <div class="hidden lg:block lg:basis-1/4">
+                <img src="{{ $business->secondary_cover_image }}" class="w-96 h-96 rounded-lg object-cover" alt="">
+            </div>
+        @endif
         <div class="w-full text-center lg:text-start lg:basis-3/4">
-            <h1 class="text-2xl text-gray-900">We Strive to Ship the Best Products Globally</h1>
+            <h1 class="text-3xl font-bold text-slate-700">We Strive to Ship the Best Products Globally</h1>
             <div class="flex gap-2 justify-center lg:justify-start">
                 <h2 class="text-sm my-auto">15 Years Experience</h2>
                 <span class="uppercase text-gray-400 text-xl">I</span>

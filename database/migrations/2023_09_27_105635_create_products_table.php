@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('model_number')->nullable();
             $table->boolean('is_available')->default(true);
             $table->string('regional_featre')->nullable();
+            $table->string('slug')->nullable();
             $table->timestamps();
         });
     }
