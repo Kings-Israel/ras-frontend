@@ -28,8 +28,8 @@
         <div class="min-h-screen bg-auth bg-no-repeat bg-cover">
             <x-guest-nav>
                 <div>
-                    <a href="{{ url('/') }}">
-                        <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                    <a href="{{ url('/') }}" class="-my-12">
+                        <x-application-logo class="w-[10rem] h-[4rem] object-contain" />
                     </a>
                 </div>
                 @guest
