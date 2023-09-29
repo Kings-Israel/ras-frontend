@@ -25,11 +25,13 @@
         </style>
     </head>
     <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen bg-auth bg-no-repeat bg-cover">
+        @php($random = ['auth', 'auth-alt'])
+        @php($key = array_rand($random))
+        <div class="min-h-screen bg-auth-alt bg-no-repeat bg-cover">
             <x-guest-nav>
                 <div>
-                    <a href="{{ url('/') }}" class="-my-12">
-                        <x-application-logo class="w-[10rem] h-[4rem] object-contain" />
+                    <a href="{{ url('/') }}" class="">
+                        <img src="{{ asset('assets/img/logo-alt.png') }}" class="w-[10rem] h-[10rem] object-contain -my-12" alt="">
                     </a>
                 </div>
                 @guest
@@ -42,7 +44,7 @@
                         @elseif (Route::is('register'))
                         <div class="flex">
                             <a href="{{ route('select-type') }}">
-                                <h2 class="mr-3 text-white lg:my-auto font-bold lg:text-2xl md:text-lg md:mt-2 sm:mt-10">Switch User</h2>
+                                <h2 class="mr-3 text-white mt-2 md:my-auto font-bold lg:text-2xl md:text-lg md:mt-2 sm:mt-10">Switch User</h2>
                             </a>
                             <a href="{{ route('login') }}">
                                 <x-secondary-button class="px-8">
@@ -69,7 +71,7 @@
                     </form>
                 @endguest
             </x-guest-nav>
-            <div {!! $attributes->merge(['class' => 'px-6 py-4 bg-white overflow-hidden sm:rounded-lg mx-auto']) !!}>
+            <div {!! $attributes->merge(['class' => 'px-6 py-4 bg-white overflow-hidden sm:rounded-lg mx-auto rounded-md']) !!}>
                 {{ $slot }}
             </div>
             {{-- <div class="flex flex-col sm:justify-center items-center lg:mt-10 pt-6 sm:pt-0 bg-transparent">

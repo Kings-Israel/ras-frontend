@@ -1,4 +1,4 @@
-<x-guest-layout class="w-full md:w-[70%] lg:w-[40%]">
+<x-guest-layout class="w-[98%] md:w-[70%] lg:w-[40%] my-10 md:my-16">
     <div class="flex flex-col text-center py-3">
         <h1 class="text-3xl font-bold p-2">{{ Str::ucfirst($type) }} Sign Up</h1>
         <span class="p-1">Your Gateway to Finding and Selling Awesome Products Across The Continent</span>
@@ -76,7 +76,7 @@
                 </x-secondary-outline-button>
             </a>
 
-            <x-primary-button class="w-full ml-2">
+            <x-primary-button class="w-full lg:w-[60%] tracking-wide ml-2">
                 {{ __('Create Account') }}
             </x-primary-button>
         </div>

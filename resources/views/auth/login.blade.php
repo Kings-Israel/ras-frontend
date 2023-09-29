@@ -1,5 +1,5 @@
-<x-guest-layout class="w-full md:w-[70%] lg:w-[30%]">
-    <div>
+<x-guest-layout class="w-[96%] md:w-[70%] lg:w-[30%] my-10 md:my-20">
+    <div class="">
         <!-- Session Status -->
         <x-auth-session-status class="mb-4" :status="session('status')" />
 
@@ -51,7 +51,7 @@
                     </x-secondary-outline-button>
                 </a>
 
-                <x-primary-button class="w-full ml-2">
+                <x-primary-button class="w-full lg:w-[60%] tracking-wide ml-2">
                     {{ __('Login to Account') }}
                 </x-primary-button>
             </div>

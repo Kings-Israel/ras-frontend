@@ -17,6 +17,7 @@ export default {
             },
             backgroundImage: {
                 'auth': "url('/public/assets/img/6CeuCO.jpg')",
+                'auth-alt': "url('/public/assets/img/auth-bg-1.png')",
                 'hero': "url('/public/assets/img/banner.png')",
             },
             screens: {

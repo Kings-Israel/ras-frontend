@@ -1,4 +1,4 @@
-<x-guest-layout class="my-auto w-full md:w-[60%] lg:w-[30%]">
+<x-guest-layout class="w-[96%] md:w-[60%] lg:w-[30%] my-16 md:my-20">
 
     <div class="flex flex-col text-center py-10">
         <h1 class="text-3xl font-bold p-2">Select Account Type</h1>
@@ -47,7 +47,7 @@
         </div>
 
         <div class="mt-4 text-center">
-            <h3 class="">Already Have an Account? <a href="{{ route('register') }}" class="underline decoration-orange-500 text-orange-400 font-bold hover:text-orange-500 focus:text-orange-600 transition ease-in-out duration-150">Login</a></h3>
+            <h3 class="">Already Have an Account? <a href="{{ route('login') }}" class="underline decoration-orange-500 text-orange-400 font-bold hover:text-orange-500 focus:text-orange-600 transition ease-in-out duration-150">Login</a></h3>
         </div>
     </form>
 </x-guest-layout>

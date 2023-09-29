@@ -1,7 +1,7 @@
 <x-main>
     <div class="bg-hero bg-[length:400px_400px] md:bg-[length:800px_600px] lg:bg-cover bg-no-repeat lg:h-[500px] -mt-24 pt-24">
         <div class="flex flex-col mx-auto py-8 sm:px-20 md:px-24 lg:px-32 z-50 space-y-3">
-            <h1 class="text-2xl md:text-2xl lg:text-4xl font-[600] md:font-[800] lg:font-[1100] text-center hero-main-text text-gray-800">Find The Best Products, From Top Notch Suppliers</h1>
+            <h1 class="text-2xl md:text-2xl lg:text-4xl font-[600] md:font-[800] lg:font-[1100] text-center hero-main-text text-gray-900">Find The Best Products, From Top Notch Suppliers</h1>
             <h5 class="text-center font-semibold px-8 md:px-12 lg:px-52">Real African Sources is where to go to easily access raw materials and business opportunities from vetted suppliers across Africa.</h5>
             <label for="themeSwitcherThree" class="themeSwitcherThree relative inline-flex cursor-pointer select-none items-center justify-center my-2">
                 <input type="checkbox" name="themeSwitcherThree" id="themeSwitcherThree" class="sr-only">
