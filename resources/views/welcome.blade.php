@@ -1,20 +1,20 @@
 <x-main>
-    <div class="bg-hero bg-cover bg-no-repeat lg:h-[500px] -mt-24 pt-24">
+    <div class="bg-hero bg-[length:400px_400px] md:bg-[length:800px_600px] lg:bg-cover bg-no-repeat lg:h-[500px] -mt-24 pt-24">
         <div class="flex flex-col mx-auto py-8 sm:px-20 md:px-24 lg:px-32 z-50 space-y-3">
-            <h1 class="text-2xl md:text-2xl lg:text-4xl font-[600] md:font-[800] lg:font-[1100] text-center hero-main-text">Find The Best Products, From Top Notch Suppliers</h1>
+            <h1 class="text-2xl md:text-2xl lg:text-4xl font-[600] md:font-[800] lg:font-[1100] text-center hero-main-text text-gray-800">Find The Best Products, From Top Notch Suppliers</h1>
             <h5 class="text-center font-semibold px-8 md:px-12 lg:px-52">Real African Sources is where to go to easily access raw materials and business opportunities from vetted suppliers across Africa.</h5>
             <label for="themeSwitcherThree" class="themeSwitcherThree relative inline-flex cursor-pointer select-none items-center justify-center my-2">
                 <input type="checkbox" name="themeSwitcherThree" id="themeSwitcherThree" class="sr-only">
 
-                <div class="shadow-card flex h-[40px] w-[192px] items-center justify-between rounded-full bg-white border border-orange-500 p-1" id="switch-toggle" onclick="toggleTheme()">
-                    <h4 id="products-toggle" class="bg-orange-500 px-4 py-1 rounded-full text-white ml-3 transition duration-200 ease-out font-semibold">Products</h4>
+                <div class="shadow-card flex h-[40px] w-[192px] items-center justify-between rounded-full bg-white border border-primary-one p-1" id="switch-toggle" onclick="toggleTheme()">
+                    <h4 id="products-toggle" class="bg-primary-one px-4 py-1 rounded-full text-white ml-3 transition duration-200 ease-out font-semibold">Products</h4>
                     <h4 id="vendors-toggle" class="transition duration-200 ease-out mr-4">Vendors</h4>
                 </div>
             </label>
             <div class="lg:w-3/5 mx-2 lg:mx-auto">
                 <form class="">
                     <div class="flex">
-                        <button id="dropdown-button" data-dropdown-toggle="store-dropdown" data-dropdown-placement="bottom" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-bold text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-2 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600" type="button">
+                        <button id="dropdown-button" data-dropdown-toggle="store-dropdown" data-dropdown-placement="bottom" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-semibold text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-2 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600" type="button">
                             All Items
                             <svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
@@ -48,7 +48,7 @@
                     @foreach ($categories as $category)
                         <x-badge class="bg-violet-100 font-semibold" text="{{ $category->name }}"></x-badge>
                     @endforeach
-                    <x-badge class="bg-orange-500 text-white font-semibold" text="All Categories"></x-badge>
+                    <x-badge class="bg-primary-one text-white font-semibold" text="All Categories"></x-badge>
                 </div>
             </div>
         </div>
@@ -67,7 +67,7 @@
             <div class="hidden md:grid md:grid-cols-1 lg:grid-cols-2 4xl:flex">
                 <div class="4xl:basis-1/2">
                     <div class="md:flex gap-1">
-                        <h3 class="font-semibold text-lg">New Buying Leads</h3>
+                        <h3 class="font-bold text-lg text-gray-600">New Buying Leads</h3>
                         <h4 class="font-thin text-lg">(12)</h4>
                     </div>
                     <div class="relative" id="default-carousel" data-carousel="static">
@@ -158,7 +158,7 @@
                 </div>
                 <div class="4xl:basis-1/2">
                     <div class="flex gap-1">
-                        <h3 class="font-semibold text-lg">New Selling Leads</h3>
+                        <h3 class="font-bold text-lg text-gray-600">New Selling Leads</h3>
                         <h4 class="font-thin text-lg">(387)</h4>
                     </div>
                     <div class="relative" id="default-carousel" data-carousel="static">
@@ -267,7 +267,7 @@
 
             <div class="products">
                 <div class="flex justify-between">
-                    <h3 class="font-extrabold tracking-wide">Top Product Picks For You</h3>
+                    <h3 class="font-bold tracking-wide text-lg text-gray-600">Top Product Picks For You</h3>
                     <h4 class="font-semibold text-sm">See All <i class="fas fa-arrow-circle-right"></i></h4>
                 </div>
                 <div class="space-y-2 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-4 4xl:grid-cols-5 gap-2 py-4">
@@ -326,7 +326,7 @@
 
             <div class="vendors hidden">
                 <div class="flex justify-between">
-                    <h3 class="font-extrabold tracking-wide">Top Vendors Picks For You</h3>
+                    <h3 class="font-bold tracking-wide text-lg text-gray-600">Top Vendors Picks For You</h3>
                     <h4 class="font-semibold text-sm">See All <i class="fas fa-arrow-circle-right"></i></h4>
                 </div>
                 <div class="grid md:grid-cols-1 lg:grid-cols-2 4xl:grid-cols-3 gap-4 py-4">
@@ -562,17 +562,17 @@
 
         function switchTheme (){
             if (isProductmode) {
-                productsToggle.classList.add('bg-orange-500', 'px-4', 'py-1', 'rounded-full', 'text-white', 'ml-3', 'font-semibold');
+                productsToggle.classList.add('bg-primary-one', 'px-4', 'py-1', 'rounded-full', 'text-white', 'ml-3', 'font-semibold');
                 productsToggle.classList.remove('text-black', 'ml-3')
-                vendorsToggle.classList.remove('bg-orange-500', 'px-4', 'py-1', 'rounded-full', 'text-white', 'font-semibold')
+                vendorsToggle.classList.remove('bg-primary-one', 'px-4', 'py-1', 'rounded-full', 'text-white', 'font-semibold')
                 vendorsToggle.classList.add('text-black', 'mr-4')
                 productsList.classList.remove('hidden')
                 vendorsList.classList.add('hidden')
             } else {
-                productsToggle.classList.remove('bg-orange-500', 'px-4', 'py-1', 'rounded-full', 'ml-3', 'text-white', 'font-semibold')
+                productsToggle.classList.remove('bg-primary-one', 'px-4', 'py-1', 'rounded-full', 'ml-3', 'text-white', 'font-semibold')
                 productsToggle.classList.add('text-black', 'ml-3')
                 productsList.classList.add('hidden')
-                vendorsToggle.classList.add('bg-orange-500', 'px-4', 'py-1', 'rounded-full', 'text-white', 'font-semibold', 'mr-4')
+                vendorsToggle.classList.add('bg-primary-one', 'px-4', 'py-1', 'rounded-full', 'text-white', 'font-semibold', 'mr-4')
                 vendorsToggle.classList.remove('mr-4')
                 vendorsList.classList.remove('hidden')
             }
