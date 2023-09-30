@@ -70,11 +70,10 @@ Route::middleware('auth')->group(function () {
     Route::put('password', [PasswordController::class, 'update'])->name('password.update');
 
     Route::post('/business/create', [VendorController::class, 'create'])->name('auth.business.create');
-
     Route::get('/business/create', [VendorController::class, 'showCreateProfileForm'])->name('auth.business.create.show');
 
     // Route::get('/product/add', [VendorController::class, 'addProduct'])->name('auth.product.add');
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
-                ->name('logout');
+    ->name('logout');
 });

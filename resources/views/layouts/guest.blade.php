@@ -77,8 +77,8 @@
             {{-- <div class="flex flex-col sm:justify-center items-center lg:mt-10 pt-6 sm:pt-0 bg-transparent">
             </div> --}}
         </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.0/flowbite.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/datepicker.min.js"></script>
+        @stack('scripts')
     </body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.0/flowbite.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/datepicker.min.js"></script>
-    @stack('scripts')
 </html>

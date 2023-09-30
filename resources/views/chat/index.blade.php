@@ -18,24 +18,24 @@
                                 <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded-full border-2 border-orange-600 w-10 h-10 object-cover" alt="">
                                 <div class="px-2 flex flex-col w-[87%]">
                                     <div class="flex justify-between">
-                                        <span class="text-lg font-extrabold text-gray-900 mb-1 truncate">
+                                        <span class="text-lg font-bold text-gray-900 mb-1 truncate">
                                             @{{ conversation.last_message.sender.first_name }} @{{ conversation.last_message.sender.last_name }}
                                         </span>
                                         <span class="text-xs font-bold my-auto w-16 truncate text-end">@{{ conversation.last_message.from_now }}</span>
                                     </div>
-                                    <span class="font-light text-sm truncate">@{{ conversation.last_message.body }}.</span>
+                                    <span class="text-sm truncate">@{{ conversation.last_message.body }}.</span>
                                 </div>
                             </div>
                             <div v-else class="flex px-2 rounded-lg py-1 hover:bg-gray-200">
                                 <img src="{{ asset('assets/img/6CeuCO.jpg') }}" class="rounded-full w-10 h-10 object-cover" alt="">
                                 <div class="px-2 flex flex-col w-[87%]">
                                     <div class="flex justify-between">
-                                        <span class="text-lg font-extrabold text-gray-900 mb-1 truncate">
+                                        <span class="text-lg font-bold text-gray-900 mb-1 truncate">
                                             @{{ conversation.last_message.sender.first_name }} @{{ conversation.last_message.sender.last_name }}
                                         </span>
                                         <span class="text-xs font-bold my-auto w-16 truncate text-end">@{{ conversation.last_message.from_now }}</span>
                                     </div>
-                                    <span class="font-light text-sm truncate">@{{ conversation.last_message.body }}.</span>
+                                    <span class="text-sm truncate">@{{ conversation.last_message.body }}.</span>
                                 </div>
                             </div>
                         </li>
@@ -43,12 +43,12 @@
                             <img src="{{ asset('assets/img/skLbbi.jpg') }}" class="rounded-full w-10 h-10 object-cover" alt="" srcset="">
                             <div class="px-2 flex flex-col w-[87%]">
                                 <div class="flex justify-between">
-                                    <span class="text-lg font-extrabold text-gray-900 mb-1">
+                                    <span class="text-lg font-bold text-gray-900 mb-1">
                                         Xen Ping
                                     </span>
                                     <span class="text-xs font-bold my-auto">2:35a.m</span>
                                 </div>
-                                <span class="font-light text-sm truncate">We will have a short group discussion and get back to you</span>
+                                <span class="text-sm truncate">We will have a short group discussion and get back to you</span>
                             </div>
                         </li>
                     </ul>
@@ -59,7 +59,7 @@
                     <div class="border-b-2 border-t-0 border-gray-400 w-full px-4 py-2 flex justify-between">
                         <div class="flex gap-2 lg:block">
                             <i class="fas fa-arrow-left my-auto lg:hidden hover:cursor-pointer" v-on:click="viewContacts"></i>
-                            <h2 class="text-2xl font-extrabold text-gray-800">Wence Connor</h2>
+                            <h2 class="text-2xl font-bold text-gray-800">Wence Connor</h2>
                         </div>
                         <form action="#" method="POST" class="hidden md:block my-auto">
                             <div class="relative md:w-full sm:w-full">

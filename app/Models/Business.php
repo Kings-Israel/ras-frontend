@@ -60,7 +60,9 @@ class Business extends Model
      */
     public function getSecondaryCoverImageAttribute($value)
     {
-        return config('app.url').'/storage/vendor/cover_image/'.$value;
+        if ($value) {
+            return config('app.url').'/storage/vendor/cover_image/'.$value;
+        }
     }
 
     /**
@@ -69,6 +71,14 @@ class Business extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get all of the documents for the Business
+     */
+    public function documents(): HasMany
+    {
+        return $this->hasMany(BusinessDocument::class);
     }
 
     /**

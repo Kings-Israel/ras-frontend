@@ -55,12 +55,12 @@
                 </a>
             </li>
             <li class="cursor-pointer">
-                <a href="{{ route('vendor.storefront.products') }}" class="@if(request()->routeIs('vendor.storefront.products')) font-extrabold @endif text-sm md:text-base">
+                <a href="{{ route('vendor.storefront.products', ['slug' => $business->slug]) }}" class="@if(request()->routeIs('vendor.storefront.products')) font-extrabold @endif text-sm md:text-base">
                     Products
                 </a>
             </li>
             <li class="cursor-pointer">
-                <a href="{{ route('vendor.storefront.compliance') }}" class="@if(request()->routeIs('vendor.storefront.compliance')) font-extrabold @endif text-sm md:text-base">
+                <a href="{{ route('vendor.storefront.compliance', ['slug' => $business->slug]) }}" class="@if(request()->routeIs('vendor.storefront.compliance')) font-extrabold @endif text-sm md:text-base">
                     Compliance Documents
                 </a>
             </li>

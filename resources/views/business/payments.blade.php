@@ -11,7 +11,7 @@
                     </span>
                     <div class="ml-2 overflow-x-auto">
                         <span class="text-sm">Wallet Balance</span>
-                        <h1 class="text-xl font-extrabold">Ksh.3,685,338</h1>
+                        <h1 class="text-xl font-bold">Ksh.3,685,338</h1>
                     </div>
                 </div>
                 <div class="bg-gray-200 dark:bg-gray-200 p-3 rounded-md flex gap-2 mx-2 lg:w-[30%] hover:bg-orange-400">

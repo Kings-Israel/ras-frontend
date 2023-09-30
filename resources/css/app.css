@@ -77,6 +77,28 @@
     border-color: #a4cafe;
 }
 
+.bs-stepper .bs-stepper-header {
+    padding: 0 !important;
+}
+
+.bs-stepper .bs-stepper-content {
+    padding: 0 !important;
+}
+
+.bs-stepper .bs-stepper-header .step .bs-stepper-circle {
+    width: 35px !important;
+    height: 35px !important;
+    border-radius: 20px !important;
+}
+
+.active .bs-stepper-circle {
+    background-color: #30D1D1 !important;
+}
+
+.invalid-feedback {
+    color: red;
+}
+
 @media(max-width:1699.98px) {
 }
 
