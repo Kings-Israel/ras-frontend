@@ -1,5 +1,5 @@
 <x-vendor>
-    <x-storefront-header></x-storefront-header>
+    <x-storefront-header :business="$business"></x-storefront-header>
     <div>
         <img src="{{ asset('assets/img/skLbbi.jpg') }}" alt="" class="h-32 w-full object-cover">
     </div>
