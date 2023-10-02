@@ -47,12 +47,12 @@
         <div class="md:grid md:grid-cols-2 lg:flex gap-3 mt-3">
             <div class="bg-gray-50 p-2">
                 @if ($product->media->first()->type === 'image')
-                    <img src="{{ $product->media->first()->file }}" alt="" class="w-[290px] h-[350px] mx-auto md:w-[390px] md:h-[450px] md:mx-0 object-cover rounded-md">
+                    <img src="{{ $product->media->first()->file }}" alt="" class="w-[290px] h-[350px] mx-auto md:w-[390px] md:h-[450px] md:mx-0 object-cover rounded-md product-image">
                 @endif
                 <div class="flex justify-between mt-2 mx-8 md:mx-0">
                     @foreach ($product->media as $media)
                         @if ($media->type == 'image')
-                            <img src="{{ $media->file }}" alt="" class="w-20 h-20 lg:w-24 lg:h-24 object-cover rounded-md border border-primary-one">
+                            <img src="{{ $media->file }}" alt="" class="w-20 h-20 lg:w-24 lg:h-24 object-cover rounded-md border border-primary-one product-images-preview">
                         @endif
                     @endforeach
                 </div>
@@ -364,15 +364,15 @@
         </div>
         <div class="w-full lg:w-[70%]">
             <div class="flex gap-4">
-                <h4 class="text-lg font-semibold text-gray-600 p-2 bg-gray-100">Product Details</h4>
-                <h4 class="text-lg font-semibold text-gray-600 p-2">Vendor Details</h4>
-                <h4 class="text-lg font-semibold text-gray-600 p-2">Customer Reviews</h4>
+                <h4 class="text-lg font-semibold text-gray-600 p-2 bg-gray-100 hover:cursor-pointer" id="product-details-btn">Product Details</h4>
+                <h4 class="text-lg font-semibold text-gray-600 p-2 hover:cursor-pointer" id="vendor-details-btn">Vendor Details</h4>
+                <h4 class="text-lg font-semibold text-gray-600 p-2 hover:cursor-pointer" id="customer-reviews-btn">Customer Reviews</h4>
             </div>
-            <div class="bg-gray-100">
+            <div class="bg-gray-100" id="product-details">
                 <div class="grid grid-cols-1 md:grid-cols-3 md:divide-x md:divide-gray-400 p-2">
                     <div class="space-y-3">
                         <h5 class="text-sm font-bold text-gray-700">Overview</h5>
-                        <p class="text-sm text-gray-600">Material: <strong class="text-sm text-gray-700">Gold</strong></p>
+                        <p class="text-sm text-gray-600">Material: <strong class="text-sm text-gray-700">{{ $product->material }}</strong></p>
                         <p class="text-sm text-gray-600">Type: <strong class="text-sm text-gray-700">Mineral</strong></p>
                         <p class="text-sm text-gray-600">Product Type: <strong class="text-sm text-gray-700">Badge & Emblem</strong></p>
                         <p class="text-sm text-gray-600">Technique: <strong class="text-sm text-gray-700">Carving</strong></p>
@@ -386,7 +386,6 @@
                         <p class="text-sm text-gray-600">Brand Name: <strong class="text-sm text-gray-700">{{ $product->brand }}</strong></p>
                         <p class="text-sm text-gray-600">Model Number: <strong class="text-sm text-gray-700">#{{ $product->model_number }}</strong></p>
                         <p class="text-sm text-gray-600">Usage: <strong class="text-sm text-gray-700">Home Decoration Gift</strong></p>
-                        <p class="text-sm text-gray-600">Product Name: <strong class="text-sm text-gray-700">Natural</strong></p>
                         <p class="text-sm text-gray-600">Plating: <strong class="text-sm text-gray-700">None</strong></p>
                         <p class="text-sm text-gray-600">Shaping: <strong class="text-sm text-gray-700">Rectangle</strong></p>
                         <p class="text-sm text-gray-600">Design: <strong class="text-sm text-gray-700">100% Custom Made</strong></p>
@@ -420,22 +419,47 @@
                         </div>
                     </div>
                 </div>
-                <div class="p-2 space-y-3">
+                {{-- <div class="p-2 space-y-3">
                     <h5 class="text-sm font-bold text-gray-700">Product Images</h5>
                     <div class="md:flex gap-2">
-                        <img src="{{ asset('assets/img/6CeuCO.jpg') }}" alt="" class="w-96 h-60 object-contain mb-3 md:mb-0">
+                        @php($image = collect($product->media)->where('type', 'image')->first())
+                        <img src="{{ $image->file }}" alt="" class="w-96 h-60 object-contain mb-3 md:mb-0 product-image">
                         <div class="grid grid-cols-2 gap-3">
                             @foreach ($product->media as $media)
                                 @if ($media->type === 'image')
-                                    <img src="{{ $media->file }}" alt="" class="w-40 h-28 object-cover">
+                                    <img src="{{ $media->file }}" alt="" class="w-40 h-28 object-cover product-image-preview">
                                 @endif
                             @endforeach
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <div class="p-2 space-y-3">
                     <h5 class="text-sm font-bold text-gray-700">Product Videos</h5>
+                    <div>
+                        @php($video = collect($product->media)->where('type', 'video')->first())
+                        <video src="{{ $video->file }}" controls class="h-72 w-full rounded-md"></video>
+                    </div>
                 </div>
+            </div>
+            <div class="bg-gray-100 hidden" id="vendor-details">
+                <h5 class="text-sm font-bold text-gray-700 ml-2 pt-1">Overview</h5>
+                <div class="grid grid-cols-1 md:grid-cols-3 p-2 space-y-3">
+                    <p class="text-sm text-gray-600">Business Name: <strong class="text-sm text-gray-700">{{ $product->business->name }}</strong></p>
+                    <div class="flex gap-2">
+                        <h6 class="text-sm text-gray-500">Verified</h6>
+                        <i class="text-sm fas fa-shield-alt text-red-800"></i>
+                    </div>
+                    <p class="text-sm text-gray-600">Location: <strong class="text-sm text-gray-700">{{ $product->business->city ? $product->business->city->name.',' : '' }} {{ $product->business->country->name }}</strong></p>
+                    @if ($product->warehouse)
+                        <p class="text-sm text-gray-600">Warehouse: <strong class="text-sm text-gray-700">{{ $product->warehouse->name }}</strong></p>
+                    @endif
+                    <p class="text-sm text-gray-600">Member Since: <strong class="text-sm text-gray-700">{{ $product->business->created_at->format('d M Y') }}</strong></p>
+                    <a href="{{ route('vendor.storefront', ['slug' => $product->business->slug]) }}">
+                        <x-primary-button class="py-1">View Business Details</x-primary-button>
+                    </a>
+                </div>
+            </div>
+            <div class="bg-gray-100">
                 <div class="p-2 space-y-3">
                     <h5 class="text-sm font-bold text-gray-700">Related Items</h5>
                     <div class="space-y-2 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-4 gap-2 py-2">
@@ -529,6 +553,7 @@
             </div>
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>
         function decrement(e) {
           const btn = e.target.parentNode.parentElement.querySelector(
@@ -566,7 +591,34 @@
           btn.addEventListener("click", increment);
         });
         var container = document.getElementById("messages");
-        console.log(container);
         container.scrollTop = container.scrollHeight
+
+        $(".product-images-preview").on("mouseover", function () {
+            let newImage = $(this).attr("src");
+            $(this)
+                .parent()
+                .parent()
+                .children(".product-image")
+                .attr("src", newImage);
+        });
+
+        const product_details_btn = document.querySelector('#product-details-btn')
+        const product_details = document.querySelector('#product-details');
+        const vendor_details_btn = document.querySelector('#vendor-details-btn')
+        const vendor_details = document.querySelector('#vendor-details');
+
+        vendor_details_btn.addEventListener('click', function() {
+            product_details.classList.add('hidden');
+            vendor_details.classList.remove('hidden');
+            product_details_btn.classList.remove('bg-gray-100')
+            vendor_details_btn.classList.add('bg-gray-100')
+        })
+
+        product_details_btn.addEventListener('click', function() {
+            product_details.classList.remove('hidden');
+            vendor_details.classList.add('hidden');
+            product_details_btn.classList.add('bg-gray-100')
+            vendor_details_btn.classList.remove('bg-gray-100')
+        })
       </script>
 </x-main>
