@@ -27,8 +27,8 @@
                 </div>
                 <div class="mt-2 lg:mt-0 lg:basis-3/4 border border-gray-300 rounded-lg bg-white py-4 px-4 divide-y-4">
                     <div class="flex gap-6">
-                        <span class="font-semibold text-primary-one underline underline-offset-4 decoration-4 hover:cursor-pointer" id="account-settings-btn">Account Settings</span>
-                        <span class="font-semibold text-gray-400 hover:cursor-pointer" id="business-account-settings-btn">Business Account Settings</span>
+                        <span class="font-semibold text-primary-one underline underline-offset-4 decoration-4 hover:cursor-pointer transition duration-200" id="account-settings-btn">Account Settings</span>
+                        <span class="font-semibold text-gray-400 hover:cursor-pointer transition duration-200" id="business-account-settings-btn">Business Account Settings</span>
                         <span class="font-semibold text-gray-400 hover:cursor-pointer" id="notifications">Notifications</span>
                     </div>
                     <form action="{{ route('vendor.profile.update') }}" method="POST" enctype="multipart/form-data" id="account-settings" class="">

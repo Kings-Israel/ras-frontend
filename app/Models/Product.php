@@ -64,4 +64,12 @@ class Product extends Model
     {
         return $this->hasMany(ProductMedia::class);
     }
+
+    /**
+     * Get the warehouse that owns the Product
+     */
+    public function warehouse(): BelongsTo
+    {
+        return $this->belongsTo(Warehouse::class);
+    }
 }
