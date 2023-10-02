@@ -8,7 +8,9 @@ use App\Models\BusinessDocument;
 use App\Models\Category;
 use App\Models\Country;
 use App\Models\Document;
+use App\Models\MeasurementUnit;
 use App\Models\RequiredDocumentPerCountry;
+use App\Models\Warehouse;
 use App\Rules\PhoneNumber;
 use Illuminate\Http\Request;
 
@@ -124,11 +126,6 @@ class VendorController extends Controller
     public function dashboard()
     {
         return view('business.dashboard');
-    }
-
-    public function products()
-    {
-        return view('business.products');
     }
 
     public function orders()

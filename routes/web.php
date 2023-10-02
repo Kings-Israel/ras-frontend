@@ -4,6 +4,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OtpController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Vendor\ProductController as VendorProductController;
 use App\Http\Controllers\Vendor\VendorController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
@@ -38,7 +39,8 @@ Route::group(['prefix' => 'vendor', 'as' => 'vendor.'], function () {
 Route::middleware(['auth', 'phone_verified', 'role:vendor', 'has_registered_business'])->group(function () {
     Route::group(['prefix' => 'vendor/', 'as' => 'vendor.'], function() {
         Route::get('/', [VendorController::class, 'dashboard'])->name('dashboard');
-        Route::get('/products', [VendorController::class, 'products'])->name('products');
+        Route::get('/products', [VendorProductController::class, 'index'])->name('products');
+        Route::post('/products/store', [VendorProductController::class, 'store'])->name('products.store');
         Route::get('/orders', [VendorController::class, 'orders'])->name('orders');
         Route::get('/messages', function () {
             return view('chat.index', [
