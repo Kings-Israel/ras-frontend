@@ -1,4 +1,7 @@
-<x-guest-layout>
+<x-guest-layout class="w-[96%] md:w-[70%] lg:w-[30%] my-10 md:my-20">
+    <div class="flex flex-col text-center py-10">
+        <h1 class="text-3xl font-bold p-2">Reset Password</h1>
+    </div>
     <form method="POST" action="{{ route('password.store') }}">
         @csrf
 
@@ -31,7 +34,7 @@
         </div>
 
         <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
+            <x-primary-button class="py-2">
                 {{ __('Reset Password') }}
             </x-primary-button>
         </div>

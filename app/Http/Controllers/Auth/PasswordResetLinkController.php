@@ -36,6 +36,12 @@ class PasswordResetLinkController extends Controller
             $request->only('email')
         );
 
+        if ($status == Password::RESET_LINK_SENT) {
+            toastr()->success('', 'Password reset link sent successfully');
+        } else {
+            toastr()->error('', 'Password reset link failed to send');
+        }
+
         return $status == Password::RESET_LINK_SENT
                     ? back()->with('status', __($status))
                     : back()->withInput($request->only('email'))
