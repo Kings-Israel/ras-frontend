@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-guest-layout class="w-full md:w-[60%] lg:w-[30%] my-16 md:my-20">
     <div class="flex flex-col text-center py-10">
         <h1 class="text-3xl font-bold p-2">Verify Email</h1>
     </div>
@@ -13,7 +13,7 @@
         </div>
     @endif
 
-    <div class="mt-4 flex items-center gap-3">
+    <div class="mt-4 flex gap-3 justify-between">
         <a href="#" class="">
             <x-secondary-outline-button>
                 {{ __('Help') }}
@@ -23,7 +23,7 @@
             @csrf
 
             <div>
-                <x-primary-button class="whitespace-nowrap">
+                <x-primary-button class="whitespace-nowrap py-2 w-full">
                     {{ __('Resend Verification Email') }}
                 </x-primary-button>
             </div>

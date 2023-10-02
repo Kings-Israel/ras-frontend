@@ -33,12 +33,6 @@ Route::group(['prefix' => 'vendor', 'as' => 'vendor.'], function () {
     Route::get('/{slug}/storefront', [VendorController::class, 'storefront'])->name('storefront');
     Route::get('/{slug}/storefront/products', [VendorController::class, 'storefrontProducts'])->name('storefront.products');
     Route::get('/{slug}/storefront/compliance', [VendorController::class, 'storefrontDocuments'])->name('storefront.compliance');
-    // Route::get('/storefront/products', function() {
-    //     return view('business.storefront.products');
-    // })->name('storefront.products');
-    // Route::get('/storefront/compliance', function() {
-    //     return view('business.storefront.compliance');
-    // })->name('storefront.compliance');
 });
 
 Route::middleware(['auth', 'phone_verified', 'role:vendor', 'has_registered_business'])->group(function () {
@@ -74,12 +68,12 @@ Route::middleware(['auth', 'phone_verified', 'role:vendor', 'has_registered_busi
         Route::get('/suppliers', function () {
             return view('business.suppliers');
         })->name('suppliers');
-        Route::get('/profile', function() {
-            return view('business.profile');
-        })->name('profile');
+        Route::get('/profile', [ProfileController::class, 'businessProfile'])->name('profile');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::patch('/business/update', [VendorController::class, 'update'])->name('business.update');
+        Route::patch('/business/image/update', [VendorController::class, 'updatePrimaryCoverImage'])->name('business.image.update');
     });
     // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 

@@ -31,7 +31,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'phone_number',
         'password',
         'phone_verified_at',
-        'last_login'
+        'last_login',
+        'avatar',
     ];
 
     /**
@@ -60,7 +61,7 @@ class User extends Authenticatable implements MustVerifyEmail
         if ($value != NULL) {
             return config('app.url').'/storage/user/avatars/'.$value;
         }
-        return public_path().'/assets/img/user.png';
+        return config('app.url').'/assets/img/user.png';
     }
 
     /**

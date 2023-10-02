@@ -4,7 +4,7 @@
     </a>
     <div class="flex space-x-2">
         @auth
-            <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-8 h-8 rounded-full object-cover my-auto">
+            <img src="{{ auth()->user()->avatar }}" alt="" class="w-8 h-8 rounded-full object-cover my-auto">
             <button id="dropdown-button" data-dropdown-toggle="account-dropdown" data-dropdown-placement="bottom" class="flex gap-2" type="button">
                 <span class="font-semibold my-auto">My Account</span>
                 <i class="fas fa-chevron-down my-auto text-sm"></i>

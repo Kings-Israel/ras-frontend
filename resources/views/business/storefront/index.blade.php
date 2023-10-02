@@ -10,11 +10,15 @@
             </div>
         @endif
         <div class="w-full text-center lg:text-start lg:basis-3/4">
-            <h1 class="text-3xl font-bold text-slate-700">We Strive to Ship the Best Products Globally</h1>
+            @if ($business->tag_line)
+                <h1 class="text-3xl font-bold text-slate-700">{{ $business->tag_line }}</h1>
+            @endif
             <div class="flex gap-2 justify-center lg:justify-start">
-                <h2 class="text-sm my-auto">15 Years Experience</h2>
-                <span class="uppercase text-gray-400 text-xl">I</span>
-                <h2 class="text-sm my-auto">Releasing Over 2000 products per year</h2>
+                <h2 class="text-sm my-auto">{{ $business->mission }}</h2>
+                @if ($business->vision)
+                    <span class="uppercase text-gray-400 text-xl">I</span>
+                    <h2 class="text-sm my-auto">{{ $business->vision }}</h2>
+                @endif
             </div>
             <div class="space-y-4">
                 <span class="text-sm">Avg Response Time: <span class="text-green-400">&#60;24Hrs</span></span>
@@ -23,13 +27,19 @@
                     <button class="font-semibold px-10 py-0.5 border border-primary-one text-primary-one rounded-full hover:bg-orange-200">Chat</button>
                 </div>
             </div>
+            @if ($business->about)
+                <div class="mt-10">
+                    <h4 class="font-bold text-gray-600">About Us</h4>
+                    <p class="mt-3 text-gray-700">{{ $business->about }}</p>
+                </div>
+            @endif
             <div class="mt-10">
-                <h4 class="text-sm font-bold">Our Advantages</h4>
-                <p class="text-xs mt-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt optio vitae quam corrupti eius fuga, sunt sint magni, atque sapiente eos sequi veritatis porro nisi totam dolore numquam tenetur minus. Quos velit maiores, ea numquam reiciendis veniam voluptatum blanditiis, aut ratione mollitia omnis minus nisi vero incidunt, tenetur tempora sed?</p>
-            </div>
-            <div class="mt-10">
-                <h4 class="text-sm font-bold">Contact Us</h4>
-                <p class="text-xs mt-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium, eos repellendus autem voluptas maxime magni velit facere eum, doloremque ab quam excepturi labore laboriosam sapiente accusantium accusamus corporis nobis dignissimos.</p>
+                <h4 class="font-bold text-gray-600">Contact Us</h4>
+                <div class="flex divide-x-2 gap-4">
+                    <p class="space-x-2"><span>{{ $business->contact_email }}</span></p>
+                    <p class="space-x-2 pl-2"><span>{{ $business->contact_phone_number }}</span></p>
+                </div>
+                {{-- <p class="text-xs mt-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium, eos repellendus autem voluptas maxime magni velit facere eum, doloremque ab quam excepturi labore laboriosam sapiente accusantium accusamus corporis nobis dignissimos.</p> --}}
             </div>
         </div>
     </div>

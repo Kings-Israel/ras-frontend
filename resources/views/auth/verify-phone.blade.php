@@ -1,4 +1,4 @@
-<x-guest-layout class="w-full md:w-[60%] lg:w-[30%]">
+<x-guest-layout class="w-full md:w-[60%] lg:w-[25%] my-16 md:my-20">
     <div class="flex flex-col text-center py-10">
         <h1 class="text-3xl font-bold p-2">Enter the Code</h1>
         <span class="p-1">Enter the 5-digit code sent to your phone. Be careful not to share the code with anyone</span>
@@ -9,28 +9,28 @@
 
         <div class="">
             <div class="flex justify-evenly gap-3 w-full-mt-3">
-                <x-text-input id="verify-code-input-1" class="w-1/5 border-slate-400 dark:border-slate-400 bg-slate-200 dark:bg-slate-200 text-center text-3xl font-bold"
+                <x-text-input id="verify-code-input-1" class="w-1/5 border-slate-400 dark:border-slate-400 bg-slate-200 dark:bg-slate-200 text-center text-2xl font-bold"
                                 type="number"
                                 name="number[]"
                                 required
                 />
 
-                <x-text-input id="verify-code-input-2" class="w-1/5 border-slate-400 dark:border-slate-400 bg-slate-200 dark:bg-slate-200 text-center text-3xl font-bold"
+                <x-text-input id="verify-code-input-2" class="w-1/5 border-slate-400 dark:border-slate-400 bg-slate-200 dark:bg-slate-200 text-center text-2xl font-bold"
                                 type="number"
                                 name="number[]"
                                 required />
 
-                <x-text-input id="verify-code-input-3" class="w-1/5 border-slate-400 dark:border-slate-400 bg-slate-200 dark:bg-slate-200 text-center text-3xl font-bold"
+                <x-text-input id="verify-code-input-3" class="w-1/5 border-slate-400 dark:border-slate-400 bg-slate-200 dark:bg-slate-200 text-center text-2xl font-bold"
                                 type="number"
                                 name="number[]"
                                 required />
 
-                <x-text-input id="verify-code-input-4" class="w-1/5 border-slate-400 dark:border-slate-400 bg-slate-200 dark:bg-slate-200 text-center text-3xl font-bold"
+                <x-text-input id="verify-code-input-4" class="w-1/5 border-slate-400 dark:border-slate-400 bg-slate-200 dark:bg-slate-200 text-center text-2xl font-bold"
                                 type="number"
                                 name="number[]"
                                 required />
 
-                <x-text-input id="verify-code-input-5" class="w-1/5 border-slate-400 dark:border-slate-400 bg-slate-200 dark:bg-slate-200 text-center text-3xl font-bold"
+                <x-text-input id="verify-code-input-5" class="w-1/5 border-slate-400 dark:border-slate-400 bg-slate-200 dark:bg-slate-200 text-center text-2xl font-bold"
                                 type="number"
                                 name="number[]"
                                 required />

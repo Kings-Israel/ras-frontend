@@ -79,9 +79,9 @@ class VerifyPhoneController extends Controller
             return redirect()->intended('/');
         }
 
-        if ($request->user()->markEmailAsVerified()) {
-            event(new Verified($request->user()));
-        }
+        // if ($request->user()->markEmailAsVerified()) {
+        //     event(new Verified($request->user()));
+        // }
 
         if ($request->user()->hasRole('vendor')) {
             // Create business if account is new

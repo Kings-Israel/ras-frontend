@@ -14,7 +14,7 @@ class PhoneNumber implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (!preg_match('/^07\d{9}$/i', $value)) {
+        if (!preg_match('/^07\d{8}$/i', $value)) {
             $fail('Invalid phone number');
         }
     }
