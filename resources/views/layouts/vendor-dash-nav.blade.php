@@ -9,7 +9,7 @@
     <div class="h-[98%] px-4 py-2 grid grid-cols-1 divide-gray-400 divide-y-2 overflow-y-auto rounded-xl bg-gray-200 dark:bg-gray-800">
         <div>
             <div class="flex pt-4 md:pb-5">
-                <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded-full w-12 h-12 object-cover" alt="avatar">
+                <img src="{{ auth()->user()->avatar }}" class="rounded-full w-12 h-12 object-cover" alt="avatar">
                 <div class="pl-2">
                     <h3>Hello, {{ auth()->user()->last_name }}</h3>
                     <h4 class="font-bold text-lg">{{ auth()->user()->business->name }}</h4>

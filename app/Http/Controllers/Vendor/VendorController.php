@@ -9,14 +9,15 @@ use App\Models\Category;
 use App\Models\Country;
 use App\Models\Document;
 use App\Models\RequiredDocumentPerCountry;
+use App\Rules\PhoneNumber;
 use Illuminate\Http\Request;
 
 class VendorController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware(['auth']);
-    // }
+    public function __construct()
+    {
+        $this->middleware(['auth', 'verified', 'phone_verified']);
+    }
 
     public function showCreateProfileForm()
     {
@@ -32,7 +33,6 @@ class VendorController extends Controller
             array_push($documents, $value->document);
         }
 
-        // return view('auth.business', compact('categories', 'countries'));
         return view('business.profile.create', compact('categories', 'countries', 'documents'));
     }
 
@@ -65,6 +65,51 @@ class VendorController extends Controller
         }
 
         return redirect()->route('vendor.dashboard');
+    }
+
+    public function update(Request $request)
+    {
+        $request->validate([
+            'business_name' => ['required'],
+            'secondary_cover_image' => ['nullable', 'mimes:png,jpg,jpeg', 'max:4096'],
+            'contact_email' => ['nullable', 'email'],
+            'contact_phone_number' => ['nullable', new PhoneNumber]
+        ]);
+
+        auth()->user()->business()->update([
+            'name' => $request->business_name,
+            'about' => $request->has('about') && $request->about != null ? $request->about : auth()->user()->business->about,
+            'tag_line' => $request->has('tag_line') && $request->about != null ? $request->tag_line : auth()->user()->business->tag_line,
+            'mission' => $request->has('mission') && $request->mission != null ? $request->mission : auth()->user()->business->mission,
+            'vision' => $request->has('vision') && $request->vision != null ? $request->vision : auth()->user()->business->vision,
+            'contact_email' => $request->has('contact_email') && $request->contact_email != null ? $request->contact_email : auth()->user()->business->contact_email,
+            'contact_phone_number' => $request->has('contact_phone_number') && $request->contact_phone_number != null ? $request->contact_phone_number : auth()->user()->business->contact_phone_number,
+        ]);
+
+        if ($request->hasFile('secondary_cover_image')) {
+            auth()->user()->business()->update([
+                'secondary_cover_image' => pathinfo($request->secondary_cover_image->store('cover_image', 'vendor'), PATHINFO_BASENAME)
+            ]);
+        }
+
+        toastr()->success('', 'Business details updated successfully');
+
+        return back();
+    }
+
+    public function updatePrimaryCoverImage(Request $request)
+    {
+        $request->validate([
+            'primary_cover_image' => ['required', 'mimes:png,jpg,jpeg', 'max:4096'],
+        ]);
+
+        auth()->user()->business()->update([
+            'primary_cover_image' => pathinfo($request->primary_cover_image->store('cover_image', 'vendor'), PATHINFO_BASENAME)
+        ]);
+
+        toastr()->success('', 'Business details updated successfully');
+
+        return back();
     }
 
     public function addProduct()
