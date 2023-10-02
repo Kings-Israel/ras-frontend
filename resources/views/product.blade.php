@@ -433,13 +433,15 @@
                         </div>
                     </div>
                 </div> --}}
-                <div class="p-2 space-y-3">
-                    <h5 class="text-sm font-bold text-gray-700">Product Videos</h5>
-                    <div>
-                        @php($video = collect($product->media)->where('type', 'video')->first())
-                        <video src="{{ $video->file }}" controls class="h-72 w-full rounded-md"></video>
+                @php($video = collect($product->media)->where('type', 'video')->first())
+                @if ($video)
+                    <div class="p-2 space-y-3">
+                        <h5 class="text-sm font-bold text-gray-700">Product Videos</h5>
+                        <div>
+                            <video src="{{ $video->file }}" controls class="h-72 w-full rounded-md"></video>
+                        </div>
                     </div>
-                </div>
+                @endif
             </div>
             <div class="bg-gray-100 hidden" id="vendor-details">
                 <h5 class="text-sm font-bold text-gray-700 ml-2 pt-1">Overview</h5>
