@@ -46,7 +46,7 @@
         </form>
     </div>
 </div>
-<div class="bg-red-800 mx-auto px-2 md:px-8 lg:px-24 py-2 sticky top-16 z-30">
+<div class="bg-red-800 mx-auto px-2 md:px-8 lg:px-24 py-2 sticky top-14 md:top-16 z-30">
     <div class="h-8 flex justify-center lg:justify-start">
         <ul class="list-desc flex gap-4 md:gap-8 text-white font-sans my-auto">
             <li class="cursor-pointer">

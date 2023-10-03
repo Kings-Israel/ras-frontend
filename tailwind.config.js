@@ -18,6 +18,10 @@ export default {
             backgroundImage: {
                 'auth': "url('/public/assets/img/6CeuCO.jpg')",
                 'auth-alt': "url('/public/assets/img/auth-bg-1.png')",
+                'auth-alt-two': "url('/public/assets/img/auth-alt-three.jpg')",
+                'auth-alt-three': "url('/public/assets/img/auth-alt-four.jpg')",
+                'auth-alt-four': "url('/public/assets/img/auth-alt-five.jpg')",
+                'auth-alt-five': "url('/public/assets/img/auth-alt-six.jpg')",
                 'hero': "url('/public/assets/img/banner.png')",
             },
             screens: {
