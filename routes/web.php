@@ -31,9 +31,9 @@ Route::middleware(['auth', 'phone_verified', 'role:buyer'])->group(function () {
 });
 
 Route::group(['prefix' => 'vendor', 'as' => 'vendor.'], function () {
-    Route::get('/{slug}/storefront', [VendorController::class, 'storefront'])->name('storefront');
-    Route::get('/{slug}/storefront/products', [VendorController::class, 'storefrontProducts'])->name('storefront.products');
-    Route::get('/{slug}/storefront/compliance', [VendorController::class, 'storefrontDocuments'])->name('storefront.compliance');
+    Route::get('/{slug}/storefront', [ProductController::class, 'storefront'])->name('storefront');
+    Route::get('/{slug}/storefront/products', [ProductController::class, 'storefrontProducts'])->name('storefront.products');
+    Route::get('/{slug}/storefront/compliance', [ProductController::class, 'storefrontDocuments'])->name('storefront.compliance');
 });
 
 Route::middleware(['auth', 'phone_verified', 'role:vendor', 'has_registered_business'])->group(function () {
