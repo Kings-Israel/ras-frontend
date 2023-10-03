@@ -27,7 +27,6 @@
     <body class="font-sans text-gray-900 antialiased">
         @php($random = ['auth-alt', 'auth-alt-three', 'auth-alt-four', 'auth-alt-five'])
         @php($key = array_rand($random))
-        {{ $random[$key] }}
         <div class="min-h-screen bg-{{ $random[$key] }} bg-no-repeat bg-cover">
             <x-guest-nav>
                 <div>
