@@ -25,9 +25,9 @@
         </style>
     </head>
     <body class="font-sans text-gray-900 antialiased">
-        @php($random = ['auth-alt', 'auth-alt-three', 'auth-alt-four', 'auth-alt-five'])
+        @php($random = ['min-h-screen bg-auth-alt bg-no-repeat bg-cover', 'min-h-screen bg-auth-alt-three bg-no-repeat bg-cover', 'min-h-screen bg-auth-alt-four bg-no-repeat bg-cover', 'min-h-screen bg-auth-alt-five bg-no-repeat bg-cover'])
         @php($key = array_rand($random))
-        <div class="min-h-screen bg-auth-alt-five bg-no-repeat bg-cover">
+        <div class="{{ $random[$key] }}">
             <x-guest-nav>
                 <div>
                     <a href="{{ url('/') }}" class="">

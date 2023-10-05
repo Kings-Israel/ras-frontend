@@ -50,5 +50,15 @@
         <script src="{{asset('assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js')}}"></script>
         <script src="{{asset('assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js')}}"></script>
         <script src="{{ asset('assets/js/product-wizard.js') }}"></script>
+        <script>
+            function showCapacityInput() {
+                let selected_warehouse = $('#link_to_warehouse').find(':selected').val()
+                if (selected_warehouse === '') {
+                    $('#product_capacity').addClass('hidden')
+                } else {
+                    $('#product_capacity').removeClass('hidden')
+                }
+            }
+        </script>
     @endpush
 </x-app-layout>
