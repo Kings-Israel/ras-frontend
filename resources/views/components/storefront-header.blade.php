@@ -64,11 +64,11 @@
                     Compliance Documents
                 </a>
             </li>
-            <li>
+            {{-- <li>
                 <a href="#" class="text-sm md:text-base">
                     Contact Us
                 </a>
-            </li>
+            </li> --}}
         </ul>
     </div>
 </div>

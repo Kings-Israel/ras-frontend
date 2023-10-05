@@ -1,4 +1,4 @@
-<div class="sticky top-0 bg-transparent flex lg:flex-wrap lg:items-center justify-between mx-auto pt-1 py-1 lg:px-24 md:px-16 sm:px-8 z-50 duration-200" id="main-header">
+<div class="sticky top-0 bg-transparent flex lg:flex-wrap lg:items-center justify-between mx-auto pt-1 py-1 lg:px-24 md:px-10 sm:px-8 z-50 duration-200" id="main-header">
     <a href="{{ url('/') }}" class="">
         <x-application-logo class="w-[10rem] object-contain" />
     </a>

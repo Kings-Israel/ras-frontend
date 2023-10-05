@@ -38,18 +38,18 @@
             </div>
         </form>
     </div>
-    <div class="mx-auto px-4 md:px-10 lg:px-28 my-5">
+    <div class="mx-auto px-4 md:px-6 lg:px-28 my-5">
         <span class="flex gap-2 text-sm">
             <p class="text-gray-400">Home ></p>
             <p class="text-gray-400">{{ $product->category->name }} ></p>
             <p class="text-gray-600">{{ $product->name }}</p>
         </span>
         <div class="md:grid md:grid-cols-2 lg:flex gap-3 mt-3">
-            <div class="bg-gray-50 p-2">
-                @if ($product->media->first()->type === 'image')
-                    <img src="{{ $product->media->first()->file }}" alt="" class="w-[290px] h-[350px] mx-auto md:w-[390px] md:h-[450px] md:mx-0 object-cover rounded-md product-image">
+            <div class="bg-gray-50 p-2 lg:w-[35%]">
+                @if ($product->media->where('type', 'image')->first())
+                    <img src="{{ $product->media->where('type', 'image')->first()->file }}" alt="" class="w-[360px] h-[350px] mx-auto md:w-[430px] md:h-[540px] md:mx-0 object-cover rounded-md product-image">
                 @endif
-                <div class="flex justify-between mt-2 mx-8 md:mx-0">
+                <div class="flex justify-between mt-2">
                     @foreach ($product->media as $media)
                         @if ($media->type == 'image')
                             <img src="{{ $media->file }}" alt="" class="w-20 h-20 lg:w-24 lg:h-24 object-cover rounded-md border border-primary-one product-images-preview">
@@ -57,7 +57,7 @@
                     @endforeach
                 </div>
             </div>
-            <div class="space-y-4 bg-gray-50 p-2 rounded-md">
+            <div class="space-y-4 bg-gray-50 p-2 rounded-md lg:w-[50%]">
                 <h2 class="text-xl font-bold text-gray-600">{{ $product->name }}</h2>
                 <div class="border-b-2 space-y-2 lg:space-y-5 pb-6">
                     <div class="flex gap-2">
@@ -80,14 +80,14 @@
                         </div>
                     </div>
                     <div class="flex gap-2">
-                        <h4 class="text-sm font-bold text-gray-600">Brand:</h4>
+                        <h4 class="font-bold text-gray-600">Brand:</h4>
                         <div class="flex gap-3">
-                            <h4 class="text-sm font-semibold text-blue-500">Raw Material</h4>
-                            <h4 class="text-sm font-bold text-gray-400">I</h4>
-                            <h4 class="text-sm font-semibold text-blue-500">Similar Products from {{ $product->business->name }}</h4>
+                            <h4 class="font-semibold text-blue-500">Raw Material</h4>
+                            <h4 class="font-bold text-gray-400">I</h4>
+                            <h4 class="font-semibold text-blue-500">Similar Products from {{ $product->business->name }}</h4>
                         </div>
                     </div>
-                    <div class="border border-gray-300 p-3 px-5 rounded-lg mt-2 bg-white">
+                    <div class="border border-gray-300 p-3 px-5 rounded-lg mt-2 bg-white lg:w-[80%]">
                         <div class="flex gap-2 justify-between">
                             <div class="flex flex-col gap-1">
                                 <h4 class="font-semibold text-gray-400">10 - 39 Pieces</h4>
@@ -104,20 +104,20 @@
                         </div>
                     </div>
                     <div class="flex gap-2">
-                        <h4 class="text-sm font-bold text-gray-600">Benefits:</h4>
+                        <h4 class="font-bold text-gray-600">Benefits:</h4>
                         <div class="flex gap-1">
-                            <h4 class="text-sm font-semibold text-gray-500">Quick Refunds on Orders Under</h4>
-                            <h4 class="text-sm font-semibold text-blue-500">$500.</h4>
+                            <h4 class="font-semibold text-gray-500">Quick Refunds on Orders Under</h4>
+                            <h4 class="font-semibold text-blue-500">$500.</h4>
                         </div>
                     </div>
                     <div class="flex gap-2">
-                        <h4 class="text-sm font-bold text-gray-600">Color:</h4>
+                        <h4 class="font-bold text-gray-600">Color:</h4>
                         <div class="flex gap-3">
-                            <h4 class="text-sm font-semibold text-gray-500">{{ $product->color }}</h4>
+                            <h4 class="font-semibold text-gray-500">{{ $product->color }}</h4>
                         </div>
                     </div>
                     <div class="flex gap-2">
-                        <h4 class="text-sm font-bold text-gray-600 my-auto">Your Order:</h4>
+                        <h4 class="font-bold text-gray-600 my-auto">Your Order:</h4>
                         <div class="custom-number-input h-10 w-32">
                             <div class="flex flex-row h-8 w-full rounded-lg relative bg-transparent mt-1">
                                 <button data-action="decrement" class=" bg-gray-200 mr-0.5 border-2 rounded-tl-lg rounded-bl-lg border-gray-400 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none">
@@ -134,41 +134,41 @@
                         </div>
                     </div>
                     <div class="flex gap-2">
-                        <h4 class="text-sm font-bold text-gray-600">Samples:</h4>
+                        <h4 class="font-bold text-gray-600">Samples:</h4>
                         <div class="flex gap-1">
-                            <h4 class="text-sm font-semibold text-gray-500">$20.00/piece</h4>
-                            <h4 class="text-sm font-semibold text-gray-500">Min. Order: 1 Piece</h4>
-                            <h4 class="text-sm font-semibold text-blue-500">Buy Samples</h4>
+                            <h4 class="font-semibold text-gray-500">$20.00/piece</h4>
+                            <h4 class="font-semibold text-gray-500">Min. Order: 1 Piece</h4>
+                            <h4 class="font-semibold text-blue-500">Buy Samples</h4>
                         </div>
                     </div>
                 </div>
                 <div class="space-y-2 lg:space-y-5">
                     <h3 class="text-bold text-gray-600">Purchase Details</h3>
                     <div class="flex gap-2">
-                        <h4 class="text-sm font-bold text-gray-600 my-auto">Payments:</h4>
+                        <h4 class="font-bold text-gray-600 my-auto">Payments:</h4>
                         <div class="flex gap-1">
                             <img src="{{ asset('assets/img/visa_icon.png') }}" alt="" class="w-14 h-10 object-contain">
                             <img src="{{ asset('assets/img/mastercard_payment_icon.png') }}" alt="" class="w-14 h-10 object-contain">
-                            <h4 class="text-sm font-semibold text-blue-500 my-auto">MPESA</h4>
+                            <h4 class="font-semibold text-blue-500 my-auto">MPESA</h4>
                         </div>
                     </div>
                     <div class="flex gap-2">
-                        <h4 class="text-sm font-bold text-gray-600">Delivery Time:</h4>
+                        <h4 class="font-bold text-gray-600">Delivery Time:</h4>
                         <div class="flex flex-col gap-1">
-                            <h4 class="text-sm font-semibold text-gray-500">Express: 6 - 8 Days</h4>
-                            <h4 class="text-sm font-semibold text-gray-500">Standard: 10 - 16 Days</h4>
+                            <h4 class="font-semibold text-gray-500">Express: 6 - 8 Days</h4>
+                            <h4 class="font-semibold text-gray-500">Standard: 10 - 16 Days</h4>
                         </div>
                     </div>
                     <div class="flex">
-                        <h4 class="text-sm font-bold text-gray-600">Returns And Refunds:</h4>
-                        <h4 class="text-sm font-semibold text-gray-500">
+                        <h4 class="font-bold text-gray-600">Returns And Refunds:</h4>
+                        <h4 class="font-semibold text-gray-500">
                             For Returns, Refunds and Other Product Issues
-                            <span class="text-sm font-semibold text-blue-500 underline underline-offset-2">Click Here</span>
+                            <span class="font-semibold text-blue-500 underline underline-offset-2">Click Here</span>
                         </h4>
                     </div>
                 </div>
             </div>
-            <div class="border border-gray-300 rounded-lg p-4 lg:h-[30%] col-span-2 sm:block md:flex gap-4 lg:block">
+            <div class="border border-gray-300 rounded-lg p-4 lg:h-[30%] col-span-2 sm:block md:flex gap-4 lg:block content-end">
                 <div class="sm:border-b md:border-none lg:border-b border-gray-300 pb-5">
                     <h5 class="font-semibold text-gray-500">Total Cost:</h5>
                     <h3 class="font-bold text-xl">US$55.86</h3>
@@ -371,37 +371,37 @@
             <div class="bg-gray-100" id="product-details">
                 <div class="grid grid-cols-1 md:grid-cols-3 md:divide-x md:divide-gray-400 p-2">
                     <div class="space-y-3">
-                        <h5 class="text-sm font-bold text-gray-700">Overview</h5>
-                        <p class="text-sm text-gray-600">Material: <strong class="text-sm text-gray-700">{{ $product->material }}</strong></p>
-                        <p class="text-sm text-gray-600">Type: <strong class="text-sm text-gray-700">Mineral</strong></p>
-                        <p class="text-sm text-gray-600">Product Type: <strong class="text-sm text-gray-700">Badge & Emblem</strong></p>
-                        <p class="text-sm text-gray-600">Technique: <strong class="text-sm text-gray-700">Carving</strong></p>
-                        <p class="text-sm text-gray-600">Style: <strong class="text-sm text-gray-700">Natural</strong></p>
-                        <p class="text-sm text-gray-600">Use: <strong class="text-sm text-gray-700">Business Gift</strong></p>
-                        <p class="text-sm text-gray-600">Theme: <strong class="text-sm text-gray-700">Patriotism</strong></p>
-                        <p class="text-sm text-gray-600">Regional Feature: <strong class="text-sm text-gray-700">Africa</strong></p>
+                        <h5 class="font-bold text-gray-700">Overview</h5>
+                        <p class="text-gray-600">Material: <strong class="text-gray-700">{{ $product->material }}</strong></p>
+                        <p class="text-gray-600">Type: <strong class="text-gray-700">Mineral</strong></p>
+                        <p class="text-gray-600">Product Type: <strong class="text-gray-700">Badge & Emblem</strong></p>
+                        <p class="text-gray-600">Technique: <strong class="text-gray-700">Carving</strong></p>
+                        <p class="text-gray-600">Style: <strong class="text-gray-700">Natural</strong></p>
+                        <p class="text-gray-600">Use: <strong class="text-gray-700">Business Gift</strong></p>
+                        <p class="text-gray-600">Theme: <strong class="text-gray-700">Patriotism</strong></p>
+                        <p class="text-gray-600">Regional Feature: <strong class="text-gray-700">Africa</strong></p>
                     </div>
                     <div class="space-y-3 md:px-4 lg:px-8 pt-2 md:pt-8">
-                        <p class="text-sm text-gray-600">Place of Origin: <strong class="text-sm text-gray-700">{{ $product->place_of_origin }}</strong></p>
-                        <p class="text-sm text-gray-600">Brand Name: <strong class="text-sm text-gray-700">{{ $product->brand }}</strong></p>
-                        <p class="text-sm text-gray-600">Model Number: <strong class="text-sm text-gray-700">#{{ $product->model_number }}</strong></p>
-                        <p class="text-sm text-gray-600">Usage: <strong class="text-sm text-gray-700">Home Decoration Gift</strong></p>
-                        <p class="text-sm text-gray-600">Plating: <strong class="text-sm text-gray-700">None</strong></p>
-                        <p class="text-sm text-gray-600">Shaping: <strong class="text-sm text-gray-700">Rectangle</strong></p>
-                        <p class="text-sm text-gray-600">Design: <strong class="text-sm text-gray-700">100% Custom Made</strong></p>
+                        <p class="text-gray-600">Place of Origin: <strong class="text-gray-700">{{ $product->place_of_origin }}</strong></p>
+                        <p class="text-gray-600">Brand Name: <strong class="text-gray-700">{{ $product->brand }}</strong></p>
+                        <p class="text-gray-600">Model Number: <strong class="text-gray-700">#{{ $product->model_number }}</strong></p>
+                        <p class="text-gray-600">Usage: <strong class="text-gray-700">Home Decoration Gift</strong></p>
+                        <p class="text-gray-600">Plating: <strong class="text-gray-700">None</strong></p>
+                        <p class="text-gray-600">Shaping: <strong class="text-gray-700">Rectangle</strong></p>
+                        <p class="text-gray-600">Design: <strong class="text-gray-700">100% Custom Made</strong></p>
                     </div>
                     <div class="space-y-3 md:px-4 lg:px-8 pt-2 md:pt-8">
-                        <p class="text-sm text-gray-600">Color: <strong class="text-sm text-gray-700">{{ $product->color }}</strong></p>
-                        <p class="text-sm text-gray-600">MOQ: <strong class="text-sm text-gray-700">{{ $product->min_order_quantity }}</strong></p>
-                        <p class="text-sm text-gray-600">Payment: <strong class="text-sm text-gray-700">T/T</strong></p>
+                        <p class="text-gray-600">Color: <strong class="text-gray-700">{{ $product->color }}</strong></p>
+                        <p class="text-gray-600">MOQ: <strong class="text-gray-700">{{ $product->min_order_quantity }}</strong></p>
+                        <p class="text-gray-600">Payment: <strong class="text-gray-700">T/T</strong></p>
                     </div>
                 </div>
                 <div class="p-2 space-y-3">
-                    <h5 class="text-sm font-bold text-gray-700">Supply Ability</h5>
-                    <p class="text-sm text-gray-600">Supply Ability: <strong class="text-sm text-gray-700">20,000 Piece/Pieces Per Month</strong></p>
+                    <h5 class="font-bold text-gray-700">Supply Ability</h5>
+                    <p class="text-gray-600">Supply Ability: <strong class="text-gray-700">20,000 Piece(s) Per Month</strong></p>
                 </div>
                 <div class="p-2 space-y-3">
-                    <h5 class="text-sm font-bold text-gray-700">Packaging & Delivery</h5>
+                    <h5 class="font-bold text-gray-700">Packaging & Delivery</h5>
                     <div class="border border-gray-300 p-1 px-2 rounded-lg mt-2 bg-white md:w-[50%]">
                         <div class="flex justify-between divide-x divide-gray-300">
                             <div class="flex flex-col gap-1 -mr-10">
@@ -420,7 +420,7 @@
                     </div>
                 </div>
                 {{-- <div class="p-2 space-y-3">
-                    <h5 class="text-sm font-bold text-gray-700">Product Images</h5>
+                    <h5 class="font-bold text-gray-700">Product Images</h5>
                     <div class="md:flex gap-2">
                         @php($image = collect($product->media)->where('type', 'image')->first())
                         <img src="{{ $image->file }}" alt="" class="w-96 h-60 object-contain mb-3 md:mb-0 product-image">
@@ -436,7 +436,7 @@
                 @php($video = collect($product->media)->where('type', 'video')->first())
                 @if ($video)
                     <div class="p-2 space-y-3">
-                        <h5 class="text-sm font-bold text-gray-700">Product Videos</h5>
+                        <h5 class="font-bold text-gray-700">Product Videos</h5>
                         <div>
                             <video src="{{ $video->file }}" controls class="h-72 w-full rounded-md"></video>
                         </div>
@@ -444,18 +444,18 @@
                 @endif
             </div>
             <div class="bg-gray-100 hidden" id="vendor-details">
-                <h5 class="text-sm font-bold text-gray-700 ml-2 pt-1">Overview</h5>
+                <h5 class="font-bold text-gray-700 ml-2 pt-1">Overview</h5>
                 <div class="grid grid-cols-1 md:grid-cols-3 p-2 space-y-3">
-                    <p class="text-sm text-gray-600">Business Name: <strong class="text-sm text-gray-700">{{ $product->business->name }}</strong></p>
+                    <p class="text-gray-600">Business Name: <strong class="text-gray-700">{{ $product->business->name }}</strong></p>
                     <div class="flex gap-2">
-                        <h6 class="text-sm text-gray-500">Verified</h6>
-                        <i class="text-sm fas fa-shield-alt text-red-800"></i>
+                        <h6 class="text-gray-500">Verified</h6>
+                        <i class="fas fa-shield-alt text-red-800"></i>
                     </div>
-                    <p class="text-sm text-gray-600">Location: <strong class="text-sm text-gray-700">{{ $product->business->city ? $product->business->city->name.',' : '' }} {{ $product->business->country->name }}</strong></p>
+                    <p class="text-gray-600">Location: <strong class="text-gray-700">{{ $product->business->city ? $product->business->city->name.',' : '' }} {{ $product->business->country->name }}</strong></p>
                     @if ($product->warehouse)
-                        <p class="text-sm text-gray-600">Warehouse: <strong class="text-sm text-gray-700">{{ $product->warehouse->name }}</strong></p>
+                        <p class="text-gray-600">Warehouse: <strong class="text-gray-700">{{ $product->warehouse->name }}</strong></p>
                     @endif
-                    <p class="text-sm text-gray-600">Member Since: <strong class="text-sm text-gray-700">{{ $product->business->created_at->format('d M Y') }}</strong></p>
+                    <p class="text-gray-600">Member Since: <strong class="text-gray-700">{{ $product->business->created_at->format('d M Y') }}</strong></p>
                     <a href="{{ route('vendor.storefront', ['slug' => $product->business->slug]) }}">
                         <x-primary-button class="py-1">View Business Details</x-primary-button>
                     </a>
@@ -463,7 +463,7 @@
             </div>
             <div class="bg-gray-100">
                 <div class="p-2 space-y-3">
-                    <h5 class="text-sm font-bold text-gray-700">Related Items</h5>
+                    <h5 class="font-bold text-gray-700">Related Items</h5>
                     <div class="space-y-2 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-4 gap-2 py-2">
                         <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
                             <a href="#">
@@ -471,7 +471,7 @@
                                 <div class="">
                                     <h4 class="font-bold text-gray-500">Gold Bars</h4>
                                     <h4 class="font-bold uppercase text-gray-700">US $ 10.20 - US $ 400.37</h4>
-                                    <h5 class="text-sm text-gray-500 font-semibold">Minimum Order: 20 Pieces</h5>
+                                    <h5 class="text-gray-500 font-semibold">Minimum Order: 20 Pieces</h5>
                                 </div>
                             </a>
                         </div>
@@ -481,7 +481,7 @@
                                 <div class="">
                                     <h4 class="font-bold text-gray-500">Diamond</h4>
                                     <h4 class="font-bold uppercase text-gray-700">US $ 10.20 - US $ 400.37</h4>
-                                    <h5 class="text-sm text-gray-500 font-semibold">Minimum Order: 100 Pieces</h5>
+                                    <h5 class="text-gray-500 font-semibold">Minimum Order: 100 Pieces</h5>
                                 </div>
                             </a>
                         </div>
@@ -491,7 +491,7 @@
                                 <div class="">
                                     <h4 class="font-bold text-gray-500">Platinum</h4>
                                     <h4 class="font-bold uppercase text-gray-700">US $ 100 - US $ 2000</h4>
-                                    <h5 class="text-sm text-gray-500 font-semibold">Minimum Order: 50 Pieces</h5>
+                                    <h5 class="text-gray-500 font-semibold">Minimum Order: 50 Pieces</h5>
                                 </div>
                             </a>
                         </div>
@@ -501,14 +501,14 @@
                                 <div class="">
                                     <h4 class="font-bold text-gray-500">Iron Ore</h4>
                                     <h4 class="font-bold uppercase text-gray-700">US $ 2.20 - US $ 3.37</h4>
-                                    <h5 class="text-sm text-gray-500 font-semibold">Minimum Order: 10 Pieces</h5>
+                                    <h5 class="text-gray-500 font-semibold">Minimum Order: 10 Pieces</h5>
                                 </div>
                             </a>
                         </div>
                     </div>
                 </div>
                 <div class="p-2 space-y-3">
-                    <h5 class="text-sm font-bold text-gray-700">Vendor's Popular Products</h5>
+                    <h5 class="font-bold text-gray-700">Vendor's Popular Products</h5>
                     <div class="space-y-2 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-4 gap-2 py-2">
                         <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
                             <a href="#">
@@ -516,7 +516,7 @@
                                 <div class="">
                                     <h4 class="font-bold text-gray-500">Gold Bars</h4>
                                     <h4 class="font-bold uppercase text-gray-700">US $ 10.20 - US $ 400.37</h4>
-                                    <h5 class="text-sm text-gray-500 font-semibold">Minimum Order: 20 Pieces</h5>
+                                    <h5 class="text-gray-500 font-semibold">Minimum Order: 20 Pieces</h5>
                                 </div>
                             </a>
                         </div>
@@ -526,7 +526,7 @@
                                 <div class="">
                                     <h4 class="font-bold text-gray-500">Diamond</h4>
                                     <h4 class="font-bold uppercase text-gray-700">US $ 10.20 - US $ 400.37</h4>
-                                    <h5 class="text-sm text-gray-500 font-semibold">Minimum Order: 100 Pieces</h5>
+                                    <h5 class="text-gray-500 font-semibold">Minimum Order: 100 Pieces</h5>
                                 </div>
                             </a>
                         </div>
@@ -536,7 +536,7 @@
                                 <div class="">
                                     <h4 class="font-bold text-gray-500">Platinum</h4>
                                     <h4 class="font-bold uppercase text-gray-700">US $ 100 - US $ 2000</h4>
-                                    <h5 class="text-sm text-gray-500 font-semibold">Minimum Order: 50 Pieces</h5>
+                                    <h5 class="text-gray-500 font-semibold">Minimum Order: 50 Pieces</h5>
                                 </div>
                             </a>
                         </div>
@@ -546,7 +546,7 @@
                                 <div class="">
                                     <h4 class="font-bold text-gray-500">Iron Ore</h4>
                                     <h4 class="font-bold uppercase text-gray-700">US $ 2.20 - US $ 3.37</h4>
-                                    <h5 class="text-sm text-gray-500 font-semibold">Minimum Order: 10 Pieces</h5>
+                                    <h5 class="text-gray-500 font-semibold">Minimum Order: 10 Pieces</h5>
                                 </div>
                             </a>
                         </div>

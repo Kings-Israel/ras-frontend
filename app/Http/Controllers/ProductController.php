@@ -32,8 +32,14 @@ class ProductController extends Controller
     {
         $business = Business::findBySlug($slug);
 
+        $categories = $business->products->map(fn ($product) => $product->category)->unique()->take(8);
+
+        $products = $business->products->groupBy('category.name');
+
         return view('business.storefront.products', [
-            'business' => $business->load('products'),
+            'business' => $business->loadCount('products')->load('products'),
+            'products' => $products,
+            'categories' => $categories,
         ]);
     }
 

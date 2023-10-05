@@ -15,7 +15,7 @@ class ProductsList extends Component
         $products = Product::where('business_id', '=', auth()->user()->business->id)
                             ->paginate(10);
         return view('livewire.vendor.products-list', [
-            'products' => $products
+            'products' => $products,
         ]);
     }
 }
