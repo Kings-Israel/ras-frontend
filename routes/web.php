@@ -41,6 +41,8 @@ Route::middleware(['auth', 'phone_verified', 'role:vendor', 'has_registered_busi
         Route::get('/', [VendorController::class, 'dashboard'])->name('dashboard');
         Route::get('/products', [VendorProductController::class, 'index'])->name('products');
         Route::post('/products/store', [VendorProductController::class, 'store'])->name('products.store');
+        Route::get('/{product}/edit', [VendorProductController::class, 'edit'])->name('products.edit');
+        Route::patch('/{product}/update', [VendorProductController::class, 'update'])->name('products.update');
         Route::get('/orders', [VendorController::class, 'orders'])->name('orders');
         Route::get('/messages', function () {
             return view('chat.index', [

@@ -1,5 +1,8 @@
 <x-vendor>
     <x-storefront-header :business="$business"></x-storefront-header>
+    <div>
+        <img src="{{ $business->primary_cover_image }}" alt="" class="h-32 w-full object-cover">
+    </div>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 flex-wrap px-2 md:px-8 lg:px-32 py-6">
         @foreach ($business->documents as $document)
             <div class="hover:cursor-pointer" data-modal-target="view-document-modal-{{ $document->id }}" data-modal-toggle="view-document-modal-{{ $document->id }}">

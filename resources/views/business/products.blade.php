@@ -11,7 +11,7 @@
     <div class="p-3 sm:ml-64 lg:grid lg:grid-cols-4 lg:divide-x">
         <div class="p-3 md:col-span-3">
             <div>
-                <x-primary-button class="py-2 font-light bg-primary-one tracking-wide -mt-2 mb-2 focus:ring-2 focus:ring-primary-one px-8 text-sm" data-modal-target="add-product-modal" data-modal-toggle="add-product-modal">Add Product</x-primary-button>
+                <x-primary-button class="py-2 font-light bg-primary-one tracking-wide -mt-2 mb-2 focus:ring-2 focus:ring-primary-one px-8" data-modal-target="add-product-modal" data-modal-toggle="add-product-modal">Add Product</x-primary-button>
 
                 <x-modal modal_id="add-product-modal">
                     <div class="relative w-full max-w-4xl max-h-full">
@@ -24,13 +24,11 @@
                             </button>
                             <div class="px-2 py-2 lg:px-4">
                                 <h3 class="mb-2 text-2xl font-bold text-gray-900 dark:text-white space-y-4">New Product</h3>
-                                {{-- <livewire:add-product /> --}}
                                 @include('business.product.create')
                             </div>
                         </div>
                     </div>
                 </x-modal>
-
             </div>
             <livewire:vendor.products-list />
         </div>

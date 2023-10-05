@@ -45,8 +45,8 @@
             </div>
         </form>
     </div>
-    <div class="block lg:flex px-4 lg:px-32 p-4 gap-12">
-        <div class="basis-2/3 bg-gray-50 p-2 rounded-lg">
+    <div class="block lg:flex px-4 lg:px-28 p-4 gap-12">
+        <div class="basis-3/4 bg-gray-50 p-2 rounded-lg">
             <div>
                 <h3 class="text-3xl text-gray-600 font-bold">Shopping Cart</h3>
                 <span class="flex gap-2 divide-x-2 divide-gray-300">
@@ -256,7 +256,7 @@
                 </div>
             </div>
         </div>
-        <div class="basis-1/3">
+        <div class="basis-1/4">
             <div class="border border-gray-300 p-4 space-y-4 rounded-lg">
                 <div>
                     <h4 class="text-sm font-semibold text-gray-500">Cart Subtotal:</h4>

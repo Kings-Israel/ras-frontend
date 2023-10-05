@@ -26,7 +26,7 @@ class Business extends Model
     public function getSlugOptions() : SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom('name', 'id')
+            ->generateSlugsFrom(['name', 'id'])
             ->saveSlugsTo('slug')
             ->usingSeparator('_');
     }
