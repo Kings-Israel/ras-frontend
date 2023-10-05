@@ -16,6 +16,7 @@ class ProductController extends Controller
     {
         return view('business.products', [
             'categories' => Category::all(),
+            // 'warehouses' => Warehouse::where('country_id', auth()->user()->business->country->id)->get(),
             'warehouses' => Warehouse::all(),
             'units' => MeasurementUnit::all(),
             'shapes' => ['Rectangle', 'Circle', 'Square', 'Rhombus', 'Sphere'],
@@ -39,7 +40,8 @@ class ProductController extends Controller
             'model_number' => ['required'],
             'images' => ['required', 'array'],
             'images.*' => ['mimes:png,jpg,jpeg', 'max:4096'],
-            'video' => ['nullable', 'mimes:mp4', 'max:10000']
+            'video' => ['nullable', 'mimes:mp4', 'max:10000'],
+            'capacity_in_warehouse' => ['nullable', 'integer'],
         ]);
 
         $product = Product::create([
@@ -62,7 +64,14 @@ class ProductController extends Controller
             'model_number' => $request->model_number,
             'is_available' => $request->has('product_availability') ? true : false,
             'regional_featre' => $request->regional_feature,
+            'capacity_in_warehouse' => $request->product_capacity,
         ]);
+
+        if ($product->warehouse) {
+            $product->warehouse()->update([
+                'occupied_capacity' => $request->product_capacity,
+            ]);
+        }
 
         foreach ($request->images as $image) {
             ProductMedia::create([

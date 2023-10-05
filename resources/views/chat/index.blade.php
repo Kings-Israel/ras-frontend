@@ -95,7 +95,7 @@
                                 </div> --}}
                             </div>
                         </div>
-                        <div class="pb-2 lg:pb-0 lg:fixed lg:bottom-6 w-[94%] lg:w-[40%] 4xl:w-[42%]">
+                        <div class="pb-2">
                             <form action="#" method="POST" class="mx-3 lg:my-2 w-full lg:w-[96%] flex gap-1">
                                 <x-text-input class="w-[98%] md:w-full border-2 border-gray-400 rounded focus:border-b-3 focus:ring-0" placeholder="Type Your Message Here..."></x-text-input>
                                 <i class="fas fa-paperclip text-gray-400 text-xl my-auto w-[5%]"></i>

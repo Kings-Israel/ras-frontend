@@ -514,7 +514,7 @@
         </ul>
         <div class="flex justify-center">
             <a href="{{ url('/') }}">
-                <x-application-logo class="w-[10rem] h-[10rem] object-contain -my-2" />
+                <x-application-logo class="w-[10rem] object-contain pt-3" />
             </a>
         </div>
     </div>

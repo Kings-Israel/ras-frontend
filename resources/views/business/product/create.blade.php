@@ -163,10 +163,10 @@
                         </div>
                         <div class="form-group">
                             <x-input-label for="product_link_to_warehouse" :value="__('Link to Warehouse')" class="text-gray-500" />
-                            <select name="warehouse" id="link_to_warehouse" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+                            <select name="warehouse" id="link_to_warehouse" onchange="showCapacityInput()" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                                 <option value="">Select Warehouse</option>
                                 @foreach ($warehouses as $warehouse)
-                                    <option value="{{ $warehouse->id }}" @if(in_array(old('warehouse'), $warehouses->toArray())) selected @endif>{{ $warehouse->name.', '.$warehouse->city->name.', '.$warehouse->country->name }}</option>
+                                    <option value="{{ $warehouse->id }}" @if(in_array(old('warehouse'), $warehouses->toArray())) selected @endif>{{ $warehouse->name.', '.$warehouse->country->name }}</option>
                                 @endforeach
                             </select>
                             <x-input-error :messages="$errors->get('warehouse')" class="mt-2" />
@@ -175,6 +175,11 @@
                             <x-input-label for="product_model_number" :value="__('Product\'s Model Number')" class="text-gray-500" />
                             <input type="text" name="model_number" id="product_model_number" min="0" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                             <x-input-error :messages="$errors->get('model_number')" class="mt-2" />
+                        </div>
+                        <div class="form-group col-span-2 hidden" id="product_capacity">
+                            <x-input-label for="product_capacity" :value="__('Product\'s Capacity in Warehouse (in cubic meters)')" class="text-gray-500" />
+                            <input type="number" name="product_capacity" id="product_capacity" min="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+                            <x-input-error :messages="$errors->get('product_capacity')" class="mt-2" />
                         </div>
                         <div class="form-group">
                             <x-input-label for="product_images" :value="__('Add Product Images')" class="text-gray-500" />
