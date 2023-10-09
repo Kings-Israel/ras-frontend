@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OtpController;
 use App\Http\Controllers\ProfileController;
@@ -23,6 +24,11 @@ use Livewire\Livewire;
 Route::get('/', [HomeController::class, 'index'])->name('welcome');
 
 Route::get('/product/{slug}', [ProductController::class, 'viewProduct'])->name('product');
+Route::middleware(['auth', 'phone_verified'])->group(function () {
+    Route::get('/chat/{user?}', [ChatController::class, 'index'])->name('messages');
+    Route::get('/messages/chat/{id}', [ChatController::class, 'view'])->name('messages.chat');
+    Route::post('/messages/send', [ChatController::class, 'store'])->name('messages.send');
+});
 
 Route::middleware(['auth', 'phone_verified', 'role:buyer'])->group(function () {
     Route::get('/cart', function() {
@@ -44,22 +50,8 @@ Route::middleware(['auth', 'phone_verified', 'role:vendor', 'has_registered_busi
         Route::get('/{product}/edit', [VendorProductController::class, 'edit'])->name('products.edit');
         Route::patch('/{product}/update', [VendorProductController::class, 'update'])->name('products.update');
         Route::get('/orders', [VendorController::class, 'orders'])->name('orders');
-        Route::get('/messages', function () {
-            return view('chat.index', [
-                'test' => file_get_contents('../chat.json')
-            ]);
-        })->name('messages');
-        Route::get('/messages/chat', function () {
-            if(request()->wantsJson()) {
-                return response()->json([
-                    'conversations' => file_get_contents('../chat-log.json')
-                ], 200);
-            } else {
-                return view('chat.index', [
-                    'conversations' => file_get_contents('../chat-log.json')
-                ]);
-            }
-        })->name('messages.chat');
+        Route::get('/messages', [ChatController::class, 'index'])->name('messages');
+        Route::get('/messages/chat', [ChatController::class, 'view'])->name('messages.chat');
         Route::get('/customers', function () {
             return view('business.customers');
         })->name('customers');

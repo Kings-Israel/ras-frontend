@@ -11,11 +11,12 @@
         <link href="https://fonts.bunny.net/css?family=figtree:200,400,500,600,700,800,900,1100&display=swap" rel="stylesheet" />
         <link href="https://fonts.bunny.net/css?family=Century:200,400,500,600,700,800,900,1100&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="{{ asset('assets/fontawesome/css/all.min.css') }}">
+        <script type = "text/javascript" src = "https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
     </head>
-    <body class="antialiased">
+    <body {{ $attributes->merge(['class' => 'antialiased']) }}>
         @include('layouts.main-header')
         {{ $slot }}
         @include('layouts.footer')

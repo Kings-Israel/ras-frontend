@@ -4,7 +4,8 @@ namespace App\Helpers;
 
 use Illuminate\Support\Facades\Storage;
 
-class HelperFunctions {
+class HelperFunctions
+{
     public static function formatBytes($size, $precision = 2)
     {
         $base = log($size, 1024);
