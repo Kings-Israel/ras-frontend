@@ -2,8 +2,10 @@
     <div class="px-2 md:px-8 lg:px-52 py-6 text-white">
         <div class="grid md:flex md:justify-between">
             <div>
-                <h3 class="text-lg font-thin text-slate-50 text-center md:text-start">Join Us</h3>
-                <h5 class="text-sm text-slate-100 text-center md:text-start mb-4 md:mb-0">We'll send you daily special offers</h5>
+                @guest
+                    <h3 class="text-lg font-thin text-slate-50 text-center md:text-start">Join Us</h3>
+                    <h5 class="text-sm text-slate-100 text-center md:text-start mb-4 md:mb-0">We'll send you daily special offers</h5>
+                @endguest
             </div>
             <div class="grid md:flex md:flex-col lg:w-2/5">
                 <form action="#">

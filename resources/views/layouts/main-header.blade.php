@@ -6,7 +6,7 @@
         @auth
             <img src="{{ auth()->user()->avatar }}" alt="" class="w-8 h-8 rounded-full object-cover my-auto">
             <button id="dropdown-button" data-dropdown-toggle="account-dropdown" data-dropdown-placement="bottom" class="flex gap-2" type="button">
-                <span class="font-semibold my-auto">My Account</span>
+                <span class="font-semibold my-auto">{{ auth()->user()->first_name }} {{ auth()->user()->last_name }}</span>
                 <i class="fas fa-chevron-down my-auto text-sm"></i>
             </button>
             <div id="account-dropdown" class="z-10 hidden bg-gray-200 divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
@@ -19,11 +19,16 @@
                     <li>
                         <a href="{{ route('cart') }}" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">My Cart</a>
                     </li>
+                    @if (auth()->user()->hasRole('buyer'))
+                        <li>
+                            <a href="{{ route('messages') }}" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Messages</a>
+                        </li>
+                    @endif
                     <li>
                         <a href="{{ route('logout') }}" class="inline-flex w-full px-4 py-2 hover:cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf
-                         </form>
+                        </form>
                     </li>
                 </ul>
             </div>

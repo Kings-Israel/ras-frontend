@@ -274,7 +274,7 @@
                     @foreach ($products as $product)
                         <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
                             <a href="{{ route('product', ['slug' => $product->slug]) }}">
-                                <img src="{{ $product->media->first()->file }}" class="rounded border-gray-200 w-full h-52 object-cover" alt="">
+                                <img src="{{ $product->media->where('type', 'image')->first()->file }}" class="rounded border-gray-200 w-full h-52 object-cover" alt="">
                                 <div class="">
                                     <h4 class="font-extrabold text-gray-500">{{ $product->name }}</h4>
                                     @if ($product->price)
@@ -388,9 +388,21 @@
                             </div>
                             <div class="flex flex-col gap-3">
                                 <img src="{{ $business->primary_cover_image }}" alt="" class="w-full h-44 object-cover rounded-md">
-                                <x-secondary-outline-button class="text-center text-primary-one font-semibold justify-center hover:bg-orange-300 hover:border-orange-400">
-                                    Message Vendor
-                                </x-secondary-outline-button>
+                                @auth
+                                    @if (auth()->user()->hasRole('buyer') && (auth()->id() != $business->user->id))
+                                        <a href="{{ route('messages', ['user' => $business->user]) }}">
+                                            <x-secondary-outline-button class="text-center text-primary-one w-full font-semibold justify-center hover:bg-orange-300 hover:border-orange-400">
+                                                Message Vendor
+                                            </x-secondary-outline-button>
+                                        </a>
+                                    @endif
+                                @else
+                                    <a href="{{ route('messages', ['user' => $business->user]) }}">
+                                        <x-secondary-outline-button class="text-center text-primary-one w-full font-semibold justify-center hover:bg-orange-300 hover:border-orange-400">
+                                            Message Vendor
+                                        </x-secondary-outline-button>
+                                    </a>
+                                @endauth
                             </div>
                         </x-card>
                     @endforeach
