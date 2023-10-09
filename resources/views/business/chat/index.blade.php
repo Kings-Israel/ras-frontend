@@ -96,7 +96,7 @@
                                                         <p @click.prevent="downloadFile(data)" class="text-gray-600 hover:cursor-pointer flex gap-2">@{{ data.file_name }}</p> <p class="text-gray-400">@{{ formatBytes(data.file_size) }}</p>
                                                     </div>
                                                 </div>
-                                                <p>@{{ log.body }}</p>
+                                                <p v-if="log.body != 'files_only_message'">@{{ log.body }}</p>
                                             </div>
                                         </div>
                                         <span class="text-xs text-right">@{{ log.created_at }}</span>
@@ -108,7 +108,7 @@
                                                     <p @click.prevent="downloadFile(data)" class="text-gray-600 hover:cursor-pointer flex gap-2">@{{ data.file_name }}</p> <p class="text-gray-400">@{{ formatBytes(data.file_size) }}</p>
                                                 </div>
                                             </div>
-                                            <p>@{{ log.body }}</p>
+                                            <p v-if="log.body != 'files_only_message'">@{{ log.body }}</p>
                                         </div>
                                         <span class="text-xs">@{{ log.created_at }}</span>
                                     </div>
@@ -123,7 +123,7 @@
                             </div>
                             <form action="#" method="POST" class="mx-3 lg:my-2 w-full lg:w-[96%] flex gap-1" id="send-message-form" enctype="multipart/form-data" ref="sendMessageForm">
                                 @csrf
-                                <x-text-input class="w-[98%] md:w-full border-2 border-gray-400 rounded focus:border-b-3 focus:ring-0" id="send-message-input" placeholder="Type Your Message Here..." ref="refMessageTextInput"></x-text-input>
+                                <x-text-input class="w-[98%] md:w-full border-2 border-gray-400 rounded focus:border-b-3 focus:ring-0" id="send-message-input" autocomplete="off" placeholder="Type Your Message Here..." ref="refMessageTextInput"></x-text-input>
                                 <i class="fas fa-paperclip text-gray-400 text-xl my-auto w-[5%] hover:cursor-pointer" id="upload-files" ref="uploadFilesBtn" @click.prevent="uploadFile"></i>
                                 <input type="file" class="hidden" v-on:change="uploadFiles" multiple name="docs[]" id="docs-input" ref="docsInput">
                                 <button class="bg-primary-one text-white rounded-full md:mx-auto my-auto w-[15%] md:w-12 h-10 hover:bg-orange-600" id="send-message-btn" ref="refMessageSubmit" @click.prevent="sendMessage">
