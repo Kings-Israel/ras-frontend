@@ -89,9 +89,7 @@ class ChatController extends Controller
         ]);
 
         if ($validator->fails()) {
-            foreach ($validator->messages() as $message) {
-                toastr()->error('', $message);
-            }
+            toastr()->error('', 'Invalid content. Files must be less than 10MiB');
 
             return response()->json($validator->messages(), 422);
         }
