@@ -15,6 +15,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Musonza\Chat\Traits\Messageable;
 use Ramsey\Uuid\Uuid;
 use Spatie\Permission\Traits\HasRoles;
+use Chat;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -71,5 +72,16 @@ class User extends Authenticatable implements MustVerifyEmail
     public function business(): HasOne
     {
         return $this->hasOne(Business::class);
+    }
+
+    public function unreadMessagesCount(): int
+    {
+        $unread_messages_count = 0;
+
+        if (auth()->check()) {
+            $unread_messages_count = Chat::messages()->setParticipant(auth()->user())->unreadCount();
+        }
+
+        return $unread_messages_count;
     }
 }
