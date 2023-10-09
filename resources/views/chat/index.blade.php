@@ -23,11 +23,17 @@
                                                 </span>
                                                 <span class="text-xs font-bold my-auto w-16 truncate text-end">@{{ conversation.last_message.from_now }}</span>
                                             </div>
-                                            <div class="flex justify-between truncate">
-                                                <span v-if="conversation.last_message.body" class="text-sm truncate">@{{ conversation.last_message.body }}.</span>
-                                                <span v-if="conversation.unread_count > 0" class="px-2 py-0.5 rounded-xl text-sm bg-primary-one text-white" v-bind:ref="conversation.id">
-                                                    @{{ conversation.unread_count }}
-                                                </span>
+                                            <div v-if="conversation.last_message.body || conversation.last_message.data.length > 0">
+                                                <div class="flex justify-between truncate">
+                                                    <span v-if="conversation.last_message.body && conversation.last_message.body !== 'files_only_message'" class="text-sm truncate">@{{ conversation.last_message.body }}.</span>
+                                                    <span v-else class="text-sm truncate">File: @{{ conversation.last_message.data[conversation.last_message.data.length - 1].file_name }}</span>
+                                                    <span v-if="conversation.last_message.sender.id != {{ auth()->id() }} && conversation.unread_count > 0" class="px-2 py-0.5 rounded-xl text-sm bg-primary-one text-white" v-bind:ref="conversation.id">
+                                                        @{{ conversation.unread_count }}
+                                                    </span>
+                                                    <span v-if="conversation.last_message.sender.id != {{ auth()->id() }} && conversation.receiver_unread_count > 0" class="px-2 py-0.5 rounded-xl text-sm bg-primary-one text-white" v-bind:ref="conversation.id">
+                                                        @{{ conversation.receiver_unread_count }}
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -40,11 +46,17 @@
                                                 </span>
                                                 <span class="text-xs font-bold my-auto w-16 truncate text-end">@{{ conversation.last_message.from_now }}</span>
                                             </div>
-                                            <div class="flex justify-between truncate">
-                                                <span v-if="conversation.last_message.body" class="text-sm truncate">@{{ conversation.last_message.body }}.</span>
-                                                <span v-if="conversation.unread_count > 0" class="px-2 py-0.5 rounded-xl text-sm bg-primary-one text-white" v-bind:ref="conversation.id">
-                                                    @{{ conversation.unread_count }}
-                                                </span>
+                                            <div v-if="conversation.last_message.body || conversation.last_message.data.length > 0">
+                                                <div class="flex justify-between truncate">
+                                                    <span v-if="conversation.last_message.body && conversation.last_message.body !== 'files_only_message'" class="text-sm truncate">@{{ conversation.last_message.body }}.</span>
+                                                    <span v-else class="text-sm truncate">File: @{{ conversation.last_message.data[conversation.last_message.data.length - 1].file_name }}</span>
+                                                    <span v-if="conversation.last_message.sender.id != {{ auth()->id() }} && conversation.unread_count > 0" class="px-2 py-0.5 rounded-xl text-sm bg-primary-one text-white" v-bind:ref="conversation.id">
+                                                        @{{ conversation.unread_count }}
+                                                    </span>
+                                                    <span v-if="conversation.last_message.sender.id != {{ auth()->id() }} && conversation.receiver_unread_count > 0" class="px-2 py-0.5 rounded-xl text-sm bg-primary-one text-white" v-bind:ref="conversation.id">
+                                                        @{{ conversation.receiver_unread_count }}
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -78,7 +90,7 @@
                                         <div class="bg-gray-300 border-none p-2 max-w-sm rounded-lg">
                                             <div v-if="log.data.length > 0">
                                                 <div v-for="(data, index) in log.data" v-bind:key="index" class="p-2 bg-gray-200 rounded-lg my-1">
-                                                    <p @click.prevent="downloadFile(data)" class="text-gray-600 hover:cursor-pointer flex gap-2">@{{ data.file_name }}</p> <p class="text-gray-400">@{{ formatBytes(data.file_size) }}</p>
+                                                    <p @click.prevent="downloadFile(data)" class="text-gray-600 font-semibold hover:cursor-pointer flex gap-2">@{{ data.file_name }}</p> <p class="text-gray-400">@{{ formatBytes(data.file_size) }}</p>
                                                 </div>
                                             </div>
                                             <p>@{{ log.body }}</p>
@@ -90,7 +102,7 @@
                                     <div class="bg-yellow-200 w-fit max-w-sm border-none p-2 rounded-lg">
                                         <div v-if="log.data.length > 0">
                                             <div v-for="(data, index) in log.data" v-bind:key="index" class="p-2 bg-gray-200 max-w-sm rounded-lg my-1">
-                                                <p @click.prevent="downloadFile(data)" class="text-gray-600 hover:cursor-pointer flex gap-2">@{{ data.file_name }}</p> <p class="text-gray-400">@{{ formatBytes(data.file_size) }}</p>
+                                                <p @click.prevent="downloadFile(data)" class="text-gray-600 font-semibold hover:cursor-pointer flex gap-2">@{{ data.file_name }}</p> <p class="text-gray-400">@{{ formatBytes(data.file_size) }}</p>
                                             </div>
                                         </div>
                                         <p>@{{ log.body }}</p>
@@ -176,32 +188,19 @@
                                         container.scrollTop = container.scrollHeight;
                                     })
                                 } else {
-                                    let conv = null
-                                    this.conversations.filter((conversation) => {
-                                        // Check if conversation exists
-                                        if (conversation.id === e.conversation.id) {
-                                            conv = e.conversation
-                                        } else {
-                                            // Append new conversation to conversation list
-                                            this.conversations.push(e.conversation)
-                                        }
-                                    })
-
-                                    // If conversation exists, check if there are any unread messages
-                                    if (conv) {
-                                        if (conv.unread_count > 0) {
-                                            this.$refs[conv.id].innerHTML = '<span v-if="conversation.unread_count > 0" class="px-2 py-0.5 rounded-xl text-sm bg-primary-one text-white" v-bind:ref="conversation.id">'+
-                                                                                conv.unread_count + 1
-                                                                            +'</span>'
-                                        } else {
-                                            this.$refs[conv.id].innerHTML = '<span v-if="conversation.unread_count > 0" class="px-2 py-0.5 rounded-xl text-sm bg-primary-one text-white" v-bind:ref="conversation.id">'+
-                                                                                conv.unread_count + 1
-                                                                            +'</span>'
-                                        }
+                                    // Check if conversation exists
+                                    let index = this.conversations.findIndex(conversation => conversation.id === e.conversation.id)
+                                    if (index >= 0) {
+                                        this.conversations.forEach((conversation, key) => {
+                                            if (conversation.id === e.conversation.id) {
+                                                this.conversations.splice(key, 1)
+                                                this.conversations.unshift(e.conversation)
+                                            }
+                                        })
+                                    } else {
+                                        // If Conversation does not exist, create new and add to list of conversations
+                                        this.conversations.unshift(e.conversation)
                                     }
-                                    // Add to unread message if counter exists
-                                    // Create counter element if counter does not exist
-                                    // If Conversation does not exist, create new and add to list of conversations
                                 }
                             });
                     })
@@ -228,6 +227,10 @@
                     viewContacts() {
                         this.$refs.messagesSidebar.classList.remove('hidden')
                         this.$refs.messagesBox.classList.add('hidden')
+                        if (this.$refs[this.active_conversation]) {
+                            this.$refs[this.active_conversation][0].classList.add('hidden');
+                        }
+                        this.active_conversation = ''
                     },
                     async sendMessage() {
                         const formData = new FormData()

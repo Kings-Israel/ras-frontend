@@ -17,9 +17,16 @@ class ConversationResource extends JsonResource
     public function toArray(Request $request): array
     {
         $unread_count = 0;
+        $receiver_unread_count = 0;
         if ($this->last_message) {
-            $conversation = $conversation = Chat::conversations()->between(auth()->user(), $this->last_message->sender);
-            $unread_count = Chat::conversation($conversation)->setParticipant(auth()->user())->unreadCount();
+            $conversation = $conversation = Chat::conversations()->getById($this->id);
+            foreach ($conversation->getParticipants() as $participant) {
+                if ($participant->id != auth()->id()) {
+                    $receiver_unread_count = Chat::conversation($conversation)->setParticipant($participant)->unreadCount();
+                } else {
+                    $unread_count = Chat::conversation($conversation)->setParticipant($participant)->unreadCount();
+                }
+            }
         }
         return [
             'id' => $this->id,
@@ -29,6 +36,7 @@ class ConversationResource extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'unread_count' => $unread_count,
+            'receiver_unread_count' => $receiver_unread_count,
             'last_message' => [
                 'id' => $this->last_message ? $this->last_message->id : NULL,
                 'message_id' => $this->last_message ? $this->last_message->message_id : NULL,

@@ -172,7 +172,7 @@
                         </svg>
                     @endif
                     <span class="flex-1 ml-3 truncate">Orders</span>
-                    <span class="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-gray-200 bg-red-900 rounded-full">100</span>
+                    <span class="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-gray-200 bg-red-900 rounded-full">0</span>
                 </x-nav-item>
             </li>
             <li>
@@ -242,7 +242,7 @@
                         </svg>
                     @endif
                     <span class="flex-1 ml-3 truncate">Messages</span>
-                    <span class="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-gray-200 bg-red-900 rounded-full">3</span>
+                    <span class="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-gray-200 bg-red-900 rounded-full">{{ auth()->user()->unreadMessagesCount() }}</span>
                 </x-nav-item>
             </li>
             <li>

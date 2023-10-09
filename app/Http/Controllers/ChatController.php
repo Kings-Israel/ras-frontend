@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Chat;
+use Illuminate\Support\Facades\Validator;
 
 class ChatController extends Controller
 {
@@ -46,7 +47,6 @@ class ChatController extends Controller
         }
 
         return view('chat.index', [
-            // 'test' => file_get_contents('../chat.json')
             'conversations' => ConversationResource::collection($conversations),
             'conversation' => ['user' => $user, 'conversation_id' => $conversation ? $conversation_id : NULL, 'messages' => $conversation ? MessageResource::collection($conversation) : NULL]
         ]);
@@ -81,10 +81,20 @@ class ChatController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'receiver_id' => ['required'],
-            'message' => ['required'],
+            'message' => ['required_without:files'],
+            'files' => ['nullable', 'array'],
+            'files.*' => ['max:10000']
         ]);
+
+        if ($validator->fails()) {
+            foreach ($validator->messages() as $message) {
+                toastr()->error('', $message);
+            }
+
+            return response()->json($validator->messages(), 422);
+        }
 
         $user = User::find($request->receiver_id);
 
@@ -120,7 +130,7 @@ class ChatController extends Controller
             }
         }
 
-        $message = Chat::message($request->message)->from(auth()->user())->data($files)->to($conversation)->send();
+        $message = Chat::message($request->message ? $request->message : 'files_only_message')->from(auth()->user())->data($files)->to($conversation)->send();
 
         event(new SendMessage($user->email, $user, new MessageResource($message), new ConversationResource($conversation)));
 
