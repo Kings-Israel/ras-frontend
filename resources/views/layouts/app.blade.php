@@ -11,7 +11,8 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="{{ asset('assets/fontawesome/css/all.min.css') }}">
-        <script type = "text/javascript" src = "https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        {{-- <script type = "text/javascript" src = "https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> --}}
+        <script type = "text/javascript" src = "{{ asset('assets/js/vue.min.js') }}"></script>
         @livewireStyles
         @yield('css')
         <!-- Scripts -->
