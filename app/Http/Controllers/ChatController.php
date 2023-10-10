@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\SendMessage;
 use App\Http\Resources\ConversationResource;
 use App\Http\Resources\MessageResource;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -65,11 +66,10 @@ class ChatController extends Controller
         Chat::conversation($conversation)->setParticipant(auth()->user())->readAll();
 
         $messages = MessageResource::collection(Chat::conversation($conversation)->setParticipant(auth()->user())->limit(250000)->getMessages());
-        $user =  User::find(collect($conversation->getParticipants())->filter(fn ($user) => $user->id != auth()->id())->first()->id);
+        $user =  new UserResource(User::find(collect($conversation->getParticipants())->filter(fn ($user) => $user->id != auth()->id())->first()->id));
 
         if(request()->wantsJson()) {
             return response()->json([
-                // 'conversations' => file_get_contents('../chat-log.json')
                 'conversations' => ['user' => $user, 'messages' => $messages]
             ], 200);
         } else {

@@ -11,8 +11,9 @@
                     <h4 id="vendors-toggle" class="transition duration-200 ease-out mr-4">Vendors</h4>
                 </div>
             </label>
-            <div class="lg:w-3/5 mx-2 lg:mx-auto">
-                <form class="">
+            <div class="lg:w-3/5 mx-2 lg:mx-auto relative">
+                <livewire:home-main-search />
+                {{-- <form class="">
                     <div class="flex">
                         <button id="dropdown-button" data-dropdown-toggle="store-dropdown" data-dropdown-placement="bottom" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-semibold text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-2 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600" type="button">
                             All Items
@@ -41,9 +42,10 @@
                             <input type="search" id="search-dropdown" class="pl-10 block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-200 placeholder:font-semibold focus:ring-primary-one focus:border-primary-one dark:bg-orange-700 dark:border-l-orange-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-primary-one transition duration-250" placeholder="What Are You Looking For..." required>
                         </div>
                     </div>
-                </form>
+                </form> --}}
             </div>
             <div class="lg:w-3/5 mx-2 lg:mx-auto">
+            {{-- <div class="lg:w-3/5 mx-2 lg:mx-auto hidden md:block absolute top-[22rem] left-0 lg:top-[17rem] lg:left-[26rem] lg:max-w-[50%]"> --}}
                 <div class="flex flex-wrap justify-center lg:justify-start gap-1 lg:gap-2 mt-2">
                     @foreach ($categories as $category)
                         <x-badge class="bg-violet-100 font-semibold" text="{{ $category->name }}"></x-badge>

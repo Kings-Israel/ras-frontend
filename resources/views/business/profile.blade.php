@@ -89,9 +89,8 @@
                     </form>
                     <form action="{{ route('vendor.business.update') }}" method="POST" enctype="multipart/form-data" id="business-account-settings" class="hidden">
                         @csrf
-                        @method('PATCH')
                         <div>
-                            <x-input-label for="business_name" :value="__('Busness Name')" class="text-gray-500" />
+                            <x-input-label for="business_name" :value="__('Business Name')" class="text-gray-500" />
                             <x-text-input id="business_name" class="block w-full" type="text" name="business_name" :value="old('business_name', $business->name)" required autocomplete="business_name" />
                             <x-input-error :messages="$errors->get('business_name')" class="mt-2" />
                         </div>
@@ -128,7 +127,7 @@
                             </div>
                             <div class="mt-2">
                                 <x-input-label for="contact_phone_number" :value="__('Business Phone Number')" class="text-gray-500"></x-input-label>
-                                <x-text-input id="contact_phone_number" class="block w-full" type="phone_number" name="contact_phone_number" :value="old('contact_phone_number', $business->contact_phone_number)" autocomplete="contact_phone_number" />
+                                <x-text-input id="contact_phone_number" class="block w-full" type="tel" name="contact_phone_number" :value="old('contact_phone_number', $business->contact_phone_number)" autocomplete="contact_phone_number" />
                                 <x-input-error :messages="$errors->get('contact_phone_number')" class="mt-2" />
                             </div>
                         </div>
