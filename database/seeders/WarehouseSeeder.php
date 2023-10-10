@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Country;
 use App\Models\User;
+use App\Models\UserWarehouse;
 use App\Models\Warehouse;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -24,7 +25,6 @@ class WarehouseSeeder extends Seeder
         $warehouses = [
             [
                 'name' => 'Sebuleni',
-                'user_id' => $warehouse_managers->id,
                 'country_id' => $countries->id,
                 'city_id' => $countries->cities()->first()->id,
                 'max_capacity' => '1000000',
@@ -32,7 +32,6 @@ class WarehouseSeeder extends Seeder
             ],
             [
                 'name' => 'Cabo Stores',
-                'user_id' => $warehouse_managers->id,
                 'country_id' => $countries->id,
                 'city_id' => $countries->cities()->first()->id,
                 'max_capacity' => '990000',
@@ -40,6 +39,12 @@ class WarehouseSeeder extends Seeder
             ],
         ];
 
-        collect($warehouses)->each(fn ($warehouse) => Warehouse::create($warehouse));
+        collect($warehouses)->each(function ($warehouse) use ($warehouse_managers) {
+            $new_warehouse = Warehouse::create($warehouse);
+            UserWarehouse::create([
+                'warehouse_id' => $new_warehouse->id,
+                'user_id' => $warehouse_managers->id
+            ]);
+        });
     }
 }

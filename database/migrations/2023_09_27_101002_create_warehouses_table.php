@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('warehouses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('country_id')->references('id')->on('countries')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('city_id')->nullable()->references('id')->on('cities')->nullOnDelete()->onUpdate('cascade');
             $table->string('name')->nullable();

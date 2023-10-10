@@ -16,6 +16,8 @@ use Musonza\Chat\Traits\Messageable;
 use Ramsey\Uuid\Uuid;
 use Spatie\Permission\Traits\HasRoles;
 use Chat;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -72,6 +74,14 @@ class User extends Authenticatable implements MustVerifyEmail
     public function business(): HasOne
     {
         return $this->hasOne(Business::class);
+    }
+
+    /**
+     * The warehouses that belong to the User
+     */
+    public function warehouses(): BelongsToMany
+    {
+        return $this->belongsToMany(Warehouse::class, 'user_warehouses', 'warehouse_id', 'user_id');
     }
 
     public function unreadMessagesCount(): int

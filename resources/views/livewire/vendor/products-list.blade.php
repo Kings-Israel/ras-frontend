@@ -57,7 +57,7 @@
                         {{ $product->is_available ? 'In stock' : 'Out of stock' }}
                     </td>
                     <td class="px-2 py-2">
-                        @if($product->price) USD.{{ number_format($product->price) }} @else USD.{{ number_format($product->min_price) }} - USD.{{ number_format($product->max_price) }} @endif
+                        @if($product->price) {{ $product->currency ? $product->currency : 'USD' }}. {{ number_format($product->price) }} @else USD.{{ number_format($product->min_price) }} - USD.{{ number_format($product->max_price) }} @endif
                     </td>
                     <td class="px-2 py-2 flex gap-3">
                         <a href="{{ route('vendor.products.edit', ['product' => $product]) }}">

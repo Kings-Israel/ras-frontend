@@ -143,7 +143,7 @@
                     </div>
                 </div>
                 <div class="space-y-2 lg:space-y-5">
-                    <h3 class="text-bold text-gray-600">Purchase Details</h3>
+                    {{-- <h3 class="text-bold text-gray-600">Purchase Details</h3>
                     <div class="flex gap-2">
                         <h4 class="font-bold text-gray-600 my-auto">Payments:</h4>
                         <div class="flex gap-1">
@@ -151,7 +151,7 @@
                             <img src="{{ asset('assets/img/mastercard_payment_icon.png') }}" alt="" class="w-14 h-10 object-contain">
                             <h4 class="font-semibold text-blue-500 my-auto">MPESA</h4>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="flex gap-2">
                         <h4 class="font-bold text-gray-600">Delivery Time:</h4>
                         <div class="flex flex-col gap-1">
