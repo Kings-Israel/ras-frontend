@@ -24,6 +24,7 @@ use Livewire\Livewire;
 Route::get('/', [HomeController::class, 'index'])->name('welcome');
 
 Route::get('/product/{slug}', [ProductController::class, 'viewProduct'])->name('product');
+
 Route::middleware(['auth', 'phone_verified'])->group(function () {
     Route::get('/chat/{user?}', [ChatController::class, 'index'])->name('messages');
     Route::get('/messages/chat/{id}', [ChatController::class, 'view'])->name('messages.chat');
@@ -66,7 +67,7 @@ Route::middleware(['auth', 'phone_verified', 'role:vendor', 'has_registered_busi
         })->name('suppliers');
         Route::get('/profile', [ProfileController::class, 'businessProfile'])->name('profile');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-        Route::patch('/business/update', [VendorController::class, 'update'])->name('business.update');
+        Route::post('/business/update', [VendorController::class, 'update'])->name('business.update');
         Route::patch('/business/image/update', [VendorController::class, 'updatePrimaryCoverImage'])->name('business.image.update');
     });
     // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

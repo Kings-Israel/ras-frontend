@@ -8,8 +8,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
-class Business extends Model
+class Business extends Model implements Searchable
 {
     use HasFactory, HasSlug;
 
@@ -19,6 +21,19 @@ class Business extends Model
      * @var array
      */
     protected $guarded = [];
+
+    public $searchableType = 'vendors';
+
+    public function getSearchResult(): SearchResult
+    {
+        $url = route('vendor.storefront', $this->slug);
+
+        return new \Spatie\Searchable\SearchResult(
+            $this,
+            $this->name,
+            $url
+        );
+    }
 
     /**
      * Get the options for generating the slug.

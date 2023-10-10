@@ -6,7 +6,7 @@
                 <form action="#" method="POST" class="m-3">
                     <div class="relative md:w-full sm:w-full">
                         <i class="fas fa-search absolute inset-y-0 left-1 flex items-center pl-1 pointer-events-none text-2xl"></i>
-                        <x-text-input class="pl-10 h-9 border-none rounded w-[99%] focus:border-b-3 focus:ring-0 transition duration-150" placeholder="Search Contacts..."></x-text-input>
+                        <x-text-input class="pl-10 h-9 border-none rounded w-[99%] focus:border-b-3 focus:ring-0 transition duration-150" v-model="searchContacts" placeholder="Search Contacts..."></x-text-input>
                     </div>
                 </form>
                 <ul class="list-none px-2 space-y-2 overflow-scroll max-h-[20rem] min-h-[20rem] md:min-h-[32rem] md:max-h-[37rem] 4xl:h-[55rem]">
@@ -15,12 +15,24 @@
                             <div v-for="participant in conversation.participants">
                                 <div v-if="participant.messageable.id != {{ auth()->id() }}">
                                     <div v-if="conversation.id == active_conversation" class="flex px-2 rounded-lg py-1 bg-yellow-200 hover:bg-yellow-100">
-                                        <img v-bind:src="participant.messageable.avatar" class="rounded-full border-2 border-orange-600 w-10 h-10 object-cover" alt="">
+                                        <div v-if="participant.messageable.business">
+                                            <img v-bind:src="participant.messageable.business.primary_cover_image" class="rounded-full border-2 border-orange-600 w-10 h-10 object-cover" alt="">
+                                        </div>
+                                        <div v-else>
+                                            <img v-bind:src="participant.messageable.avatar" class="rounded-full border-2 border-orange-600 w-10 h-10 object-cover" alt="">
+                                        </div>
                                         <div class="px-2 flex flex-col w-[87%]">
                                             <div class="flex justify-between">
-                                                <span class="text-lg font-bold text-gray-900 mb-1 truncate">
-                                                    @{{ participant.messageable.first_name }} @{{ participant.messageable.last_name }}
-                                                </span>
+                                                <div v-if="participant.messageable.business">
+                                                    <span class="text-lg font-bold text-gray-900 mb-1 truncate">
+                                                        @{{ participant.messageable.business.name }}
+                                                    </span>
+                                                </div>
+                                                <div v-else>
+                                                    <span class="text-lg font-bold text-gray-900 mb-1 truncate">
+                                                        @{{ participant.messageable.first_name }} @{{ participant.messageable.last_name }}
+                                                    </span>
+                                                </div>
                                                 <span class="text-xs font-bold my-auto w-16 truncate text-end">@{{ conversation.last_message.from_now }}</span>
                                             </div>
                                             <div v-if="conversation.last_message.body || conversation.last_message.data.length > 0">
@@ -38,12 +50,25 @@
                                         </div>
                                     </div>
                                     <div v-else class="flex px-2 rounded-lg py-1 hover:bg-gray-200">
-                                        <img v-bind:src="participant.messageable.avatar" class="rounded-full w-10 h-10 object-cover" alt="">
+                                        {{-- <img v-bind:src="participant.messageable.avatar" class="rounded-full w-10 h-10 object-cover" alt=""> --}}
+                                        <div v-if="participant.messageable.business">
+                                            <img v-bind:src="participant.messageable.business.primary_cover_image" class="rounded-full w-10 h-10 object-cover" alt="">
+                                        </div>
+                                        <div v-else>
+                                            <img v-bind:src="participant.messageable.avatar" class="rounded-full w-10 h-10 object-cover" alt="">
+                                        </div>
                                         <div class="px-2 flex flex-col w-[87%]">
                                             <div class="flex justify-between">
-                                                <span class="text-lg font-bold text-gray-900 mb-1 truncate">
-                                                    @{{ participant.messageable.first_name }} @{{ participant.messageable.last_name }}
-                                                </span>
+                                                <div v-if="participant.messageable.business">
+                                                    <span class="text-lg font-bold text-gray-900 mb-1 truncate">
+                                                        @{{ participant.messageable.business.name }}
+                                                    </span>
+                                                </div>
+                                                <div v-else>
+                                                    <span class="text-lg font-bold text-gray-900 mb-1 truncate">
+                                                        @{{ participant.messageable.first_name }} @{{ participant.messageable.last_name }}
+                                                    </span>
+                                                </div>
                                                 <span class="text-xs font-bold my-auto w-16 truncate text-end">@{{ conversation.last_message.from_now }}</span>
                                             </div>
                                             <div v-if="conversation.last_message.body || conversation.last_message.data.length > 0">
@@ -72,14 +97,15 @@
                 <div class="border-b-2 border-t-0 border-gray-400 w-full px-4 py-2 flex justify-between">
                     <div class="flex gap-2 lg:block">
                         <i class="fas fa-arrow-left my-auto lg:hidden hover:cursor-pointer" v-on:click="viewContacts"></i>
-                        <h2 class="text-2xl font-bold text-gray-800">@{{ receiver.first_name }} @{{ receiver.last_name }}</h2>
+                        <h2 v-if="receiver.business" class="text-2xl font-bold text-gray-800">@{{ receiver.business.name }}</h2>
+                        <h2 v-else class="text-2xl font-bold text-gray-800">@{{ receiver.first_name }} @{{ receiver.last_name }}</h2>
                     </div>
-                    <form action="#" method="POST" class="hidden md:block my-auto">
+                    {{-- <form action="#" method="POST" class="hidden md:block my-auto">
                         <div class="relative md:w-full sm:w-full">
                             <i class="fas fa-search absolute inset-y-0 left-1 flex items-center pl-1 pointer-events-none text-md"></i>
                             <x-text-input class="pl-10 h-7 border-none rounded focus:border-b-2 focus:ring-0" placeholder="Search Chat History..."></x-text-input>
                         </div>
-                    </form>
+                    </form> --}}
                 </div>
                 <div class="flex flex-col">
                     <div class="space-y-2 p-2 text-sm">
@@ -150,15 +176,37 @@
                 data() {
                     return {
                         conversations: [],
+                        const_conversations: [],
                         active_conversation: '',
                         conversation_log: [],
                         auth_id: '',
                         receiver: null,
                         files: [],
+                        searchContacts: ''
+                    }
+                },
+                watch: {
+                    searchContacts(newQuery, oldQuery) {
+                        let new_conversations = []
+                        if (this.conversations.length > 0 && newQuery.length > 0) {
+                            new_conversations = this.conversations.filter(conversation => {
+                                return conversation.participants.find(participant => {
+                                    if (participant.messageable.business) {
+                                        return participant.messageable.first_name.toLowerCase().includes(newQuery.toLowerCase()) || participant.messageable.last_name.toLowerCase().includes(newQuery.toLowerCase()) || participant.messageable.business.name.toLowerCase().includes(newQuery.toLowerCase())
+                                    } else {
+                                        return participant.messageable.first_name.toLowerCase().includes(newQuery.toLowerCase()) || participant.messageable.last_name.toLowerCase().includes(newQuery.toLowerCase())
+                                    }
+                                })
+                            })
+                        } else if (newQuery.length == 0) {
+                            new_conversations = this.const_conversations
+                        }
+                        this.conversations = new_conversations
                     }
                 },
                 mounted() {
                     this.conversations = conversations
+                    this.const_conversations = conversations
                     this.auth_id = auth_id
                     if (conversation.user) {
                         this.active_conversation = conversation.id

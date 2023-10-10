@@ -21,6 +21,7 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'phone_number' => $this->phone_number,
             'avatar' => $this->avatar,
+            'business' => $this->when($this->business()->exists(), new VendorResource($this->business))
         ];
     }
 }
