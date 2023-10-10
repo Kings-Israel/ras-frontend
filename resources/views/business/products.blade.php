@@ -57,6 +57,24 @@
                     $('#product_capacity').removeClass('hidden')
                 }
             }
+            function enterCustom(value, element_id) {
+                if (value.checked) {
+                    $('#'+element_id).addClass('hidden')
+                    $('#'+element_id).removeClass('block')
+                    $('#custom_'+element_id).addClass('block')
+                    $('#custom_'+element_id).removeClass('hidden')
+                    $('#custom_'+element_id).focus()
+                } else {
+                    $('#'+element_id).addClass('block')
+                    $('#'+element_id).removeClass('hidden')
+                    $('#'+element_id).focus()
+                    $('#custom_'+element_id).addClass('hidden')
+                    $('#custom_'+element_id).removeClass('block')
+                }
+            }
+            function setInput(input) {
+                $('#'+input).val($('#custom_'+input).val())
+            }
         </script>
     @endpush
 </x-app-layout>
