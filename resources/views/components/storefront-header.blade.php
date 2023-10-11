@@ -2,7 +2,6 @@
 <div class="mx-auto px-2 md:px-8 lg:px-24 py-6 border-t-2 border-gray-200">
     <div class="md:h-10 md:flex justify-between">
         <div class="flex gap-1">
-            {{-- <span class="w-12 h-12 bg-gray-300 rounded-full text-center pt-3 font-bold text-white">E</span> --}}
             <img src="https://ui-avatars.com/api/?name={!! $business->name !!}&rounded=true&size=60" alt="" />
             <div class="-space-y-1">
                 <h1 class="font-bold text-sm text-slate-700">{{ $business->name }}</h1>
