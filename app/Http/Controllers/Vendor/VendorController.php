@@ -60,7 +60,7 @@ class VendorController extends Controller
                     'business_id' => $business->id,
                     'name' => $key,
                     'file' => pathinfo($document->store('document', 'vendor'), PATHINFO_BASENAME),
-                    'expires_on' => array_key_exists($key, $request->document_expiry_date) ? $request->document_expiry_date[$key] : NULL,
+                    'expires_on' => $request->document_expiry_date && array_key_exists($key, $request->document_expiry_date) ? $request->document_expiry_date[$key] : NULL,
                     // 'expiry_date' => $request->document_expiry_date[$key] ? $request->document_expiry_date[$key] : NULL,
                 ]);
             }
