@@ -50,8 +50,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        info(now()->diffInMonths(auth()->user()->last_login));
-
         if (auth()->user()->last_login === NULL || now()->diffInMonths(auth()->user()->last_login) > 3) {
             auth()->user()->update([
                 'phone_verified_at' => NULL,
