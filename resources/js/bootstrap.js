@@ -21,7 +21,7 @@ import Pusher from 'pusher-js';
 window.Pusher = Pusher;
 
 
-const HOST = window.location.hostname
+const HOST = '127.0.0.1';
 
 console.log(HOST)
 
@@ -30,8 +30,8 @@ window.Echo = new Echo({
     broadcaster: 'pusher',
     key: 'local',
     wsHost: HOST,
-    wsPort: 80,
-    wssPort: 80,
+    wsPort: 6001,
+    wssPort: 6001,
     cluster : 'mt1',
     forceTLS: false,
     encrypted: true,
