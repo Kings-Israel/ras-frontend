@@ -20,6 +20,8 @@ import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
 window.Pusher = Pusher;
 
+console.log(window.location.hostname)
+
 window.Echo = new Echo({
     // Laravel Websockets Config
     broadcaster: 'pusher',
