@@ -20,6 +20,7 @@ import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
 window.Pusher = Pusher;
 
+console.log(process.env.NODE_ENV)
 console.log(window.location.hostname)
 
 window.Echo = new Echo({
