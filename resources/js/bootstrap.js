@@ -21,7 +21,7 @@ import Pusher from 'pusher-js';
 window.Pusher = Pusher;
 
 
-const HOST = process.env.NODE_ENV === 'production' ? window.location.hostname+'/ras' : window.location.hostname
+const HOST = window.location.hostname
 
 console.log(HOST)
 
