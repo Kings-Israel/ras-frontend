@@ -20,8 +20,7 @@ import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
 window.Pusher = Pusher;
 
-
-const HOST = '127.0.0.1';
+const HOST = process.env.NODE_ENV == 'production' ? '194.163.129.200' : '127.0.0.1';
 
 console.log(HOST)
 
