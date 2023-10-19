@@ -20,14 +20,16 @@ import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
 window.Pusher = Pusher;
 
-console.log(process.env.NODE_ENV)
-console.log(window.location.hostname)
+
+const HOST = process.env.NODE_ENV === 'production' ? window.location.hostname+'/ras' : window.location.hostname
+
+console.log(HOST)
 
 window.Echo = new Echo({
     // Laravel Websockets Config
     broadcaster: 'pusher',
     key: 'local',
-    wsHost: window.location.hostname,
+    wsHost: HOST,
     wsPort: 6001,
     wssPort: 6001,
     cluster : 'mt1',
