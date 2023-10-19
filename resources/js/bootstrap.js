@@ -21,27 +21,27 @@ import Pusher from 'pusher-js';
 window.Pusher = Pusher;
 
 window.Echo = new Echo({
-    // // Laravel Websockets Config
-    // broadcaster: 'pusher',
-    // key: 'local',
-    // wsHost: window.location.hostname,
-    // wsPort: 6001,
-    // wssPort: 6001,
-    // cluster : 'mt1',
-    // forceTLS: false,
-    // encrypted: true,
-    // disableStats: true,
-    // enabledTransports: ['ws', 'wss'],
-
-    // Ably config
+    // Laravel Websockets Config
     broadcaster: 'pusher',
-    key: 'W4R6LA.GZ7-qw',
+    key: 'local',
     wsHost: window.location.hostname,
-    wssHost: window.location.hostname,
     wsPort: 6001,
     wssPort: 6001,
-    disableStats: true,
+    cluster : 'mt1',
+    forceTLS: false,
     encrypted: true,
-    cluster: 'eu',
+    disableStats: true,
     enabledTransports: ['ws', 'wss'],
+
+    // // Ably config
+    // broadcaster: 'pusher',
+    // key: 'W4R6LA.GZ7-qw',
+    // wsHost: window.location.hostname,
+    // wssHost: window.location.hostname,
+    // wsPort: 6001,
+    // wssPort: 6001,
+    // disableStats: true,
+    // encrypted: true,
+    // cluster: 'eu',
+    // enabledTransports: ['ws', 'wss'],
 });
