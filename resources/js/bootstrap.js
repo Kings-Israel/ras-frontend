@@ -22,8 +22,6 @@ window.Pusher = Pusher;
 
 const HOST = process.env.NODE_ENV == 'production' ? '194.163.129.200' : '127.0.0.1';
 
-console.log(HOST)
-
 window.Echo = new Echo({
     // Laravel Websockets Config
     broadcaster: 'pusher',
