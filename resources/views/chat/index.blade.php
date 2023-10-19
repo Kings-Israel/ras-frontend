@@ -35,7 +35,7 @@
                                                 </div>
                                                 <span class="text-xs font-bold my-auto w-16 truncate text-end">@{{ conversation.last_message.from_now }}</span>
                                             </div>
-                                            <div v-if="conversation.last_message.body || conversation.last_message.data.length > 0">
+                                            <div v-if="conversation.last_message.body || (conversation.last_message.data && conversation.last_message.data.length > 0)">
                                                 <div class="flex justify-between truncate">
                                                     <span v-if="conversation.last_message.body && conversation.last_message.body !== 'files_only_message'" class="text-sm truncate">@{{ conversation.last_message.body }}.</span>
                                                     <span v-else class="text-sm truncate">File: @{{ conversation.last_message.data[conversation.last_message.data.length - 1].file_name }}</span>
@@ -71,7 +71,7 @@
                                                 </div>
                                                 <span class="text-xs font-bold my-auto w-16 truncate text-end">@{{ conversation.last_message.from_now }}</span>
                                             </div>
-                                            <div v-if="conversation.last_message.body || conversation.last_message.data.length > 0">
+                                            <div v-if="conversation.last_message.body || (conversation.last_message.data && conversation.last_message.data.length > 0)">
                                                 <div class="flex justify-between truncate">
                                                     <span v-if="conversation.last_message.body && conversation.last_message.body !== 'files_only_message'" class="text-sm truncate">@{{ conversation.last_message.body }}.</span>
                                                     <span v-else class="text-sm truncate">File: @{{ conversation.last_message.data[conversation.last_message.data.length - 1].file_name }}</span>
@@ -209,7 +209,7 @@
                     this.const_conversations = conversations
                     this.auth_id = auth_id
                     if (conversation.user) {
-                        this.active_conversation = conversation.id
+                        this.active_conversation = conversation.conversation_id
                         this.conversation_log = conversation.messages
                         this.receiver = conversation.user
                         this.$nextTick(() => {

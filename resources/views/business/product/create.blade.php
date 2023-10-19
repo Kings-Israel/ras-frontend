@@ -52,8 +52,8 @@
                                 <div class="flex justify-between">
                                     <x-input-label for="currency" :value="__('Currency')" class="text-gray-500" />
                                     <div class="flex gap-2">
-                                        <x-input-label :value="__('Custom')" class="text-sm text-gray-500" />
-                                        <input type="checkbox" name="enter_custom_currency" @if(!in_array(old('currency'), $currencies->toArray()) && old('currency') != NULL) @endif onchange="enterCustom(this, 'currency')" id="enter_custom_currency" class="my-auto w-4 h-4 mr-0.5 text-primary-one bg-gray-400 border-gray-500 rounded focus:ring-primary-one dark:focus:ring-primary-two dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <x-input-label :value="__('Custom')" class="text-sm font-thin text-gray-500 -mr-2" />
+                                        <input type="checkbox" name="enter_custom_currency" @if(!in_array(old('currency'), $currencies->toArray()) && old('currency') != NULL) @endif onchange="enterCustom(this, 'currency')" id="enter_custom_currency" class="my-auto w-3 h-3 mr-0.5 text-primary-one bg-gray-400 border-gray-500 rounded focus:ring-primary-one dark:focus:ring-primary-two dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                     </div>
                                 </div>
                                 <input name="currency" id="custom_currency" oninput="setInput('currency')" type="text" class="hidden bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
@@ -67,7 +67,7 @@
                                     @endif
                                 </select>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group w-full">
                                 <x-input-label for="product_price" :value="__('Price')" class="text-gray-500" />
                                 <input type="number" name="price" :value="old('price')" id="product_price" min="0" placeholder="0.00" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                                 <x-input-error :messages="$errors->get('price')" class="mt-2" />
@@ -96,8 +96,8 @@
                                 <div class="flex justify-between">
                                     <x-input-label for="product_brand" :value="__('Unit')" class="text-gray-500" />
                                     <div class="flex gap-2">
-                                        <x-input-label :value="__('Custom')" class="text-sm text-gray-500" />
-                                        <input type="checkbox" name="enter_custom_min_quantity_order_unit" @if(!in_array(old('min_order_quantity_unit'), $units->toArray()) && old('min_quantity_order_unit') != NULL) checked @endif onchange="enterCustom(this, 'min_quantity_order_unit')" id="enter_custom_min_quantity_order_unit" class="my-auto w-4 h-4 text-primary-one bg-gray-400 border-gray-500 rounded focus:ring-primary-one dark:focus:ring-primary-two dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <x-input-label :value="__('Custom')" class="text-sm text-gray-500 -mr-2" />
+                                        <input type="checkbox" name="enter_custom_min_quantity_order_unit" @if(!in_array(old('min_order_quantity_unit'), $units->toArray()) && old('min_quantity_order_unit') != NULL) checked @endif onchange="enterCustom(this, 'min_quantity_order_unit')" id="enter_custom_min_quantity_order_unit" class="my-auto w-3 h-3 text-primary-one bg-gray-400 border-gray-500 rounded focus:ring-primary-one dark:focus:ring-primary-two dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                     </div>
                                 </div>
                                 <input name="min_order_quantity_unit" id="custom_min_quantity_order_unit" oninput="setInput('min_quantity_order_unit')" type="text" class="hidden bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
@@ -123,8 +123,8 @@
                                 <div class="flex justify-between">
                                     <x-input-label for="product_brand" :value="__('Unit')" class="text-gray-500" />
                                     <div class="flex gap-2">
-                                        <x-input-label :value="__('Custom')" class="text-sm text-gray-500" />
-                                        <input type="checkbox" name="enter_custom_max_quantity_order_unit" @if(!in_array(old('max_quantity_order_unit'), $units->toArray()) && old('max_quantity_order_unit') != NULL) checked @endif onchange="enterCustom(this, 'max_quantity_order_unit')" id="enter_custom_max_quantity_order_unit" class="my-auto w-4 h-4 text-primary-one bg-gray-400 border-gray-500 rounded focus:ring-primary-one dark:focus:ring-primary-two dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <x-input-label :value="__('Custom')" class="text-sm text-gray-500 -mr-2" />
+                                        <input type="checkbox" name="enter_custom_max_quantity_order_unit" @if(!in_array(old('max_quantity_order_unit'), $units->toArray()) && old('max_quantity_order_unit') != NULL) checked @endif onchange="enterCustom(this, 'max_quantity_order_unit')" id="enter_custom_max_quantity_order_unit" class="my-auto w-3 h-3 text-primary-one bg-gray-400 border-gray-500 rounded focus:ring-primary-one dark:focus:ring-primary-two dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                     </div>
                                 </div>
                                 <input name="max_order_quantity_unit" oninput="setInput('max_order_quantity_unit')" id="custom_max_quantity_order_unit" type="text" class="hidden bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">

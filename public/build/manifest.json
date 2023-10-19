@@ -1,19 +1,31 @@
 {
-  "public/assets/img/6CeuCO.jpg": {
-    "file": "assets/6CeuCO-fd67f134.jpg",
-    "src": "public/assets/img/6CeuCO.jpg"
+  "public/assets/img/auth-alt-five.jpg": {
+    "file": "assets/auth-alt-five-af4ac493.jpg",
+    "src": "public/assets/img/auth-alt-five.jpg"
   },
-  "public/assets/img/index.jpg": {
-    "file": "assets/index-8f5ddfc7.jpg",
-    "src": "public/assets/img/index.jpg"
+  "public/assets/img/auth-alt-four.jpg": {
+    "file": "assets/auth-alt-four-e4023992.jpg",
+    "src": "public/assets/img/auth-alt-four.jpg"
+  },
+  "public/assets/img/auth-alt-six.jpg": {
+    "file": "assets/auth-alt-six-05ab1cfd.jpg",
+    "src": "public/assets/img/auth-alt-six.jpg"
+  },
+  "public/assets/img/auth-bg-1.png": {
+    "file": "assets/auth-bg-1-4161d694.png",
+    "src": "public/assets/img/auth-bg-1.png"
+  },
+  "public/assets/img/banner.png": {
+    "file": "assets/banner-3f8aa010.png",
+    "src": "public/assets/img/banner.png"
   },
   "resources/css/app.css": {
-    "file": "assets/app-d5a2b377.css",
+    "file": "assets/app-f96db848.css",
     "isEntry": true,
     "src": "resources/css/app.css"
   },
   "resources/js/app.js": {
-    "file": "assets/app-0d91dc04.js",
+    "file": "assets/app-6bb65501.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   }

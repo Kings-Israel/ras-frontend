@@ -186,6 +186,7 @@
                         auth_id: '',
                         receiver: null,
                         files: [],
+                        searchContacts: ''
                     }
                 },
                 watch: {
