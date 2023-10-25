@@ -86,6 +86,7 @@ class VendorController extends Controller
             'vision' => $request->has('vision') && $request->vision != null ? $request->vision : auth()->user()->business->vision,
             'contact_email' => $request->has('contact_email') && $request->contact_email != null ? $request->contact_email : auth()->user()->business->contact_email,
             'contact_phone_number' => $request->has('contact_phone_number') && $request->contact_phone_number != null ? $request->contact_phone_number : auth()->user()->business->contact_phone_number,
+            'global_currency' => $request->has('currency') && $request->currency != NULL ? $request->currency : NULL,
         ]);
 
         if ($request->hasFile('secondary_cover_image')) {

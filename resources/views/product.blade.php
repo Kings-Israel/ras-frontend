@@ -38,6 +38,14 @@
             </div>
         </form>
     </div>
+    <span class="hidden" id="product_id">{{ $product->id }}</span>
+    <span class="hidden" id="min_product_price">{{ $product->min_price }}</span>
+    <span class="hidden" id="max_product_price">{{ $product->max_price }}</span>
+    <span class="hidden" id="product_price">{{ $product->price }}</span>
+    @php($min_order_quantity = $product->min_order_quantity ? explode(" ", $product->min_order_quantity)[0] : 0)
+    @php($max_order_quantity = $product->max_order_quantity ? explode(" ", $product->max_order_quantity)[0] : 1000000000000)
+    <span class="hidden" id="min_order_quantity">{{ $min_order_quantity }}</span>
+    <span class="hidden" id="max_order_quantity">{{ $max_order_quantity }}</span>
     <div class="mx-auto px-4 md:px-6 lg:px-28 my-5">
         <span class="flex gap-2 text-sm">
             <p class="text-gray-400">Home ></p>
@@ -80,10 +88,14 @@
                         </div>
                     </div>
                     <div class="flex gap-2">
-                        <h4 class="font-bold text-gray-600">Brand:</h4>
+                        @if ($product->brand)
+                            <h4 class="font-bold text-gray-600">Brand:</h4>
+                        @endif
                         <div class="flex gap-3">
-                            <h4 class="font-semibold text-blue-500">Raw Material</h4>
+                            @if ($product->brand)
+                                <h4 class="font-semibold text-blue-500">{{ $product->brand }}</h4>
                             <h4 class="font-bold text-gray-400">I</h4>
+                            @endif
                             <h4 class="font-semibold text-blue-500">Similar Products from {{ $product->business->name }}</h4>
                         </div>
                     </div>
@@ -117,20 +129,26 @@
                         </div>
                     </div>
                     <div class="flex gap-2">
-                        <h4 class="font-bold text-gray-600 my-auto">Your Order:</h4>
-                        <div class="custom-number-input h-10 w-32">
-                            <div class="flex flex-row h-8 w-full rounded-lg relative bg-transparent mt-1">
+                        <h4 class="font-bold text-gray-600 my-auto w-32">Your Order:</h4>
+                        <div class="custom-number-input h-10 w-full">
+                            <div class="flex flex-row h-8 w-40 rounded-lg relative bg-transparent mt-1">
                                 <button data-action="decrement" class=" bg-gray-200 mr-0.5 border-2 rounded-tl-lg rounded-bl-lg border-gray-400 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none">
                                     <span class="m-auto text-xl font-thin">-</span>
                                 </button>
-                                <input type="number" class="border-0 outline-none focus:outline-none text-center w-full bg-gray-300 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700" name="custom-input-number" value="2" />
+                                <input type="number" id="order_quantity" value="{{ $min_order_quantity }}" min="{{ $min_order_quantity }}" max="{{ $max_order_quantity }}" class="border-0 outline-none focus:outline-none text-center w-full bg-gray-300 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700" name="custom-input-number" />
                                 <button data-action="increment" class="bg-gray-200 ml-0.5 border-2 rounded-tr-lg rounded-br-lg border-gray-400 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer">
                                     <span class="m-auto text-xl font-thin">+</span>
                                 </button>
                             </div>
+                            <span class="text-red-600 text-sm hidden" id="min_order_warning">Minimum order quantity is {{ $min_order_quantity }}</span>
+                            <span class="text-red-600 text-sm hidden" id="max_order_warning">Maximum order quantity is {{ $max_order_quantity }}</span>
                         </div>
                         <div class="my-auto">
-                            <h3 class="font-bold text-gray-500">US$50.86</h3>
+                            @php($min_order_price = $product->min_price ? $product->min_price : $product->price)
+                            <span class="flex gap-1">
+                                <h3 class="font-semibold text-gray-400">{{ $product->currency }}</h3>
+                                <h3 class="font-bold text-gray-500" id="order_amount">{{ number_format($min_order_price) }}</h3>
+                            </span>
                         </div>
                     </div>
                     <div class="flex gap-2">
@@ -171,17 +189,38 @@
             <div class="border border-gray-300 rounded-lg p-4 lg:h-[30%] col-span-2 sm:block md:flex gap-4 lg:block content-end">
                 <div class="sm:border-b md:border-none lg:border-b border-gray-300 pb-5">
                     <h5 class="font-semibold text-gray-500">Total Cost:</h5>
-                    <h3 class="font-bold text-xl">US$55.86</h3>
+                    <div class="flex gap-1">
+                        <h3 class="font-bold text-xl text-gray-700">{{ $product->currency }}</h3>
+                        <h3 class="font-bold text-xl" id="total_product_order_cost">0</h3>
+                    </div>
                     <h4 class="font-semibold text-gray-400">No Import Fees Deposit & $23.64 Shipping to Kenya</h4>
                     <h4 class="text-gray-500">Delivery: <strong class="font-bold">Friday, August 18</strong></h4>
                     <h5 class="font-thin text-gray-500 text-sm">Order Within: <span class="text-green-600">19h 38min</span></h5>
                     <x-primary-button class="w-full my-2 py-2 tracking-wide">Place Order</x-primary-button>
-                    <x-primary-outline-button class="w-full my-2 py-1 text-orange-400 justify-center gap-1">
-                        <i class="fas fa-plus text-sm"></i>
-                        <span class="tracking-tight">
-                            Add To Cart
-                        </span>
-                    </x-primary-outline-button>
+                    @auth
+                        @if (!$product->isInCart())
+                            <form action="{{ route('cart.store') }}" method="post" id="add-to-cart-form">
+                                @csrf
+                                <input type="hidden" id="add-to-cart-product-id" name="product_id">
+                                <input type="hidden" id="add-to-cart-quantity" name="quantity">
+                                <input type="hidden" id="order-amount" name="amount">
+                                <x-primary-outline-button class="w-full my-2 py-1 text-orange-400 justify-center gap-1 focus:text-orange-900 focus:ring-1 focus:ring-orange-900" id="add-to-cart-btn">
+                                    <i class="fas fa-plus text-sm"></i>
+                                    <span class="tracking-tight">
+                                        Add To Cart
+                                    </span>
+                                </x-primary-outline-button>
+                            </form>
+                        @else
+                            <a href="{{ route('cart') }}">
+                                <x-primary-outline-button class="w-full my-2 py-1 text-orange-400 justify-center gap-1 focus:text-orange-900 focus:ring-1 focus:ring-orange-900" id="add-to-cart-btn">
+                                    <span class="tracking-tight">
+                                        View Cart
+                                    </span>
+                                </x-primary-outline-button>
+                            </a>
+                        @endif
+                    @endauth
                     <x-primary-outline-button class="w-full my-2 py-1 text-orange-400 justify-center gap-1" data-modal-target="get-quote-modal" data-modal-toggle="get-quote-modal">
                         <span class="tracking-tight">
                             Get Quotation
@@ -556,15 +595,43 @@
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
     <script>
+        // Get the standard, price minumum and maximum price if available
+        const max_product_price = Number(document.getElementById('max_product_price').innerHTML);
+        const max_order_quantity = Number(document.getElementById('max_order_quantity').innerHTML);
+
+        const min_product_price = Number(document.getElementById('min_product_price').innerHTML);
+        const min_order_quantity = Number(document.getElementById('min_order_quantity').innerHTML);
+
+        const product_price = Number(document.getElementById('product_price').innerHTML);
+
+        let order_amount = document.getElementById('order_amount')
+
+        let product_order_cost = document.getElementById('total_product_order_cost')
+
+        $(document).ready(function () {
+            calculatePrice(min_order_quantity)
+        })
+
         function decrement(e) {
           const btn = e.target.parentNode.parentElement.querySelector(
             'button[data-action="decrement"]'
           );
           const target = btn.nextElementSibling;
+          let min_value = target.attributes['min'].value
           let value = Number(target.value);
           value--;
-          target.value = value;
+          if (value < min_value) {
+            target.value = min_value;
+            document.getElementById('min_order_warning').classList.remove('hidden')
+            setTimeout(() => {
+                document.getElementById('min_order_warning').classList.add('hidden')
+            }, 3000);
+          } else {
+            target.value = value;
+          }
+          calculatePrice(target.value)
         }
 
         function increment(e) {
@@ -572,9 +639,48 @@
             'button[data-action="decrement"]'
           );
           const target = btn.nextElementSibling;
+          let max_value = target.attributes['max'].value
           let value = Number(target.value);
           value++;
-          target.value = value;
+          if (value > max_value) {
+            target.value = max_value;
+            document.getElementById('max_order_warning').classList.remove('hidden')
+            setTimeout(() => {
+                document.getElementById('max_order_warning').classList.add('hidden')
+            }, 3000);
+          } else {
+            target.value = value;
+          }
+          calculatePrice(target.value);
+        }
+
+        let order_quantity = document.getElementById('order_quantity').value;
+
+        function calculatePrice(amount) {
+            order_quantity = amount
+
+            let calculated_price = 0
+
+            let order_quantity_middle = Math.round((Number(min_order_quantity) + Number(max_order_quantity)) / 2)
+
+            let product_price_middle = Math.round((Number(min_product_price) + Number(max_product_price)) / 2)
+
+            // if price available, multiply price by the order quantity
+            // If price is not available, multiply minimun price by the order quantity
+            if (min_product_price && max_product_price) {
+                if (order_quantity < order_quantity_middle) {
+                    calculated_price = max_product_price * order_quantity
+                } else if (order_quantity > max_order_quantity) {
+                    calculated_price = min_product_price * order_quantity
+                } else {
+                    calculated_price = product_price_middle * order_quantity
+                }
+            } else {
+                calculated_price = product_price * order_quantity
+            }
+
+            order_amount.innerHTML = new Intl.NumberFormat().format(calculated_price)
+            total_product_order_cost.innerHTML = new Intl.NumberFormat().format(calculated_price)
         }
 
         const decrementButtons = document.querySelectorAll(
@@ -592,9 +698,11 @@
         incrementButtons.forEach(btn => {
           btn.addEventListener("click", increment);
         });
+
         var container = document.getElementById("messages");
         container.scrollTop = container.scrollHeight
 
+        // Show product image when mouse hovers
         $(".product-images-preview").on("mouseover", function () {
             let newImage = $(this).attr("src");
             $(this)
@@ -604,11 +712,13 @@
                 .attr("src", newImage);
         });
 
+        // Switch Tabs to product details, vendor details or customer reviews
         const product_details_btn = document.querySelector('#product-details-btn')
         const product_details = document.querySelector('#product-details');
         const vendor_details_btn = document.querySelector('#vendor-details-btn')
         const vendor_details = document.querySelector('#vendor-details');
 
+        // View vendor details
         vendor_details_btn.addEventListener('click', function() {
             product_details.classList.add('hidden');
             vendor_details.classList.remove('hidden');
@@ -616,11 +726,24 @@
             vendor_details_btn.classList.add('bg-gray-100')
         })
 
+        // View Product details
         product_details_btn.addEventListener('click', function() {
             product_details.classList.remove('hidden');
             vendor_details.classList.add('hidden');
             product_details_btn.classList.add('bg-gray-100')
             vendor_details_btn.classList.remove('bg-gray-100')
+        })
+
+        let product_id = document.getElementById('product_id').innerHTML;
+
+        // TODO: Add functionality to view customer reviews
+
+        $('#add-to-cart-form').on('submit', function (e) {
+            e.preventDefault();
+            $('#add-to-cart-product-id').val(product_id)
+            $('#add-to-cart-quantity').val(order_quantity)
+            $('#order-amount').val(order_amount.innerHTML.replaceAll(',', ''))
+            this.submit()
         })
       </script>
 </x-main>
