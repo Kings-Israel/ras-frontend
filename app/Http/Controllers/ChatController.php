@@ -32,6 +32,8 @@ class ChatController extends Controller
             $conversation_id = $conversation->id;
             Chat::conversation($conversation)->setParticipant(auth()->user())->readAll();
             $conversation = Chat::conversation($conversation)->setParticipant(auth()->user())->limit(250000)->getMessages();
+
+            $user->load('business');
         }
 
         $conversations = Chat::conversations()
