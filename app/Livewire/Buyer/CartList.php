@@ -8,13 +8,14 @@ use Livewire\Component;
 class CartList extends Component
 {
     public $cart;
+
     public function mount()
     {
         $cart = auth()->user()->cart;
 
         if (!$cart) {
             toastr()->error('', 'No items in cart');
-            return redirect()->route('welcome');
+            return back();
         }
 
         $cart->load('cartItems.product.media');
