@@ -13,13 +13,12 @@ class CartController extends Controller
         $cart = auth()->user()->cart;
 
         if ($cart) {
-            $cart->load('cartItems.product.media');
-            return view('cart', compact('cart'));
+            return view('cart');
         }
 
         toastr()->error('', 'No items in cart');
 
-        return redirect()->route('welcome');
+        return back();
     }
 
     public function store(Request $request)
