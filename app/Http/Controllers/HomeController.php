@@ -15,7 +15,7 @@ class HomeController extends Controller
         return view('welcome', [
             'categories' => Category::all()->take(12),
             'businesses' => Business::all()->take(8),
-            'products' => Product::with(['media' => function($query) {
+            'products' => Product::available()->with(['media' => function($query) {
                 $query->where('type', 'image')->inRandomOrder();
             }])->get()->take(10),
         ]);
