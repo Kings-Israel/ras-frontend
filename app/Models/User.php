@@ -17,6 +17,7 @@ use Ramsey\Uuid\Uuid;
 use Spatie\Permission\Traits\HasRoles;
 use Chat;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -74,6 +75,22 @@ class User extends Authenticatable implements MustVerifyEmail
     public function business(): HasOne
     {
         return $this->hasOne(Business::class);
+    }
+
+    /**
+     * Get the cart associated with the User
+     */
+    public function cart(): HasOne
+    {
+        return $this->hasOne(Cart::class);
+    }
+
+    /**
+     * Get all of the cartItems for the User
+     */
+    public function cartItems(): HasManyThrough
+    {
+        return $this->hasManyThrough(CartItem::class, Cart::class);
     }
 
     /**

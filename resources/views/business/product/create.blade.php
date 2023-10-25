@@ -51,23 +51,27 @@
                             <div class="basis-2/5 form-group">
                                 <div class="flex justify-between">
                                     <x-input-label for="currency" :value="__('Currency')" class="text-gray-500" />
+                                    @php($vendor_currency = auth()->user()->business->global_currency)
                                     <div class="flex gap-2">
                                         <x-input-label :value="__('Custom')" class="text-sm text-gray-500" />
-                                        <input type="checkbox" name="enter_custom_currency" @if(!in_array(old('currency'), $currencies->toArray()) && old('currency') != NULL) @endif onchange="enterCustom(this, 'currency')" id="enter_custom_currency" class="my-auto w-4 h-4 mr-0.5 text-primary-one bg-gray-400 border-gray-500 rounded focus:ring-primary-one dark:focus:ring-primary-two dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <input type="checkbox" name="enter_custom_currency" @if((!in_array(old('currency'), $currencies->toArray()) && old('currency') != NULL) || ($vendor_currency && !in_array($vendor_currency, $currencies->toArray()))) checked @endif onchange="enterCustom(this, 'currency')" id="enter_custom_currency" class="my-auto w-4 h-4 mr-0.5 text-primary-one bg-gray-400 border-gray-500 rounded focus:ring-primary-one dark:focus:ring-primary-two dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                     </div>
                                 </div>
-                                <input name="currency" id="custom_currency" oninput="setInput('currency')" type="text" class="hidden bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
-                                <select name="currency" id="currency"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+                                <input name="currency" id="custom_currency" oninput="setInput('currency')" type="text" class="@if(!$vendor_currency || ($vendor_currency && in_array($vendor_currency, $currencies->toArray()))) hidden @endif bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+                                <select name="currency" id="currency"  class="@if($vendor_currency && !in_array($vendor_currency, $currencies->toArray())) hidden @endif bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                                     <option value="">Currency</option>
                                     @foreach ($currencies as $currency)
-                                        <option value="{{ $currency }}" @if(old('currency') === $currency) selected @endif>{{ $currency }}</option>
+                                        <option value="{{ $currency }}" @if(old('currency') === $currency || ($vendor_currency && $vendor_currency === $currency)) selected @endif>{{ $currency }}</option>
                                     @endforeach
                                     @if (!in_array(old('currency'), $currencies->toArray()) && old('currency') != NULL)
                                         <option value="{{ old('currency') }}" selected>{{ old('currency') }}</option>
                                     @endif
+                                    @if ($vendor_currency && !in_array($vendor_currency, $currencies->toArray()))
+                                        <option value="{{ $vendor_currency }}" selected>{{ $vendor_currency }}</option>
+                                    @endif
                                 </select>
                             </div>
-                            <div class="form-group">
+                            <div class="basis-3/5 form-group">
                                 <x-input-label for="product_price" :value="__('Price')" class="text-gray-500" />
                                 <input type="number" name="price" :value="old('price')" id="product_price" min="0" placeholder="0.00" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                                 <x-input-error :messages="$errors->get('price')" class="mt-2" />
@@ -86,13 +90,13 @@
                             </div>
                         </div>
                         <div class="flex gap-1">
-                            <div class="basis-3/4 form-group">
-                                <x-input-label for="product_minimum_quantity_order" :value="__('Minimum Quantity of Order')" class="text-gray-500" />
+                            <div class="basis-3/5 form-group">
+                                <x-input-label for="product_minimum_quantity_order" :value="__('Minimum Order Quantity')" class="text-gray-500" />
                                 <input type="number" name="min_order_quantity" id="product_minimum_quantity_order" min="1" placeholder="0" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                                 <x-input-error :messages="$errors->get('min_order_quantity')" class="mt-2" />
                                 <x-input-error :messages="$errors->get('min_order_quantity_unit')" class="mt-2" />
                             </div>
-                            <div class="basis-1/4 form-group">
+                            <div class="basis-2/5 form-group">
                                 <div class="flex justify-between">
                                     <x-input-label for="product_brand" :value="__('Unit')" class="text-gray-500" />
                                     <div class="flex gap-2">
@@ -113,13 +117,13 @@
                             </div>
                         </div>
                         <div class="flex gap-1">
-                            <div class="basis-3/4 form-group">
-                                <x-input-label for="product_maximum_quantity_order" :value="__('Maximum Quantity of Order')" class="text-gray-500" />
+                            <div class="basis-3/5 form-group">
+                                <x-input-label for="product_maximum_quantity_order" :value="__('Maximum Order Quantity')" class="text-gray-500" />
                                 <input type="number" name="max_order_quantity" id="product_maximum_quantity_order" min="1" placeholder="0" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                                 <x-input-error :messages="$errors->get('max_order_quantity')" class="mt-2" />
                                 <x-input-error :messages="$errors->get('max_order_quantity_unit')" class="mt-2" />
                             </div>
-                            <div class="basis-1/4 form-group">
+                            <div class="basis-2/5 form-group">
                                 <div class="flex justify-between">
                                     <x-input-label for="product_brand" :value="__('Unit')" class="text-gray-500" />
                                     <div class="flex gap-2">

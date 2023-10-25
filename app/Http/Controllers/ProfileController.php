@@ -91,7 +91,8 @@ class ProfileController extends Controller
     public function businessProfile()
     {
         return view('business.profile', [
-            'business' => auth()->user()->hasRole('vendor') ? auth()->user()->business : NULL
+            'business' => auth()->user()->hasRole('vendor') ? auth()->user()->business : NULL,
+            'currencies' => collect(['USD', 'EUR', 'GBP', 'KSH', 'JPY']),
         ]);
     }
 }
