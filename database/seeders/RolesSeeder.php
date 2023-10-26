@@ -35,6 +35,7 @@ class RolesSeeder extends Seeder
             'view user',
 
             // Roles
+            'view role',
             'create role',
             'update role',
             'delete role',
