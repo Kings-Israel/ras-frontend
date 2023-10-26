@@ -60,5 +60,13 @@ class UsersSeeder extends Seeder
             ]);
 
         $user->assignRole('vendor');
+
+        $user = User::factory()
+        ->create([
+            'email' => 'admin@deveint.com',
+            'phone_number' => '0700004337'
+        ]);
+
+        $user->assignRole('deveint');
     }
 }
