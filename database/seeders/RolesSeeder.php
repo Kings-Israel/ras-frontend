@@ -45,11 +45,22 @@ class RolesSeeder extends Seeder
             'update warehouse',
             'delete warehouse',
 
+            // Warehouse management
+            'view warehouse product',
+            'update warehouse product',
+            'delete warehouse product',
+            'view warehouse occupation',
+            'update warehouse occupation',
+
             // Financier
             'create financier',
-            'view finaciers',
-            'update finacier',
-            'delete finacier',
+            'view financier',
+            'update financier',
+            'delete financier',
+
+            // Financing
+            'view financing request',
+            'update financing request',
 
             // Inspector
             'create inspector',
@@ -63,9 +74,17 @@ class RolesSeeder extends Seeder
             'update inspection report',
             'delete inspection report',
 
-            // Financing
-            'view financing request',
-            'update financing request',
+            // Stocklift
+            'create stocklift request',
+            'view stocklift request',
+            'update stocklift request',
+            'delete stocklift request',
+
+            // Drivers
+            'create delivery',
+            'view delivery',
+            'update delivery',
+            'delete delivery',
 
             // Settings
             'view settings',
@@ -100,6 +119,12 @@ class RolesSeeder extends Seeder
             'view warehouse',
             'update warehouse',
             'view order',
+            'create delivery',
+            'view delivery',
+            'update delivery',
+            'delete delivery',
+            'view stocklift request',
+            'update stocklift request',
         ];
 
         $transaction_permissions = [
@@ -112,10 +137,27 @@ class RolesSeeder extends Seeder
             'view warehouse',
             'view order',
             'update order',
-            'view inspection report',
             'create inspection report',
+            'view inspection report',
             'update inspection report',
             'delete inspection report',
+            'view delivery',
+            'update delivery',
+        ];
+
+        $driver_permissions = [
+            'view product',
+            'view warehouse',
+            'view order',
+            'update order',
+            'create delivery',
+            'view delivery',
+            'update delivery',
+            'delete delivery',
+            'create stocklift request',
+            'view stocklift request',
+            'update stocklift request',
+            'delete stocklift request',
         ];
 
         $deveint_permissions = [
@@ -132,14 +174,22 @@ class RolesSeeder extends Seeder
             'delete warehouse',
             'view settings',
             'update settings',
-            'view logs'
+            'view logs',
+            'create delivery',
+            'view delivery',
+            'update delivery',
+            'delete delivery',
+            'create stocklift request',
+            'view stocklift request',
+            'update stocklift request',
+            'delete stocklift request',
         ];
 
-        $roles = ['admin', 'buyer', 'vendor', 'warehouse manager', 'financier', 'inspector', 'deveint'];
+        $roles = ['admin', 'buyer', 'vendor', 'warehouse manager', 'financier', 'inspector', 'driver', 'deveint'];
 
         collect($all_permissions)->each(fn ($permission) => Permission::firstOrCreate(['name' => $permission]));
 
-        collect($roles)->each(function ($role) use ($warehouse_permissions, $transaction_permissions, $inspector_permissions, $deveint_permissions){
+        collect($roles)->each(function ($role) use ($warehouse_permissions, $transaction_permissions, $inspector_permissions, $deveint_permissions, $driver_permissions) {
             $role = Role::firstOrCreate(['name' => $role]);
             // if ($role->name === 'vendor') {
             //     collect($vendor_permissions)->each(function ($permission) use ($role) {
@@ -165,6 +215,12 @@ class RolesSeeder extends Seeder
 
             if ($role->name === 'inspector') {
                 collect($inspector_permissions)->each(function($permission) use ($role) {
+                    $role->givePermissionTo($permission);
+                });
+            }
+
+            if ($role->name === 'driver') {
+                collect($driver_permissions)->each(function($permission) use ($role) {
                     $role->givePermissionTo($permission);
                 });
             }
