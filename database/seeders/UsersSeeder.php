@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class UsersSeeder extends Seeder
 {
@@ -62,11 +63,19 @@ class UsersSeeder extends Seeder
         $user->assignRole('vendor');
 
         $user = User::factory()
-        ->create([
-            'email' => 'admin@deveint.com',
-            'phone_number' => '0700004337'
-        ]);
+                ->create([
+                    'email' => 'admin@deveint.com',
+                    'phone_number' => '0700004337'
+                ]);
 
         $user->assignRole('deveint');
+
+        $user = User::factory()
+                ->create([
+                    'email' => 'driver@ras.com',
+                    'phone_number' => '0700104337',
+                ]);
+
+        $user->assignRole('driver');
     }
 }
