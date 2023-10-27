@@ -7,11 +7,14 @@ use App\Models\Category;
 use App\Models\Country;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use VisitLog;
 
 class HomeController extends Controller
 {
     public function index()
     {
+        VisitLog::save();
+
         return view('welcome', [
             'categories' => Category::all()->take(12),
             'businesses' => Business::all()->take(8),

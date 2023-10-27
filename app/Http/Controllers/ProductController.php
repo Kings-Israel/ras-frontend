@@ -6,11 +6,14 @@ use App\Models\Business;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use VisitLog;
 
 class ProductController extends Controller
 {
     public function viewProduct($slug)
     {
+        VisitLog::save();
+
         $product = Product::findBySlug($slug);
 
         return view('product', [
@@ -25,6 +28,10 @@ class ProductController extends Controller
     {
         $business = Business::findBySlug($slug);
 
+        if (auth()->id() != $business->user->id) {
+            VisitLog::save();
+        }
+
         return view('business.storefront.index', compact('business'));
     }
 
@@ -36,6 +43,10 @@ class ProductController extends Controller
 
         $products = $business->products->groupBy('category.name');
 
+        if (auth()->id() != $business->user->id) {
+            VisitLog::save();
+        }
+
         return view('business.storefront.products', [
             'business' => $business->loadCount('products')->load('products'),
             'products' => $products,
@@ -46,6 +57,10 @@ class ProductController extends Controller
     public function storefrontDocuments($slug)
     {
         $business = Business::findBySlug($slug);
+
+        if (auth()->id() != $business->user->id) {
+            VisitLog::save();
+        }
 
         return view('business.storefront.compliance', [
             'business' => $business->load('documents'),
