@@ -500,95 +500,65 @@
                     </a>
                 </div>
             </div>
-            <div class="bg-gray-100">
+            <hr>
+            <div class="bg-gray-100 mt-6">
                 <div class="p-2 space-y-3">
-                    <h5 class="font-bold text-gray-700">Related Items</h5>
+                    <h5 class="font-bold text-lg text-gray-700">Related Items</h5>
                     <div class="space-y-2 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-4 gap-2 py-2">
-                        <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
-                            <a href="#">
-                                <img src="{{ asset('assets/img/6CeuCO.jpg') }}" class="rounded border border-gray-200 w-full h-36 object-cover" alt="">
-                                <div class="">
-                                    <h4 class="font-bold text-gray-500">Gold Bars</h4>
-                                    <h4 class="font-bold uppercase text-gray-700">US $ 10.20 - US $ 400.37</h4>
-                                    <h5 class="text-gray-500 font-semibold">Minimum Order: 20 Pieces</h5>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
-                            <a href="#">
-                                <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded border border-gray-200 w-full h-36 object-cover" alt="">
-                                <div class="">
-                                    <h4 class="font-bold text-gray-500">Diamond</h4>
-                                    <h4 class="font-bold uppercase text-gray-700">US $ 10.20 - US $ 400.37</h4>
-                                    <h5 class="text-gray-500 font-semibold">Minimum Order: 100 Pieces</h5>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
-                            <a href="#">
-                                <img src="{{ asset('assets/img/skLbbi.jpg') }}" class="rounded border border-gray-200 w-full h-36 object-cover" alt="">
-                                <div class="">
-                                    <h4 class="font-bold text-gray-500">Platinum</h4>
-                                    <h4 class="font-bold uppercase text-gray-700">US $ 100 - US $ 2000</h4>
-                                    <h5 class="text-gray-500 font-semibold">Minimum Order: 50 Pieces</h5>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
-                            <a href="#">
-                                <img src="{{ asset('assets/img/W8ZUrJ.jpg') }}" class="rounded border border-gray-200 w-full h-36 object-cover" alt="">
-                                <div class="">
-                                    <h4 class="font-bold text-gray-500">Iron Ore</h4>
-                                    <h4 class="font-bold uppercase text-gray-700">US $ 2.20 - US $ 3.37</h4>
-                                    <h5 class="text-gray-500 font-semibold">Minimum Order: 10 Pieces</h5>
-                                </div>
-                            </a>
-                        </div>
+                        @forelse ($similar_products as $product)
+                            <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
+                                <a href="{{ route('product', ['slug' => $product->slug]) }}">
+                                    <img src="{{ $product->media->where('type', 'image')->first()->file }}" class="rounded border-gray-200 w-full h-52 object-cover" alt="">
+                                    <div class="">
+                                        <h4 class="font-extrabold text-gray-500">{{ $product->name }}</h4>
+                                        @if ($product->price)
+                                            <h4 class="font-extrabold uppercase text-gray-700">{{ $product->currency ? $product->currency : 'USD' }} {{ number_format($product->price) }}</h4>
+                                        @else
+                                            <h4 class="font-extrabold uppercase text-gray-700">{{ $product->currency ? $product->currency : 'USD' }} {{ number_format($product->min_price) }} - {{ $product->currency ? $product->currency : 'USD' }} {{ number_format($product->max_price) }}</h4>
+                                        @endif
+                                        @if ($product->min_order_quantity)
+                                            <h5 class="text-sm text-gray-500 font-semibold">Minimum Order: {{ $product->min_order_quantity }}</h5>
+                                        @endif
+                                    </div>
+                                </a>
+                            </div>
+                        @empty
+                            <span class="text-md flex col-span-4 gap-1">
+                                <span class="font-semibold">
+                                    Similar Products are being added.
+                                </span>
+                            </span>
+                        @endforelse
                     </div>
                 </div>
-                <div class="p-2 space-y-3">
+                <hr>
+                <div class="p-2 space-y-3 mt-6">
                     <h5 class="font-bold text-gray-700">Vendor's Popular Products</h5>
                     <div class="space-y-2 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-4 gap-2 py-2">
-                        <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
-                            <a href="#">
-                                <img src="{{ asset('assets/img/6CeuCO.jpg') }}" class="rounded border-gray-200 w-full h-36 object-cover" alt="">
-                                <div class="">
-                                    <h4 class="font-bold text-gray-500">Gold Bars</h4>
-                                    <h4 class="font-bold uppercase text-gray-700">US $ 10.20 - US $ 400.37</h4>
-                                    <h5 class="text-gray-500 font-semibold">Minimum Order: 20 Pieces</h5>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
-                            <a href="#">
-                                <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded border border-gray-200 w-full h-36 object-cover" alt="">
-                                <div class="">
-                                    <h4 class="font-bold text-gray-500">Diamond</h4>
-                                    <h4 class="font-bold uppercase text-gray-700">US $ 10.20 - US $ 400.37</h4>
-                                    <h5 class="text-gray-500 font-semibold">Minimum Order: 100 Pieces</h5>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
-                            <a href="#">
-                                <img src="{{ asset('assets/img/skLbbi.jpg') }}" class="rounded border border-gray-200 w-full h-36 object-cover" alt="">
-                                <div class="">
-                                    <h4 class="font-bold text-gray-500">Platinum</h4>
-                                    <h4 class="font-bold uppercase text-gray-700">US $ 100 - US $ 2000</h4>
-                                    <h5 class="text-gray-500 font-semibold">Minimum Order: 50 Pieces</h5>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
-                            <a href="#">
-                                <img src="{{ asset('assets/img/W8ZUrJ.jpg') }}" class="rounded border border-gray-200 w-full h-36 object-cover" alt="">
-                                <div class="">
-                                    <h4 class="font-bold text-gray-500">Iron Ore</h4>
-                                    <h4 class="font-bold uppercase text-gray-700">US $ 2.20 - US $ 3.37</h4>
-                                    <h5 class="text-gray-500 font-semibold">Minimum Order: 10 Pieces</h5>
-                                </div>
-                            </a>
-                        </div>
+                        @forelse ($vendor_products as $product)
+                            <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
+                                <a href="{{ route('product', ['slug' => $product->slug]) }}">
+                                    <img src="{{ $product->media->where('type', 'image')->first()->file }}" class="rounded border-gray-200 w-full h-52 object-cover" alt="">
+                                    <div class="">
+                                        <h4 class="font-extrabold text-gray-500">{{ $product->name }}</h4>
+                                        @if ($product->price)
+                                            <h4 class="font-extrabold uppercase text-gray-700">{{ $product->currency ? $product->currency : 'USD' }} {{ number_format($product->price) }}</h4>
+                                        @else
+                                            <h4 class="font-extrabold uppercase text-gray-700">{{ $product->currency ? $product->currency : 'USD' }} {{ number_format($product->min_price) }} - {{ $product->currency ? $product->currency : 'USD' }} {{ number_format($product->max_price) }}</h4>
+                                        @endif
+                                        @if ($product->min_order_quantity)
+                                            <h5 class="text-sm text-gray-500 font-semibold">Minimum Order: {{ $product->min_order_quantity }}</h5>
+                                        @endif
+                                    </div>
+                                </a>
+                            </div>
+                        @empty
+                            <span class="text-md flex col-span-4 gap-1">
+                                <span class="font-semibold">
+                                    Vendor products will be added soon.
+                                </span>
+                            </span>
+                        @endforelse
                     </div>
                 </div>
             </div>
