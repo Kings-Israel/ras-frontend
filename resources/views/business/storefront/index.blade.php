@@ -39,89 +39,31 @@
                     <p class="space-x-2"><span>{{ $business->contact_email }}</span></p>
                     <p class="space-x-2 pl-2"><span>{{ $business->contact_phone_number }}</span></p>
                 </div>
-                {{-- <p class="text-xs mt-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium, eos repellendus autem voluptas maxime magni velit facere eum, doloremque ab quam excepturi labore laboriosam sapiente accusantium accusamus corporis nobis dignissimos.</p> --}}
             </div>
         </div>
     </div>
     <div class="space-y-4">
         <div class="px-2 md:px-8 lg:px-28">
             <div class="flex justify-between">
-                <h3 class="font-bold tracking-wide">Product Groups</h3>
-                <h4 class="font-bold text-sm">View More <i class="fas fa-arrow-circle-right"></i></h4>
-            </div>
-            <div class="block md:flex md:justify-between bg-rose-100 gap-2 px-4 py-4 rounded-lg">
-                <div>
-                    <img src="{{ asset('assets/img/Logo.png') }}" class="rounded-full w-36 h-36 md:w-28 md:h-28 lg:w-36 lg:h-36 object-cover mx-auto md:mx-0" alt="">
-                    <h4 class="font-bold text-center text-gray-800">Gold</h4>
-                </div>
-                <div>
-                    <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded-full w-36 h-36 md:w-28 md:h-28 lg:w-36 lg:h-36 object-cover mx-auto md:mx-0" alt="">
-                    <h4 class="font-bold text-center text-gray-800">Diamond</h4>
-                </div>
-                <div>
-                    <img src="{{ asset('assets/img/skLbbi.jpg') }}" class="rounded-full w-36 h-36 md:w-28 md:h-28 lg:w-36 lg:h-36 object-cover mx-auto md:mx-0" alt="">
-                    <h4 class="font-bold text-center text-gray-800">Gemstone</h4>
-                </div>
-                <div class="hidden md:block">
-                    <img src="{{ asset('assets/img/W8ZUrJ.jpg') }}" class="rounded-full w-36 h-36 md:w-28 md:h-28 lg:w-36 lg:h-36 object-cover mx-auto md:mx-0" alt="">
-                    <h4 class="font-bold text-center text-gray-800">Tanzanite</h4>
-                </div>
-                <div class="hidden md:block">
-                    <img src="{{ asset('assets/img/6CeuCO.jpg') }}" class="rounded-full w-36 h-36 md:w-28 md:h-28 lg:w-36 lg:h-36 object-cover mx-auto md:mx-0" alt="">
-                    <h4 class="font-bold text-center text-gray-800">Mercury</h4>
-                </div>
-                <div class="hidden lg:block">
-                    <img src="{{ asset('assets/img/Logo.png') }}" class="rounded-full w-36 h-36 md:w-28 md:h-28 lg:w-36 lg:h-36 object-cover mx-auto md:mx-0" alt="">
-                    <h4 class="font-bold text-center text-gray-800">Platinum</h4>
-                </div>
-            </div>
-        </div>
-        <div class="px-2 md:px-8 lg:px-28">
-            <div class="flex justify-between">
                 <h3 class="font-bold tracking-wide">Best Sellers</h3>
                 <h4 class="font-bold text-sm">View More <i class="fas fa-arrow-circle-right"></i></h4>
             </div>
             <div class="space-y-2 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-4 gap-2 py-4">
-                <div>
-                    <img src="{{ asset('assets/img/6CeuCO.jpg') }}" class="rounded border border-gray-200 w-full h-52 object-cover" alt="">
-                    <div class="">
-                        <h4 class="font-bold text-gray-500">Gold Bars</h4>
-                        <h4 class="font-bold uppercase text-gray-700">US $ 10.20 - US $ 400.37</h4>
-                        <h5 class="text-sm text-gray-500 font-bold">Minimum Order: 20 Pieces</h5>
-                    </div>
-                </div>
-                <div>
-                    <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded border border-gray-200 w-full h-52 object-cover" alt="">
-                    <div class="">
-                        <h4 class="font-bold text-gray-500">Diamond</h4>
-                        <h4 class="font-bold uppercase text-gray-700">US $ 10.20 - US $ 400.37</h4>
-                        <h5 class="text-sm text-gray-500 font-bold">Minimum Order: 100 Pieces</h5>
-                    </div>
-                </div>
-                <div>
-                    <img src="{{ asset('assets/img/skLbbi.jpg') }}" class="rounded border border-gray-200 w-full h-52 object-cover" alt="">
-                    <div class="">
-                        <h4 class="font-bold text-gray-500">Platinum</h4>
-                        <h4 class="font-bold uppercase text-gray-700">US $ 100 - US $ 2000</h4>
-                        <h5 class="text-sm text-gray-500 font-bold">Minimum Order: 50 Pieces</h5>
-                    </div>
-                </div>
-                <div>
-                    <img src="{{ asset('assets/img/W8ZUrJ.jpg') }}" class="rounded border border-gray-200 w-full h-52 object-cover" alt="">
-                    <div class="">
-                        <h4 class="font-bold text-gray-500">Iron Ore</h4>
-                        <h4 class="font-bold uppercase text-gray-700">US $ 2.20 - US $ 3.37</h4>
-                        <h5 class="text-sm text-gray-500 font-bold">Minimum Order: 10 Pieces</h5>
-                    </div>
-                </div>
-                <div>
-                    <img src="{{ asset('assets/img/6CeuCO.jpg') }}" class="rounded border border-gray-200 w-full h-52 object-cover" alt="">
-                    <div class="">
-                        <h4 class="font-bold text-gray-500">Blue Tanzanite</h4>
-                        <h4 class="font-bold uppercase text-gray-700">US $ 3.80 - US $ 6.00</h4>
-                        <h5 class="text-sm text-gray-500 font-bold">Minimum Order: 50 Pieces</h5>
-                    </div>
-                </div>
+                @foreach ($best_sellers as $product)
+                    @if ($loop->index < 4)
+                        <a href="{{ route('product', ['slug' => $product->slug]) }}" class="rounded-lg bg-gray-200 hover:bg-gray-300 hover:cursor-pointer transition duration-200 ease-in-out">
+                            @php($image = $product->media->where('type', 'image')->first()->file)
+                            <img src="{{ $image }}" class="rounded-xl w-full h-52 object-cover p-2" alt="">
+                            <div class="p-2">
+                                <h4 class="font-bold text-gray-500">{{ $product->name }}</h4>
+                                <h4 class="font-bold uppercase text-gray-700">{{ $product->price ? 'US$'.number_format($product->price) :$product->currency.''.number_format($product->min_price).' - '.$product->currency.''.number_format($product->max_price) }}</h4>
+                                @if ($product->min_order_quantity)
+                                    <h5 class="text-sm text-gray-500 font-bold">Minimum Order: {{ $product->min_order_quantity }}</h5>
+                                @endif
+                            </div>
+                        </a>
+                    @endif
+                @endforeach
             </div>
         </div>
         <div class="px-2 md:px-8 lg:px-28">
@@ -130,46 +72,21 @@
                 <h4 class="font-bold text-sm">View More <i class="fas fa-arrow-circle-right"></i></h4>
             </div>
             <div class="space-y-2 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-4 gap-2 py-4">
-                <div>
-                    <img src="{{ asset('assets/img/6CeuCO.jpg') }}" class="rounded border border-gray-200 w-full h-52 object-cover" alt="">
-                    <div class="">
-                        <h4 class="font-bold text-gray-500">Gold Bars</h4>
-                        <h4 class="font-bold uppercase text-gray-700">US $ 10.20 - US $ 400.37</h4>
-                        <h5 class="text-sm text-gray-500 font-bold">Minimum Order: 20 Pieces</h5>
-                    </div>
-                </div>
-                <div>
-                    <img src="{{ asset('assets/img/6CeuCO.jpg') }}" class="rounded border border-gray-200 w-full h-52 object-cover" alt="">
-                    <div class="">
-                        <h4 class="font-bold text-gray-500">Uranium</h4>
-                        <h4 class="font-bold uppercase text-gray-700">US $ 10.20 - US $ 400.37</h4>
-                        <h5 class="text-sm text-gray-500 font-bold">Minimum Order: 100 Pieces</h5>
-                    </div>
-                </div>
-                <div>
-                    <img src="{{ asset('assets/img/W8ZUrJ.jpg') }}" class="rounded border border-gray-200 w-full h-52 object-cover" alt="">
-                    <div class="">
-                        <h4 class="font-bold text-gray-500">Platinum</h4>
-                        <h4 class="font-bold uppercase text-gray-700">US $ 100 - US $ 2000</h4>
-                        <h5 class="text-sm text-gray-500 font-bold">Minimum Order: 50 Pieces</h5>
-                    </div>
-                </div>
-                <div>
-                    <img src="{{ asset('assets/img/skLbbi.jpg') }}" class="rounded border border-gray-200 w-full h-52 object-cover" alt="">
-                    <div class="">
-                        <h4 class="font-bold text-gray-500">Iron Ore</h4>
-                        <h4 class="font-bold uppercase text-gray-700">US $ 2.20 - US $ 3.37</h4>
-                        <h5 class="text-sm text-gray-500 font-bold">Minimum Order: 10 Pieces</h5>
-                    </div>
-                </div>
-                <div>
-                    <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded border border-gray-200 w-full h-52 object-cover" alt="">
-                    <div class="">
-                        <h4 class="font-bold text-gray-500">Blue Tanzanite</h4>
-                        <h4 class="font-bold uppercase text-gray-700">US $ 3.80 - US $ 6.00</h4>
-                        <h5 class="text-sm text-gray-500 font-bold">Minimum Order: 50 Pieces</h5>
-                    </div>
-                </div>
+                @foreach ($new_products as $product)
+                    @if ($loop->index < 4)
+                        <a href="{{ route('product', ['slug' => $product->slug]) }}" class="rounded-lg bg-gray-200 hover:bg-gray-300 hover:cursor-pointer transition duration-200 ease-in-out">
+                            @php($image = $product->media->where('type', 'image')->first()->file)
+                            <img src="{{ $image }}" class="rounded-xl w-full h-52 object-cover p-2" alt="">
+                            <div class="p-2">
+                                <h4 class="font-bold text-gray-500">{{ $product->name }}</h4>
+                                <h4 class="font-bold uppercase text-gray-700">{{ $product->price ? 'US$'.number_format($product->price) : 'US$'.number_format($product->min_price).' - US$'.number_format($product->max_price) }}</h4>
+                                @if ($product->min_order_quantity)
+                                    <h5 class="text-sm text-gray-500 font-bold">Minimum Order: {{ $product->min_order_quantity }}</h5>
+                                @endif
+                            </div>
+                        </a>
+                    @endif
+                @endforeach
             </div>
         </div>
     </div>
