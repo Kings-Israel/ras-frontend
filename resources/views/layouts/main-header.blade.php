@@ -19,12 +19,13 @@
                     <li>
                         <a href="{{ route('cart') }}" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">My Cart</a>
                     </li>
-                    @if (auth()->user()->hasRole('buyer'))
-                        <li class="flex justify-between px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                            <a href="{{ route('messages') }}" class="inline-flex w-full">Messages</a>
-                            <span class="inline-flex items-center justify-center px-1 py-1 my-auto h-4 text-xs text-gray-200 bg-red-900 rounded-full">{{ auth()->user()->unreadMessagesCount() }}</span>
-                        </li>
-                    @endif
+                    <li class="flex justify-between px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                        <a href="{{ route('messages') }}" class="inline-flex w-full">Messages</a>
+                        <span class="inline-flex items-center justify-center px-1 py-1 my-auto h-4 text-xs text-gray-200 bg-red-900 rounded-full">{{ auth()->user()->unreadMessagesCount() }}</span>
+                    </li>
+                    <li class="flex justify-between px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                        <a href="{{ route('profile.edit') }}" class="inline-flex w-full">My Profile</a>
+                    </li>
                     <li>
                         <a href="{{ route('logout') }}" class="inline-flex w-full px-4 py-2 hover:cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -36,9 +37,11 @@
             <a href="#" class="text-gray-800 bg-gray-300 rounded-full w-7 h-7 my-auto lg:my-0 md:w-8 md:h-8 text-center pt-0.5 md:pt-1">
                 <i class="w-5 h-5 fas fa-bell"></i>
             </a>
-            <a href="{{ route('cart') }}" class="text-gray-800 bg-gray-300 rounded-full w-7 h-7 my-auto lg:my-0 md:w-8 md:h-8 text-center pt-0.5 md:pt-1">
-                <i class="w-5 h-5 fas fa-shopping-bag"></i>
-            </a>
+            @if (auth()->user()->hasRole('buyer'))
+                <a href="{{ route('cart') }}" class="text-gray-800 bg-gray-300 rounded-full w-7 h-7 my-auto lg:my-0 md:w-8 md:h-8 text-center pt-0.5 md:pt-1">
+                    <i class="w-5 h-5 fas fa-shopping-bag"></i>
+                </a>
+            @endif
         @else
             <a href="{{ route('login') }}">
                 <x-primary-button class="py-2">Login</x-primary-button>
