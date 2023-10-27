@@ -14,7 +14,7 @@
     @empty
         <p class="text-gray-500 flex gap-2 justify-center p-2"><i class="fas fa-search my-auto"></i> No Results Found</p>
     @endforelse
-    @if ($countries->count() > 0)
+    {{-- @if ($countries->count() > 0)
         <div class="flex gap-2 px-1 text-gray-600 text-sm">
             <a
                 href="#"
@@ -23,5 +23,5 @@
                 Show More
             </a>
         </div>
-    @endif
+    @endif --}}
 </div>
