@@ -36,6 +36,10 @@ Route::middleware(['auth', 'web', 'phone_verified', 'role:buyer'])->group(functi
     Route::post('/cart/add', [CartController::class, 'store'])->name('cart.store');
 
     Route::get('/cart', [CartController::class, 'index'])->name('cart');
+
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 Route::group(['prefix' => 'vendor', 'as' => 'vendor.'], function () {
@@ -71,8 +75,6 @@ Route::middleware(['auth', 'web', 'phone_verified', 'role:vendor', 'has_register
         Route::post('/business/update', [VendorController::class, 'update'])->name('business.update');
         Route::patch('/business/image/update', [VendorController::class, 'updatePrimaryCoverImage'])->name('business.image.update');
     });
-    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 if (config('app.env') == 'production') {

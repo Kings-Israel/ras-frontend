@@ -25,6 +25,11 @@
                             <span class="inline-flex items-center justify-center px-1 py-1 my-auto h-4 text-xs text-gray-200 bg-red-900 rounded-full">{{ auth()->user()->unreadMessagesCount() }}</span>
                         </li>
                     @endif
+                    @if (auth()->user()->hasRole('buyer'))
+                        <li class="flex justify-between px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                            <a href="{{ route('profile.edit') }}" class="inline-flex w-full">My Profile</a>
+                        </li>
+                    @endif
                     <li>
                         <a href="{{ route('logout') }}" class="inline-flex w-full px-4 py-2 hover:cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
