@@ -30,6 +30,9 @@ Route::middleware(['auth', 'web', 'phone_verified'])->group(function () {
     Route::get('/chat/{user?}', [ChatController::class, 'index'])->name('messages');
     Route::get('/messages/chat/{id}', [ChatController::class, 'view'])->name('messages.chat');
     Route::post('/messages/send', [ChatController::class, 'store'])->name('messages.send');
+
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 });
 
 Route::middleware(['auth', 'web', 'phone_verified', 'role:buyer'])->group(function () {
@@ -37,8 +40,6 @@ Route::middleware(['auth', 'web', 'phone_verified', 'role:buyer'])->group(functi
 
     Route::get('/cart', [CartController::class, 'index'])->name('cart');
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
