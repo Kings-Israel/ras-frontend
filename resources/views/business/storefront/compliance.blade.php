@@ -8,7 +8,7 @@
             <div class="hover:cursor-pointer" data-modal-target="view-document-modal-{{ $document->id }}" data-modal-toggle="view-document-modal-{{ $document->id }}">
                 {{-- <div data-modal-target="view-document-modal-{{ $document->id }}" data-modal-toggle="view-document-modal-{{ $document->id }}" class="hover:cursor-pointer"> --}}
                 <x-card class="border-2 border-gray-200 p-10 rounded-md justify-center">
-                    <img src="{{ asset('assets/img/skLbbi.jpg') }}" class="w-40 h-52 object-cover" alt="">
+                    <img src="{{ asset('assets/img/PDF_file_icon.svg.png') }}" class="w-40 h-52 object-cover" alt="">
                 </x-card>
                 <h3 class="text-gray-500 font-extrabold">{{ $document->name }}</h3>
                 @if ($document->expires_on)

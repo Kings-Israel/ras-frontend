@@ -23,6 +23,13 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        if (auth()->user()->hasRole('vendor')) {
+            return view('business.profile', [
+                'business' => auth()->user()->hasRole('vendor') ? auth()->user()->business : NULL,
+                'currencies' => collect(['USD', 'EUR', 'GBP', 'KSH', 'JPY']),
+            ]);
+        }
+
         return view('profile.edit', [
             'user' => $request->user(),
         ]);
@@ -91,7 +98,8 @@ class ProfileController extends Controller
     public function businessProfile()
     {
         return view('business.profile', [
-            'business' => auth()->user()->hasRole('vendor') ? auth()->user()->business : NULL
+            'business' => auth()->user()->hasRole('vendor') ? auth()->user()->business : NULL,
+            'currencies' => collect(['USD', 'EUR', 'GBP', 'KSH', 'JPY']),
         ]);
     }
 }

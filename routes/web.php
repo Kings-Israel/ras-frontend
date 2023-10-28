@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OtpController;
@@ -25,16 +26,21 @@ Route::get('/', [HomeController::class, 'index'])->name('welcome');
 
 Route::get('/product/{slug}', [ProductController::class, 'viewProduct'])->name('product');
 
-Route::middleware(['auth', 'phone_verified'])->group(function () {
+Route::middleware(['auth', 'web', 'phone_verified'])->group(function () {
     Route::get('/chat/{user?}', [ChatController::class, 'index'])->name('messages');
     Route::get('/messages/chat/{id}', [ChatController::class, 'view'])->name('messages.chat');
     Route::post('/messages/send', [ChatController::class, 'store'])->name('messages.send');
+
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 });
 
-Route::middleware(['auth', 'phone_verified', 'role:buyer'])->group(function () {
-    Route::get('/cart', function() {
-        return view('cart');
-    })->name('cart');
+Route::middleware(['auth', 'web', 'phone_verified', 'role:buyer'])->group(function () {
+    Route::post('/cart/add', [CartController::class, 'store'])->name('cart.store');
+
+    Route::get('/cart', [CartController::class, 'index'])->name('cart');
+
+    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 Route::group(['prefix' => 'vendor', 'as' => 'vendor.'], function () {
@@ -43,7 +49,7 @@ Route::group(['prefix' => 'vendor', 'as' => 'vendor.'], function () {
     Route::get('/{slug}/storefront/compliance', [ProductController::class, 'storefrontDocuments'])->name('storefront.compliance');
 });
 
-Route::middleware(['auth', 'phone_verified', 'role:vendor', 'has_registered_business'])->group(function () {
+Route::middleware(['auth', 'web', 'phone_verified', 'role:vendor', 'has_registered_business'])->group(function () {
     Route::group(['prefix' => 'vendor/', 'as' => 'vendor.'], function() {
         Route::get('/', [VendorController::class, 'dashboard'])->name('dashboard');
         Route::get('/products', [VendorProductController::class, 'index'])->name('products');
@@ -70,8 +76,6 @@ Route::middleware(['auth', 'phone_verified', 'role:vendor', 'has_registered_busi
         Route::post('/business/update', [VendorController::class, 'update'])->name('business.update');
         Route::patch('/business/image/update', [VendorController::class, 'updatePrimaryCoverImage'])->name('business.image.update');
     });
-    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 if (config('app.env') == 'production') {

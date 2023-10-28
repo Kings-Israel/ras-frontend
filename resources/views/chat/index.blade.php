@@ -35,7 +35,7 @@
                                                 </div>
                                                 <span class="text-xs font-bold my-auto w-16 truncate text-end">@{{ conversation.last_message.from_now }}</span>
                                             </div>
-                                            <div v-if="conversation.last_message.body || conversation.last_message.data.length > 0">
+                                            <div v-if="(conversation.last_message && conversation.last_message.body) || (conversation.last_message && conversation.last_message.data && conversation.last_message.data.length > 0)">
                                                 <div class="flex justify-between truncate">
                                                     <span v-if="conversation.last_message.body && conversation.last_message.body !== 'files_only_message'" class="text-sm truncate">@{{ conversation.last_message.body }}.</span>
                                                     <span v-else class="text-sm truncate">File: @{{ conversation.last_message.data[conversation.last_message.data.length - 1].file_name }}</span>
@@ -71,7 +71,7 @@
                                                 </div>
                                                 <span class="text-xs font-bold my-auto w-16 truncate text-end">@{{ conversation.last_message.from_now }}</span>
                                             </div>
-                                            <div v-if="conversation.last_message.body || conversation.last_message.data.length > 0">
+                                            <div v-if="(conversation.last_message && conversation.last_message.body) || (conversation.last_message && conversation.last_message.data && conversation.last_message.data.length > 0)">
                                                 <div class="flex justify-between truncate">
                                                     <span v-if="conversation.last_message.body && conversation.last_message.body !== 'files_only_message'" class="text-sm truncate">@{{ conversation.last_message.body }}.</span>
                                                     <span v-else class="text-sm truncate">File: @{{ conversation.last_message.data[conversation.last_message.data.length - 1].file_name }}</span>
@@ -93,7 +93,7 @@
             </div>
             {{-- End Chat Sidebar --}}
             {{-- Chat Messages --}}
-            <div class="lg:col-span-2 border-none hidden lg:block" id="messages-box" v-if="conversation_log.length > 0 || receiver != null" ref="messagesBox">
+            <div class="lg:col-span-2 border-none hidden lg:block" id="messages-box" v-if="receiver != null" ref="messagesBox">
                 <div class="border-b-2 border-t-0 border-gray-400 w-full px-4 py-2 flex justify-between">
                     <div class="flex gap-2 lg:block">
                         <i class="fas fa-arrow-left my-auto lg:hidden hover:cursor-pointer" v-on:click="viewContacts"></i>
@@ -110,30 +110,32 @@
                 <div class="flex flex-col">
                     <div class="space-y-2 p-2 text-sm">
                         <div class="overflow-scroll h-[33rem] 4xl:h-[50rem]" id="texts-box" ref="refChatLogPS">
-                            <div v-for="log in conversation_log" v-bind:key="log.id">
-                                <div class="flex flex-col mb-2 pr-2" v-if="auth_id === log.sender.id">
-                                    <div class="flex flex-row-reverse">
-                                        <div class="bg-gray-300 border-none p-2 max-w-sm rounded-lg">
-                                            <div v-if="log.data.length > 0">
-                                                <div v-for="(data, index) in log.data" v-bind:key="index" class="p-2 bg-gray-200 rounded-lg my-1">
+                            <div v-if="conversation_log.length > 0">
+                                <div v-for="log in conversation_log" v-bind:key="log.id">
+                                    <div class="flex flex-col mb-2 pr-2" v-if="auth_id === log.sender.id">
+                                        <div class="flex flex-row-reverse">
+                                            <div class="bg-gray-300 border-none p-2 max-w-sm rounded-lg">
+                                                <div v-if="log.data && log.data.length > 0">
+                                                    <div v-for="(data, index) in log.data" v-bind:key="index" class="p-2 bg-gray-200 rounded-lg my-1">
+                                                        <p @click.prevent="downloadFile(data)" class="text-gray-600 font-semibold hover:cursor-pointer flex gap-2">@{{ data.file_name }}</p> <p class="text-gray-400">@{{ formatBytes(data.file_size) }}</p>
+                                                    </div>
+                                                </div>
+                                                <p v-if="log.body != 'files_only_message'">@{{ log.body }}</p>
+                                            </div>
+                                        </div>
+                                        <span class="text-xs text-right">@{{ log.created_at }}</span>
+                                    </div>
+                                    <div v-else class="mb-2">
+                                        <div class="bg-yellow-200 w-fit max-w-sm border-none p-2 rounded-lg">
+                                            <div v-if="log.data && log.data.length > 0">
+                                                <div v-for="(data, index) in log.data" v-bind:key="index" class="p-2 bg-gray-200 max-w-sm rounded-lg my-1">
                                                     <p @click.prevent="downloadFile(data)" class="text-gray-600 font-semibold hover:cursor-pointer flex gap-2">@{{ data.file_name }}</p> <p class="text-gray-400">@{{ formatBytes(data.file_size) }}</p>
                                                 </div>
                                             </div>
                                             <p v-if="log.body != 'files_only_message'">@{{ log.body }}</p>
                                         </div>
+                                        <span class="text-xs">@{{ log.created_at }}</span>
                                     </div>
-                                    <span class="text-xs text-right">@{{ log.created_at }}</span>
-                                </div>
-                                <div v-else class="mb-2">
-                                    <div class="bg-yellow-200 w-fit max-w-sm border-none p-2 rounded-lg">
-                                        <div v-if="log.data.length > 0">
-                                            <div v-for="(data, index) in log.data" v-bind:key="index" class="p-2 bg-gray-200 max-w-sm rounded-lg my-1">
-                                                <p @click.prevent="downloadFile(data)" class="text-gray-600 font-semibold hover:cursor-pointer flex gap-2">@{{ data.file_name }}</p> <p class="text-gray-400">@{{ formatBytes(data.file_size) }}</p>
-                                            </div>
-                                        </div>
-                                        <p v-if="log.body != 'files_only_message'">@{{ log.body }}</p>
-                                    </div>
-                                    <span class="text-xs">@{{ log.created_at }}</span>
                                 </div>
                             </div>
                         </div>
@@ -209,7 +211,7 @@
                     this.const_conversations = conversations
                     this.auth_id = auth_id
                     if (conversation.user) {
-                        this.active_conversation = conversation.id
+                        this.active_conversation = conversation.conversation_id
                         this.conversation_log = conversation.messages
                         this.receiver = conversation.user
                         this.$nextTick(() => {

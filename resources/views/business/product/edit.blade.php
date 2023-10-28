@@ -100,7 +100,7 @@
                                 <div class="flex gap-1">
                                     <div class="basis-3/4 form-group">
                                         @php($product_min_order_quantity = explode(" ", $product->min_order_quantity))
-                                        <x-input-label for="product_minimum_quantity_order" :value="__('Minimum Quantity Order')" class="text-gray-500" />
+                                        <x-input-label for="product_minimum_quantity_order" :value="__('Minimum Order Quantity')" class="text-gray-500" />
                                         <input type="number" name="min_order_quantity" value="{{ $product_min_order_quantity[0] }}" id="product_minimum_quantity_order" min="1" placeholder="0" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                                         <x-input-error :messages="$errors->get('min_order_quantity')" class="mt-2" />
                                         <x-input-error :messages="$errors->get('min_order_quantity_unit')" class="mt-2" />
@@ -128,7 +128,7 @@
                                 <div class="flex gap-1">
                                     <div class="basis-3/4 form-group">
                                         @php($product_max_order_quantity = explode(" ", $product->max_order_quantity))
-                                        <x-input-label for="product_maximum_quantity_order" :value="__('Maximum Quantity Order')" class="text-gray-500" />
+                                        <x-input-label for="product_maximum_quantity_order" :value="__('Maximum Order Quantity')" class="text-gray-500" />
                                         <input type="number" name="max_order_quantity" value="{{ $product_max_order_quantity[0] }}" id="product_maximum_quantity_order" min="1" placeholder="0" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                                         <x-input-error :messages="$errors->get('max_order_quantity')" class="mt-2" />
                                         <x-input-error :messages="$errors->get('max_order_quantity_unit')" class="mt-2" />
