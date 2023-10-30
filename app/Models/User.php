@@ -111,4 +111,20 @@ class User extends Authenticatable implements MustVerifyEmail
 
         return $unread_messages_count;
     }
+
+    /**
+     * The financingInstitutions that belong to the User
+     */
+    public function financingInstitutions(): BelongsToMany
+    {
+        return $this->belongsToMany(FinancingInstitution::class, 'financing_institution_users', 'user_id', 'financing_institution_id');
+    }
+
+    /**
+     * The financingInstitutions that belong to the User
+     */
+    public function inspectors(): BelongsToMany
+    {
+        return $this->belongsToMany(Inspector::class, 'inspector_users', 'user_id', 'inspector_id');
+    }
 }
