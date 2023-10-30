@@ -9,6 +9,8 @@ class HomeCountriesView extends Component
 {
     public $search = '';
 
+    public $select_countries = [];
+
     public function render()
     {
         return view('livewire.home-countries-view', [
@@ -17,7 +19,7 @@ class HomeCountriesView extends Component
                                     })
                                     ->inRandomOrder()
                                     ->get()
-                                    ->take(5)
+                                    ->take(10)
         ]);
     }
 }
