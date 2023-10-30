@@ -1,19 +1,11 @@
 {
-  "public/assets/img/6CeuCO.jpg": {
-    "file": "assets/6CeuCO-fd67f134.jpg",
-    "src": "public/assets/img/6CeuCO.jpg"
-  },
-  "public/assets/img/index.jpg": {
-    "file": "assets/index-8f5ddfc7.jpg",
-    "src": "public/assets/img/index.jpg"
-  },
   "resources/css/app.css": {
-    "file": "assets/app-d5a2b377.css",
+    "file": "assets/app-d949737b.css",
     "isEntry": true,
     "src": "resources/css/app.css"
   },
   "resources/js/app.js": {
-    "file": "assets/app-0d91dc04.js",
+    "file": "assets/app-98d598f5.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   }
