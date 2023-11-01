@@ -39,4 +39,8 @@ return [
         'sms_client_id' => env('JAMBOPAY_SMS_CLIENT_ID'),
         'sms_client_secret' => env('JAMBOPAY_SMS_CLIENT_SECRET'),
     ],
+    'maps' => [
+        'key' => env('GOOGLE_MAPS_KEY'),
+        'partial_key' => env('MAPS_KEY')
+    ],
 ];

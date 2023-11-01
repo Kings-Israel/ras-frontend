@@ -194,7 +194,6 @@ class RolesSeeder extends Seeder
             'view logistics company',
             'update logistics company',
             'delete logistics company',
-
         ];
 
         $roles = ['admin', 'buyer', 'vendor', 'warehouse manager', 'financier', 'inspector', 'driver', 'deveint'];

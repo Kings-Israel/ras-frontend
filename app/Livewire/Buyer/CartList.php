@@ -11,7 +11,7 @@ class CartList extends Component
 
     public function mount()
     {
-        $cart = auth()->user()->cart;
+        $cart = auth()->user()->cart->load('cartItems.product.business');
 
         if (!$cart) {
             toastr()->error('', 'No items in cart');
