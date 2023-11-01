@@ -13,7 +13,7 @@
         <div class="p-3 md:col-span-3">
             <h3 class="text-xl font-bold my-2">Orders In Progress</h3>
             <table class="table table-auto text-sm text-left text-gray-800 font-bold dark:text-gray-400 rounded-tl-lg rounded-tr-lg">
-                <thead class="text-xs text-gray-500 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400 border-2">
+                <thead class="text-xs text-gray-900 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400 border-2">
                     <tr>
                         <th scope="col" class="px-2 py-3">
                             ID
@@ -49,34 +49,34 @@
                 </thead>
                 <tbody>
                     <tr class="bg-gray-50 border-t-2 border-r-2 border-l-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer mb-3 expandChildTable">
-                        <th scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <th scope="row" class="px-2 py-2 font-medium text-gray-500 whitespace-nowrap dark:text-white">
                             A94858
                         </th>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Mar 27, 2023
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Bag of Copper Wire
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             23
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Senegal
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Kenya
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Dakar
                         </td>
                         <td class="px-2 py-2">
                             <span class="bg-green-200 rounded-md px-3">Paid</span>
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             In Progress
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Ksh.237,948
                         </td>
                     </tr>
@@ -170,66 +170,66 @@
                         </td>
                     </tr>
                     <tr class="bg-gray-50 border-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
-                        <th scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <th scope="row" class="px-2 py-2 font-medium text-gray-500 whitespace-nowrap dark:text-white">
                             D38748
                         </th>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Apr 30, 2023
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Tanzanite
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             39
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Zambia
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Egypt
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Kenya
                         </td>
                         <td class="px-2 py-2">
                             <span class="bg-gray-200 rounded-md px-3">Unpaid</span>
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Processing
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Ksh.384,473
                         </td>
                     </tr>
                     <tr class="bg-gray-50 border-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
-                        <th scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <th scope="row" class="px-2 py-2 font-medium text-gray-500 whitespace-nowrap dark:text-white">
                             E47783
                         </th>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Jan 30, 2023
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Silver Chain
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             50
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Egypt
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Zambia
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Ethiopia
                         </td>
                         <td class="px-2 py-2">
                             <span class="bg-gray-200 rounded-md px-3">Unpaid</span>
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Processing
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Ksh.674,287
                         </td>
                     </tr>
@@ -245,162 +245,162 @@
                 <span class="font-extrabold text-gray-400">In Progress</span>
             </div>
             <table class="w-full table-auto text-sm text-left text-gray-800 font-bold dark:text-gray-400 truncate rounded-tl-lg rounded-tr-lg">
-                <thead class="text-xs text-gray-500 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400 border-2">
+                <thead class="text-xs text-gray-900 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400 border-2">
                     <tr>
-                        <th scope="col" class="px-2 py-3">
+                        <th scope="col" class="px-2 py-3 text-gray-900">
                             ID
                         </th>
-                        <th scope="col" class="px-2 py-3">
+                        <th scope="col" class="px-2 py-3 text-gray-900">
                             Date
                         </th>
-                        <th scope="col" class="px-2 py-3">
+                        <th scope="col" class="px-2 py-3 text-gray-900">
                             Product
                         </th>
-                        <th scope="col" class="px-2 py-3">
+                        <th scope="col" class="px-2 py-3 text-gray-900">
                             Quantity
                         </th>
-                        <th scope="col" class="px-2 py-3">
+                        <th scope="col" class="px-2 py-3 text-gray-900">
                             Country
                         </th>
-                        <th scope="col" class="px-2 py-3">
+                        <th scope="col" class="px-2 py-3 text-gray-900">
                             Payment
                         </th>
-                        <th scope="col" class="px-2 py-3">
+                        <th scope="col" class="px-2 py-3 text-gray-900">
                             Fulfilment
                         </th>
-                        <th scope="col" class="px-2 py-3">
+                        <th scope="col" class="px-2 py-3 text-gray-900">
                             Amount
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="bg-gray-50 border-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
-                        <th scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <th scope="row" class="px-2 py-2 font-medium text-gray-500 whitespace-nowrap dark:text-white">
                             348758
                         </th>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Mar 27, 2023
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Bag of Copper Wire
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             23
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Senegal
                         </td>
                         <td class="px-2 py-2">
                             <span class="bg-green-200 rounded-md px-3">Paid</span>
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Delivered
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Ksh.235,387
                         </td>
                     </tr>
                     <tr class="bg-gray-50 border-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
-                        <th scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <th scope="row" class="px-2 py-2 font-medium text-gray-500 whitespace-nowrap dark:text-white">
                             349854
                         </th>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Apr 30, 2023
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Gold Chains
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             300
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Zambia
                         </td>
                         <td class="px-2 py-2">
                             <span class="bg-gray-200 rounded-md px-3">Unpaid</span>
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Cancelled
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Ksh.452,453
                         </td>
                     </tr>
                     <tr class="bg-gray-50 border-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
-                        <th scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <th scope="row" class="px-2 py-2 font-medium text-gray-500 whitespace-nowrap dark:text-white">
                             56858
                         </th>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Jan 27, 2023
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Tanzanite
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             180
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Kenya
                         </td>
                         <td class="px-2 py-2">
                             <span class="bg-green-200 rounded-md px-2">Paid</span>
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Delivered
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Ksh.235,387
                         </td>
                     </tr>
                     <tr class="bg-gray-50 border-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
-                        <th scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <th scope="row" class="px-2 py-2 font-medium text-gray-500 whitespace-nowrap dark:text-white">
                             349854
                         </th>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Apr 30, 2023
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Gold Chains
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             300
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Zambia
                         </td>
                         <td class="px-2 py-2">
                             <span class="bg-gray-200 rounded-md px-3">Unpaid</span>
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Cancelled
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Ksh.452,453
                         </td>
                     </tr>
                     <tr class="bg-gray-50 border-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
-                        <th scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <th scope="row" class="px-2 py-2 font-medium text-gray-500 whitespace-nowrap dark:text-white">
                             565434
                         </th>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Apr 26, 2023
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Diamond
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             30
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             South Africa
                         </td>
                         <td class="px-2 py-2">
                             <span class="bg-gray-200 rounded-md px-3">Unpaid</span>
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Cancelled
                         </td>
-                        <td class="px-2 py-2">
+                        <td class="px-2 py-2 text-gray-500">
                             Ksh.1,452,453
                         </td>
                     </tr>
