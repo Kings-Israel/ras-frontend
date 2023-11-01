@@ -8,7 +8,18 @@ use Livewire\Attributes\On;
 
 class HomeProductsList extends Component
 {
-    public $country_search = '';
+    public $countries = [];
+
+    #[On('update-selected-countries')]
+    public function updateProductsList($id)
+    {
+        if(collect($this->countries)->contains($id)) {
+            $key = collect($this->countries)->search($id, true);
+            array_splice($this->countries, $key, 1);
+        } else {
+            array_push($this->countries, $id);
+        }
+    }
 
     public function render()
     {
@@ -17,9 +28,9 @@ class HomeProductsList extends Component
                         $query->where('type', 'image')
                                 ->inRandomOrder();
                     }])
-                    ->when($this->country_search && $this->country_search != '', function($query) {
+                    ->when($this->countries && collect($this->countries)->count() > 0, function($query) {
                         $query->whereHas('business', function($query) {
-                            $query->where('country_id', $this->country_search);
+                            $query->whereIn('country_id', $this->countries);
                         });
                     })
                     ->get()
