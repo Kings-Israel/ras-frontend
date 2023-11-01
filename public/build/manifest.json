@@ -1,6 +1,26 @@
 {
+  "public/assets/img/auth-alt-five.jpg": {
+    "file": "assets/auth-alt-five-af4ac493.jpg",
+    "src": "public/assets/img/auth-alt-five.jpg"
+  },
+  "public/assets/img/auth-alt-four.jpg": {
+    "file": "assets/auth-alt-four-e4023992.jpg",
+    "src": "public/assets/img/auth-alt-four.jpg"
+  },
+  "public/assets/img/auth-alt-six.jpg": {
+    "file": "assets/auth-alt-six-05ab1cfd.jpg",
+    "src": "public/assets/img/auth-alt-six.jpg"
+  },
+  "public/assets/img/auth-bg-1.png": {
+    "file": "assets/auth-bg-1-4161d694.png",
+    "src": "public/assets/img/auth-bg-1.png"
+  },
+  "public/assets/img/banner.png": {
+    "file": "assets/banner-3f8aa010.png",
+    "src": "public/assets/img/banner.png"
+  },
   "resources/css/app.css": {
-    "file": "assets/app-d949737b.css",
+    "file": "assets/app-88cf0384.css",
     "isEntry": true,
     "src": "resources/css/app.css"
   },
