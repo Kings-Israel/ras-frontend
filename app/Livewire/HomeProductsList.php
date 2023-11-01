@@ -10,14 +10,6 @@ class HomeProductsList extends Component
 {
     public $country_search = '';
 
-    #[On('update-home-search')]
-    public function updateSearch($search)
-    {
-        // dd($search);
-        info($search);
-        // $this->country_search = $search;
-    }
-
     public function render()
     {
         $products = Product::available()

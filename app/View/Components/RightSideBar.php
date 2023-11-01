@@ -21,6 +21,8 @@ class RightSideBar extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.right-side-bar');
+        $orders = auth()->user()->business->orders->count();
+
+        return view('components.right-side-bar', compact('orders'));
     }
 }

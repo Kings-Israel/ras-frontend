@@ -19,7 +19,7 @@
             </span>
             <div class="ml-2 overflow-x-auto">
                 <span class="text-sm">Orders</span>
-                <h1 class="text-xl font-bold">368</h1>
+                <h1 class="text-xl font-bold">{{ $orders }}</h1>
             </div>
         </div>
         <div class="bg-rose-200 dark:bg-pink-100 p-3 rounded-md flex gap-2 mx-2">

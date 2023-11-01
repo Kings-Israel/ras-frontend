@@ -1,5 +1,6 @@
 <div>
-    <form action="" method="post" class="block lg:flex px-4 lg:px-28 p-4 gap-12">
+    <form action="{{ route('order.store') }}" method="post" class="block lg:flex px-4 lg:px-28 p-4 gap-12">
+        @csrf
         <div class="basis-3/4 bg-gray-50 p-2 rounded-lg">
             {{-- <div>
                 <h3 class="text-3xl text-gray-600 font-bold">Shopping Cart</h3>
@@ -15,14 +16,14 @@
                 <div>
                     <div class="flex justify-between border border-gray-200 rounded-lg px-1 py-1 md:px-2 md:py-2">
                         <div class="flex gap-2 md:px-2 text-gray-500">
-                            <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                            {{-- <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
                             <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                            <h2 class="font-thin text-sm">Select All Items</h2>
+                            <h2 class="font-thin text-sm">Select All Items</h2> --}}
                         </div>
                         <i class="fas fa-trash-alt my-auto text-gray-500 hover:cursor-pointer" wire:click="deleteAll"></i>
                     </div>
                 </div>
-                @foreach ($cart->cartItems as $item)
+                @foreach ($cart->cartItems as $key => $item)
                     @php($min_order_quantity = $item->product->min_order_quantity ? explode(" ", $item->product->min_order_quantity)[0] : 0)
                     @php($max_order_quantity = $item->product->max_order_quantity ? explode(" ", $item->product->max_order_quantity)[0] : 10000000000)
                     @php($min_price = $item->product->min_price ? $item->product->min_price : $item->product->price)
@@ -32,21 +33,23 @@
                         <div class="flex w-full border border-gray-200 rounded-lg px-1 py-1 md:px-2 md:py-2">
                             <div class="basis-4/5 grid md:flex md:justify-between gap-2 px-2 text-gray-500">
                                 <div class="flex gap-3 md:min-w-fit md:mr-10">
-                                    <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
-                                    <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                                    <input id="cart_items_ids[]" value="{{ $item->id }}" type="checkbox" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                                    <label for="cart_items_ids" class="sr-only">checkbox</label>
                                     @if ($item->product->media->where('type', 'image')->first())
                                         <img src="{{ $item->product->media->where('type', 'image')->first()->file }}" alt="" class="w-10 h-10 lg:w-20 lg:h-20 object-cover rounded-md border border-orange-400">
                                     @endif
                                     <div class="flex flex-col">
+                                        <input type="hidden" name="items_ids[]" value="{{ $item->product->id }}">
                                         <a href="{{ route('product', ['slug' => $item->product->slug]) }}" class="text-gray-500 font-bold text-md my-auto hover:text-gray-700">
                                             {{ $item->product->name }}
                                         </a>
                                         <a href="{{ route('vendor.storefront', ['slug' => $item->product->business->slug]) }}" class="text-gray-400 font-semibold text-md my-auto hover:text-gray-600">
                                             {{ $item->product->business->name }}
                                         </a>
+                                        <span>{{ $products_locations[$key] }}</span>
                                     </div>
                                 </div>
-                                <div class="flex md:w-[90%] md:justify-items-center md:grid md:grid-cols-4">
+                                <div class="md:w-[90%] md:justify-items-center md:grid md:grid-cols-4">
                                     <div class="my-auto md:col-span-2">
                                         <div class="flex gap-3">
                                             <div class="custom-number-input h-10">
@@ -54,26 +57,28 @@
                                                     <button type="button" data-action="decrement" class=" bg-gray-200 mr-0.5 border-2 rounded-tl-lg rounded-bl-lg border-gray-400 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none">
                                                         <span class="m-auto text-xl font-thin">-</span>
                                                     </button>
-                                                    <input type="number" id="order_quantity" data-cart-id="{{ $item->id }}" data-min-price="{{ $min_price }}" data-max-price="{{ $max_price }}" data-min-order-quantity="{{ $min_order_quantity }}" data-max-order-quantity="{{ $max_order_quantity }}" value="{{ $item->quantity }}" min="{{ $min_order_quantity }}" max="{{ $max_order_quantity }}" class="border-0 outline-none focus:outline-none text-center w-full bg-gray-300 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700" name="custom-input-number" />
+                                                    <input type="number" id="order_quantity" name="items_quantities[{{ $item->product->id }}]" value="{{ $item->quantity, old('item_quantitys['.$key.']') }}" data-cart-id="{{ $item->id }}" data-min-price="{{ $min_price }}" data-max-price="{{ $max_price }}" data-min-order-quantity="{{ $min_order_quantity }}" data-max-order-quantity="{{ $max_order_quantity }}" min="{{ $min_order_quantity }}" max="{{ $max_order_quantity }}" class="border-0 outline-none focus:outline-none text-center w-full bg-gray-300 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700" />
                                                     <button type="button" data-action="increment" class="bg-gray-200 ml-0.5 border-2 rounded-tr-lg rounded-br-lg border-gray-400 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer">
                                                         <span class="m-auto text-xl font-thin">+</span>
                                                     </button>
                                                 </div>
                                             </div>
                                             <span class="text-gray-500 text-sm font-bold my-auto mr-1">{{ $product_measurement_unit }}</span>
+                                            <input type="hidden" name="items_quantities_measurement_units[{{ $item->product->id }}]" value="{{ $product_measurement_unit }}">
                                         </div>
                                         <span class="text-red-600 text-sm hidden" id="min_order_warning">Minimum order quantity is {{ $min_order_quantity }}</span>
                                         <span class="text-red-600 text-sm hidden" id="max_order_warning">Maximum order quantity is {{ $max_order_quantity }}</span>
                                     </div>
-                                    <div class="flex gap-1 md:col-span-1">
+                                    <div class="flex gap-1 md:col-span-1 md:ml-32">
                                         <span class="text-sm font-semibold text-gray-500 my-auto">Color:</span>
                                         <span class="text-sm font-bold my-auto">{{ $item->product->color }}</span>
                                     </div>
-                                    <div class="my-auto md:col-span-1">
+                                    <div class="my-auto md:col-span-1 md:ml-32">
                                         @php($min_order_price = $item->product->min_price ? $item->product->min_price : $item->product->price)
                                         <span class="flex gap-1">
                                             <h3 class="font-semibold text-gray-400">{{ $item->product->currency }}</h3>
                                             <h3 class="font-bold text-gray-500" id="order_price_{{ $item->id }}">{{ $item->amount }}</h3>
+                                            <input type="hidden" name="items_prices[{{ $item->product->id }}]" id="items_prices_{{ $item->id }}" value="{{ $item->amount }}">
                                         </span>
                                     </div>
                                 </div>
@@ -84,67 +89,94 @@
                 @endforeach
                 @if (!$cart->cartItems->isEmpty())
                     <div>
-                        <div class="flex justify-between border border-gray-200 rounded-lg px-1 py-1 md:px-2 md:py-2">
+                        <div class="flex justify-between border border-gray-200 rounded-lg px-1 py-1 md:px-2 md:py-2 mb-2">
                             <div class="basis-1/5 flex gap-2 px-1 md:px-2 text-gray-500">
-                                <input id="checkbox-table-search-1" type="checkbox" checked class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                <h2 class="font-semibold text-sm">Shipping</h2>
+                                <h2 class="font-semibold text-sm">Delivery Location</h2>
                             </div>
                             <div class="basis-4/5 flex justify-between">
                                 <span class="flex gap-1 my-auto">
                                     <i class="fas fa-map-marker-alt my-auto text-red-600"></i>
                                     <input type="hidden" name="place_id" id="delivery_location_place_id">
+                                    <input type="hidden" name="delivery_location_lat" id="delivery_location_lat">
+                                    <input type="hidden" name="delivery_location_lng" id="delivery_location_lng">
                                     <input type="hidden" name="delivery_location" id="delivery_location">
                                     <p class="text-sm font-bold text-blue-500 tracking-tight underline underline-offset-2 truncate hover:cursor-pointer" id="location" data-modal-target="cart-select-location" data-modal-toggle="cart-select-location">Click to search delivery location</p>
-                                    @include('partials.cart-select-location')
+                                    <x-input-error :messages="$errors->get('delivery_location')" class="mt-2" />
+                                    <x-modal modal_id="cart-select-location">
+                                        <div class="relative w-full max-w-4xl max-h-full">
+                                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                                <button type="button" class="absolute top-1 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="cart-select-location">
+                                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                                    </svg>
+                                                    <span class="sr-only">Close modal</span>
+                                                </button>
+                                                <div class="px-2 py-2 lg:px-4">
+                                                    <h3 class="mb-2 text-2xl font-bold text-gray-900 dark:text-white space-y-4">Enter Delivery Location</h3>
+                                                    <input id="place_id" type="hidden" name="place_id">
+                                                    <input type="text" name="delivery_location" id="pac-input" placeholder="Search location here" class="form-control mb-2 border-2 border-gray-200 w-full rounded-md focus:border-1 focus:border-gray-400 transition duration-150 ease-in-out">
+                                                    <div id="gmap_markers" class="gmap block h-[96%]"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </x-modal>
                                 </span>
                                 <span class="font-semibold text-gray-600 my-auto"></span>
                             </div>
                         </div>
-                        <div class="flex justify-between mx-2" id="logistics_companies">
-                            <div class="hidden md:block md:basis-1/5"></div>
-                            <div class="w-full md:basis-4/5 flex justify-between">
-                                <div class="flex justify-between w-[60%] md:w-[40%]">
-                                    <div class="flex">
-                                        <input id="checkbox-table-search-1" type="radio" name="shipping_address" checked class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
-                                        <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                        <h2 class="font-semibold text-sm ml-2 truncate">Arena 1 Logistics</h2>
-                                    </div>
-                                    <span class="font-thin text-orange-400 text-sm italic">Negotiate</span>
-                                </div>
-                                <span class="text-gray-600 my-auto">US$6.53</span>
+                        <div class="grid md:flex border border-gray-200 rounded-lg px-1 py-1 md:px-2 md:py-2">
+                            <div class="basis-1/5 flex gap-2 px-1 md:px-2 text-gray-500">
+                                <input id="request_logistics" type="checkbox" name="request_logistics" checked class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="request_logistics" class="sr-only">checkbox</label>
+                                <h2 class="font-semibold text-sm my-auto">Shipping</h2>
                             </div>
-                        </div>
-                        <div class="flex justify-between mx-2">
-                            <div class="hidden md:block md:basis-1/5"></div>
-                            <div class="w-full md:basis-4/5 flex justify-between">
-                                <div class="flex justify-between w-[60%] md:w-[40%]">
-                                    <div class="flex">
-                                        <input id="checkbox-table-search-1" type="radio" name="shipping_address" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
-                                        <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                        <h2 class="font-semibold text-sm ml-2 truncate">Boflo Afrika</h2>
+                            <div class="w-full">
+                                <div class="flex justify-between mx-2" id="logistics_companies">
+                                    <div class="hidden md:block md:basis-1/5"></div>
+                                    <div class="w-full md:basis-4/5 flex justify-between">
+                                        <div class="flex justify-between w-[50%] md:w-[40%]">
+                                            <div class="flex">
+                                                <input id="checkbox-table-search-1" type="radio" name="shipping_address" checked class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                                                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                                                <h2 class="font-semibold text-sm ml-2 truncate">Arena 1 Logistics</h2>
+                                            </div>
+                                            <span class="font-thin text-orange-400 text-sm italic">Negotiate</span>
+                                        </div>
+                                        <span class="text-gray-600 my-auto">US$6.53</span>
                                     </div>
-                                    <span class="font-thin text-orange-400 text-sm italic">Negotiate</span>
                                 </div>
-                                <span class="text-gray-600 my-auto">US$7.04</span>
-                            </div>
-                        </div>
-                        <div class="flex justify-between mx-2">
-                            <div class="hidden md:block md:basis-1/5"></div>
-                            <div class="w-full md:basis-4/5 flex justify-between">
-                                <div class="flex justify-between w-[60%] md:w-[40%]">
-                                    <div class="flex">
-                                        <input id="checkbox-table-search-1" type="radio" name="shipping_address" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
-                                        <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                        <h2 class="font-semibold text-sm ml-2 truncate">Sare 254</h2>
+                                <div class="flex justify-between mx-2">
+                                    <div class="hidden md:block md:basis-1/5"></div>
+                                    <div class="w-full md:basis-4/5 flex justify-between">
+                                        <div class="flex justify-between w-[60%] md:w-[40%]">
+                                            <div class="flex">
+                                                <input id="checkbox-table-search-1" type="radio" name="shipping_address" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                                                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                                                <h2 class="font-semibold text-sm ml-2 truncate">Boflo Afrika</h2>
+                                            </div>
+                                            <span class="font-thin text-orange-400 text-sm italic">Negotiate</span>
+                                        </div>
+                                        <span class="text-gray-600 my-auto">US$7.04</span>
                                     </div>
-                                    <span class="font-thin text-orange-400 text-sm italic">Negotiate</span>
                                 </div>
-                                <span class="text-gray-600 my-auto">US$7.20</span>
+                                <div class="flex justify-between mx-2">
+                                    <div class="hidden md:block md:basis-1/5"></div>
+                                    <div class="w-full md:basis-4/5 flex justify-between">
+                                        <div class="flex justify-between w-[60%] md:w-[40%]">
+                                            <div class="flex">
+                                                <input id="checkbox-table-search-1" type="radio" name="shipping_address" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                                                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                                                <h2 class="font-semibold text-sm ml-2 truncate">Sare 254</h2>
+                                            </div>
+                                            <span class="font-thin text-orange-400 text-sm italic">Negotiate</span>
+                                        </div>
+                                        <span class="text-gray-600 my-auto">US$7.20</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div>
+                    {{-- <div>
                         <div class="grid md:flex justify-between border border-gray-200 rounded-lg p-2">
                             <div class="md:basis-1/5 flex gap-2 px-1 md:px-2 text-gray-500">
                                 <input id="checkbox-table-search-1" type="checkbox" checked class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
@@ -216,11 +248,11 @@
                                 <span class="text-gray-600 my-auto">US$7.20</span>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <div>
                         <div class="flex justify-between border border-gray-200 rounded-lg px-1 py-1 md:px-2 md:py-2">
                             <div class="basis-1/5 flex gap-2 px-2 text-gray-500">
-                                <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                                <input id="checkbox-table-search-1" name="request_financing" type="checkbox" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
                                 <h2 class="font-semibold text-sm">Financing</h2>
                             </div>
@@ -230,12 +262,12 @@
                         </div>
                     </div>
                     <div>
-                        <textarea name="" rows="5" class="w-full border border-gray-300 rounded-lg placeholder-gray-400" placeholder="Additional Notes"></textarea>
+                        <textarea name="additional_notes" rows="5" class="w-full border border-gray-300 rounded-lg placeholder-gray-400" placeholder="Additional Notes"></textarea>
                     </div>
                     <div>
                         <div class="flex justify-between p-2">
                             <div class="flex gap-2 px-2 text-gray-500">
-                                <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                                <input id="checkbox-table-search-1" name="share_contacts" type="checkbox" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
                                 <h2 class="font-semibold text-sm">Agree to share contact information with the vendor</h2>
                             </div>
@@ -249,15 +281,16 @@
                 <div>
                     <h4 class="text-sm font-semibold text-gray-500">Cart Subtotal:</h4>
                     <div class="flex gap-1">
-                        <h3 class="font-bold text-xl text-gray-600"></h3>
-                        <h3 class="font-bold text-xl text-gray-800" id="total_cart_amount">{{ $cart->cartItems->sum('amount') }}</h3>
+                        <h3 class="font-bold text-xl text-gray-600 my-auto">USD</h3>
+                        <span class="font-bold text-xl text-gray-800" id="total_cart_amount">{{ $cart->cartItems->sum('amount') }}</span>
+                        <input type="hidden" id="total_cart_amount_input" name="total_cart_amount" value="{{ $cart->cartItems->sum('amount') }}" />
                     </div>
                 </div>
                 <div>
-                    <h4 class="text-gray-500">Delivery: <strong class="font-bold">Friday, August 18</strong></h4>
+                    <h4 class="text-gray-500">Delivery: <strong class="font-bold">{{ now()->addDays(3)->format('D d M, Y') }}</strong></h4>
                     <h5 class="font-thin text-gray-500 text-sm">Order Within: <span class="text-green-600">19h 38min</span></h5>
                 </div>
-                <x-primary-button class="w-full my-2 py-2">
+                <x-primary-button class="w-full my-2 py-2" type="submit">
                     <span class="tracking-tight">
                         Checkout
                     </span>
@@ -272,8 +305,14 @@
 
     let total_amount = document.getElementById('total_cart_amount');
 
+    let total_amount_input = document.getElementById('total_cart_amount_input');
+
+    let request_logistics = document.getElementById('request_logistics');
+
+    let products_locations = @json($products_locations)
+
     $(document).ready(function () {
-        total_amount.innerHTML = new Intl.NumberFormat().format(total_amount.innerHTML)
+        total_amount.value = new Intl.NumberFormat().format(total_amount.value)
     })
 
     function decrement(e) {
@@ -302,6 +341,7 @@
         let old_amount = document.getElementById('order_price_'+element).innerHTML.replaceAll(',', '')
         let updated_amount = calculatePrice(element, target.value, product_min_order_quantity, product_max_order_quantity, product_min_price, product_max_price)
         total_amount.innerHTML = new Intl.NumberFormat().format(Number((new_amount - old_amount) + updated_amount))
+        total_amount_input.value = Number((new_amount - old_amount) + updated_amount)
     }
 
     function increment(e) {
@@ -331,6 +371,7 @@
         let old_amount = document.getElementById('order_price_'+element).innerHTML.replaceAll(',', '');
         let updated_amount = calculatePrice(element, target.value, product_min_order_quantity, product_max_order_quantity, product_min_price, product_max_price)
         total_amount.innerHTML = new Intl.NumberFormat().format(Number((new_amount - old_amount) + updated_amount))
+        total_amount_input.value = Number((new_amount - old_amount) + updated_amount)
     }
 
     function calculatePrice(element, quantity, min_order_quantity, max_order_quantity, min_product_price, max_product_price) {
@@ -357,6 +398,7 @@
         }
 
         document.getElementById('order_price_'+element).innerHTML = new Intl.NumberFormat().format(calculated_price)
+        document.getElementById('items_prices_'+element).value = calculated_price
 
         return calculated_price
     }
@@ -417,8 +459,32 @@
             // map.setCenter(place.geometry.location);
             // map.setZoom(17);
 
+            // foreach ($warehouse_location['results'][0]['address_components'] as $place) {
+            //     if (collect($place['types'])->contains('country')) {
+            //         $country = Country::where('name', 'LIKE', $place['long_name'])->orWhere('iso', 'LIKE', $place['short_name'])->first();
+            //         if (!$country) {
+            //             toastr()->error('', 'Please select a valid location');
+            //             return back();
+            //         }
+            //     }
+            // }
+
+            // place.address_components.forEach(component => {
+            //     if (component.types.includes('country')) {
+            //         let selected_country = component.long_name
+            //         console.log(selected_country)
+            //         if (products_locations.includes(selected_country)) {
+            //             console.log('No logistics required')
+            //         } else {
+            //             console.log('Logistics required')
+            //         }
+            //     }
+            // })
+
             document.getElementById('place_id').value = place.place_id
             document.getElementById('delivery_location_place_id').value = place.place_id
+            document.getElementById('delivery_location_lat').value = place.geometry.location.lat()
+            document.getElementById('delivery_location_lng').value = place.geometry.location.lng()
             document.getElementById('delivery_location').value = place.formatted_address
             document.getElementById('location').innerHTML = place.formatted_address
 

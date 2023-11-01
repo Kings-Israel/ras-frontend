@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Notifications\Notifiable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Searchable\Searchable;
@@ -13,7 +14,7 @@ use Spatie\Searchable\SearchResult;
 
 class Business extends Model implements Searchable
 {
-    use HasFactory, HasSlug;
+    use HasFactory, HasSlug, Notifiable;
 
     /**
      * The attributes that aren't mass assignable.
@@ -118,5 +119,13 @@ class Business extends Model implements Searchable
     public function products(): HasMany
     {
         return $this->hasMany(Product::class);
+    }
+
+    /**
+     * Get all of the orders for the Business
+     */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
     }
 }

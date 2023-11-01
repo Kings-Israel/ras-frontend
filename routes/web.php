@@ -3,6 +3,7 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OtpController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
@@ -39,6 +40,8 @@ Route::middleware(['auth', 'web', 'phone_verified', 'role:buyer'])->group(functi
     Route::post('/cart/add', [CartController::class, 'store'])->name('cart.store');
 
     Route::get('/cart', [CartController::class, 'index'])->name('cart');
+
+    Route::post('/order/create', [OrderController::class, 'store'])->name('order.store');
 
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });

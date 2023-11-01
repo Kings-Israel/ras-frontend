@@ -131,6 +131,8 @@ class VendorController extends Controller
 
     public function orders()
     {
-        return view('business.orders');
+        $orders = auth()->user()->business->products->orders->load('orderItems.product', 'financingRequest')->orderBy('created_at', 'DESC');
+
+        return view('business.orders', compact('orders'));
     }
 }

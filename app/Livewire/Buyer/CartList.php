@@ -9,16 +9,26 @@ class CartList extends Component
 {
     public $cart;
 
+    public $products_locations = [];
+
+    public $inspectors = [];
+
     public function mount()
     {
-        $cart = auth()->user()->cart->load('cartItems.product.business');
+        $cart = auth()->user()->cart->load('cartItems.product.business', 'cartItems.product.media');
 
         if (!$cart) {
             toastr()->error('', 'No items in cart');
             return back();
         }
 
-        $cart->load('cartItems.product.media');
+        foreach ($cart->cartItems as $cart_item) {
+            if ($cart_item->product->warehouse) {
+                array_push($this->products_locations, $cart_item->product->warehouse->country->name);
+            } else {
+                array_push($this->products_locations, $cart_item->product->business->country->name);
+            }
+        }
 
         $this->cart = $cart;
     }

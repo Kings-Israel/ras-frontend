@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
 
 class Order extends Model
@@ -29,8 +30,19 @@ class Order extends Model
         parent::boot();
 
         static::creating(function ($model) {
-            $model->order_id = (string) Str::uuid();
+            $model->order_id = Str::uuid();
         });
+    }
+
+    /**
+     * Get the order id
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getOrderIdAttribute($value)
+    {
+        return Str::upper(explode('-', $value)[0]);
     }
 
     /**
@@ -47,5 +59,21 @@ class Order extends Model
     public function orderItems(): HasMany
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    /**
+     * Get the invoice that owns the Order
+     */
+    public function invoice(): BelongsTo
+    {
+        return $this->belongsTo(Invoice::class);
+    }
+
+    /**
+     * Get the business that owns the Order
+     */
+    public function business(): BelongsTo
+    {
+        return $this->belongsTo(Business::class);
     }
 }
