@@ -81,6 +81,12 @@ class RolesSeeder extends Seeder
             'update stocklift request',
             'delete stocklift request',
 
+            // Logistics Companies
+            'create logistics company',
+            'view logistics company',
+            'update logistics company',
+            'delete logistics company',
+
             // Drivers
             'create delivery',
             'view delivery',
@@ -184,6 +190,11 @@ class RolesSeeder extends Seeder
             'view stocklift request',
             'update stocklift request',
             'delete stocklift request',
+            'create logistics company',
+            'view logistics company',
+            'update logistics company',
+            'delete logistics company',
+
         ];
 
         $roles = ['admin', 'buyer', 'vendor', 'warehouse manager', 'financier', 'inspector', 'driver', 'deveint'];
