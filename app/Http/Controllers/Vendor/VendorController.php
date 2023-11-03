@@ -75,13 +75,17 @@ class VendorController extends Controller
             'business_name' => ['required'],
             'secondary_cover_image' => ['nullable', 'mimes:png,jpg,jpeg', 'max:4096'],
             'contact_email' => ['nullable', 'email'],
-            'contact_phone_number' => ['nullable', new PhoneNumber]
+            'contact_phone_number' => ['nullable', new PhoneNumber],
+            'about' => ['nullable', 'max:200'],
+            'vision' => ['nullable', 'max:100'],
+            'mission' => ['nullable', 'max:100'],
+            'tag_line' => ['nullable', 'max:100'],
         ]);
 
         auth()->user()->business()->update([
             'name' => $request->business_name,
             'about' => $request->has('about') && $request->about != null ? $request->about : auth()->user()->business->about,
-            'tag_line' => $request->has('tag_line') && $request->about != null ? $request->tag_line : auth()->user()->business->tag_line,
+            'tag_line' => $request->has('tag_line') && $request->tag_line != null ? $request->tag_line : auth()->user()->business->tag_line,
             'mission' => $request->has('mission') && $request->mission != null ? $request->mission : auth()->user()->business->mission,
             'vision' => $request->has('vision') && $request->vision != null ? $request->vision : auth()->user()->business->vision,
             'contact_email' => $request->has('contact_email') && $request->contact_email != null ? $request->contact_email : auth()->user()->business->contact_email,
@@ -131,8 +135,6 @@ class VendorController extends Controller
 
     public function orders()
     {
-        $orders = auth()->user()->business->products->orders->load('orderItems.product', 'financingRequest')->orderBy('created_at', 'DESC');
-
-        return view('business.orders', compact('orders'));
+        return view('business.orders');
     }
 }

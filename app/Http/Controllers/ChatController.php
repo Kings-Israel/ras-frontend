@@ -29,6 +29,7 @@ class ChatController extends Controller
                     'direct_message' => true,
                 ]);
             }
+
             $conversation_id = $conversation->id;
             Chat::conversation($conversation)->setParticipant(auth()->user())->readAll();
             $conversation = Chat::conversation($conversation)->setParticipant(auth()->user())->limit(250000)->getMessages();
@@ -42,10 +43,12 @@ class ChatController extends Controller
 
         $conversations = Arr::pluck($conversations, 'conversation');
 
+        // dd($conversation);
+
         if (auth()->user()->hasRole('vendor')) {
             return view('business.chat.index', [
                 'conversations' => ConversationResource::collection($conversations),
-                'conversation' => ['user' => $user, 'conversation_id' => $conversation ? $conversation->id : NULL, 'messages' => $conversation ? MessageResource::collection($conversation) : NULL]
+                'conversation' => ['user' => $user, 'conversation_id' => $conversation ? $conversation_id : NULL, 'messages' => $conversation ? MessageResource::collection($conversation) : NULL]
             ]);
         }
 

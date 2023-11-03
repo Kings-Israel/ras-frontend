@@ -81,6 +81,15 @@ class Business extends Model implements Searchable
         }
     }
 
+    public function verified():bool
+    {
+        if ($this->verified_on) {
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * Get the user that owns the Business
      */

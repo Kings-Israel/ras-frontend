@@ -6,7 +6,7 @@
         <div class="flex space-x-2">
             <img src="{{ auth()->user()->avatar }}" alt="" class="w-8 h-8 rounded-full object-cover">
             <button id="dropdown-button" data-dropdown-toggle="dropdown" class="flex gap-2">
-                <span class="font-bold my-auto">My Account</span>
+                <span class="font-semibold my-auto">{{ auth()->user()->first_name }} {{ auth()->user()->last_name }}</span>
                 <i class="fas fa-chevron-down my-auto text-sm"></i>
             </button>
             {{-- <div id="dropdown" class="z-10 hidden bg-gray-200 divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
