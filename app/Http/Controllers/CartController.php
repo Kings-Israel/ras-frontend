@@ -29,6 +29,13 @@ class CartController extends Controller
             'amount' => ['required', 'integer'],
         ]);
 
+        if (auth()->hasRole('vendor')) {
+            if (auth()->user()->business && auth()->user()->business->id == $request->business->id) {
+                toastr()->error('', 'Cannot add own product to cart');
+                return back();
+            }
+        }
+
         $cart = auth()->user()->cart;
         if (!$cart) {
             $cart = auth()->user()->cart()->create();
