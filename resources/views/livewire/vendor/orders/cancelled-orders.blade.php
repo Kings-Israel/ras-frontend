@@ -44,7 +44,7 @@
                         23
                     </td>
                     <td class="px-2 py-2 text-gray-600">
-                        {{ $order->order_id }}
+                        {{ $order->getDeliveryCountry() }}
                     </td>
                     <td class="px-2 py-2">
                         <span class="{{ $order->resolvePaymentStatus() }} rounded-md px-3">{{ Str::title($order->payment_status) }}</span>

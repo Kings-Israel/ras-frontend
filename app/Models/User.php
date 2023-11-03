@@ -69,6 +69,30 @@ class User extends Authenticatable implements MustVerifyEmail
         return config('app.url').'/assets/img/user.png';
     }
 
+    public function unreadMessagesCount(): int
+    {
+        $unread_messages_count = 0;
+
+        if (auth()->check()) {
+            $unread_messages_count = Chat::messages()->setParticipant(auth()->user())->unreadCount();
+        }
+
+        return $unread_messages_count;
+    }
+
+    public function pendingOrders(): int
+    {
+        $pending_orders = 0;
+
+        if (auth()->check() && auth()->user()->hasRole('vendor')) {
+            if (auth()->user()->business) {
+                $pending_orders = auth()->user()->business->orders->where('status', 'pending')->count();
+            }
+        }
+
+        return $pending_orders;
+    }
+
     /**
      * Get the business associated with the User
      */
@@ -115,17 +139,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function warehouses(): BelongsToMany
     {
         return $this->belongsToMany(Warehouse::class, 'user_warehouses', 'warehouse_id', 'user_id');
-    }
-
-    public function unreadMessagesCount(): int
-    {
-        $unread_messages_count = 0;
-
-        if (auth()->check()) {
-            $unread_messages_count = Chat::messages()->setParticipant(auth()->user())->unreadCount();
-        }
-
-        return $unread_messages_count;
     }
 
     /**

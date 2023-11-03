@@ -8,6 +8,8 @@ class ViewInProgressOrders extends Component
 {
     public function render()
     {
-        return view('livewire.vendor.orders.view-in-progress-orders');
+        $orders = auth()->user()->business->orders->load('orderItems.product', 'invoice.financingRequest')->sortByDesc('created_at');
+
+        return view('livewire.vendor.orders.view-in-progress-orders', compact('orders'));
     }
 }
