@@ -96,15 +96,15 @@ class Order extends Model
         }
     }
 
-    public function getDeliveryCouuntry(): string
+    public function getDeliveryCountry(): string
     {
         $user_location = Http::withOptions(['verify' => false])->get('https://maps.googleapis.com/maps/api/geocode/json?latlng='.$this->delivery_location_lat.','.$this->delivery_location_lng.'&key=AIzaSyCisnVFSnc5QVfU2Jm2W3oRLqMDrKwOEoM');
 
-            foreach ($user_location['results'][0]['address_components'] as $place) {
-                if (collect($place['types'])->contains('country')) {
-                    $country = Country::where('name', 'LIKE', $place['long_name'])->orWhere('iso', 'LIKE', $place['short_name'])->first();
-                    return $country->name;
-                }
+        foreach ($user_location['results'][0]['address_components'] as $place) {
+            if (collect($place['types'])->contains('country')) {
+                $country = Country::where('name', 'LIKE', $place['long_name'])->orWhere('iso', 'LIKE', $place['short_name'])->first();
+                return $country->name;
             }
+        }
     }
 }
