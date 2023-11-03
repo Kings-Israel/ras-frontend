@@ -11,6 +11,7 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
+use Illuminate\Notifications\Notification;
 
 class Business extends Model implements Searchable
 {
@@ -55,6 +56,17 @@ class Business extends Model implements Searchable
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+        /**
+     * Route notifications for the mail channel.
+     *
+     * @return  array<string, string>|string
+     */
+    public function routeNotificationForMail(Notification $notification): array|string
+    {
+        // Return email address only...
+        return $this->contact_email;
     }
 
     /**

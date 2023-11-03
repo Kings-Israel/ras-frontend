@@ -3,13 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Models\Business;
+use App\Models\Invoice;
 use App\Models\Product;
 use App\Notifications\NewOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
+    public function index()
+    {
+        $invoices = auth()->user()->invoices->count();
+        if ($invoices <= 0) {
+            toastr()->error('', 'No orders found');
+
+            return redirect()->route('welcome');
+        }
+        return view('invoices');
+    }
+
+    public function orders(Invoice $invoice)
+    {
+        if (!$invoice) {
+            return redirect()->route('welcome');
+        }
+
+        return view('orders', compact('invoice'));
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -30,17 +52,18 @@ class OrderController extends Controller
         $products = Product::whereIn('id', $request->items_ids)->get()->groupBy('business_id');
 
         // Create invoice
-        $invoice = auth()->user()->invoices()->create();
+        $invoice = auth()->user()->invoices()->create([
+            'delivery_location_address' => $request->delivery_location,
+            'delivery_location_lat' => $request->delivery_location_lat,
+            'delivery_location_lng' => $request->delivery_location_lng,
+            'additional_notes' => $request->has('additional_notes') ? $request->additional_notes : NULL,
+            'total_amount' => $request->total_cart_amount,
+        ]);
 
         foreach($products as $key => $product) {
             $order = auth()->user()->orders()->create([
                 'invoice_id' => $invoice->id,
                 'business_id' => $key,
-                'delivery_location_address' => $request->delivery_location,
-                'delivery_location_lat' => $request->delivery_location_lat,
-                'delivery_location_lng' => $request->delivery_location_lng,
-                'additional_notes' => $request->has('additional_notes') ? $request->additional_notes : NULL,
-                'total_amount' => $request->total_cart_amount,
             ]);
 
             foreach($product as $item) {
@@ -58,6 +81,7 @@ class OrderController extends Controller
 
             $business = Business::find($key);
             $business->notify(new NewOrder($order));
+            $business->user->notify(new NewOrder($order));
         }
 
         if ($request->has('request_financing')) {

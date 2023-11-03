@@ -36,11 +36,12 @@ Route::middleware(['auth', 'web', 'phone_verified'])->group(function () {
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 });
 
-Route::middleware(['auth', 'web', 'phone_verified', 'role:buyer'])->group(function () {
+Route::middleware(['auth', 'web', 'phone_verified'])->group(function () {
+    Route::get('/cart', [CartController::class, 'index'])->name('cart');
     Route::post('/cart/add', [CartController::class, 'store'])->name('cart.store');
 
-    Route::get('/cart', [CartController::class, 'index'])->name('cart');
-
+    Route::get('/invoices', [OrderController::class, 'index'])->name('invoices.index');
+    Route::get('invoices/{invoice}/orders', [OrderController::class, 'orders'])->name('invoice.orders');
     Route::post('/order/create', [OrderController::class, 'store'])->name('order.store');
 
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

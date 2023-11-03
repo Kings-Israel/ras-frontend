@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
 class Invoice extends Model
@@ -27,6 +28,47 @@ class Invoice extends Model
         static::creating(function ($model) {
             $model->invoice_id = Str::uuid();
         });
+    }
+
+    /**
+     * Get the order id
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getInvoiceIdAttribute($value)
+    {
+        return Str::upper(explode('-', $value)[0]);
+    }
+
+    public function resolvePaymentStatus(): string
+    {
+        switch ($this->payment_status) {
+            case 'pending':
+                return 'bg-gray-200';
+                break;
+            case 'paid':
+                return 'bg-green-200';
+                break;
+            case 'cancelled':
+                return 'bg-red-200';
+                break;
+            default:
+                return 'bg-gray-200';
+                break;
+        }
+    }
+
+    public function getDeliveryCountry(): string
+    {
+        $user_location = Http::withOptions(['verify' => false])->get('https://maps.googleapis.com/maps/api/geocode/json?latlng='.$this->delivery_location_lat.','.$this->delivery_location_lng.'&key=AIzaSyCisnVFSnc5QVfU2Jm2W3oRLqMDrKwOEoM');
+
+        foreach ($user_location['results'][0]['address_components'] as $place) {
+            if (collect($place['types'])->contains('country')) {
+                $country = Country::where('name', 'LIKE', $place['long_name'])->orWhere('iso', 'LIKE', $place['short_name'])->first();
+                return $country->name;
+            }
+        }
     }
 
     /**
