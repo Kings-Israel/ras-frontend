@@ -4,6 +4,7 @@ namespace App\Notifications;
 
 use App\Models\Business;
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -36,11 +37,19 @@ class NewOrder extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
+        if ($notifiable instanceof User) {
+            return (new MailMessage)
+                        ->line('Hello, '.$notifiable->first_name)
+                        ->line('You have received a new order, ORDER ID: '.$this->order->order_id)
+                        ->action('Login to View Orders', url('/vendor/orders'))
+                        ->line('Thank you for using our application!');
+        }
+
         return (new MailMessage)
-                    ->line('Hello, '.$notifiable->user->first_name)
-                    ->line('You have received a new order, ORDER ID: '.$this->order->order_id)
-                    ->action('Login to View Orders', url('/vendor/orders'))
-                    ->line('Thank you for using our application!');
+                        ->line('Hello, '.$notifiable->user->first_name)
+                        ->line('You have received a new order, ORDER ID: '.$this->order->order_id)
+                        ->action('Login to View Orders', url('/vendor/orders'))
+                        ->line('Thank you for using our application!');
     }
 
     /**

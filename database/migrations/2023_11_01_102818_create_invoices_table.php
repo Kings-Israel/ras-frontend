@@ -15,6 +15,13 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('invoice_id');
+            $table->enum('status', ['pending', 'accepted', 'rejected', 'in progress', 'delivered', 'cancelled'])->nullable()->default('pending');
+            $table->enum('payment_status', ['pending', 'paid', 'cancelled'])->nullable()->default('pending');
+            $table->bigInteger('total_amount')->nullable();
+            $table->string('delivery_location_address')->nullable();
+            $table->string('delivery_location_lat')->nullable();
+            $table->string('delivery_location_lng')->nullable();
+            $table->text('additional_notes')->nullable();
             $table->timestamps();
         });
     }

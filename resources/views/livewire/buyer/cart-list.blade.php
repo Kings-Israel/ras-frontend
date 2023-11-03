@@ -1,5 +1,5 @@
 <div>
-    <form action="{{ route('order.store') }}" method="post" class="block lg:flex px-4 lg:px-28 p-4 gap-12">
+    <form action="{{ route('order.store') }}" method="post" id="submit-cart-form" class="block lg:flex px-4 lg:px-28 p-4 gap-12">
         @csrf
         <div class="basis-3/4 bg-gray-50 p-2 rounded-lg">
             {{-- <div>
@@ -87,6 +87,7 @@
                         </div>
                     </div>
                 @endforeach
+                <x-input-error :messages="$errors->get('delivery_location')" />
                 @if (!$cart->cartItems->isEmpty())
                     <div>
                         <div class="flex justify-between border border-gray-200 rounded-lg px-1 py-1 md:px-2 md:py-2 mb-2">
@@ -101,7 +102,7 @@
                                     <input type="hidden" name="delivery_location_lng" id="delivery_location_lng">
                                     <input type="hidden" name="delivery_location" id="delivery_location">
                                     <p class="text-sm font-bold text-blue-500 tracking-tight underline underline-offset-2 truncate hover:cursor-pointer" id="location" data-modal-target="cart-select-location" data-modal-toggle="cart-select-location">Click to search delivery location</p>
-                                    <x-input-error :messages="$errors->get('delivery_location')" class="mt-2" />
+                                    <p class="text-sm text-red-600 hidden" id="location-select-error">Select delivery location</p>
                                     <x-modal modal_id="cart-select-location">
                                         <div class="relative w-full max-w-4xl max-h-full">
                                             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -128,7 +129,7 @@
                             <div class="basis-1/5 flex gap-2 px-1 md:px-2 text-gray-500">
                                 <input id="request_logistics" type="checkbox" name="request_logistics" checked class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="request_logistics" class="sr-only">checkbox</label>
-                                <h2 class="font-semibold text-sm my-auto">Shipping</h2>
+                                <h2 class="font-semibold my-auto">Shipping</h2>
                             </div>
                             <div class="w-full">
                                 <div class="flex justify-between mx-2" id="logistics_companies">
@@ -254,7 +255,7 @@
                             <div class="basis-1/5 flex gap-2 px-2 text-gray-500">
                                 <input id="checkbox-table-search-1" name="request_financing" type="checkbox" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                <h2 class="font-semibold text-sm">Financing</h2>
+                                <h2 class="font-semibold">Request Financing</h2>
                             </div>
                             <span class="basis-4/5 my-auto">
                                 <p class="text-sm font-bold text-blue-500 tracking-tight">Credit Limit $6,700.00</p>
@@ -290,7 +291,7 @@
                     <h4 class="text-gray-500">Delivery: <strong class="font-bold">{{ now()->addDays(3)->format('D d M, Y') }}</strong></h4>
                     <h5 class="font-thin text-gray-500 text-sm">Order Within: <span class="text-green-600">19h 38min</span></h5>
                 </div>
-                <x-primary-button class="w-full my-2 py-2" type="submit">
+                <x-primary-button class="w-full my-2 py-2" type="submit" id="submit-cart">
                     <span class="tracking-tight">
                         Checkout
                     </span>
@@ -313,6 +314,18 @@
 
     $(document).ready(function () {
         total_amount.value = new Intl.NumberFormat().format(total_amount.value)
+    })
+
+    $('#submit-cart-form').on('submit', function(e) {
+        e.preventDefault()
+        if ($('#delivery_location').val() == '') {
+            $('#location-select-error').removeClass('hidden')
+            setTimeout(() => {
+                $('#location-select-error').addClass('hidden')
+            }, 3000);
+        } else {
+            $(this).submit()
+        }
     })
 
     function decrement(e) {

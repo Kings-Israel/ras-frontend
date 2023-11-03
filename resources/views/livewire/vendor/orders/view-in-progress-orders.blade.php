@@ -50,7 +50,7 @@
                         23
                     </td>
                     <td class="px-2 py-2 text-gray-500">
-                        {{ $order->getDeliveryCountry() }}
+                        {{ $order->invoice->getDeliveryCountry() }}
                     </td>
                     {{-- <td class="px-2 py-2 text-gray-500">
                         Kenya
@@ -59,13 +59,13 @@
                         Dakar
                     </td> --}}
                     <td class="px-2 py-2">
-                        <span class="{{ $order->resolvePaymentStatus() }} rounded-md px-3">{{ Str::title($order->payment_status) }}</span>
+                        <span class="{{ $order->invoice->resolvePaymentStatus() }} rounded-md px-3">{{ Str::title($order->invoice->payment_status) }}</span>
                     </td>
                     <td class="px-2 py-2 text-gray-500">
-                        {{ Str::title($order->status) }}
+                        {{ Str::title($order->invoice->status) }}
                     </td>
                     <td class="px-2 py-2 text-gray-500">
-                        Ksh.{{ number_format($order->total_amount) }}
+                        Ksh.{{ number_format($order->invoice->total_amount) }}
                     </td>
                 </tr>
                 <tr class="bg-gray-100 border-b-2 border-r-2 border-l-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer childTableRow">
