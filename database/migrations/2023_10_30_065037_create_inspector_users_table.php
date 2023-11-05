@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('inspector_users', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('inspector_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('inspector_id')->references('id')->on('inspecting_institutions')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

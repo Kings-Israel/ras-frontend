@@ -312,6 +312,8 @@
 
     let products_locations = @json($products_locations)
 
+    let inspectors = @json($inspectors)
+
     $(document).ready(function () {
         total_amount.value = new Intl.NumberFormat().format(total_amount.value)
     })
