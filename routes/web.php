@@ -41,7 +41,7 @@ Route::middleware(['auth', 'web', 'phone_verified'])->group(function () {
     Route::post('/cart/add', [CartController::class, 'store'])->name('cart.store');
 
     Route::get('/invoices', [OrderController::class, 'index'])->name('invoices.index');
-    Route::get('invoices/{invoice}/orders', [OrderController::class, 'orders'])->name('invoice.orders');
+    Route::get('/invoices/{invoice}/orders', [OrderController::class, 'orders'])->name('invoice.orders');
     Route::post('/order/create', [OrderController::class, 'store'])->name('order.store');
 
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -61,6 +61,8 @@ Route::middleware(['auth', 'web', 'phone_verified', 'role:vendor', 'has_register
         Route::get('/{product}/edit', [VendorProductController::class, 'edit'])->name('products.edit');
         Route::patch('/{product}/update', [VendorProductController::class, 'update'])->name('products.update');
         Route::get('/orders', [VendorController::class, 'orders'])->name('orders');
+        Route::get('/orders/{order}', [VendorController::class, 'order'])->name('orders.show');
+        Route::get('/orders/{order}/{status}/update', [VendorController::class, 'orderUpdate'])->name('orders.status.update');
         Route::get('/messages', [ChatController::class, 'index'])->name('messages');
         Route::get('/messages/chat', [ChatController::class, 'view'])->name('messages.chat');
         Route::get('/customers', function () {

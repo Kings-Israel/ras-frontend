@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('order_financings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_id')->references('id')->on('orders')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('invoice_id')->references('id')->on('invoices')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('financing_institution_id')->references('id')->on('financing_institutions')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('first_approval_by')->nullable()->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');
             $table->dateTime('first_approval_on')->nullable();
