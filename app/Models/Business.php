@@ -58,7 +58,7 @@ class Business extends Model implements Searchable
         return 'slug';
     }
 
-        /**
+    /**
      * Route notifications for the mail channel.
      *
      * @return  array<string, string>|string

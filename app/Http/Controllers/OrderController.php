@@ -80,7 +80,7 @@ class OrderController extends Controller
             }
 
             $business = Business::find($key);
-            $business->notify(new NewOrder($order));
+            // $business->notify(new NewOrder($order));
             $business->user->notify(new NewOrder($order));
         }
 

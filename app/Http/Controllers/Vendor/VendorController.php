@@ -8,9 +8,13 @@ use App\Models\BusinessDocument;
 use App\Models\Category;
 use App\Models\Country;
 use App\Models\Document;
+use App\Models\FinancingInstitution;
 use App\Models\MeasurementUnit;
+use App\Models\Order;
 use App\Models\RequiredDocumentPerCountry;
 use App\Models\Warehouse;
+use App\Notifications\FinancingRequested;
+use App\Notifications\UpdatedOrder;
 use App\Rules\PhoneNumber;
 use Illuminate\Http\Request;
 
@@ -136,5 +140,30 @@ class VendorController extends Controller
     public function orders()
     {
         return view('business.orders');
+    }
+
+    public function order(Order $order)
+    {
+        return view('business.order', compact('order'));
+    }
+
+    public function orderUpdate(Order $order, $status)
+    {
+        $order->update(['status' => $status]);
+
+        // Send Notification to user of updated order status
+        $order->user->notify(new UpdatedOrder($order));
+
+        if($status === 'accepted') {
+            // Check if order financing was requested
+            if ($order->invoice->financingRequest) {
+                // Send notification to financier to view order
+                FinancingInstitution::find(1)->notify(new FinancingRequested($order->invoice));
+            }
+        }
+
+        toastr()->success('', 'Order updated successfully');
+
+        return back();
     }
 }

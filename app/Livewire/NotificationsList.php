@@ -76,10 +76,6 @@ class NotificationsList extends Component
                 $this->notifications->push($notification);
             });
         }
-
-        // $this->notifications = auth()->user()->business->unreadNotifications()->get()->take(4);
-
-        // dd(auth()->user()->business->unreadNotifications()->get()->take(4));
     }
 
     public function render()

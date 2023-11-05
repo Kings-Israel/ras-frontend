@@ -15,6 +15,11 @@
                             <span class="font-semibold text-lg">You have a new order <strong>{{ $notification['data']['order']['order_id'] }}</strong></span>
                         </li>
                     @endif
+                    @if ($notification->type == 'App\\Notifications\\UpdatedOrder')
+                        <li class="hover:bg-gray-100 hover:cursor-pointer text-left p-2" wire:click="goToOrders({{ $notification }})">
+                            <span class="font-semibold text-lg">Your order was updated <strong>{{ $notification['data']['order']['order_id'] }}</strong></span>
+                        </li>
+                    @endif
                 @endforeach
             </ul>
         </div>
