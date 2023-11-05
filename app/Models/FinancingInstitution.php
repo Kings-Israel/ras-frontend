@@ -25,6 +25,6 @@ class FinancingInstitution extends Model
      */
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'financing_institution_users', 'role_id', 'user_id');
+        return $this->belongsToMany(User::class, 'financing_institution_users', 'financing_institution_id', 'user_id');
     }
 }
