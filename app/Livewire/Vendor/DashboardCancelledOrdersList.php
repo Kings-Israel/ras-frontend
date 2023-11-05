@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Livewire\Vendor\Orders;
+namespace App\Livewire\Vendor;
 
 use App\Models\Order;
 use Livewire\Component;
 
-class CancelledOrders extends Component
+class DashboardCancelledOrdersList extends Component
 {
     public function render()
     {
@@ -16,6 +16,6 @@ class CancelledOrders extends Component
                                 ->get()
                                 ->take(5);
 
-        return view('livewire.vendor.orders.cancelled-orders', compact('cancelled_orders'));
+        return view('livewire.vendor.dashboard-cancelled-orders-list', compact('cancelled_orders'));
     }
 }

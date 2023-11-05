@@ -37,9 +37,7 @@
                     </li>
                 </ul>
             </div>
-            <a href="#" class="text-gray-800 bg-gray-300 rounded-full w-7 h-7 my-auto lg:my-0 md:w-8 md:h-8 text-center pt-0.5 md:pt-1">
-                <i class="w-5 h-5 fas fa-bell"></i>
-            </a>
+            <livewire:notifications-list />
             @if (auth()->user()->hasRole('buyer'))
                 <a href="{{ route('cart') }}" class="text-gray-800 bg-gray-300 rounded-full w-7 h-7 my-auto lg:my-0 md:w-8 md:h-8 text-center pt-0.5 md:pt-1">
                     <i class="w-5 h-5 fas fa-shopping-bag"></i>

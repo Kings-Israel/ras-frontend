@@ -29,7 +29,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($cancelled_orders as $order)
+            @foreach ($orders as $order)
                 <tr class="bg-gray-50 border-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
                     <th scope="row" class="px-2 py-2 font-extrabold text-gray-700 whitespace-nowrap dark:text-white hover:text-gray-800">
                         {{ $order->order_id }}
