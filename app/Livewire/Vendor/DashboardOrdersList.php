@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Livewire\Vendor\Orders;
+namespace App\Livewire\Vendor;
 
 use App\Models\Order;
 use Livewire\Component;
 
-class AllOrders extends Component
+class DashboardOrdersList extends Component
 {
     public function render()
     {
@@ -15,6 +15,6 @@ class AllOrders extends Component
                         ->get()
                         ->take(5);
 
-        return view('livewire.vendor.orders.all-orders', compact('orders'));
+        return view('livewire.vendor.dashboard-orders-list', compact('orders'));
     }
 }

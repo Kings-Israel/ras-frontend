@@ -45,11 +45,15 @@ class NewOrder extends Notification
                         ->line('Thank you for using our application!');
         }
 
-        return (new MailMessage)
-                        ->line('Hello, '.$notifiable->user->first_name)
-                        ->line('You have received a new order, ORDER ID: '.$this->order->order_id)
-                        ->action('Login to View Orders', url('/vendor/orders'))
-                        ->line('Thank you for using our application!');
+        if ($notifiable instanceof Business) {
+            if ($notifiable->contact_email) {
+                return (new MailMessage)
+                                ->line('Hello, '.$notifiable->user->first_name)
+                                ->line('You have received a new order, ORDER ID: '.$this->order->order_id)
+                                ->action('Login to View Orders', url('/vendor/orders'))
+                                ->line('Thank you for using our application!');
+            }
+        }
     }
 
     /**
@@ -59,8 +63,10 @@ class NewOrder extends Notification
      */
     public function toArray(object $notifiable): array
     {
-        return [
-            'order' => $this->order
-        ];
+        if ($notifiable instanceof Business) {
+            return [
+                'order' => $this->order
+            ];
+        }
     }
 }

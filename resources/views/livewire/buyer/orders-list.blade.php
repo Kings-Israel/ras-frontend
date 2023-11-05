@@ -46,8 +46,8 @@
                                             <div class="my-auto md:col-span-2">
                                                 <div class="flex gap-3">
                                                     <div class="custom-number-input h-10">
-                                                        <div class="flex flex-row h-8 w-full rounded-lg relative bg-transparent mt-1">
-                                                            <span id="order_quantity" class="border border-1 rounded-lg border-gray-500 px-3 text-center w-full bg-gray-300 font-semibold text-md text-gray-700">{{ $order_item->quantity }}</span>
+                                                        <div class="flex flex-row h-8 w-full rounded-lg relative bg-transparent my-auto">
+                                                            <span id="order_quantity" class="border border-1 rounded-lg border-gray-500 px-3 my-auto text-center w-full bg-gray-300 font-semibold text-md text-gray-700">{{ $order_item->quantity }}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -71,7 +71,7 @@
                 @endforeach
             </div>
         </div>
-        <div class="basis-1/4">
+        <div class="basis-1/4 space-y-2">
             <div class="border border-gray-300 p-4 space-y-4 rounded-lg">
                 <div>
                     <h4 class="text-sm font-semibold text-gray-500">Total:</h4>
@@ -80,6 +80,10 @@
                         <span class="font-bold text-xl text-gray-800">{{ number_format($total_amount) }}</span>
                     </div>
                 </div>
+            </div>
+            <div class="border border-gray-300 p-4 space-y-4 rounded-lg">
+                <h4 class="text-sm font-semibold text-gray-500">Delivery Location</h4>
+                <h3 class="font-bold text-xl text-gray-600 my-auto`">{{ $invoice->delivery_location_address }}</h3>
             </div>
         </div>
     </form>

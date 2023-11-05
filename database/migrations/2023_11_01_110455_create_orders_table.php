@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('invoice_id')->references('id')->on('invoices')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('business_id')->references('id')->on('businesses')->onDelete('cascade')->onUpdate('cascade');
+            $table->enum('status', ['pending', 'accepted', 'rejected', 'in progress', 'delivered', 'cancelled'])->nullable()->default('pending');
             $table->timestamps();
         });
     }

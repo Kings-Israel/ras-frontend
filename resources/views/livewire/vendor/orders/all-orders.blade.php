@@ -11,9 +11,9 @@
                 <th scope="col" class="px-2 py-3 text-gray-900">
                     Products
                 </th>
-                <th scope="col" class="px-2 py-3 text-gray-900">
+                {{-- <th scope="col" class="px-2 py-3 text-gray-900">
                     Quantity
-                </th>
+                </th> --}}
                 <th scope="col" class="px-2 py-3 text-gray-900">
                     Country
                 </th>
@@ -40,9 +40,9 @@
                     <td class="px-2 py-2 text-gray-600">
                         {{ $order->orderItems->count() }}
                     </td>
-                    <td class="px-2 py-2 text-gray-600">
+                    {{-- <td class="px-2 py-2 text-gray-600">
                         23
-                    </td>
+                    </td> --}}
                     <td class="px-2 py-2 text-gray-600">
                         {{ $order->invoice->getDeliveryCountry() }}
                     </td>
@@ -50,7 +50,7 @@
                         <span class="{{ $order->invoice->resolvePaymentStatus() }} rounded-md px-3">{{ Str::title($order->invoice->payment_status) }}</span>
                     </td>
                     <td class="px-2 py-2 text-gray-600">
-                        {{ Str::title($order->invoice->status) }}
+                        {{ Str::title($order->status) }}
                     </td>
                     <td class="px-2 py-2 text-gray-600">
                         Ksh.{{ number_format($order->invoice->total_amount) }}

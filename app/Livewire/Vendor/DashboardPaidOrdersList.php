@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Livewire\Vendor\Orders;
+namespace App\Livewire\Vendor;
 
 use App\Models\Order;
 use Livewire\Component;
 
-class PaidOrders extends Component
+class DashboardPaidOrdersList extends Component
 {
     public function render()
     {
@@ -18,6 +18,6 @@ class PaidOrders extends Component
                             ->get()
                             ->take(5);
 
-        return view('livewire.vendor.orders.paid-orders', compact('paid_orders'));
+        return view('livewire.vendor.dashboard-paid-orders-list', compact('paid_orders'));
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Livewire\Vendor\Orders;
+namespace App\Livewire\Vendor;
 
 use App\Models\Order;
 use Livewire\Component;
 
-class InProgressOrders extends Component
+class DashboardInProgressOrdersList extends Component
 {
     public function render()
     {
@@ -16,6 +16,6 @@ class InProgressOrders extends Component
                                     ->get()
                                     ->take(5);
 
-        return view('livewire.vendor.orders.in-progress-orders', compact('in_progress_orders'));
+        return view('livewire.vendor.dashboard-in-progress-orders-list', compact('in_progress_orders'));
     }
 }
