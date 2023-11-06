@@ -46,7 +46,7 @@
                     </li>
                 </ul>
             </div>
-            <livewire:notifications-list
+            <livewire:notifications-list />
             @if(auth()->user()->hasRole('buyer'))
                 <a href="{{ route('cart') }}" class="text-gray-800 bg-gray-300 rounded-full w-8 text-center pt-1">
                     <i class="w-5 h-5 fas fa-shopping-bag"></i>
