@@ -40,11 +40,11 @@ class CartList extends Component
 
         foreach ($this->products_locations as $product_location) {
             $country = Country::where('name', $product_location)->first();
-            $inpector = InspectingInstitution::where('country_id', $country->id)->inRandomOrder()->first();
-            array_push($this->inspectors, $inpector);
+            $inspector = InspectingInstitution::where('country_id', $country->id)->inRandomOrder()->first();
+            if ($inspector) {
+                array_push($this->inspectors, $inspector);
+            }
         }
-
-        dd($this->inspectors);
 
         $this->cart = $cart;
     }
