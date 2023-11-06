@@ -44,6 +44,8 @@ class CartList extends Component
             array_push($this->inspectors, $inpector);
         }
 
+        dd($this->inspectors);
+
         $this->cart = $cart;
     }
 
