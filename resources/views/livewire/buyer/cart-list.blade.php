@@ -159,21 +159,23 @@
                                         <span class="text-gray-600 my-auto">US$7.04</span>
                                     </div>
                                 </div> --}}
-                                @foreach ($inspectors as $inspector)
-                                    <div class="flex justify-between mx-2">
-                                        <div class="hidden md:block md:basis-1/5"></div>
-                                        <div class="w-full md:basis-4/5 flex justify-between">
-                                            <div class="flex justify-between w-[60%] md:w-[40%]">
-                                                <div class="flex">
-                                                    <input id="checkbox-table-search-1" type="radio" value="{{ $inspector->id }}" name="inspector_id" onchange="updateInspectorSelection()" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
-                                                    <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                                    <h2 class="font-semibold text-sm ml-2 truncate">{{$inspector->name}}</h2>
+                                @if (count($inspectors) > 0)
+                                    @foreach ($inspectors as $inspector)
+                                        <div class="flex justify-between mx-2">
+                                            <div class="hidden md:block md:basis-1/5"></div>
+                                            <div class="w-full md:basis-4/5 flex justify-between">
+                                                <div class="flex justify-between w-[60%] md:w-[40%]">
+                                                    <div class="flex">
+                                                        <input id="checkbox-table-search-1" type="radio" value="{{ $inspector->id }}" name="inspector_id" onchange="updateInspectorSelection()" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                                                        <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                                                        <h2 class="font-semibold text-sm ml-2 truncate">{{$inspector->name}}</h2>
+                                                    </div>
+                                                    <span class="font-thin text-orange-400 text-sm italic">Negotiate</span>
                                                 </div>
-                                                <span class="font-thin text-orange-400 text-sm italic">Negotiate</span>
                                             </div>
                                         </div>
-                                    </div>
-                                @endforeach
+                                    @endforeach
+                                @endif
                             </div>
                         </div>
                         <p class="text-red-600 tracking-tight font-semibold hidden" id="inspection-selection-warning">If no inspector is selected, you will be required to upload your inspection report.</p>
