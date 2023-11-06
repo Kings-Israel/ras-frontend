@@ -5,8 +5,8 @@ namespace App\Livewire\Buyer;
 use App\Models\Business;
 use App\Models\CartItem;
 use App\Models\Country;
-use App\Models\Inspectors as Inspector;
 use App\Models\Product;
+use App\Models\InspectingInstitution;
 use App\Notifications\NewOrder;
 use Livewire\Component;
 use Livewire\Attributes\Rule;
@@ -40,7 +40,7 @@ class CartList extends Component
 
         foreach ($this->products_locations as $product_location) {
             $country = Country::where('name', $product_location)->first();
-            $inpector = Inspector::where('country_id', $country->id)->inRandomOrder()->first();
+            $inpector = InspectingInstitution::where('country_id', $country->id)->inRandomOrder()->first();
             array_push($this->inspectors, $inpector);
         }
 

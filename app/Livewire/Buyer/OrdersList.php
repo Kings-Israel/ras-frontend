@@ -34,8 +34,16 @@ class OrdersList extends Component
                                 return $item['business']['name'];
                             });
 
-        $total_amount = $this->invoice->orders->sum(fn ($order) => $order->orderItems->sum('amount'));
+        $inspection_cost = 0;
 
-        return view('livewire.buyer.orders-list', compact('orders', 'total_amount'));
+        foreach ($this->invoice->orders as $order) {
+            if ($order->inspectionRequests()->where('status', 'accepted')->exists()) {
+                $inspection_cost += $order->inspectionRequests()->where('status', 'accepted')->first()->cost ? $order->inspectionRequests()->where('status', 'accepted')->first()->cost : 0;
+            }
+        }
+
+        $total_amount = $this->invoice->orders->sum(fn ($order) => $order->orderItems->sum('amount')) + $inspection_cost;
+
+        return view('livewire.buyer.orders-list', compact('orders', 'total_amount', 'inspection_cost'));
     }
 }

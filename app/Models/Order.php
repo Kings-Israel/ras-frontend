@@ -77,4 +77,12 @@ class Order extends Model
     {
         return $this->belongsTo(Business::class);
     }
+
+    /**
+     * Get all of the inspectionRequests for the Order
+     */
+    public function inspectionRequests(): HasMany
+    {
+        return $this->hasMany(InspectionRequest::class);
+    }
 }
