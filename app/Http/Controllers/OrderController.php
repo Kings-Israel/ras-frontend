@@ -79,6 +79,14 @@ class OrderController extends Controller
                 ]);
             }
 
+            if ($request->has('request_inspection')) {
+                if ($request->has('inspector_id')) {
+                    $order->inspectionRequests()->create([
+                        'inspector_id' => $request->get('inspector_id'),
+                    ]);
+                }
+            }
+
             $business = Business::find($key);
             // $business->notify(new NewOrder($order));
             $business->user->notify(new NewOrder($order));

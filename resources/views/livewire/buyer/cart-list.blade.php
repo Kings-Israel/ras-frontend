@@ -33,8 +33,8 @@
                         <div class="flex w-full border border-gray-200 rounded-lg px-1 py-1 md:px-2 md:py-2">
                             <div class="basis-4/5 grid md:flex md:justify-between gap-2 px-2 text-gray-500">
                                 <div class="flex gap-3 md:min-w-fit md:mr-10">
-                                    <input id="cart_items_ids[]" value="{{ $item->id }}" type="checkbox" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
-                                    <label for="cart_items_ids" class="sr-only">checkbox</label>
+                                    {{-- <input id="cart_items_ids[]" value="{{ $item->id }}" type="checkbox" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                                    <label for="cart_items_ids" class="sr-only">checkbox</label> --}}
                                     @if ($item->product->media->where('type', 'image')->first())
                                         <img src="{{ $item->product->media->where('type', 'image')->first()->file }}" alt="" class="w-10 h-10 lg:w-20 lg:h-20 object-cover rounded-md border border-orange-400">
                                     @endif
@@ -46,7 +46,6 @@
                                         <a href="{{ route('vendor.storefront', ['slug' => $item->product->business->slug]) }}" class="text-gray-400 font-semibold text-md my-auto hover:text-gray-600">
                                             {{ $item->product->business->name }}
                                         </a>
-                                        <span>{{ $products_locations[$key] }}</span>
                                     </div>
                                 </div>
                                 <div class="md:w-[90%] md:justify-items-center md:grid md:grid-cols-4">
@@ -90,9 +89,9 @@
                 <x-input-error :messages="$errors->get('delivery_location')" />
                 @if (!$cart->cartItems->isEmpty())
                     <div>
-                        <div class="flex justify-between border border-gray-200 rounded-lg px-1 py-1 md:px-2 md:py-2 mb-2">
+                        <div class="flex justify-between border border-gray-200 rounded-lg px-1 py-1 md:px-2 md:py-2 mb-2" id="delivery-location-section">
                             <div class="basis-1/5 flex gap-2 px-1 md:px-2 text-gray-500">
-                                <h2 class="font-semibold text-sm">Delivery Location</h2>
+                                <h2 class="font-semibold">Delivery Location</h2>
                             </div>
                             <div class="basis-4/5 flex justify-between">
                                 <span class="flex gap-1 my-auto">
@@ -101,8 +100,8 @@
                                     <input type="hidden" name="delivery_location_lat" id="delivery_location_lat">
                                     <input type="hidden" name="delivery_location_lng" id="delivery_location_lng">
                                     <input type="hidden" name="delivery_location" id="delivery_location">
-                                    <p class="text-sm font-bold text-blue-500 tracking-tight underline underline-offset-2 truncate hover:cursor-pointer" id="location" data-modal-target="cart-select-location" data-modal-toggle="cart-select-location">Click to search delivery location</p>
-                                    <p class="text-sm text-red-600 hidden" id="location-select-error">Select delivery location</p>
+                                    <p class="font-bold text-blue-500 tracking-tight underline underline-offset-2 truncate hover:cursor-pointer" id="location" data-modal-target="cart-select-location" data-modal-toggle="cart-select-location">Click to search delivery location</p>
+                                    <p class="text-red-600 hidden" id="location-select-error">Select delivery location</p>
                                     <x-modal modal_id="cart-select-location">
                                         <div class="relative w-full max-w-4xl max-h-full">
                                             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -125,9 +124,62 @@
                                 <span class="font-semibold text-gray-600 my-auto"></span>
                             </div>
                         </div>
+                        <div class="grid md:flex border border-gray-200 rounded-lg px-1 py-1 md:px-2 md:py-2 mb-2" id="delivery-inspection-section">
+                            <div class="basis-1/5 flex gap-2 px-1 md:px-2 text-gray-500">
+                                <input id="request_inspection" type="checkbox" name="request_inspection" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="request_inspection" class="sr-only">checkbox</label>
+                                <h2 class="font-semibold my-auto">Request Inpection</h2>
+                            </div>
+                            <div class="w-full">
+                                {{-- <div class="flex justify-between mx-2" id="logistics_companies">
+                                    <div class="hidden md:block md:basis-1/5"></div>
+                                    <div class="w-full md:basis-4/5 flex justify-between">
+                                        <div class="flex justify-between w-[50%] md:w-[40%]">
+                                            <div class="flex">
+                                                <input id="checkbox-table-search-1" type="radio" name="shipping_address" checked class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                                                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                                                <h2 class="font-semibold text-sm ml-2 truncate">Arena 1 Logistics</h2>
+                                            </div>
+                                            <span class="font-thin text-orange-400 text-sm italic">Negotiate</span>
+                                        </div>
+                                        <span class="text-gray-600 my-auto">US$6.53</span>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between mx-2">
+                                    <div class="hidden md:block md:basis-1/5"></div>
+                                    <div class="w-full md:basis-4/5 flex justify-between">
+                                        <div class="flex justify-between w-[60%] md:w-[40%]">
+                                            <div class="flex">
+                                                <input id="checkbox-table-search-1" type="radio" name="shipping_address" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                                                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                                                <h2 class="font-semibold text-sm ml-2 truncate">Boflo Afrika</h2>
+                                            </div>
+                                            <span class="font-thin text-orange-400 text-sm italic">Negotiate</span>
+                                        </div>
+                                        <span class="text-gray-600 my-auto">US$7.04</span>
+                                    </div>
+                                </div> --}}
+                                @foreach ($inspectors as $inspector)
+                                    <div class="flex justify-between mx-2">
+                                        <div class="hidden md:block md:basis-1/5"></div>
+                                        <div class="w-full md:basis-4/5 flex justify-between">
+                                            <div class="flex justify-between w-[60%] md:w-[40%]">
+                                                <div class="flex">
+                                                    <input id="checkbox-table-search-1" type="radio" value="{{ $inspector->id }}" name="inspector_id" onchange="updateInspectorSelection()" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                                                    <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                                                    <h2 class="font-semibold text-sm ml-2 truncate">{{$inspector->name}}</h2>
+                                                </div>
+                                                <span class="font-thin text-orange-400 text-sm italic">Negotiate</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        <p class="text-red-600 tracking-tight font-semibold hidden" id="inspection-selection-warning">If no inspector is selected, you will be required to upload your inspection report.</p>
                         <div class="grid md:flex border border-gray-200 rounded-lg px-1 py-1 md:px-2 md:py-2">
                             <div class="basis-1/5 flex gap-2 px-1 md:px-2 text-gray-500">
-                                <input id="request_logistics" type="checkbox" name="request_logistics" checked class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                                <input id="request_logistics" type="checkbox" name="request_logistics" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="request_logistics" class="sr-only">checkbox</label>
                                 <h2 class="font-semibold my-auto">Shipping</h2>
                             </div>
@@ -137,7 +189,7 @@
                                     <div class="w-full md:basis-4/5 flex justify-between">
                                         <div class="flex justify-between w-[50%] md:w-[40%]">
                                             <div class="flex">
-                                                <input id="checkbox-table-search-1" type="radio" name="shipping_address" checked class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                                                <input id="checkbox-table-search-1" type="radio" name="shipping_address" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
                                                 <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
                                                 <h2 class="font-semibold text-sm ml-2 truncate">Arena 1 Logistics</h2>
                                             </div>
@@ -314,6 +366,8 @@
 
     let inspectors = @json($inspectors)
 
+    console.log(products_locations)
+
     $(document).ready(function () {
         total_amount.value = new Intl.NumberFormat().format(total_amount.value)
     })
@@ -322,6 +376,7 @@
         e.preventDefault()
         if ($('#delivery_location').val() == '') {
             $('#location-select-error').removeClass('hidden')
+            $('#delivery-location-section').removeClass('border-gray-200').addClass('border-red-500')
             setTimeout(() => {
                 $('#location-select-error').addClass('hidden')
             }, 3000);
@@ -445,6 +500,10 @@
     //     }
     // }
 
+    function updateInspectorSelection() {
+        $('#inspection-selection-warning').addClass('hidden')
+    }
+
     function initMap() {
         var map = new google.maps.Map(document.getElementById('gmap_markers'), {
             center: {lat: -1.270104, lng: 36.80814},
@@ -484,17 +543,19 @@
             //     }
             // }
 
-            // place.address_components.forEach(component => {
-            //     if (component.types.includes('country')) {
-            //         let selected_country = component.long_name
-            //         console.log(selected_country)
-            //         if (products_locations.includes(selected_country)) {
-            //             console.log('No logistics required')
-            //         } else {
-            //             console.log('Logistics required')
-            //         }
-            //     }
-            // })
+            place.address_components.forEach(component => {
+                if (component.types.includes('country')) {
+                    let selected_country = component.long_name
+                    console.log(selected_country)
+                    if (!products_locations.includes(selected_country)) {
+                        $('#request_inspection').prop('checked', true);
+                        $('#inspection-selection-warning').removeClass('hidden')
+                    } else {
+                        $('#request_inspection').prop('checked', false);
+                        $('#inspection-selection-warning').addClass('hidden')
+                    }
+                }
+            })
 
             document.getElementById('place_id').value = place.place_id
             document.getElementById('delivery_location_place_id').value = place.place_id
@@ -502,6 +563,8 @@
             document.getElementById('delivery_location_lng').value = place.geometry.location.lng()
             document.getElementById('delivery_location').value = place.formatted_address
             document.getElementById('location').innerHTML = place.formatted_address
+
+            $('#delivery-location-section').removeClass('border-red-500').addClass('border-gray-200')
 
             // placeMarker(place.geometry.location);
             // marker.setVisible(true);

@@ -156,4 +156,12 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsToMany(InspectingInstitution::class, 'inspector_users', 'user_id', 'inspector_id');
     }
+
+    /**
+     * Get all of the inspectionReports for the User
+     */
+    public function inspectionReports(): HasMany
+    {
+        return $this->hasMany(InspectionReport::class);
+    }
 }

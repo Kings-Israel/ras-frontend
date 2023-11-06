@@ -43,8 +43,11 @@ class NotificationsList extends Component
 
         $notification->markAsRead();
 
-        return redirect()->route('vendor.orders');
-
+        if (auth()->user()->hasRole('vendor')) {
+            return redirect()->route('vendor.orders');
+        } else {
+            return redirect()->route('invoices.index');
+        }
     }
 
     public function markAllAsRead()
