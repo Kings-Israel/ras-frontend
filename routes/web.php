@@ -55,7 +55,7 @@ Route::group(['prefix' => 'vendor', 'as' => 'vendor.'], function () {
 
 Route::middleware(['auth', 'web', 'phone_verified', 'role:vendor', 'has_registered_business'])->group(function () {
     Route::group(['prefix' => 'vendor/', 'as' => 'vendor.'], function() {
-        Route::get('/', [VendorController::class, 'dashboard'])->name('dashboard');
+        Route::get('/dashboard', [VendorController::class, 'dashboard'])->name('dashboard');
         Route::get('/products', [VendorProductController::class, 'index'])->name('products');
         Route::post('/products/store', [VendorProductController::class, 'store'])->name('products.store');
         Route::get('/{product}/edit', [VendorProductController::class, 'edit'])->name('products.edit');
@@ -71,9 +71,8 @@ Route::middleware(['auth', 'web', 'phone_verified', 'role:vendor', 'has_register
         Route::get('/payments', function () {
             return view('business.payments');
         })->name('payments');
-        Route::get('/warehouses', function () {
-            return view('business.warehouses');
-        })->name('warehouses');
+        Route::get('/warehouses', [VendorController::class, 'warehouses'])->name('warehouses');
+        Route::post('/warehouses/{warehouse}/storage/request', [VendorController::class, 'requestWarehouseStorage'])->name('warehouses.storage.request');
         Route::get('/suppliers', function () {
             return view('business.suppliers');
         })->name('suppliers');
