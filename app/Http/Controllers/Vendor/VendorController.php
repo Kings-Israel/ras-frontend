@@ -12,11 +12,13 @@ use App\Models\FinancingInstitution;
 use App\Models\MeasurementUnit;
 use App\Models\Order;
 use App\Models\RequiredDocumentPerCountry;
+use App\Models\StorageRequest;
 use App\Models\Warehouse;
 use App\Notifications\FinancingRequested;
 use App\Notifications\UpdatedOrder;
 use App\Rules\PhoneNumber;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class VendorController extends Controller
 {
@@ -163,6 +165,34 @@ class VendorController extends Controller
         }
 
         toastr()->success('', 'Order updated successfully');
+
+        return back();
+    }
+
+    public function warehouses()
+    {
+        $warehouses = Warehouse::with(['country', 'city', 'products' => function ($query) {
+                                    $products_ids = auth()->user()->business->products->pluck('id');
+                                    $query->whereIn('id', $products_ids);
+                                }])
+                                ->get();
+
+        $units = MeasurementUnit::all();
+
+        return view('business.warehouses', compact('warehouses', 'units'));
+    }
+
+    public function requestWarehouseStorage(Request $request, Warehouse $warehouse)
+    {
+        StorageRequest::create([
+            'request_code' => explode('-', Str::uuid())[0],
+            'customer_id' => auth()->id(),
+            'warehouse_id' => $warehouse->id,
+            'quantity' => $request->quantity.' '.$request->storage_quantity_unit,
+            'requested_on' => now()
+        ]);
+
+        toastr()->success('', 'Request sent successfully');
 
         return back();
     }
