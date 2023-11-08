@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('warehouse_id');
             $table->unsignedBigInteger('product_id');
-            $table->string('quantity');
+            $table->string('quantity')->nullable();
             $table->enum('status', ['accepted', 'pending', 'confirmed'])->nullable()->default('pending');
             $table->enum('payment_status', ['pending', 'paid'])->nullable()->default('pending');
             $table->timestamps();

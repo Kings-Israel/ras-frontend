@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -84,5 +86,21 @@ class Order extends Model
     public function inspectionRequests(): HasMany
     {
         return $this->hasMany(InspectionRequest::class);
+    }
+
+    public function checkInspectionIsComplete(): DateTime|bool
+    {
+        $last_inspection_report_date = $this->updated_at;
+        foreach ($this->orderItems as $item) {
+            if (!$item->inspectionReport()->exists()) {
+                return false;
+            }
+
+            if (Carbon::parse($item->inspectionReport->created_at)->greaterThan(Carbon::parse($last_inspection_report_date))) {
+                $last_inspection_report_date = $item->inspectionReport->created_at;
+            }
+        }
+
+        return $last_inspection_report_date;
     }
 }

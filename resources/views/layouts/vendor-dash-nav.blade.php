@@ -128,9 +128,9 @@
                 </x-nav-item>
             </li>
             <li>
-                <x-nav-item :href="route('vendor.orders')" :active="request()->routeIs('vendor.orders')">
+                <x-nav-item :href="route('vendor.orders')" :active="request()->routeIs('vendor.orders') || request()->routeIs('vendor.orders.*')">
                     {{-- <i class="w-5 h-5 fas fa-shopping-bag"></i> --}}
-                    @if (request()->routeIs('vendor.orders'))
+                    @if (request()->routeIs('vendor.orders') || request()->routeIs('vendor.orders.*'))
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="27" height="26" viewBox="0 0 27 26">
                             <defs>
                             <style>

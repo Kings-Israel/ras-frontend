@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Business;
 use App\Models\Invoice;
+use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\Warehouse;
+use App\Models\WarehouseOrder;
+use App\Models\WarehouseProduct;
 use App\Notifications\NewOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -72,11 +76,42 @@ class OrderController extends Controller
                 $item_quantity_measurement_unit = collect($request->items_quantities_measurement_units)->filter(function ($value, $key) use ($item) { return $key == $item->id; });
                 $item_price = collect($request->items_prices)->filter(function ($value, $key) use ($item) { return $key == $item->id; });
 
-                $order->orderItems()->create([
+                $order_item = OrderItem::create([
+                    'order_id' => $order->id,
                     'product_id' => $item->id,
                     'quantity' => collect($item_quantity)->first().' '.collect($item_quantity_measurement_unit)->first(),
                     'amount' => collect($item_price)->first(),
                 ]);
+
+                $warehouse_products = WarehouseProduct::where('product_id', $item->id)->get()->pluck('warehouse_id');
+
+                if ($warehouse_products->count() > 0) {
+                    // Find nearest warehouse to the user
+                    $warehouse = Warehouse::whereIn('id', $warehouse_products)
+                                            ->get()
+                                            // Filter by distance between warehouse and customer
+                                            ->each(function ($warehouse) use ($request) {
+                                                $warehouse_location = Http::get('https://maps.googleapis.com/maps/api/distancematrix/json?origins='.$warehouse->latitude.','.$warehouse->longitude.'&destinations='.$request->delivery_location_lat.','.$request->delivery_location_lng.'&key='.config('services.maps.partial_key'));
+
+                                                if (json_decode($warehouse_location)->rows[0]->elements[0]->status != "NOT_FOUND") {
+                                                    $distance = json_decode($warehouse_location)->rows[0]->elements[0]->distance->text;
+                                                    $warehouse['distance'] = $distance;
+                                                }
+                                            })
+                                            // Order by distance
+                                            ->sortBy([
+                                                fn($a, $b) => (double) explode(' ', $a['distance'])[0] < (double) explode(' ',$b['distance'])[0],
+                                             ])
+                                            //  Get first warehouse
+                                            ->first();
+
+                    WarehouseOrder::create([
+                        'order_id' => $order->id,
+                        'order_item_id' => $order_item->id,
+                        'warehouse_id' => $warehouse->id
+                    ]);
+                }
+
             }
 
             if ($request->has('request_inspection')) {
