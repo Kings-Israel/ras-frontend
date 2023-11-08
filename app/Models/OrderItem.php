@@ -41,4 +41,12 @@ class OrderItem extends Model
     {
         return $this->hasOne(InspectionReport::class);
     }
+
+    /**
+     * Get the warehouseOrder associated with the OrderItem
+     */
+    public function warehouseOrder(): HasOne
+    {
+        return $this->hasOne(WarehouseOrder::class);
+    }
 }

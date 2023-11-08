@@ -5,6 +5,11 @@
         <link rel="stylesheet" href="{{asset('assets/vendor/libs/tagify/tagify.css')}}" />
         <link rel="stylesheet" href="{{asset('assets/vendor/libs/flatpickr/flatpickr.css')}}" />
         <link rel="stylesheet" href="{{asset('assets/vendor/libs/formvalidation/dist/css/formValidation.min.css')}}" />
+        <style>
+            [x-cloak] {
+                display: none;
+            }
+        </style>
     @endsection
     <!-- Page Heading -->
     <x-page-nav-header main-title="Products" sub-title="All Your Products Are Here..." />
@@ -49,14 +54,14 @@
         <script src="{{asset('assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js')}}"></script>
         <script src="{{ asset('assets/js/product-wizard.js') }}"></script>
         <script>
-            function showCapacityInput() {
-                let selected_warehouse = $('#link_to_warehouse').find(':selected').val()
-                if (selected_warehouse === '') {
-                    $('#product_capacity').addClass('hidden')
-                } else {
-                    $('#product_capacity').removeClass('hidden')
-                }
-            }
+            // function showCapacityInput() {
+            //     let selected_warehouse = $('#link_to_warehouse').find(':selected').val()
+            //     if (selected_warehouse === '') {
+            //         $('#product_capacity').addClass('hidden')
+            //     } else {
+            //         $('#product_capacity').removeClass('hidden')
+            //     }
+            // }
             function enterCustom(value, element_id) {
                 if (value.checked) {
                     $('#'+element_id).addClass('hidden')
@@ -72,8 +77,108 @@
                     $('#custom_'+element_id).removeClass('block')
                 }
             }
+
             function setInput(input) {
                 $('#'+input).val($('#custom_'+input).val())
+            }
+
+            function dropdown() {
+                return {
+                    options: [],
+                    selected: [],
+                    show: false,
+                    open() { this.show = true },
+                    close() { this.show = false },
+                    isOpen() { return this.show === true },
+                    select(index, event) {
+                        if (!this.options[index].selected) {
+
+                            this.options[index].selected = true;
+                            this.options[index].element = event.target;
+                            this.selected.push(index);
+
+                        } else {
+                            this.selected.splice(this.selected.lastIndexOf(index), 1);
+                            this.options[index].selected = false
+                        }
+                    },
+                    remove(index, option) {
+                        this.options[option].selected = false;
+                        this.selected.splice(index, 1);
+                    },
+                    loadOptions() {
+                        const options = document.getElementById('select').options;
+                        for (let i = 0; i < options.length; i++) {
+                            this.options.push({
+                                value: options[i].value,
+                                text: options[i].innerText,
+                                selected: options[i].getAttribute('selected') != null ? options[i].getAttribute('selected') : false
+                            });
+                        }
+                    },
+                    selectedValues(){
+                        return this.selected.map((option)=>{
+                            return this.options[option].value;
+                        })
+                    }
+                }
+            }
+
+            let selected_warehouses = []
+            function getSelectedWarehouses(product) {
+                let warehouses = product.warehouses
+
+                warehouses.forEach(warehouse => {
+                    selected_warehouses.push(warehouse.id)
+                });
+            }
+
+            function updateWarehouses(product) {
+                let warehouses = product.warehouses
+
+                warehouses.forEach(warehouse => {
+                    selected_warehouses.push(warehouse.id)
+                });
+
+                console.log(selected_warehouses)
+                return {
+                    options: [],
+                    selected: [...selected_warehouses],
+                    show: false,
+                    open() { this.show = true },
+                    close() { this.show = false },
+                    isOpen() { return this.show === true },
+                    select(index, event) {
+                        if (!this.options[index].selected) {
+                            this.options[index].selected = true;
+                            this.options[index].element = event.target;
+                            this.selected.push(index);
+
+                        } else {
+                            this.selected.splice(this.selected.lastIndexOf(index), 1);
+                            this.options[index].selected = false
+                        }
+                    },
+                    remove(index, option) {
+                        this.options[option].selected = false;
+                        this.selected.splice(index, 1);
+                    },
+                    loadOptions() {
+                        const options = document.getElementById('select').options;
+                        for (let i = 0; i < options.length; i++) {
+                            this.options.push({
+                                value: options[i].value,
+                                text: options[i].innerText,
+                                selected: options[i].getAttribute('selected') != null ? options[i].getAttribute('selected') : false
+                            });
+                        }
+                    },
+                    selectedValues(){
+                        return this.selected.map((option)=>{
+                            return this.options[option].value;
+                        })
+                    }
+                }
             }
         </script>
     @endpush

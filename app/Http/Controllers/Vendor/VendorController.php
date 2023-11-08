@@ -146,6 +146,8 @@ class VendorController extends Controller
 
     public function order(Order $order)
     {
+        $order->load('orderItems.product', 'orderItems.warehouseOrder', 'user');
+        
         return view('business.order', compact('order'));
     }
 
@@ -173,7 +175,7 @@ class VendorController extends Controller
     {
         $warehouses = Warehouse::with(['country', 'city', 'products' => function ($query) {
                                     $products_ids = auth()->user()->business->products->pluck('id');
-                                    $query->whereIn('id', $products_ids);
+                                    $query->whereIn('products.id', $products_ids);
                                 }])
                                 ->get();
 

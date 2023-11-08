@@ -87,10 +87,10 @@
                                 </ol>
                                 <ol class="flex justify-between items-center ml-5 mr-5 w-[96%]">
                                     <li>
-                                        <span class="text-gray-400 font-bold">March 23</span>
+                                        <span class="text-gray-400 font-bold">{{ $order->updated_at->format('M d') }}</span>
                                     </li>
                                     <li>
-                                        <span class="text-gray-400 font-bold">April 01</span>
+                                        <span class="text-gray-400 font-bold">{{ $order->checkInspectionIsComplete() ? Carbon\Carbon::parse($order->checkInspectionIsComplete())->format('M d') : '' }}</span>
                                     </li>
                                     <li>
                                         <span class="text-gray-400 font-bold">April 15</span>
@@ -110,14 +110,20 @@
             <div class="grid grid-cols-3 gap-2 mt-2">
                 <div class="col-span-2 border border-gray-200 rounded-md bg-white p-2">
                     <h2 class="font-bold text-lg">Order Items</h2>
-                    <div class="grid grid-cols-3 gap-2 w-full">
+                    <div class="grid grid-cols-4 gap-2 w-full">
                         <span class="font-bold">Item</span>
+                        <span class="font-bold">Warehouse</span>
                         <span class="font-bold">Order Quantity</span>
                         <span class="text-end font-bold">Amount</span>
                     </div>
                     @foreach ($order->orderItems as $item)
-                        <div class="grid grid-cols-3 gap-2 w-full border-b-2 ">
+                        <div class="grid grid-cols-4 gap-2 w-full border-b-2 ">
                             <span class="font-semibold text-lg text-gray-800">{{ $item->product->name }}</span>
+                            @if ($item->warehouseOrder()->exists())
+                                <span class="font-semibold truncate text-lg text-gray-800">{{ $item->warehouseOrder->warehouse->name }}, {{ $item->warehouseOrder->warehouse->country->name }}</span>
+                            @else
+                                <span class="font-semibold text-red-400 truncate text-lg">No Warehouse Selected</span>
+                            @endif
                             <span class="font-semibold text-gray-600">{{ $item->quantity }}</span>
                             <span class="font-semibold text-lg text-gray-700 text-end">{{ $item->product->currency }} {{ $item->product->price ? number_format($item->product->price) : number_format($item->product->min_price) }}</span>
                         </div>

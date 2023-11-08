@@ -38,10 +38,18 @@ class Warehouse extends Model
     }
 
     /**
-     * Get all of the products for the Warehouse
+     * The products that belong to the Warehouse
      */
-    public function products(): HasMany
+    public function products(): BelongsToMany
     {
-        return $this->hasMany(Product::class);
+        return $this->belongsToMany(Product::class, 'warehouse_products', 'warehouse_id', 'product_id');
+    }
+
+    /**
+     * Get all of the warehouseOrders for the Warehouse
+     */
+    public function warehouseOrders(): HasMany
+    {
+        return $this->hasMany(WarehouseOrder::class);
     }
 }

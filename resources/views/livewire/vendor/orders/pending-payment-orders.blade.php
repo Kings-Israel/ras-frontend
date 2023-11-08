@@ -26,6 +26,7 @@
                 <th scope="col" class="px-2 py-3 text-gray-900">
                     Amount
                 </th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -53,7 +54,10 @@
                         {{ Str::title($order->status) }}
                     </td>
                     <td class="px-2 py-2 text-gray-600">
-                        Ksh.{{ number_format($order->invoice->total_amount) }}
+                        {{ number_format($order->invoice->total_amount) }}
+                    </td>
+                    <td>
+                        <a href="{{ route('vendor.orders.show', $order) }}" class="bg-primary-one px-2 py-1 text-white rounded-md hover:bg-orange-400 transition duration-150 ease-in-out">View</a>
                     </td>
                 </tr>
             @endforeach

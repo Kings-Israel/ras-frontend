@@ -116,11 +116,11 @@ class Product extends Model implements Searchable
     }
 
     /**
-     * Get the warehouse that owns the Product
+     * The warehouses that belong to the Product
      */
-    public function warehouse(): BelongsTo
+    public function warehouses(): BelongsToMany
     {
-        return $this->belongsTo(Warehouse::class);
+        return $this->belongsToMany(Warehouse::class, 'warehouse_products', 'product_id', 'warehouse_id');
     }
 
     /**

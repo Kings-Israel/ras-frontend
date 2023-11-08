@@ -66,17 +66,17 @@
             </div>
         </div>
         <div class="basis-5/6 space-y-2">
-            <div class="hidden md:grid md:grid-cols-1 lg:grid-cols-2 4xl:flex">
-                <div class="4xl:basis-1/2">
+            <div @auth class="hidden md:grid md:grid-cols-2 lg:grid-cols-3" @else class="hidden md:grid md:grid-cols-2 lg:grid-cols-2" @endauth>
+                <div class="">
                     <div class="md:flex gap-1">
                         <h3 class="font-bold text-lg text-gray-600">New Buying Leads</h3>
-                        <h4 class="font-thin text-lg">(12)</h4>
+                        <h4 class="text-lg">(12)</h4>
                     </div>
                     <div class="relative" id="default-carousel" data-carousel="static">
                         <div class="relative overflow-hidden rounded-lg h-40">
                             <div class="hidden" data-carousel-item>
-                                <div class="grid grid-cols-3 space-x-1 ml-2 mr-2 pl-10 border border-gray-300 rounded-md p-5 h-40 min-h-[128px]">
-                                    <div class="space-y-6 w-32 my-auto">
+                                <div class="grid grid-cols-2 space-x-1 ml-2 mr-2 pl-10 border border-gray-300 rounded-md p-5 h-40 min-h-[128px]">
+                                    <div class="space-y-6 w-40 my-auto">
                                         <div class="flex gap-2">
                                             <img src="https://flagcdn.com/w40/ug.png" srcset="https://flagcdn.com/w40/ug.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
                                             <div class="my-auto">
@@ -86,7 +86,7 @@
                                         </div>
                                         <h4 class="text-sm text-gray-500">We Buy Crude Oil</h4>
                                     </div>
-                                    <div class="space-y-6 w-32 my-auto">
+                                    <div class="space-y-6 w-40 my-auto">
                                         <div class="flex gap-2">
                                             <img src="https://flagcdn.com/w40/ng.png" srcset="https://flagcdn.com/w40/ng.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
                                             <div class="my-auto">
@@ -96,7 +96,7 @@
                                         </div>
                                         <h4 class="text-sm text-gray-500 whitespace-normal">We Buy Refined Coconut Oil</h4>
                                     </div>
-                                    <div class="space-y-6 w-32 my-auto">
+                                    {{-- <div class="space-y-6 w-32 my-auto">
                                         <div class="flex gap-2">
                                             <img src="https://flagcdn.com/w40/ke.png" srcset="https://flagcdn.com/w40/ke.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
                                             <div class="my-auto">
@@ -105,12 +105,12 @@
                                             </div>
                                         </div>
                                         <h4 class="text-sm text-gray-500">We Buy Palm Oil</h4>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                             <div class="hidden" data-carousel-item>
-                                <div class="grid grid-cols-3 space-x-1 ml-2 mr-2 pl-10 border border-gray-300 rounded-md p-5 h-40 min-h-[128px]">
-                                    <div class="space-y-6 pr-2 w-32 my-auto">
+                                <div class="grid grid-cols-2 space-x-1 ml-2 mr-2 pl-10 border border-gray-300 rounded-md p-5 h-40 min-h-[128px]">
+                                    <div class="space-y-6 pr-2 w-40 my-auto">
                                         <div class="flex gap-2">
                                             <img src="https://flagcdn.com/w40/tz.png" srcset="https://flagcdn.com/w40/tz.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
                                             <div class="my-auto">
@@ -120,7 +120,7 @@
                                         </div>
                                         <h4 class="text-sm text-gray-500">We Buy Crude Oil</h4>
                                     </div>
-                                    <div class="space-y-6 pr-2 w-32 my-auto">
+                                    <div class="space-y-6 pr-2 w-40 my-auto">
                                         <div class="flex gap-2">
                                             <img src="https://flagcdn.com/w40/za.png" srcset="https://flagcdn.com/w40/za.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
                                             <div class="my-auto">
@@ -130,7 +130,7 @@
                                         </div>
                                         <h4 class="text-sm text-gray-500 whitespace-normal">We Buy Refined Coconut Oil</h4>
                                     </div>
-                                    <div class="space-y-6 w-32 my-auto">
+                                    {{-- <div class="space-y-6 w-32 my-auto">
                                         <div class="flex gap-2">
                                             <img src="https://flagcdn.com/w40/et.png" srcset="https://flagcdn.com/w40/et.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
                                             <div class="my-auto">
@@ -139,7 +139,7 @@
                                             </div>
                                         </div>
                                         <h4 class="text-sm text-gray-500">We Buy Palm Oil</h4>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>
@@ -158,15 +158,15 @@
                         </button>
                     </div>
                 </div>
-                <div class="4xl:basis-1/2">
+                <div class="">
                     <div class="flex gap-1">
                         <h3 class="font-bold text-lg text-gray-600">New Selling Leads</h3>
-                        <h4 class="font-thin text-lg">(387)</h4>
+                        <h4 class="text-lg">(387)</h4>
                     </div>
                     <div class="relative" id="default-carousel" data-carousel="static">
                         <div class="relative overflow-hidden rounded-lg h-40">
                             <div class="hidden" data-carousel-item>
-                                <div class="grid grid-cols-3 space-x-1 ml-2 mr-2 pl-10 border border-gray-300 h-40 min-h-[128px] rounded-md p-5">
+                                <div class="grid grid-cols-2 space-x-1 ml-2 mr-2 pl-10 border border-gray-300 h-40 min-h-[128px] rounded-md p-5">
                                     <div class="space-y-6 w-32 my-auto">
                                         <div class="flex gap-2">
                                             <img src="https://flagcdn.com/w40/gh.png" srcset="https://flagcdn.com/w40/gh.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
@@ -177,7 +177,7 @@
                                         </div>
                                         <h4 class="text-sm text-gray-500">We Sell Oil</h4>
                                     </div>
-                                    <div class="space-y-6 w-32 my-auto">
+                                    <div class="space-y-6 w-40 my-auto">
                                         <div class="flex gap-2">
                                             <img src="https://flagcdn.com/w40/cd.png" srcset="https://flagcdn.com/w40/cd.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
                                             <div class="my-auto">
@@ -187,7 +187,7 @@
                                         </div>
                                         <h4 class="text-sm text-gray-500 whitespace-normal">We Sell Diamonds</h4>
                                     </div>
-                                    <div class="space-y-6 w-32 my-auto">
+                                    {{-- <div class="space-y-6 w-16 my-auto">
                                         <div class="flex gap-2">
                                             <img src="https://flagcdn.com/w40/na.png" srcset="https://flagcdn.com/w40/na.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
                                             <div class="my-auto">
@@ -196,12 +196,12 @@
                                             </div>
                                         </div>
                                         <h4 class="text-sm text-gray-500">We Sell Palm Oil</h4>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                             <div class="hidden" data-carousel-item>
-                                <div class="grid grid-cols-3 space-x-1 ml-2 mr-2 pl-10 border border-gray-300 rounded-md p-5 h-40 min-h-[128px]">
-                                    <div class="space-y-6 pr-2 w-32 my-auto">
+                                <div class="grid grid-cols-2 space-x-1 ml-2 mr-2 pl-10 border border-gray-300 rounded-md p-5 h-40 min-h-[128px]">
+                                    <div class="space-y-6 pr-2 w-40 my-auto">
                                         <div class="flex gap-2">
                                             <img src="https://flagcdn.com/w40/rw.png" srcset="https://flagcdn.com/w40/rw.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
                                             <div class="my-auto">
@@ -211,7 +211,7 @@
                                         </div>
                                         <h4 class="text-sm text-gray-500">We Sell Gold</h4>
                                     </div>
-                                    <div class="space-y-6 pr-2 w-32 my-auto">
+                                    <div class="space-y-6 pr-2 w-40 my-auto">
                                         <div class="flex gap-2">
                                             <img src="https://flagcdn.com/w40/za.png" srcset="https://flagcdn.com/w40/za.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
                                             <div class="my-auto">
@@ -221,7 +221,7 @@
                                         </div>
                                         <h4 class="text-sm text-gray-500 whitespace-normal">We Sell Bananas</h4>
                                     </div>
-                                    <div class="space-y-6 w-32 my-auto">
+                                    {{-- <div class="space-y-6 w-16 my-auto">
                                         <div class="flex gap-2">
                                             <img src="https://flagcdn.com/w40/et.png" srcset="https://flagcdn.com/w40/et.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
                                             <div class="my-auto">
@@ -230,7 +230,7 @@
                                             </div>
                                         </div>
                                         <h4 class="text-sm text-gray-500">We Sell Palm Oil</h4>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>
@@ -250,7 +250,7 @@
                     </div>
                 </div>
                 @auth
-                    <div class="hidden 4xl:block 4xl:basis-1/3">
+                    <div class="col-span-1 md:col-span-2 lg:col-span-1">
                         <div class="flex gap-1">
                             <h3 class="font-semibold text-lg">Your Buying Requests</h3>
                         </div>
