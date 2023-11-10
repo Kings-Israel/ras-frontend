@@ -95,7 +95,7 @@ class Order extends Model
             if (!$item->inspectionReport()->exists()) {
                 return false;
             }
-
+            
             if (Carbon::parse($item->inspectionReport->created_at)->greaterThan(Carbon::parse($last_inspection_report_date))) {
                 $last_inspection_report_date = $item->inspectionReport->created_at;
             }

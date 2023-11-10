@@ -347,7 +347,7 @@
                 </div>
                 <x-primary-button class="w-full my-2 py-2" type="submit" id="submit-cart">
                     <span class="tracking-tight">
-                        Checkout
+                        Request For Quotation
                     </span>
                 </x-primary-button>
             </div>
@@ -367,8 +367,6 @@
     let products_locations = @json($products_locations)
 
     let inspectors = @json($inspectors)
-
-    console.log(products_locations)
 
     $(document).ready(function () {
         total_amount.value = new Intl.NumberFormat().format(total_amount.value)
