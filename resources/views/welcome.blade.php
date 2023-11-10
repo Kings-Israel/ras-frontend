@@ -257,7 +257,7 @@
                         <div class="bg-gray-200 rounded-md p-2">
                             <div class="flex gap-2 w-full justify-end">
                                 <h6 class="text-sm">Email:</h6>
-                                <h6 class="text-sm font-bold">oolooaloo@dist.co.ke</h6>
+                                <h6 class="text-sm font-bold">{{ auth()->user()->email }}</h6>
                                 <i class="fas fa-chevron-down text-sm"></i>
                             </div>
                             <textarea name="" rows="3" class="w-full border border-gray-300 rounded-lg placeholder-gray-400" placeholder="Enter Your Message Here..."></textarea>
