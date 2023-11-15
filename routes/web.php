@@ -42,8 +42,9 @@ Route::middleware(['auth', 'web', 'phone_verified'])->group(function () {
 
     Route::get('/invoices', [OrderController::class, 'index'])->name('invoices.index');
     Route::get('/invoices/{invoice}/orders', [OrderController::class, 'orders'])->name('invoice.orders');
+    Route::get('/invoices/{invoice}/financing/request', [OrderController::class, 'requestFinancing'])->name('invoice.financing.request');
     Route::post('/order/create', [OrderController::class, 'store'])->name('order.store');
-
+    Route::get('/order/quotation/{quotation}/update/{status}', [OrderController::class, 'updateQuotation'])->name('order.quotation.update');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
@@ -64,6 +65,7 @@ Route::middleware(['auth', 'web', 'phone_verified', 'role:vendor', 'has_register
         Route::get('/orders/{order}', [VendorController::class, 'order'])->name('orders.show');
         Route::get('/orders/{order}/{status}/update', [VendorController::class, 'orderUpdate'])->name('orders.status.update');
         Route::post('/orders/{order}/quote/update', [VendorController::class, 'quoteUpdate'])->name('orders.quote.update');
+        Route::get('/orders/{order}/quotes/accept', [VendorController::class, 'acceptQuotes'])->name('orders.quotes.accept');
         Route::get('/messages', [ChatController::class, 'index'])->name('messages');
         Route::get('/messages/chat', [ChatController::class, 'view'])->name('messages.chat');
         Route::get('/customers', function () {

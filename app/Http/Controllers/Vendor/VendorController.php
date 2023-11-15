@@ -11,10 +11,12 @@ use App\Models\Document;
 use App\Models\FinancingInstitution;
 use App\Models\MeasurementUnit;
 use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\RequiredDocumentPerCountry;
 use App\Models\StorageRequest;
 use App\Models\Warehouse;
 use App\Notifications\FinancingRequested;
+use App\Notifications\QuotationAdded;
 use App\Notifications\UpdatedOrder;
 use App\Rules\PhoneNumber;
 use Illuminate\Http\Request;
@@ -226,9 +228,32 @@ class VendorController extends Controller
                 'amount' => collect($item_price)->first(),
                 'delivery_date' => $request->delivery_date,
             ]);
+
+            $order_item = OrderItem::find($item);
+
+            $order_item->order->user->notify(new QuotationAdded($order_item->load('order.user', 'order.invoice')));
         }
 
         toastr()->success('Quotation sent successfully');
+
+        return back();
+    }
+
+    public function acceptQuotes(Order $order)
+    {
+        foreach ($order->orderItems as $item) {
+            $item->update([
+                'status' => 'accepted',
+            ]);
+        }
+
+        $order->update([
+            'status' => 'accepted',
+        ]);
+
+        $order->user->notify(new UpdatedOrder($order, 'pending'));
+
+        toastr()->success('', 'Order updated successfully');
 
         return back();
     }

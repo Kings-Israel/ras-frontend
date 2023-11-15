@@ -3,17 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Business;
+use App\Models\FinancingInstitution;
 use App\Models\InspectingInstitution;
 use App\Models\InspectionRequest;
 use App\Models\Invoice;
 use App\Models\LogisticsCompany;
+use App\Models\Order;
 use App\Models\OrderDeliveryRequest;
 use App\Models\OrderItem;
 use App\Models\OrderStorageRequest;
 use App\Models\Product;
+use App\Models\QuotationRequestResponse;
 use App\Models\Warehouse;
 use App\Models\WarehouseOrder;
 use App\Models\WarehouseProduct;
+use App\Notifications\FinancingRequested;
 use App\Notifications\NewOrder;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -125,7 +129,7 @@ class OrderController extends Controller
                     ]);
                 }
 
-                $inspection_requests = collect($request->inspection_requests)->filter(function ($value, $key) use ($item) { return $key == $item->id; });
+                $inspection_requests = collect($request->request_inspection)->filter(function ($value, $key) use ($item) { return $key == $item->id; });
 
                 if (count($inspection_requests) > 0) {
                     $inspectors = InspectingInstitution::all();
@@ -138,7 +142,7 @@ class OrderController extends Controller
                     });
                 }
 
-                $shipping_requests = collect($request->shipping_requests)->filter(function ($value, $key) use ($item) { return $key == $item->id; });
+                $shipping_requests = collect($request->request_logistics)->filter(function ($value, $key) use ($item) { return $key == $item->id; });
 
                 if (count($shipping_requests) > 0) {
                     $logistics = LogisticsCompany::all();
@@ -188,5 +192,68 @@ class OrderController extends Controller
         toastr()->success('', 'Order(s) created successfully and vendor(s) have been notified');
 
         return redirect()->route('invoice.orders', ['invoice' => $invoice]);
+    }
+
+    public function updateQuotation(QuotationRequestResponse $quotation, $status)
+    {
+        $order_item = OrderItem::find($quotation->order_item_id);
+
+        if (!$order_item) {
+            toastr()->error('', 'The Order Item does not exist');
+            return back();
+        }
+
+        $order_item->update([
+            'quantity' => $quotation->quantity,
+            'amount' => $quotation->amount,
+            'delivery_date' => $quotation->delivery_date
+        ]);
+
+        $quotation->update([
+            'status' => $status
+        ]);
+
+        // Delete Other quotation requests
+        QuotationRequestResponse::where('order_item_id', $order_item->id)->where('id', '!=', $quotation->id)->delete();
+
+        // Check for other items and quotation requests for the order
+        // If all quotation requests are accepted, then update the order to pending
+        $order_items = OrderItem::where('order_id', $order_item->order_id)
+                                    ->where(function ($query) {{
+                                        $query->where('status', 'pending')
+                                                ->orWhere('status', 'rejected');
+                                     }})
+                                    ->count();
+
+        if ($order_items <= 0) {
+            Order::where('id', $order_item->order_id)->first()->update([
+                'status' => 'pending',
+            ]);
+        }
+
+        activity()->causedBy(auth()->user())->performedOn($quotation)->log('accepted quotation for order item '.$order_item->product->name.' for order '.$order_item->order->order_id);
+
+        toastr()->success('', 'Quotation accepted successfully');
+
+        return back();
+    }
+
+    public function requestFinancing(Invoice $invoice)
+    {
+        $financiers = FinancingInstitution::with('users')->get();
+
+        foreach($financiers as $financier) {
+            $invoice->financingRequest()->create([
+                'financing_institution_id' => $financier->id
+            ]);
+
+            foreach ($financier->users as $user) {
+                $user->notify(new FinancingRequested($invoice));
+            }
+        }
+
+        toastr()->success('', 'Financing Request sent successfully');
+
+        return back();
     }
 }

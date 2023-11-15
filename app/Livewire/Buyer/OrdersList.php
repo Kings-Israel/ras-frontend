@@ -43,11 +43,12 @@ class OrdersList extends Component
                 $quantity = explode(' ', $order_item->quantity)[0];
                 $total_amount += $order_item->amount * $quantity;
                 if ($order_item->inspectionRequest()->where('cost', '!=', NULL)->exists()) {
-                    $inspection_cost += $order->inspectionRequests()->where('cost', '!=', NULL)->first()->cost ? $order->inspectionRequests()->where('cost', '!=', NULL)->first()->cost : 0;
+                    $inspection_cost += $order_item->inspectionRequest->cost;
+                    $total_amount += $order_item->inspectionRequest->cost;
                 }
             }
         }
 
-        return view('livewire.buyer.orders-list', compact('orders', 'total_amount'));
+        return view('livewire.buyer.orders-list', compact('orders', 'total_amount', 'inspection_cost'));
     }
 }

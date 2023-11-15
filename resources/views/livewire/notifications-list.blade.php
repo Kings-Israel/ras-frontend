@@ -20,6 +20,11 @@
                             <span class="font-semibold text-lg">Your order was updated <strong>{{ $notification['data']['order']['order_id'] }}</strong></span>
                         </li>
                     @endif
+                    @if ($notification->type == 'App\\Notifications\\QuotationAdded')
+                        <li class="hover:bg-gray-100 hover:cursor-pointer text-left p-2" wire:click="goToOrders({{ $notification }})">
+                            <span class="font-semibold text-lg">New Quotation added for the order <strong>{{ $notification['data']['order_item']['order']['order_id'] }}</strong></span>
+                        </li>
+                    @endif
                 @endforeach
             </ul>
         </div>

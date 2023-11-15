@@ -87,7 +87,7 @@
                                         <div class="flex gap-2 px-1 md:px-2 text-gray-500">
                                             <input id="request_inspection" type="checkbox" name="request_inspection[{{ $item->product->id }}]" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
                                             <label for="request_inspection" class="sr-only">checkbox</label>
-                                            <h2 class="font-semibold my-auto">Request Inpection</h2>
+                                            <h2 class="font-semibold my-auto">Request Inspection</h2>
                                         </div>
                                         <div class="flex gap-2 px-1 md:px-2 text-gray-500">
                                             <input id="request_logistics" type="checkbox" name="request_logistics[{{ $item->product->id }}]" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">

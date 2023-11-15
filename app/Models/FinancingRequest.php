@@ -24,4 +24,12 @@ class FinancingRequest extends Model
     {
         return $this->belongsTo(Invoice::class);
     }
+
+    /**
+     * Get the financingInstitution that owns the FinancingRequest
+     */
+    public function financingInstitution(): BelongsTo
+    {
+        return $this->belongsTo(FinancingInstitution::class);
+    }
 }
