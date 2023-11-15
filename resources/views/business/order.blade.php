@@ -198,7 +198,7 @@
                             <span class="col-span-3">
                                 @if ($item->quotationResponses->count() > 0)
                                     <div class="border-2 border-gray-400 rounded-md p-1">
-                                        <h4 class="font-bold">Your Quotations</h4>
+                                        <h4 class="font-bold">Quotations</h4>
                                         @foreach ($item->quotationResponses as $response)
                                             @if ($response->user_id == auth()->id())
                                                 <div class="grid grid-cols-3 gap-2 w-full bg-yellow-200 p-2 rounded-md">
@@ -210,7 +210,10 @@
                                                 <div class="grid grid-cols-3 gap-2 w-full p-2 rounded-md">
                                                     <span>{{ $response->quantity }} {{ explode(' ', $response->orderItem->product->min_order_quantity)[1] }}</span>
                                                     <span>{{ $response->delivery_date->format('d M Y') }}</span>
-                                                    <span class="text-end">{{ $response->amount }}</span>
+                                                    <span class="text-end">
+                                                        {{ $response->orderItem->product->business->global_currency ? $response->orderItem->product->business->global_currency : 'USD'}}
+                                                        {{ $response->amount }}
+                                                    </span>
                                                 </div>
                                             @endif
                                         @endforeach

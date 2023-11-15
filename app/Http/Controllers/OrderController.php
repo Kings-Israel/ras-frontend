@@ -204,17 +204,18 @@ class OrderController extends Controller
         }
 
         $order_item->update([
-            'quantity' => $quotation->quantity,
+            'quantity' => $quotation->quantity.' '.explode(' ', $order_item->product->min_order_quantity)[1],
             'amount' => $quotation->amount,
-            'delivery_date' => $quotation->delivery_date
+            'delivery_date' => $quotation->delivery_date,
+            'status' => 'accepted'
         ]);
 
-        $quotation->update([
-            'status' => $status
-        ]);
+        // $quotation->update([
+        //     'status' => $status
+        // ]);
 
         // Delete Other quotation requests
-        QuotationRequestResponse::where('order_item_id', $order_item->id)->where('id', '!=', $quotation->id)->delete();
+        QuotationRequestResponse::where('order_item_id', $order_item->id)->delete();
 
         // Check for other items and quotation requests for the order
         // If all quotation requests are accepted, then update the order to pending
@@ -222,18 +223,20 @@ class OrderController extends Controller
                                     ->where(function ($query) {{
                                         $query->where('status', 'pending')
                                                 ->orWhere('status', 'rejected');
-                                     }})
+                                    }})
                                     ->count();
 
         if ($order_items <= 0) {
-            Order::where('id', $order_item->order_id)->first()->update([
+            Order::where('id', $order_item->order_id)
+            ->first()
+            ->update([
                 'status' => 'pending',
             ]);
         }
 
         activity()->causedBy(auth()->user())->performedOn($quotation)->log('accepted quotation for order item '.$order_item->product->name.' for order '.$order_item->order->order_id);
 
-        toastr()->success('', 'Quotation accepted successfully');
+        toastr()->success('', 'Quotation updated successfully');
 
         return back();
     }

@@ -203,6 +203,16 @@
                             <h3 class="font-bold text-xl text-gray-600 my-auto">USD</h3>
                             <span class="font-bold text-xl text-gray-800">{{ number_format($inspection_cost) }}</span>
                         </div>
+                        <h4 class="text-md font-semibold text-gray-500">Total Shipping Cost:</h4>
+                        <div class="flex gap-1">
+                            <h3 class="font-bold text-xl text-gray-600 my-auto">USD</h3>
+                            <span class="font-bold text-xl text-gray-800">{{ 0 }}</span>
+                        </div>
+                        <h4 class="text-md font-semibold text-gray-500">Total Warehousing Cost:</h4>
+                        <div class="flex gap-1">
+                            <h3 class="font-bold text-xl text-gray-600 my-auto">USD</h3>
+                            <span class="font-bold text-xl text-gray-800">{{ 0 }}</span>
+                        </div>
                         {{-- @if ($inspection_cost > 0)
                             <div class="flex gap-2">
                                 <h4 class="text-sm font-semibold text-gray-400 my-auto">Inspection Cost:</h4>
@@ -228,6 +238,11 @@
                         <h4 class="text-sm font-semibold text-gray-500">Financing Request Status</h4>
                         <h3 class="font-bold text-xl text-gray-600 my-auto">{{ Str::title($invoice->financingRequest->status) }}</h3>
                     </div>
+                @endif
+                @if ($invoice->canRequestFinancing() && !$invoice->financingRequest)
+                    <a href="#">
+                        <x-primary-button class="w-full p-3 font-extrabold tracking-wide text-lg mt-2">Pay for Orders</x-primary-button>
+                    </a>
                 @endif
             </div>
         </div>
