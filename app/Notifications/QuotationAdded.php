@@ -2,20 +2,20 @@
 
 namespace App\Notifications;
 
-use App\Models\Invoice;
+use App\Models\OrderItem;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class FinancingRequested extends Notification
+class QuotationAdded extends Notification
 {
     use Queueable;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(public Invoice $invoice)
+    public function __construct(public OrderItem $order_item)
     {
         //
     }
@@ -27,7 +27,7 @@ class FinancingRequested extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['database'];
     }
 
     /**
@@ -36,9 +36,9 @@ class FinancingRequested extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->greeting('Hello, '.$notifiable->first_name)
-                    ->line('A new financing request has been made for the invoice '.$this->invoice->invoice_id)
-                    ->action('Click to View Details', url('/financing/requests/'.$this->invoice->financingRequest->id))
+                    ->greeting('Hello, '.$this->order_item->order->user->first_name)
+                    ->line('A new quotation has been added to the order '.$this->order_item->order->order_id)
+                    ->action('Click To View', url('/invoices/'.$this->order_item->order->invoice->id.'/orders'))
                     ->line('Thank you for using our application!');
     }
 
@@ -50,7 +50,7 @@ class FinancingRequested extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            //
+            'order_item' => $this->order_item,
         ];
     }
 }

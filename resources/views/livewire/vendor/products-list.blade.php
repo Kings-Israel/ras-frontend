@@ -15,22 +15,22 @@
                         <label for="checkbox-all-search" class="sr-only">checkbox</label>
                     </div>
                 </th>
-                <th scope="col" class="px-2 py-3">
+                <th scope="col" class="px-2 py-3 text-gray-900">
                     Product Name
                 </th>
-                <th scope="col" class="px-2 py-3">
+                <th scope="col" class="px-2 py-3 text-gray-900">
                     Brand
                 </th>
-                <th scope="col" class="px-2 py-3">
+                <th scope="col" class="px-2 py-3 text-gray-900">
                     Category
                 </th>
-                <th scope="col" class="px-2 py-3">
+                <th scope="col" class="px-2 py-3 text-gray-900">
                     Status
                 </th>
-                <th scope="col" class="px-2 py-3">
+                <th scope="col" class="px-2 py-3 text-gray-900">
                     Price
                 </th>
-                <th scope="col" class="px-2 py-3">
+                <th scope="col" class="px-2 py-3 text-gray-900">
                     Actions
                 </th>
             </tr>
@@ -47,19 +47,19 @@
                     <th scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {{ $product->name }}
                     </th>
-                    <td class="px-2 py-2">
+                    <td class="px-2 py-2 text-gray-600">
                         {{ $product->brand }}
                     </td>
-                    <td class="px-2 py-2">
+                    <td class="px-2 py-2 text-gray-600">
                         {{ $product->category->name }}
                     </td>
-                    <td class="px-2 py-2">
+                    <td class="px-2 py-2 text-gray-600">
                         {{ $product->is_available ? 'In stock' : 'Out of stock' }}
                     </td>
-                    <td class="px-2 py-2">
+                    <td class="px-2 py-2 text-gray-600">
                         @if($product->price) {{ $product->currency ? $product->currency : 'USD' }}. {{ number_format($product->price) }} @else USD.{{ number_format($product->min_price) }} - USD.{{ number_format($product->max_price) }} @endif
                     </td>
-                    <td class="px-2 py-2 flex gap-3">
+                    <td class="px-2 py-2 flex gap-3 text-gray-600">
                         <a href="{{ route('vendor.products.edit', ['product' => $product]) }}">
                             <i class="fas fa-edit"></i>
                         </a>

@@ -71,6 +71,19 @@ class Invoice extends Model
         }
     }
 
+    public function canRequestFinancing(): bool
+    {
+        // $quotation_order = $this->orders->where('status', 'quotation request')->count();
+        $accepted_order = $this->orders->where('status', 'accepted')->count();
+        $pending_order = $this->orders->where('status', 'pending')->count();
+
+        if ($pending_order <= 0 && $accepted_order <= 0) {
+            return false;
+        }
+
+        return true;
+    }
+
     /**
      * Get the user that owns the Invoice
      */
@@ -95,5 +108,13 @@ class Invoice extends Model
     public function financingRequest(): HasOne
     {
         return $this->hasOne(FinancingRequest::class);
+    }
+
+    /**
+     * Get the orderFinancing associated with the Invoice
+     */
+    public function orderFinancing(): HasOne
+    {
+        return $this->hasOne(OrderFinancing::class);
     }
 }

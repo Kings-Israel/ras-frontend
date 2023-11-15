@@ -24,7 +24,7 @@
                         <a href="{{ route('vendor.orders.status.update', ['order' => $order, 'status' => 'rejected']) }}" class="bg-red-600 rounded-md px-2 py-1 text-white hover:bg-red-500 transition duration-200 ease-in-out">Reject</a>
                     @endif
                     @if ($order->status == 'quotation request')
-                        <a href="{{ route('vendor.orders.status.update', ['order' => $order, 'status' => 'accepted']) }}" class="bg-secondary-four rounded-md px-2 py-1 text-black font-semibold hover:bg-yellow-400 transition duration-200 ease-in-out">Accept</a>
+                        <a href="{{ route('vendor.orders.quotes.accept', ['order' => $order, 'status' => 'accepted']) }}" class="bg-secondary-four rounded-md px-2 py-1 text-black font-semibold hover:bg-yellow-400 transition duration-200 ease-in-out">Accept Quotations</a>
                         <button data-modal-target="update-quote-modal" data-modal-toggle="update-quote-modal" class="bg-red-600 rounded-md px-2 py-1 text-white hover:bg-red-500 transition duration-200 ease-in-out">Add/Modify Quotation</button>
                         <x-modal modal_id="update-quote-modal">
                             <div class="relative w-full max-w-4xl max-h-full p-4">
@@ -42,25 +42,27 @@
                                             <div class="">
                                                 @foreach ($order->orderItems as $key => $item)
                                                     <input type="hidden" name="items_ids[]" value="{{ $item->id }}">
-                                                    <div class="flex justify-between">
+                                                    <div class="grid grid-cols-3 gap-4 space-y-2">
                                                         <span class="font-semibold text-lg text-gray-800">{{ $item->product->name }}</span>
-                                                        <div class="custom-number-input h-10">
-                                                            <div class="flex flex-row h-8 w-[80%] rounded-lg relative bg-transparent mt-1">
-                                                                <button type="button" data-action="decrement" class=" bg-gray-200 mr-0.5 border-2 rounded-tl-lg rounded-bl-lg border-gray-400 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none">
-                                                                    <span class="m-auto text-xl font-thin">-</span>
-                                                                </button>
-                                                                <input type="number" id="order_quantity_{{ $item->id }}" name="items_quantities[{{ $item->id }}]" value="{{ explode(' ', $item->quantity)[0], old('item_quantitys['.$key.']') }}" data-quantity-id="{{ $item->id }}" data-cart-id="{{ $item->id }}" class="quantities border-0 outline-none focus:outline-none text-center w-full bg-gray-300 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700" />
-                                                                <button type="button" data-action="increment" class="bg-gray-200 ml-0.5 border-2 rounded-tr-lg rounded-br-lg border-gray-400 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer">
-                                                                    <span class="m-auto text-xl font-thin">+</span>
-                                                                </button>
+                                                        <div class="flex justify-between col-span-2">
+                                                            <div class="custom-number-input h-10">
+                                                                <div class="flex flex-row h-8 w-[80%] rounded-lg relative bg-transparent mt-1">
+                                                                    <button type="button" data-action="decrement" class=" bg-gray-200 mr-0.5 border-2 rounded-tl-lg rounded-bl-lg border-gray-400 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none">
+                                                                        <span class="m-auto text-xl font-thin">-</span>
+                                                                    </button>
+                                                                    <input type="number" id="order_quantity_{{ $item->id }}" name="items_quantities[{{ $item->id }}]" value="{{ explode(' ', $item->quantity)[0], old('item_quantitys['.$key.']') }}" data-quantity-id="{{ $item->id }}" data-cart-id="{{ $item->id }}" class="quantities border-0 outline-none focus:outline-none text-center w-full bg-gray-300 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700" />
+                                                                    <button type="button" data-action="increment" class="bg-gray-200 ml-0.5 border-2 rounded-tr-lg rounded-br-lg border-gray-400 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer">
+                                                                        <span class="m-auto text-xl font-thin">+</span>
+                                                                    </button>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="my-auto">
-                                                            <span class="flex gap-1">
-                                                                <h4 class="text-gray-700 whitespace-nowrap my-auto">Unit Price:</h4>
-                                                                <h3 class="font-semibold text-gray-400 my-auto">{{ $item->product->currency }}</h3>
-                                                                <x-text-input type="number" class="prices" value="{{ $item->amount }}" name="items_prices[{{ $item->id }}]" id="items_prices_{{ $item->id }}" data-price-id="{{ $item->id }}" data-item-id="{{ $item->id }}" oninput="updatePrice()"></x-text-input>
-                                                            </span>
+                                                            <div class="my-auto">
+                                                                <span class="flex gap-1">
+                                                                    <h4 class="text-gray-700 whitespace-nowrap my-auto">Unit Price:</h4>
+                                                                    <h3 class="font-semibold text-gray-400 my-auto">{{ $item->product->currency }}</h3>
+                                                                    <x-text-input type="number" class="prices" value="{{ $item->amount }}" name="items_prices[{{ $item->id }}]" id="items_prices_{{ $item->id }}" data-price-id="{{ $item->id }}" data-item-id="{{ $item->id }}" oninput="updatePrice()"></x-text-input>
+                                                                </span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 @endforeach
@@ -195,15 +197,24 @@
                             <span class="col-span-2"></span>
                             <span class="col-span-3">
                                 @if ($item->quotationResponses->count() > 0)
-                                    @foreach ($item->quotationResponses as $response)
-                                        @if ($response->user_id == auth()->id())
-                                            <div class="grid grid-cols-3 gap-2 w-full bg-yellow-200 p-2 rounded-md">
-                                                <span>{{ $response->quantity }} {{ explode(' ', $response->orderItem->product->min_order_quantity)[1] }}</span>
-                                                <span>{{ $response->delivery_date->format('d M Y') }}</span>
-                                                <span class="text-end">{{ $response->amount }}</span>
-                                            </div>
-                                        @endif
-                                    @endforeach
+                                    <div class="border-2 border-gray-400 rounded-md p-1">
+                                        <h4 class="font-bold">Your Quotations</h4>
+                                        @foreach ($item->quotationResponses as $response)
+                                            @if ($response->user_id == auth()->id())
+                                                <div class="grid grid-cols-3 gap-2 w-full bg-yellow-200 p-2 rounded-md">
+                                                    <span>{{ $response->quantity }} {{ explode(' ', $response->orderItem->product->min_order_quantity)[1] }}</span>
+                                                    <span>{{ $response->delivery_date->format('d M Y') }}</span>
+                                                    <span class="text-end">{{ $response->amount }}</span>
+                                                </div>
+                                            @else
+                                                <div class="grid grid-cols-3 gap-2 w-full p-2 rounded-md">
+                                                    <span>{{ $response->quantity }} {{ explode(' ', $response->orderItem->product->min_order_quantity)[1] }}</span>
+                                                    <span>{{ $response->delivery_date->format('d M Y') }}</span>
+                                                    <span class="text-end">{{ $response->amount }}</span>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    </div>
                                 @endif
                             </span>
                         </div>

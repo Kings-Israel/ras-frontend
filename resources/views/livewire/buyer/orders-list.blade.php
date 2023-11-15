@@ -42,8 +42,7 @@
             <a href="{{ route('invoices.index') }}" class="text-gray-500">Invoices ></a>
             <p class="text-gray-600">{{ $invoice->invoice_id }}</p>
         </span>
-        <form action="#" method="post" class="block lg:flex p-4 gap-12">
-            @csrf
+        <div class="block lg:flex p-4 gap-12">
             <div class="basis-3/4 bg-gray-50 p-2 rounded-lg">
                 <h3 class="text-3xl text-gray-600 font-bold mb-2">{{ $invoice->invoice_id }} Invoice Orders</h3>
                 <div class="space-y-2">
@@ -109,7 +108,7 @@
                                                     <div class="flex gap-3">
                                                         <div class="custom-number-input h-10">
                                                             <div class="flex flex-row h-8 w-full rounded-lg relative bg-transparent my-auto">
-                                                                <span id="order_quantity" data-modal-target="view-inspection-report-modal-{{ $order_item->id }}" data-modal-toggle="view-inspection-report-modal-{{ $order_item->id }}" class="hover:cursor-pointer border border-1 rounded-lg border-gray-500 px-3 my-auto text-center w-full bg-sky-300 font-semibold text-md text-gray-700">View Inspection Report</span>
+                                                                <span id="order_quantity" data-modal-target="view-inspection-report-modal-{{ $order_item->id }}" data-modal-toggle="view-inspection-report-modal-{{ $order_item->id }}" class="hover:cursor-pointer border border-1 rounded-lg px-3 my-auto text-center w-full bg-primary-one font-semibold text-md text-gray-700">View Inspection Report</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -142,27 +141,42 @@
                                             </div>
                                         </div>
                                         <span class="col-span-4 max-h-40 overflow-scroll">
-                                            @if ($order_item->quotationResponses->count() > 0)
-                                                <h4 class="font-bold">Vendor Quotations</h4>
+                                            @if ($order_item->inspectionRequest && $order_item->inspectionRequest->cost != NULL)
+                                                <div class="flex gap-2">
+                                                    <h4 class="font-semibold">Inspection Cost: </h4>
+                                                    <span class="font-bold">USD {{ number_format($order_item->inspectionRequest->cost) }}</span>
+                                                </div>
+                                            @endif
+                                            @if (json_decode($order, true)[0]['status'] == 'quotation request' && $order_item->quotationResponses->count() <= 0)
+                                                <div class="grid grid-cols-4">
+                                                    <span class="text-lg text-gray-600 p-2 bg-gray-300 rounded-md">Awaiting Quotation or Acceptance from Vendor</span>
+                                                </div>
+                                            @endif
+                                            @if ($order_item->status != 'accepted' && $order_item->quotationResponses->count() > 0)
+                                                <h4 class="font-semibold">Vendor Quotations</h4>
                                                 <div class="grid grid-cols-4 bg-gray-500 p-2 rounded-tr-md rounded-tl-md text-white">
                                                     <span>Quantity</span>
                                                     <span>Delivery Date</span>
-                                                    <span class="text-center">Price</span>
+                                                    <span class="">Price</span>
                                                     <span class="text-end pr-1">Action</span>
                                                 </div>
                                                 @foreach ($order_item->quotationResponses as $response)
                                                     @if ($response->user_id != auth()->id())
-                                                        <div class="grid grid-cols-4 gap-2 bg-yellow-200 p-2 rounded-md border-b-2">
+                                                        <div class="grid grid-cols-4 gap-2 bg-yellow-100 p-2 rounded-md border-2 border-gray-500">
                                                             <span>{{ $response->quantity }} {{ explode(' ', $response->orderItem->product->min_order_quantity)[1] }}</span>
                                                             <span>{{ $response->delivery_date->format('d M Y') }}</span>
-                                                            <span class="text-center">{{ $response->amount }}</span>
-                                                            <span class="flex justify-end"><x-primary-button>Accept</x-primary-button></span>
+                                                            <span class="flex gap-2"><h3 class="font-semibold text-gray-500">{{ $response->orderItem->product->currency }}</h3> <h3 class="font-bold text-gray-600">{{ $response->amount }}</h3></span>
+                                                            <span class="flex justify-end">
+                                                                <a href="{{ route('order.quotation.update', ['quotation' => $response, 'status' => 'accepted']) }}">
+                                                                    <x-primary-button>Accept</x-primary-button>
+                                                                </a>
+                                                            </span>
                                                         </div>
                                                     @else
-                                                        <div class="grid grid-cols-4 gap-2 p-2 rounded-md border-b-2">
+                                                        <div class="grid grid-cols-4 gap-2 p-2 rounded-md border-b-2 border-gray-500">
                                                             <span>{{ $response->quantity }} {{ explode(' ', $response->orderItem->product->min_order_quantity)[1] }}</span>
                                                             <span>{{ $response->delivery_date->format('d M Y') }}</span>
-                                                            <span class="text-center">{{ $response->amount }}</span>
+                                                            <span class="flex gap-2"><h3 class="font-semibold text-gray-500">{{ $response->orderItem->product->currency }}</h3> <h3 class="font-bold text-gray-600">{{ $response->amount }}</h3></span>
                                                             <span></span>
                                                         </div>
                                                     @endif
@@ -184,6 +198,11 @@
                             <h3 class="font-bold text-xl text-gray-600 my-auto">USD</h3>
                             <span class="font-bold text-xl text-gray-800">{{ number_format($total_amount) }}</span>
                         </div>
+                        <h4 class="text-md font-semibold text-gray-500">Total Inspection Cost:</h4>
+                        <div class="flex gap-1">
+                            <h3 class="font-bold text-xl text-gray-600 my-auto">USD</h3>
+                            <span class="font-bold text-xl text-gray-800">{{ number_format($inspection_cost) }}</span>
+                        </div>
                         {{-- @if ($inspection_cost > 0)
                             <div class="flex gap-2">
                                 <h4 class="text-sm font-semibold text-gray-400 my-auto">Inspection Cost:</h4>
@@ -199,6 +218,11 @@
                     <h4 class="text-sm font-semibold text-gray-500">Delivery Location</h4>
                     <h3 class="font-bold text-xl text-gray-600 my-auto">{{ $invoice->delivery_location_address }}</h3>
                 </div>
+                @if ($invoice->canRequestFinancing() && !$invoice->financingRequest)
+                    <a href="{{ route('invoice.financing.request', ['invoice' => $invoice]) }}">
+                        <x-primary-button class="w-full p-3 font-extrabold tracking-wide text-lg mt-2">Request Financing</x-primary-button>
+                    </a>
+                @endif
                 @if ($invoice->financingRequest)
                     <div class="border border-gray-300 p-4 space-y-4 rounded-lg">
                         <h4 class="text-sm font-semibold text-gray-500">Financing Request Status</h4>
@@ -206,7 +230,7 @@
                     </div>
                 @endif
             </div>
-        </form>
+        </div>
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

@@ -33,20 +33,23 @@ class NotificationsList extends Component
     {
         $notification = DatabaseNotification::findOrFail($notification['id']);
 
-        $order = Order::find($notification->data['order']['id']);
+        $notification->markAsRead();
 
-        if(! $order) {
-            toastr()->error('', 'The order no longer exists');
-
-            return redirect()->route('home');
+        if ($notification->type == 'App\\Notifications\\QuotationAdded') {
+            $order = Order::with('invoice')->find($notification->data['order_item']['order_id']);
+        } else {
+            $order = Order::with('invoice')->find($notification->data['order']['id']);
         }
 
-        $notification->markAsRead();
+        if(!$order) {
+            toastr()->error('', 'The order no longer exists');
+            return redirect()->route('home');
+        }
 
         if (auth()->user()->hasRole('vendor')) {
             return redirect()->route('vendor.orders');
         } else {
-            return redirect()->route('invoices.index');
+            return redirect()->route('invoice.orders', ['invoice' => $order->invoice]);
         }
     }
 
@@ -57,6 +60,7 @@ class NotificationsList extends Component
         }
 
         auth()->user()->unreadNotifications->markAsRead();
+
         $this->getNotificationCount();
         $this->getNotifications();
     }
