@@ -73,6 +73,7 @@ class OrderController extends Controller
         ]);
 
         foreach($products as $key => $product) {
+            // Create order for each business
             $order = auth()->user()->orders()->create([
                 'invoice_id' => $invoice->id,
                 'business_id' => $key,
