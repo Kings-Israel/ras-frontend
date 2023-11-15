@@ -149,7 +149,7 @@
                                             @endif
                                             @if (json_decode($order, true)[0]['status'] == 'quotation request' && $order_item->quotationResponses->count() <= 0)
                                                 <div class="grid grid-cols-4">
-                                                    <span class="text-lg text-gray-600 p-2 bg-gray-300 rounded-md">Awaiting Quotation or Acceptance from Vendor</span>
+                                                    <span class="col-span-4 text-lg text-gray-600 p-2 bg-gray-300 rounded-md">Awaiting Quotation or Acceptance from Vendor</span>
                                                 </div>
                                             @endif
                                             @if ($order_item->status != 'accepted' && $order_item->quotationResponses->count() > 0)
