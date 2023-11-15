@@ -26,6 +26,14 @@ class OrderDeliveryRequest extends Model
     }
 
     /**
+     * Get the logisticsCompany that owns the OrderDeliveryRequest
+     */
+    public function logisticsCompany(): BelongsTo
+    {
+        return $this->belongsTo(logisticsCompany::class);
+    }
+
+    /**
      * Get the orderItem that owns the OrderDeliveryRequest
      */
     public function orderItem(): BelongsTo

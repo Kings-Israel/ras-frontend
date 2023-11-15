@@ -58,7 +58,7 @@
                                     <x-input-label for="currency" :value="__('Currency')" class="text-gray-500" />
                                     @php($vendor_currency = auth()->user()->business->global_currency)
                                     <div class="flex gap-2">
-                                        <x-input-label :value="__('Custom')" class="text-sm text-gray-500" />
+                                        <x-input-label :value="__('Custom')" class="text-sm text-gray-500 font-semibold" />
                                         <input type="checkbox" name="enter_custom_currency" @if((!in_array(old('currency'), $currencies->toArray()) && old('currency') != NULL) || ($vendor_currency && !in_array($vendor_currency, $currencies->toArray()))) checked @endif onchange="enterCustom(this, 'currency')" id="enter_custom_currency" class="my-auto w-4 h-4 mr-0.5 text-primary-one bg-gray-400 border-gray-500 rounded focus:ring-primary-one dark:focus:ring-primary-two dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                     </div>
                                 </div>
@@ -105,7 +105,7 @@
                                 <div class="flex justify-between">
                                     <x-input-label for="product_brand" :value="__('Unit')" class="text-gray-500" />
                                     <div class="flex gap-2">
-                                        <x-input-label :value="__('Custom')" class="text-sm text-gray-500" />
+                                        <x-input-label :value="__('Custom')" class="text-sm text-gray-500 font-semibold" />
                                         <input type="checkbox" name="enter_custom_min_quantity_order_unit" @if(!in_array(old('min_order_quantity_unit'), $units->toArray()) && old('min_quantity_order_unit') != NULL) checked @endif onchange="enterCustom(this, 'min_quantity_order_unit')" id="enter_custom_min_quantity_order_unit" class="my-auto w-4 h-4 text-primary-one bg-gray-400 border-gray-500 rounded focus:ring-primary-one dark:focus:ring-primary-two dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                     </div>
                                 </div>
@@ -132,7 +132,7 @@
                                 <div class="flex justify-between">
                                     <x-input-label for="product_brand" :value="__('Unit')" class="text-gray-500" />
                                     <div class="flex gap-2">
-                                        <x-input-label :value="__('Custom')" class="text-sm text-gray-500" />
+                                        <x-input-label :value="__('Custom')" class="text-sm text-gray-500 font-semibold" />
                                         <input type="checkbox" name="enter_custom_max_quantity_order_unit" @if(!in_array(old('max_quantity_order_unit'), $units->toArray()) && old('max_quantity_order_unit') != NULL) checked @endif onchange="enterCustom(this, 'max_quantity_order_unit')" id="enter_custom_max_quantity_order_unit" class="my-auto w-4 h-4 text-primary-one bg-gray-400 border-gray-500 rounded focus:ring-primary-one dark:focus:ring-primary-two dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                     </div>
                                 </div>
@@ -162,7 +162,7 @@
                             <div class="flex justify-between">
                                 <x-input-label for="product_shape" :value="__('Product Shape')" class="text-gray-500" />
                                 <div class="flex gap-2">
-                                    <x-input-label :value="__('Enter Custom')" class="text-sm text-gray-500" />
+                                    <x-input-label :value="__('Custom')" class="text-sm text-gray-500 font-semibold" />
                                     <input type="checkbox" name="enter_custom_product_shape" @if(!in_array(old('shape'), $shapes->toArray()) && old('shape') != NULL) checked @endif onchange="enterCustom(this, 'product_shape')" id="enter_custom_product_shape" class="my-auto w-4 h-4 text-primary-one bg-gray-400 border-gray-500 rounded focus:ring-primary-one dark:focus:ring-primary-two dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 </div>
                             </div>
@@ -183,7 +183,7 @@
                             <div class="flex justify-between">
                                 <x-input-label for="product_color" :value="__('Product Color')" class="text-gray-500" />
                                 <div class="flex gap-2">
-                                    <x-input-label :value="__('Enter Custom')" class="text-sm text-gray-500" />
+                                    <x-input-label :value="__('Custom')" class="text-sm text-gray-500 font-semibold" />
                                     <input type="checkbox" name="enter_custom_product_color" @if(!in_array(old('color'), $colors->toArray()) && old('color') != NULL) checked @endif onchange="enterCustom(this, 'product_color')" id="enter_custom_product_color" class="my-auto w-4 h-4 text-primary-one bg-gray-400 border-gray-500 rounded focus:ring-primary-one dark:focus:ring-primary-two dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 </div>
                             </div>
@@ -203,7 +203,7 @@
                             <div class="flex justify-between">
                                 <x-input-label for="product_usage" :value="__('Product Usage')" class="text-gray-500" />
                                 <div class="flex gap-2">
-                                    <x-input-label :value="__('Enter Custom')" class="text-sm text-gray-500" />
+                                    <x-input-label :value="__('Custom')" class="text-sm text-gray-500 font-semibold" />
                                     <input type="checkbox" name="enter_custom_product_usage" @if(!in_array(old('usage'), $usages->toArray()) && old('usage') != NULL) checked @endif onchange="enterCustom(this, 'product_usage')" id="enter_custom_product_usage" class="my-auto w-4 h-4 text-primary-one bg-gray-400 border-gray-500 rounded focus:ring-primary-one dark:focus:ring-primary-two dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 </div>
                             </div>
@@ -318,7 +318,7 @@
                             <div class="flex justify-between">
                                 <x-input-label for="product_regional_feature" :value="__('Product\'s Regional Feature')" class="text-gray-500" />
                                 <div class="flex gap-2">
-                                    <x-input-label :value="__('Enter Custom')" class="text-sm text-gray-500" />
+                                    <x-input-label :value="__('Custom')" class="text-sm text-gray-500 font-semibold" />
                                     <input type="checkbox" name="enter_custom_regional_feature" @if(!in_array(old('regional_feature'), $regions->toArray()) && old('regional_feature') != NULL) checked @endif onchange="enterCustom(this, 'regional_feature')" id="enter_custom_regional_feature" class="my-auto w-4 h-4 text-primary-one bg-gray-400 border-gray-500 rounded focus:ring-primary-one dark:focus:ring-primary-two dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 </div>
                             </div>

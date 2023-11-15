@@ -142,8 +142,8 @@
                                             </div>
                                         </div>
                                         <span class="col-span-4 max-h-40 overflow-scroll">
-                                            <h4 class="font-bold">Vendor Quotations</h4>
                                             @if ($order_item->quotationResponses->count() > 0)
+                                                <h4 class="font-bold">Vendor Quotations</h4>
                                                 <div class="grid grid-cols-4 bg-gray-500 p-2 rounded-tr-md rounded-tl-md text-white">
                                                     <span>Quantity</span>
                                                     <span>Delivery Date</span>
