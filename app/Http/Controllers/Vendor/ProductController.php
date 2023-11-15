@@ -161,7 +161,7 @@ class ProductController extends Controller
             'capacity_in_warehouse' => $request->product_capacity,
         ]);
 
-        if (count(explode(',', $request->warehouses)) > 0) {
+        if ($request->warehouses != null && count(explode(',', $request->warehouses)) > 0) {
             WarehouseProduct::where('product_id', $product->id)->delete();
 
             foreach(explode(',', $request->warehouses) as $warehouse) {
