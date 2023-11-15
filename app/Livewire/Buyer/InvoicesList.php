@@ -16,7 +16,7 @@ class InvoicesList extends Component
 
     public function render()
     {
-        $total = auth()->user()->orders->sum(fn ($order) => $order->orderItems->sum('amount'));
+        $total = 0;
 
         $invoices = Invoice::with('orders')
                             ->where('user_id', auth()->id())
@@ -27,6 +27,14 @@ class InvoicesList extends Component
                             ->orderBy('created_at', 'DESC')
                             ->get();
 
+        foreach ($invoices as $invoice) {
+            foreach($invoice->orders as $order) {
+                foreach($order->orderItems as $order_item) {
+                    $quantity = explode(' ', $order_item->quantity)[0];
+                    $total += $order_item->amount * $quantity;
+                }
+            }
+        }
 
         return view('livewire.buyer.invoices-list', compact('invoices', 'total'));
     }

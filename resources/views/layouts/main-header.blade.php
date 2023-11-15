@@ -30,6 +30,12 @@
                         <a href="{{ route('profile.edit') }}" class="inline-flex w-full">My Profile</a>
                     </li>
                     <li>
+                        <a href="#" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Change Currency</a>
+                    </li>
+                    <li>
+                        <a href="#" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Change Language</a>
+                    </li>
+                    <li>
                         <a href="{{ route('logout') }}" class="inline-flex w-full px-4 py-2 hover:cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf
@@ -47,9 +53,22 @@
             <a href="{{ route('login') }}">
                 <x-primary-button class="py-2">Login</x-primary-button>
             </a>
-            <a href="{{ route('register') }}">
+            {{-- <a href="{{ route('register') }}">
                 <x-primary-outline-button>Register</x-primary-outline-button>
-            </a>
+            </a> --}}
+            <button id="dropdown-button" data-dropdown-toggle="actions-dropdown" data-dropdown-placement="bottom" class="flex gap-2" type="button">
+                <i class="fas fa-chevron-down my-auto text-sm"></i>
+            </button>
+            <div id="actions-dropdown" class="z-10 hidden bg-gray-200 divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                <ul class="py-2 font-semibold text-gray-700 dark:text-gray-200" aria-labelledby="actions-dropdown">
+                    <li>
+                        <a href="#" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Change Currency</a>
+                    </li>
+                    <li>
+                        <a href="#" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Change Language</a>
+                    </li>
+                </ul>
+            </div>
         @endauth
     </div>
 </div>

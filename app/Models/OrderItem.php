@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class OrderItem extends Model
@@ -17,6 +18,15 @@ class OrderItem extends Model
      * @var array
      */
     protected $guarded = [];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'delivery_date' => 'date',
+    ];
 
     /**
      * Get the order that owns the OrderItem
@@ -35,6 +45,14 @@ class OrderItem extends Model
     }
 
     /**
+     * Get the inspectionRequest associated with the OrderItem
+     */
+    public function inspectionRequest(): HasOne
+    {
+        return $this->hasOne(inspectionRequest::class);
+    }
+
+    /**
      * Get the inspectionReport associated with the OrderItem
      */
     public function inspectionReport(): HasOne
@@ -48,5 +66,31 @@ class OrderItem extends Model
     public function warehouseOrder(): HasOne
     {
         return $this->hasOne(WarehouseOrder::class);
+    }
+
+    /**
+     * Get the deliveryRequest associated with the OrderItem
+     */
+    public function deliveryRequest(): HasOne
+    {
+        return $this->hasOne(OrderDeliveryRequest::class);
+    }
+
+    /**
+     * Get the storageRequest associated with the OrderItem
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function storageRequest(): HasOne
+    {
+        return $this->hasOne(OrderStorageRequest::class);
+    }
+
+    /**
+     * Get all of the quotationResponses for the OrderItem
+     */
+    public function quotationResponses(): HasMany
+    {
+        return $this->hasMany(QuotationRequestResponse::class);
     }
 }

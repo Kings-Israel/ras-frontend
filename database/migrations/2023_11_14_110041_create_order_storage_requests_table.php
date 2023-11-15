@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('order_delivery_requests', function (Blueprint $table) {
+        Schema::create('order_storage_requests', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_item_id')->references('id')->on('order_items')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('logistics_company_id')->nullable()->references('id')->on('logistics_companies')->onDelete('set null')->onUpdate('cascade');
-            $table->foreignId('user_id')->nullable()->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');
-            $table->enum('status', ['pending', 'accepted', 'picked', 'in customs', 'in progress'])->nullable()->default('pending');
+            $table->foreignId('warehouse_id')->references('id')->on('warehouses')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('quantity')->nullable();
             $table->bigInteger('cost')->nullable();
             $table->timestamps();
         });
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('order_delivery_requests');
+        Schema::dropIfExists('order_storage_requests');
     }
 };

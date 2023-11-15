@@ -19,9 +19,73 @@
                 <span>Order Status: <strong>{{ Str::title($order->status) }}</strong></span>
                 <div class="flex gap-2">
                     @if ($order->status == 'pending')
-                    <a href="{{ route('vendor.orders.status.update', ['order' => $order, 'status' => 'in progress']) }}" class="bg-secondary-four rounded-md px-2 py-1 text-black font-semibold hover:bg-yellow-400 transition duration-200 ease-in-out">In Progress</a>
+                        <a href="{{ route('vendor.orders.status.update', ['order' => $order, 'status' => 'in progress']) }}" class="bg-secondary-four rounded-md px-2 py-1 text-black font-semibold hover:bg-yellow-400 transition duration-200 ease-in-out">In Progress</a>
                         <a href="{{ route('vendor.orders.status.update', ['order' => $order, 'status' => 'accepted']) }}" class="bg-primary-one rounded-md px-2 py-1 text-white font-semibold hover:bg-orange-700 transition duration-200 ease-in-out">Accept</a>
                         <a href="{{ route('vendor.orders.status.update', ['order' => $order, 'status' => 'rejected']) }}" class="bg-red-600 rounded-md px-2 py-1 text-white hover:bg-red-500 transition duration-200 ease-in-out">Reject</a>
+                    @endif
+                    @if ($order->status == 'quotation request')
+                        <a href="{{ route('vendor.orders.status.update', ['order' => $order, 'status' => 'accepted']) }}" class="bg-secondary-four rounded-md px-2 py-1 text-black font-semibold hover:bg-yellow-400 transition duration-200 ease-in-out">Accept</a>
+                        <button data-modal-target="update-quote-modal" data-modal-toggle="update-quote-modal" class="bg-red-600 rounded-md px-2 py-1 text-white hover:bg-red-500 transition duration-200 ease-in-out">Add/Modify Quotation</button>
+                        <x-modal modal_id="update-quote-modal">
+                            <div class="relative w-full max-w-4xl max-h-full p-4">
+                                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                    <button type="button" data-modal-hide="update-quote-modal" class="absolute top-1 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                        </svg>
+                                        <span class="sr-only">Close modal</span>
+                                    </button>
+                                    <div class="px-2 py-2 lg:px-4">
+                                        <h3 class="mb-2 text-2xl font-bold text-gray-900 dark:text-white space-y-4">Update Quote</h3>
+                                        <form action="{{ route('vendor.orders.quote.update', ['order' => $order]) }}" method="post">
+                                            @csrf
+                                            <div class="">
+                                                @foreach ($order->orderItems as $key => $item)
+                                                    <input type="hidden" name="items_ids[]" value="{{ $item->id }}">
+                                                    <div class="flex justify-between">
+                                                        <span class="font-semibold text-lg text-gray-800">{{ $item->product->name }}</span>
+                                                        <div class="custom-number-input h-10">
+                                                            <div class="flex flex-row h-8 w-[80%] rounded-lg relative bg-transparent mt-1">
+                                                                <button type="button" data-action="decrement" class=" bg-gray-200 mr-0.5 border-2 rounded-tl-lg rounded-bl-lg border-gray-400 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none">
+                                                                    <span class="m-auto text-xl font-thin">-</span>
+                                                                </button>
+                                                                <input type="number" id="order_quantity_{{ $item->id }}" name="items_quantities[{{ $item->id }}]" value="{{ explode(' ', $item->quantity)[0], old('item_quantitys['.$key.']') }}" data-quantity-id="{{ $item->id }}" data-cart-id="{{ $item->id }}" class="quantities border-0 outline-none focus:outline-none text-center w-full bg-gray-300 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700" />
+                                                                <button type="button" data-action="increment" class="bg-gray-200 ml-0.5 border-2 rounded-tr-lg rounded-br-lg border-gray-400 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer">
+                                                                    <span class="m-auto text-xl font-thin">+</span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="my-auto">
+                                                            <span class="flex gap-1">
+                                                                <h4 class="text-gray-700 whitespace-nowrap my-auto">Unit Price:</h4>
+                                                                <h3 class="font-semibold text-gray-400 my-auto">{{ $item->product->currency }}</h3>
+                                                                <x-text-input type="number" class="prices" value="{{ $item->amount }}" name="items_prices[{{ $item->id }}]" id="items_prices_{{ $item->id }}" data-price-id="{{ $item->id }}" data-item-id="{{ $item->id }}" oninput="updatePrice()"></x-text-input>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                            <div class="flex mt-4">
+                                                <div class="basis-2/3 flex justify-between mr-4">
+                                                    <div class="flex gap-2">
+                                                        <h4 class="basis-1/3 text-gray-500 my-auto font-semibold w-full">Delivery On:</h4>
+                                                        <x-text-input type="date" name="delivery_date" value="{{ $item->delivery_date->format('m/d/Y') }}" class="basis-2/3 w-full" placeholder="Select Delivery Date" required></x-text-input>
+                                                    </div>
+                                                    <div class="flex gap-2 my-auto">
+                                                        <h4 class="text-sm font-semibold text-gray-500 my-auto">Total:</h4>
+                                                        <div class="flex gap-1">
+                                                            <span class="font-bold text-xl text-gray-800" id="total_cart_amount">{{ $total_amount }}</span>
+                                                            <input type="hidden" id="total_cart_amount_input" name="total_cart_amount" value="{{ $total_amount }}" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <x-primary-button type="submit" class="basis-1/3 text-xl p-2">Submit</x-primary-button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </x-modal>
                     @endif
                 </div>
             </div>
@@ -107,17 +171,18 @@
                     </tbody>
                 </table>
             @endif
-            <div class="grid grid-cols-3 gap-2 mt-2">
-                <div class="col-span-2 border border-gray-200 rounded-md bg-white p-2">
-                    <h2 class="font-bold text-lg">Order Items</h2>
-                    <div class="grid grid-cols-4 gap-2 w-full">
+            <div class="grid grid-cols-5 gap-2 mt-2">
+                <h2 class="font-semibold text-lg">Order Items</h2>
+                <div class="col-span-5 border border-gray-200 rounded-md bg-white p-2">
+                    <div class="grid grid-cols-5 gap-2 w-full">
                         <span class="font-bold">Item</span>
                         <span class="font-bold">Warehouse</span>
                         <span class="font-bold">Order Quantity</span>
+                        <span class="font-bold">Delivery Date</span>
                         <span class="text-end font-bold">Amount</span>
                     </div>
                     @foreach ($order->orderItems as $item)
-                        <div class="grid grid-cols-4 gap-2 w-full border-b-2 ">
+                        <div class="grid grid-cols-5 gap-2 w-full border-b-2 ">
                             <span class="font-semibold text-lg text-gray-800">{{ $item->product->name }}</span>
                             @if ($item->warehouseOrder()->exists())
                                 <span class="font-semibold truncate text-lg text-gray-800">{{ $item->warehouseOrder->warehouse->name }}, {{ $item->warehouseOrder->warehouse->country->name }}</span>
@@ -125,9 +190,28 @@
                                 <span class="font-semibold text-red-400 truncate text-lg">No Warehouse Selected</span>
                             @endif
                             <span class="font-semibold text-gray-600">{{ $item->quantity }}</span>
-                            <span class="font-semibold text-lg text-gray-700 text-end">{{ $item->product->currency }} {{ $item->product->price ? number_format($item->product->price) : number_format($item->product->min_price) }}</span>
+                            <span class="font-semibold text-gray-600">{{ $item->delivery_date ? $item->delivery_date->format('d M Y') : '' }}</span>
+                            <span class="font-semibold text-lg text-gray-700 text-end">{{ $item->product->currency }} {{ number_format($item->amount) }}</span>
+                            <span class="col-span-2"></span>
+                            <span class="col-span-3">
+                                @if ($item->quotationResponses->count() > 0)
+                                    @foreach ($item->quotationResponses as $response)
+                                        @if ($response->user_id == auth()->id())
+                                            <div class="grid grid-cols-3 gap-2 w-full bg-yellow-200 p-2 rounded-md">
+                                                <span>{{ $response->quantity }} {{ explode(' ', $response->orderItem->product->min_order_quantity)[1] }}</span>
+                                                <span>{{ $response->delivery_date->format('d M Y') }}</span>
+                                                <span class="text-end">{{ $response->amount }}</span>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                @endif
+                            </span>
                         </div>
                     @endforeach
+                    {{-- <div class="flex justify-between mt-4">
+                        <h2 class="font-semibold">Total</h2>
+                        <span class="font-bold">{{ $total_amount }}</span>
+                    </div> --}}
                     {{-- <div class="bg-gray-50 p-2">
                         <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-52 h-40 mx-auto md:mx-0 object-cover rounded-md">
                         <div class="flex justify-between mt-2 mx-8 md:mx-0">
@@ -137,14 +221,14 @@
                         </div>
                     </div> --}}
                 </div>
-                <div class="col-span-1">
+                <div class="col-span-2">
                     <div class="border border-gray-300 p-4 space-y-4 rounded-lg">
                         <h4 class="text-lg font-semibold text-gray-500">Delivery Location</h4>
                         <h3 class="font-bold text-xl text-gray-600 my-auto`">{{ $order->invoice->delivery_location_address }}</h3>
                     </div>
                 </div>
                 @if ($order->invoice->additional_notes)
-                    <div class="col-span-1">
+                    <div class="col-span-3">
                         <div class="border border-gray-300 p-4 space-y-4 rounded-lg">
                             <h4 class="text-lg font-semibold text-gray-500">Additional Notes</h4>
                             <h3 class="font-bold text-xl text-gray-600 my-auto`">{{ $order->invoice->additional_notes }}</h3>
@@ -194,13 +278,14 @@
         <script src="//code.jquery.com/jquery.js"></script>
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.1.1/datepicker.min.js"></script>
         <script>
-        $(function() {
-            $('.expandChildTable').on('click', function() {
-                $(this).toggleClass('bg-gray-50')
-                $(this).toggleClass('selected').closest('tr').next().toggle();
-            })
-        });
+            $(function() {
+                $('.expandChildTable').on('click', function() {
+                    $(this).toggleClass('bg-gray-50')
+                    $(this).toggleClass('selected').closest('tr').next().toggle();
+                })
+            });
         </script>
         <script>
             function showRow() {
@@ -211,6 +296,77 @@
                     x.style.display = "none";
                 }
             }
+        </script>
+        <script>
+            let total_amount = document.getElementById('total_cart_amount');
+
+            let total_amount_input = document.getElementById('total_cart_amount_input');
+
+            function decrement(e) {
+                const btn = e.target.parentNode.parentElement.querySelector(
+                    'button[data-action="decrement"]'
+                );
+                const target = btn.nextElementSibling;
+                let value = Number(target.value);
+                value--;
+                target.value = value;
+                updateQuantity()
+            }
+
+            function increment(e) {
+                const btn = e.target.parentNode.parentElement.querySelector(
+                    'button[data-action="decrement"]'
+                );
+                const target = btn.nextElementSibling;
+                let value = Number(target.value);
+                value++;
+                target.value = value;
+                updateQuantity()
+            }
+
+            function updatePrice() {
+                let total = 0;
+                document.querySelectorAll('.prices').forEach(priceElement => {
+                    if (priceElement.value != '' && priceElement.value != '0') {
+                        let element_id = priceElement.attributes['data-price-id'].value
+                        let quantity = document.getElementById('order_quantity_'+element_id).value
+                        let product = quantity * priceElement.value
+                        total += product
+                    }
+                })
+                total_amount.innerHTML = new Intl.NumberFormat().format(Number(total))
+                total_amount_input.value = total
+            }
+
+            function updateQuantity() {
+                let total = 0;
+                document.querySelectorAll('.quantities').forEach(quantityElement => {
+                    let element_id = quantityElement.attributes['data-quantity-id'].value;
+                    let price = document.getElementById('items_prices_'+element_id).value;
+                    if (price !== '' && price !== '0') {
+                        let product = price * quantityElement.value
+                        total += product
+                    }
+                })
+                total_amount.innerHTML = new Intl.NumberFormat().format(Number(total))
+                total_amount_input.value = total
+            }
+
+            const decrementButtons = document.querySelectorAll(
+                `button[data-action="decrement"]`
+            );
+
+            const incrementButtons = document.querySelectorAll(
+                `button[data-action="increment"]`
+            );
+
+            decrementButtons.forEach(btn => {
+                btn.addEventListener("click", decrement);
+            });
+
+            incrementButtons.forEach(btn => {
+                btn.addEventListener("click", increment);
+            });
         </script>
     @endpush
 </x-app-layout>

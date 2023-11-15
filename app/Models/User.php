@@ -158,10 +158,28 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * The logisticsCompanies that belong to the User
+     */
+    public function logisticsCompanies(): BelongsToMany
+    {
+        return $this->belongsToMany(LogisticsCompany::class, 'logistics_company_user', 'user_id', 'logistics_company_id');
+    }
+
+    /**
      * Get all of the inspectionReports for the User
      */
     public function inspectionReports(): HasMany
     {
         return $this->hasMany(InspectionReport::class);
+    }
+
+    /**
+     * Get all of the quotationResponses for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function quotationResponses(): HasMany
+    {
+        return $this->hasMany(QuotationRequestResponse::class);
     }
 }
