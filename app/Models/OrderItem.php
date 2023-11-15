@@ -49,7 +49,7 @@ class OrderItem extends Model
      */
     public function inspectionRequest(): HasOne
     {
-        return $this->hasOne(inspectionRequest::class);
+        return $this->hasOne(InspectionRequest::class);
     }
 
     /**
