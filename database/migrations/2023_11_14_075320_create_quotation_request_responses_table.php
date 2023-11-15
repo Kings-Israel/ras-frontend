@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('inspection_requests', function (Blueprint $table) {
+        Schema::create('quotation_request_responses', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('order_item_id')->references('id')->on('order_items')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('inspector_id')->references('id')->on('inspecting_institutions')->onDelete('cascade')->onUpdate('cascade');
-            $table->enum('status', ['pending', 'accepted', 'rejected'])->nullable()->default('pending');
-            $table->bigInteger('cost')->nullable();
+            $table->string('quantity')->nullable();
+            $table->bigInteger('amount')->nullable();
+            $table->date('delivery_date')->nullable();
+            $table->string('additional_notes')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('inspection_requests');
+        Schema::dropIfExists('quotation_request_responses');
     }
 };

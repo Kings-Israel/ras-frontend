@@ -147,8 +147,14 @@ class VendorController extends Controller
     public function order(Order $order)
     {
         $order->load('orderItems.product', 'orderItems.warehouseOrder', 'user');
-        
-        return view('business.order', compact('order'));
+
+        $total_amount = 0;
+        foreach($order->orderItems as $order_item) {
+            $quantity = explode(' ', $order_item->quantity)[0];
+            $total_amount += $order_item->amount * $quantity;
+        }
+
+        return view('business.order', compact('order', 'total_amount'));
     }
 
     public function orderUpdate(Order $order, $status)
@@ -195,6 +201,34 @@ class VendorController extends Controller
         ]);
 
         toastr()->success('', 'Request sent successfully');
+
+        return back();
+    }
+
+    public function quoteUpdate(Request $request)
+    {
+        $request->validate([
+            'items_ids' => ['required', 'array'],
+            'items_ids.*' => ['integer'],
+            'items_quantities' => ['required', 'array'],
+            'items_quantities.*' => ['integer'],
+            'items_prices' => ['required', 'array'],
+            'items_prices.*' => ['integer'],
+        ]);
+
+        foreach($request->items_ids as $item) {
+            $item_price = collect($request->items_prices)->filter(function ($value, $key) use ($item) { return $key == $item; });
+            $item_quantity = collect($request->items_quantities)->filter(function ($value, $key) use ($item) { return $key == $item; });
+
+            auth()->user()->quotationResponses()->create([
+                'order_item_id' => $item,
+                'quantity' => collect($item_quantity)->first(),
+                'amount' => collect($item_price)->first(),
+                'delivery_date' => $request->delivery_date,
+            ]);
+        }
+
+        toastr()->success('Quotation sent successfully');
 
         return back();
     }

@@ -18,6 +18,11 @@ class InspectingInstitution extends Model
      */
     protected $fillable = [''];
 
+    public function countriesOfOperation()
+    {
+        return $this->morphMany(CountryOfOperation::class, 'operateable');
+    }
+
     /**
      * The users that belong to the InspectingInstitution
      */

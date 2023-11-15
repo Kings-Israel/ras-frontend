@@ -3,13 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Business;
+use App\Models\InspectingInstitution;
+use App\Models\InspectionRequest;
 use App\Models\Invoice;
+use App\Models\LogisticsCompany;
+use App\Models\OrderDeliveryRequest;
 use App\Models\OrderItem;
+use App\Models\OrderStorageRequest;
 use App\Models\Product;
 use App\Models\Warehouse;
 use App\Models\WarehouseOrder;
 use App\Models\WarehouseProduct;
 use App\Notifications\NewOrder;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
@@ -43,6 +49,8 @@ class OrderController extends Controller
             'items_ids.*' => ['integer'],
             'items_quantities' => ['required', 'array'],
             'items_quantities.*' => ['integer'],
+            'items_prices' => ['required', 'array'],
+            'items_prices.*' => ['integer'],
             'items_quantities_measurement_units' => ['required', 'array'],
             'items_quantities_measurement_units.*' => ['string'],
             'delivery_location' => ['required'],
@@ -68,6 +76,7 @@ class OrderController extends Controller
             $order = auth()->user()->orders()->create([
                 'invoice_id' => $invoice->id,
                 'business_id' => $key,
+                'status' => 'quotation request'
             ]);
 
             foreach($product as $item) {
@@ -76,11 +85,14 @@ class OrderController extends Controller
                 $item_quantity_measurement_unit = collect($request->items_quantities_measurement_units)->filter(function ($value, $key) use ($item) { return $key == $item->id; });
                 $item_price = collect($request->items_prices)->filter(function ($value, $key) use ($item) { return $key == $item->id; });
 
+                $warehousing_requests = collect($request->warehousing_requests)->filter(function ($value, $key) use ($item) { return $key == $item->id; });
+
                 $order_item = OrderItem::create([
                     'order_id' => $order->id,
                     'product_id' => $item->id,
                     'quantity' => collect($item_quantity)->first().' '.collect($item_quantity_measurement_unit)->first(),
                     'amount' => collect($item_price)->first(),
+                    'delivery_date' => Carbon::parse($request->delivery_date)->format('Y-m-d'),
                 ]);
 
                 $warehouse_products = WarehouseProduct::where('product_id', $item->id)->get()->pluck('warehouse_id');
@@ -112,15 +124,53 @@ class OrderController extends Controller
                     ]);
                 }
 
-            }
+                $inspection_requests = collect($request->inspection_requests)->filter(function ($value, $key) use ($item) { return $key == $item->id; });
 
-            if ($request->has('request_inspection')) {
-                if ($request->has('inspector_id')) {
-                    $order->inspectionRequests()->create([
-                        'inspector_id' => $request->get('inspector_id'),
-                    ]);
+                if (count($inspection_requests) > 0) {
+                    $inspectors = InspectingInstitution::all();
+
+                    $inspectors->each(function ($inspector) use ($order_item) {
+                        InspectionRequest::create([
+                            'order_item_id' => $order_item->id,
+                            'inspector_id' => $inspector->id,
+                        ]);
+                    });
+                }
+
+                $shipping_requests = collect($request->shipping_requests)->filter(function ($value, $key) use ($item) { return $key == $item->id; });
+
+                if (count($shipping_requests) > 0) {
+                    $logistics = LogisticsCompany::all();
+
+                    $logistics->each(function ($logistics) use ($order_item) {
+                        OrderDeliveryRequest::create([
+                            'order_item_id' => $order_item->id,
+                            'logistics_company_id' => $logistics->id,
+                        ]);
+                    });
+                }
+
+                $warehousing_requests = collect($request->request_warehousing)->filter(function ($value, $key) use ($item) { return $key == $item->id; });
+
+                if (count($warehousing_requests) > 0) {
+                    $warehouses = Warehouse::all();
+
+                    $warehouses->each(function ($warehouse) use ($order_item) {
+                        OrderStorageRequest::create([
+                            'order_item_id' => $order_item->id,
+                            'warehouse_id' => $warehouse->id,
+                        ]);
+                    });
                 }
             }
+
+            // if ($request->has('request_inspection')) {
+            //     if ($request->has('inspector_id')) {
+            //         $order->inspectionRequests()->create([
+            //             'inspector_id' => $request->get('inspector_id'),
+            //         ]);
+            //     }
+            // }
 
             $business = Business::find($key);
             // $business->notify(new NewOrder($order));
@@ -136,6 +186,6 @@ class OrderController extends Controller
 
         toastr()->success('', 'Order(s) created successfully and vendor(s) have been notified');
 
-        return redirect()->route('welcome');
+        return redirect()->route('invoice.orders', ['invoice' => $invoice]);
     }
 }
