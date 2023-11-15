@@ -206,7 +206,7 @@ class ProductController extends Controller
             ]);
         }
 
-        activity()->causedBy(auth()->user())->performedOn($product)->log('added updated the product');
+        activity()->causedBy(auth()->user())->performedOn($product)->log('updated the product');
 
         toastr()->success('', 'Product updated successfully');
 

@@ -48,13 +48,12 @@
                                     <input type="text" name="name" value="{{ $product->name }}" id="name" autocomplete="off" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
                                 </div>
-                                @php($category_ids = $categories->pluck('id')->toArray())
                                 <div class="form-group">
                                     <x-input-label for="category" :value="__('Product Category')" class="text-gray-500" />
                                     <select name="category" id="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                                         <option value="">Select Product Category</option>
                                         @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}" @if(in_array($product->category_id, $category_ids)) selected @endif>{{ $category->name }}</option>
+                                            <option value="{{ $category->id }}" @if($product->category_id == $category->id) selected @endif>{{ $category->name }}</option>
                                         @endforeach
                                     </select>
                                     <x-input-error :messages="$errors->get('category')" class="mt-2" />
@@ -241,7 +240,17 @@
                         <div class="content" id="product-media">
                             <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
                                 <div class="form-group lg:col-span-2">
-                                    <x-input-label for="product_link_to_warehouse" :value="__('Warehouses')" class="text-gray-500" />
+                                    <div class="flex gap-2">
+                                        <x-input-label for="product_link_to_warehouse" :value="__('Warehouses')" class="text-gray-500" />
+                                        @if ($product->warehouses->count() > 0)
+                                            <span class="space-x-2">
+                                                <strong>Current Warehouses:</strong>
+                                                @foreach ($product->warehouses as $warehouse)
+                                                    <span>{{ $warehouse->name }}</span>
+                                                @endforeach
+                                            </span>
+                                        @endif
+                                    </div>
                                     <select name="warehouses" x-cloak id="select">
                                         {{-- <option value="">Select Warehouse</option> --}}
                                         @foreach ($warehouses as $warehouse)
@@ -478,18 +487,16 @@
             function dropdown() {
                 return {
                     options: [],
-                    selected: [...selected_warehouses],
+                    selected: [],
                     show: false,
                     open() { this.show = true },
                     close() { this.show = false },
                     isOpen() { return this.show === true },
                     select(index, event) {
                         if (!this.options[index].selected) {
-
                             this.options[index].selected = true;
                             this.options[index].element = event.target;
                             this.selected.push(index);
-
                         } else {
                             this.selected.splice(this.selected.lastIndexOf(index), 1);
                             this.options[index].selected = false
@@ -506,6 +513,7 @@
                                 value: options[i].value,
                                 text: options[i].innerText,
                                 selected: options[i].getAttribute('selected') != null ? options[i].getAttribute('selected') : false
+                                // selected: selected_warehouses.includes(Number(options[i].value)) ? true : false
                             });
                         }
                     },
