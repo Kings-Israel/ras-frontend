@@ -141,7 +141,7 @@
                                             </div>
                                         </div>
                                         <span class="col-span-4 max-h-40 overflow-scroll">
-                                            @if ($order_item->inspectionRequest && $order_item->inspectionRequest->cost != NULL)
+                                            @if ($order_item->inspectionRequest()->exists() && $order_item->inspectionRequest->cost != NULL)
                                                 <div class="flex gap-2">
                                                     <h4 class="font-semibold">Inspection Cost: </h4>
                                                     <span class="font-bold">USD {{ number_format($order_item->inspectionRequest->cost) }}</span>
