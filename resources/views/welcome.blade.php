@@ -76,7 +76,7 @@
                 <div class="relative" id="default-carousel" data-carousel="static">
                     <div class="relative overflow-hidden rounded-lg h-40">
                         <div class="hidden" data-carousel-item>
-                            <div class="grid grid-cols-3 space-x-1 ml-2 mr-2 pl-10 border border-gray-300 rounded-md p-5 h-40 min-h-[128px]">
+                            <div class="grid grid-cols-2 lg:grid-cols-3 space-x-1 ml-2 mr-2 pl-10 border border-gray-300 rounded-md p-5 h-40 min-h-[128px]">
                                 <div class="space-y-6 w-40 my-auto">
                                     <div class="flex gap-2">
                                         <img src="https://flagcdn.com/w40/ug.png" srcset="https://flagcdn.com/w40/ug.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
@@ -97,7 +97,7 @@
                                     </div>
                                     <h4 class="text-sm text-gray-500 whitespace-normal">We Buy Refined Coconut Oil</h4>
                                 </div>
-                                <div class="space-y-6 pr-2 w-40 my-auto">
+                                <div class="hidden lg:block space-y-6 pr-2 w-40 my-auto">
                                     <div class="flex gap-2">
                                         <img src="https://flagcdn.com/w40/ke.png" srcset="https://flagcdn.com/w40/ke.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
                                         <div class="my-auto">
@@ -131,7 +131,7 @@
                                     </div>
                                     <h4 class="text-sm text-gray-500 whitespace-normal">We Buy Refined Coconut Oil</h4>
                                 </div>
-                                <div class="space-y-6 pr-2 w-40 my-auto">
+                                <div class="hidden lg:block space-y-6 pr-2 w-40 my-auto">
                                     <div class="flex gap-2">
                                         <img src="https://flagcdn.com/w40/et.png" srcset="https://flagcdn.com/w40/et.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
                                         <div class="my-auto">
@@ -167,7 +167,7 @@
                 <div class="relative" id="default-carousel" data-carousel="static">
                     <div class="relative overflow-hidden rounded-lg h-40">
                         <div class="hidden" data-carousel-item>
-                            <div class="grid grid-cols-3 space-x-1 ml-2 mr-2 pl-10 border border-gray-300 h-40 min-h-[128px] rounded-md p-5">
+                            <div class="grid md:grid-cols-2 lg:grid-cols-3 space-x-1 ml-2 mr-2 pl-10 border border-gray-300 h-40 min-h-[128px] rounded-md p-5">
                                 <div class="space-y-6 w-32 my-auto">
                                     <div class="flex gap-2">
                                         <img src="https://flagcdn.com/w40/gh.png" srcset="https://flagcdn.com/w40/gh.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
@@ -188,7 +188,7 @@
                                     </div>
                                     <h4 class="text-sm text-gray-500 whitespace-normal">We Sell Diamonds</h4>
                                 </div>
-                                <div class="space-y-6 pr-2 w-40 my-auto">
+                                <div class="hidden lg:block space-y-6 pr-2 w-40 my-auto">
                                     <div class="flex gap-2">
                                         <img src="https://flagcdn.com/w40/na.png" srcset="https://flagcdn.com/w40/na.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
                                         <div class="my-auto">
@@ -222,7 +222,7 @@
                                     </div>
                                     <h4 class="text-sm text-gray-500 whitespace-normal">We Sell Bananas</h4>
                                 </div>
-                                <div class="space-y-6 pr-2 w-40 my-auto">
+                                <div class="hidden lg:block space-y-6 pr-2 w-40 my-auto">
                                     <div class="flex gap-2">
                                         <img src="https://flagcdn.com/w40/et.png" srcset="https://flagcdn.com/w40/et.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
                                         <div class="my-auto">
