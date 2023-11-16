@@ -12,7 +12,7 @@ class HomeCountriesView extends Component
 
     public $search = '';
 
-    public $per_page = 10;
+    public $per_page = 8;
 
     public $selected_countries = [];
 
@@ -23,7 +23,7 @@ class HomeCountriesView extends Component
 
     public function updatePagination()
     {
-        $this->per_page += 10;
+        $this->per_page += 5;
     }
 
     public function render()

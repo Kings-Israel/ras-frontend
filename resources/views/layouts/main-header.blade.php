@@ -2,6 +2,9 @@
     <a href="{{ url('/') }}" class="">
         <x-application-logo class="w-[10rem] object-contain" />
     </a>
+    <div class="hidden md:block md:w-[50%]">
+        <livewire:home-main-search />
+    </div>
     <div class="flex space-x-2">
         @auth
             <img src="{{ auth()->user()->avatar }}" alt="" class="w-8 h-8 rounded-full object-cover my-auto">
