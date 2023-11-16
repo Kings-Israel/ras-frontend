@@ -3,7 +3,9 @@
         <div class="grid md:flex md:justify-between">
             <div>
                 @guest
-                    <a href="route('register')" class="text-lg font-thin text-slate-50 text-center md:text-start">Join Us</a>
+                    <div class="text-center md:text-start">
+                        <a href="route('register')" class="text-lg font-thin text-slate-50">Join Us</a>
+                    </div>
                     <h5 class="text-sm text-slate-100 text-center md:text-start mb-4 md:mb-0">We'll send you daily special offers</h5>
                 @endguest
             </div>

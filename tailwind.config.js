@@ -36,6 +36,7 @@ export default {
                 'secondary-four': '#F9CB0B',
                 'secondary-five': '#30D1D1',
                 'secondary-six': '#00D666',
+                'primary-three': '#F8F7F0'
             },
         },
     },
