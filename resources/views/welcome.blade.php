@@ -270,20 +270,17 @@
             </div>
         </label>
 
-        <h3 class="font-bold tracking-wide text-lg text-gray-600">Top Picks For You</h3>
+        <div class="flex justify-between">
+            <h3 class="font-bold tracking-wide text-lg text-gray-600">Top Picks For You</h3>
+            <h4 class="font-semibold text-sm">See All <i class="fas fa-arrow-circle-right"></i></h4>
+        </div>
     </div>
     <div class="px-4 lg:px-24 mt-5">
         <div class="products">
-            <div class="flex justify-between">
-                <h4 class="font-semibold text-sm">See All <i class="fas fa-arrow-circle-right"></i></h4>
-            </div>
             <livewire:home-products-list />
         </div>
 
         <div class="vendors hidden">
-            <div class="flex justify-between">
-                <h4 class="font-semibold text-sm">See All <i class="fas fa-arrow-circle-right"></i></h4>
-            </div>
             <livewire:home-vendors-list />
         </div>
     </div>
