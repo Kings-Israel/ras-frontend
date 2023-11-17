@@ -16,35 +16,27 @@
                             <h5 class="text-center font-semibold px-2">Real African Sources is where to go to easily access raw materials and business opportunities from vetted suppliers across Africa.</h5>
                         </div>
                     </div>
-                    <!-- Item 1 -->
-                   <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                       <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="absolute block lg:h-[400px] lg:object-cover w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-                   </div>
-                   <!-- Item 2 -->
-                   <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                       <img src="{{ asset('assets/img/6CeuCO.jpg') }}" class="absolute block lg:h-[400px] lg:object-cover w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-                   </div>
-                   <!-- Item 3 -->
-                   <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                       <img src="{{ asset('assets/img/auth-alt-five.jpg') }}" class="absolute block lg:h-[400px] lg:object-cover w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-                   </div>
-                   <!-- Item 4 -->
-                   <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                       <img src="{{ asset('assets/img/auth-alt-four.jpg') }}" class="absolute block lg:h-[400px] lg:object-cover w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-                   </div>
-                   <!-- Item 5 -->
-                   <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                       <img src="{{ asset('assets/img/auth-alt-six.jpg') }}" class="absolute block lg:h-[400px] lg:object-cover w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-                   </div>
+                    @foreach ($marketing_posters as $poster)
+                        <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                            <img src="{{ $poster->image }}" class="absolute block lg:h-[400px] lg:object-cover -z-10 w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                            @if ($poster->description)
+                                <div class="mx-auto py-8 px-1.5 z-50 space-y-3">
+                                    <h5 class="text-{{ $poster->description_text_align }} px-2 text-white" style="font-size: {{ $poster->font_size }}px; color: {{ Str::lower($poster->description_text_color) }}">{{ $poster->description }}</h5>
+                                </div>
+                            @endif
+                        </div>
+                    @endforeach
                </div>
                <!-- Slider indicators -->
                 <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
                     <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
-                    <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
-                    <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
+                    @foreach ($marketing_posters as $key => $poster)
+                        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide {{ $key + 1 }}" data-carousel-slide-to="{{ $key + 1 }}"></button>
+                    @endforeach
+                    {{-- <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
                     <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 4" data-carousel-slide-to="3"></button>
                     <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 5" data-carousel-slide-to="4"></button>
-                    <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 6" data-carousel-slide-to="5"></button>
+                    <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 6" data-carousel-slide-to="5"></button> --}}
                 </div>
             </div>
             <div class="hidden lg:block col-span-1 mt-4">
