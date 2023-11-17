@@ -206,12 +206,17 @@
                         <h4 class="text-md font-semibold text-gray-500">Total Shipping Cost:</h4>
                         <div class="flex gap-1">
                             <h3 class="font-bold text-xl text-gray-600 my-auto">USD</h3>
-                            <span class="font-bold text-xl text-gray-800">{{ 0 }}</span>
+                            <span class="font-bold text-xl text-gray-800">{{ number_format($delivery_cost) }}</span>
                         </div>
                         <h4 class="text-md font-semibold text-gray-500">Total Warehousing Cost:</h4>
                         <div class="flex gap-1">
                             <h3 class="font-bold text-xl text-gray-600 my-auto">USD</h3>
-                            <span class="font-bold text-xl text-gray-800">{{ 0 }}</span>
+                            <span class="font-bold text-xl text-gray-800">{{ number_format($warehousing_cost) }}</span>
+                        </div>
+                        <h4 class="text-md font-semibold text-gray-500">Total Insurance Cost:</h4>
+                        <div class="flex gap-1">
+                            <h3 class="font-bold text-xl text-gray-600 my-auto">USD</h3>
+                            <span class="font-bold text-xl text-gray-800">{{ number_format($insurance_cost) }}</span>
                         </div>
                         {{-- @if ($inspection_cost > 0)
                             <div class="flex gap-2">

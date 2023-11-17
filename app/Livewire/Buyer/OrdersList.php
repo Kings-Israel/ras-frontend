@@ -36,6 +36,14 @@ class OrdersList extends Component
 
         $inspection_cost = 0;
 
+        $logistics_cost = 0;
+
+        $insurance_cost = 0;
+
+        $delivery_cost = 0;
+
+        $warehousing_cost = 0;
+
         $total_amount = 0;
 
         foreach ($this->invoice->orders as $order) {
@@ -46,9 +54,17 @@ class OrdersList extends Component
                     $inspection_cost += $order_item->inspectionRequest->cost;
                     $total_amount += $order_item->inspectionRequest->cost;
                 }
+                if ($order_item->deliveryRequest()->where('cost', '!=', NULL)->exists()) {
+                    $delivery_cost += $order_item->deliveryRequest->cost;
+                    $total_amount += $order_item->inspectionRequest->cost;
+                }
+                if ($order_item->insuranceRequest()->where('cost', '!=', NULL)->exists()) {
+                    $insurance_cost += $order_item->insuranceRequest->cost;
+                    $total_amount += $order_item->insuranceRequest->cost;
+                }
             }
         }
 
-        return view('livewire.buyer.orders-list', compact('orders', 'total_amount', 'inspection_cost'));
+        return view('livewire.buyer.orders-list', compact('orders', 'total_amount', 'inspection_cost', 'delivery_cost', 'insurance_cost', 'warehousing_cost'));
     }
 }
