@@ -93,6 +93,19 @@ class User extends Authenticatable implements MustVerifyEmail
         return $pending_orders;
     }
 
+    public function quotationRequests(): int
+    {
+        $pending_orders = 0;
+
+        if (auth()->check() && auth()->user()->hasRole('vendor')) {
+            if (auth()->user()->business) {
+                $pending_orders = auth()->user()->business->orders->where('status', 'quotation request')->count();
+            }
+        }
+
+        return $pending_orders;
+    }
+
     /**
      * Get the business associated with the User
      */

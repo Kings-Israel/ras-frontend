@@ -31,7 +31,7 @@
                     @php($product_measurement_unit = $item->product->min_order_quantity ? explode(" ", $item->product->min_order_quantity)[1] : 'Kilograms')
                     <div>
                         <div class="flex w-full border border-gray-200 rounded-lg px-1 py-1 md:px-2 md:py-2">
-                            <div class="basis-4/5 grid md:flex md:justify-between gap-2 px-2 text-gray-500">
+                            <div class="basis-6/7 grid md:flex md:justify-between gap-2 px-2 text-gray-500">
                                 <div class="flex gap-3 md:min-w-fit md:mr-10">
                                     {{-- <input id="cart_items_ids[]" value="{{ $item->id }}" type="checkbox" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
                                     <label for="cart_items_ids" class="sr-only">checkbox</label> --}}
@@ -83,7 +83,7 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="md:w-[90%] md:grid md:grid-cols-3">
+                                    <div class="flex gap-2 justify-end w-full">
                                         <div class="flex gap-2 px-1 md:px-2 text-gray-500">
                                             <input id="request_inspection" type="checkbox" name="request_inspection[{{ $item->product->id }}]" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
                                             <label for="request_inspection" class="sr-only">checkbox</label>
@@ -97,14 +97,19 @@
                                         <div class="flex gap-2 px-1 md:px-2 text-gray-500">
                                             <input id="checkbox-table-search-1" type="checkbox" name="request_warehousing[{{ $item->product->id }}]" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
                                             <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                            <h2 class="font-semibold text-sm my-auto">Warehousing</h2>
+                                            <h2 class="font-semibold my-auto">Request Warehousing</h2>
+                                        </div>
+                                        <div class="flex gap-2 px-1 md:px-2 text-gray-500">
+                                            <input id="checkbox-table-search-1" type="checkbox" name="request_insurance[{{ $item->product->id }}]" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                                            <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                                            <h2 class="font-semibold my-auto">Request Insurance</h2>
                                         </div>
                                         {{-- <div class="grid md:flex border border-gray-200 rounded-lg px-1 py-1 md:px-2 md:py-2 mb-2" id="delivery-inspection-section">
                                         </div> --}}
                                     </div>
                                 </div>
                             </div>
-                            <i class="fas fa-trash-alt my-auto text-gray-500 basis-1/5 flex justify-end hover:cursor-pointer" wire:click="remove({{ $item }})"></i>
+                            <i class="fas fa-trash-alt my-auto text-gray-500 basis-1/7 flex justify-end hover:cursor-pointer" wire:click="remove({{ $item }})"></i>
                         </div>
                         {{-- <div class="w-full">
                             <div class="flex justify-between mx-2" id="logistics_companies">
