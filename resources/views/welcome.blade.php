@@ -6,39 +6,48 @@
                     <livewire:home-categories-view />
                 </div>
             </div>
-            {{-- <div class="col-span-3 bg-hero bg-[length:400px_400px] md:bg-[length:800px_600px] lg:bg-cover bg-no-repeat lg:h-[400px] mt-4"> --}}
-            <div id="default-carousel" class="col-span-3 mt-4 relative w-full" data-carousel="slide">
-                <div class="relative h-56 overflow-hidden rounded-lg md:h-[400px]">
-                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                        <img src="{{ asset('assets/img/banner.png') }}" alt="" class="absolute lg:h-[400px] lg:object-cover -z-10 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-                        <div class="flex flex-col mx-auto py-8 px-1.5 z-50 space-y-3">
-                            <h1 class="text-2xl md:text-2xl lg:text-4xl font-[600] md:font-[800] lg:font-[900] text-center hero-main-text text-gray-900">Find The Best Products, From Top Notch Suppliers</h1>
-                            <h5 class="text-center font-semibold px-2">Real African Sources is where to go to easily access raw materials and business opportunities from vetted suppliers across Africa.</h5>
-                        </div>
-                    </div>
-                    @foreach ($marketing_posters as $poster)
+            @if ($marketing_posters->count() > 0)
+                <div id="default-carousel" class="col-span-3 mt-4 relative w-full" data-carousel="slide">
+                    <div class="relative h-56 overflow-hidden rounded-lg md:h-[400px]">
                         <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                            <img src="{{ $poster->image }}" class="absolute block lg:h-[400px] lg:object-cover -z-10 w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-                            @if ($poster->description)
-                                <div class="mx-auto py-8 px-1.5 z-50 space-y-3">
-                                    <h5 class="text-{{ $poster->description_text_align }} px-2 text-white" style="font-size: {{ $poster->font_size }}px; color: {{ Str::lower($poster->description_text_color) }}">{{ $poster->description }}</h5>
-                                </div>
-                            @endif
+                            <img src="{{ asset('assets/img/banner.png') }}" alt="" class="absolute lg:h-[400px] lg:object-cover -z-10 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+                            <div class="flex flex-col mx-auto py-8 px-1.5 z-50 space-y-3">
+                                <h1 class="text-2xl md:text-2xl lg:text-4xl font-[600] md:font-[800] lg:font-[900] text-center hero-main-text text-gray-900">Find The Best Products, From Top Notch Suppliers</h1>
+                                <h5 class="text-center font-semibold px-2">Real African Sources is where to go to easily access raw materials and business opportunities from vetted suppliers across Africa.</h5>
+                            </div>
                         </div>
-                    @endforeach
-               </div>
-               <!-- Slider indicators -->
-                <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-                    <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
-                    @foreach ($marketing_posters as $key => $poster)
-                        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide {{ $key + 1 }}" data-carousel-slide-to="{{ $key + 1 }}"></button>
-                    @endforeach
-                    {{-- <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
-                    <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 4" data-carousel-slide-to="3"></button>
-                    <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 5" data-carousel-slide-to="4"></button>
-                    <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 6" data-carousel-slide-to="5"></button> --}}
+                        @foreach ($marketing_posters as $poster)
+                            <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                                <img src="{{ $poster->image }}" class="absolute block lg:h-[400px] lg:object-cover -z-10 w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                                @if ($poster->description)
+                                    <div class="mx-auto py-8 px-1.5 z-50 space-y-3">
+                                        <h5 class="text-{{ $poster->description_text_align }} px-2 text-white" style="font-size: {{ $poster->font_size }}px; color: {{ Str::lower($poster->description_text_color) }}">{{ $poster->description }}</h5>
+                                    </div>
+                                @endif
+                            </div>
+                        @endforeach
                 </div>
-            </div>
+                <!-- Slider indicators -->
+                    <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
+                        <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
+                        @foreach ($marketing_posters as $key => $poster)
+                            <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide {{ $key + 1 }}" data-carousel-slide-to="{{ $key + 1 }}"></button>
+                        @endforeach
+                        {{-- <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
+                        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 4" data-carousel-slide-to="3"></button>
+                        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 5" data-carousel-slide-to="4"></button>
+                        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 6" data-carousel-slide-to="5"></button> --}}
+                    </div>
+                </div>
+            @else
+                <div class="col-span-3 mt-4 relative w-full">
+                    <img src="{{ asset('assets/img/banner.png') }}" alt="" class="absolute lg:h-[400px] lg:object-cover -z-10 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+                    <div class="flex flex-col mx-auto py-8 px-1.5 z-50 space-y-3">
+                        <h1 class="text-2xl md:text-2xl lg:text-4xl font-[600] md:font-[800] lg:font-[900] text-center hero-main-text text-gray-900">Find The Best Products, From Top Notch Suppliers</h1>
+                        <h5 class="text-center font-semibold px-2">Real African Sources is where to go to easily access raw materials and business opportunities from vetted suppliers across Africa.</h5>
+                    </div>
+                </div>
+            @endif
             <div class="hidden lg:block col-span-1 mt-4">
                 <div class="bg-primary-three rounded-md p-2">
                     <h3 class="font-bold text-xl text-slate-800">Your Buying Requests</h3>
