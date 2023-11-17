@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Business;
 use App\Models\Category;
 use App\Models\Country;
+use App\Models\MarketingPoster;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use VisitLog;
@@ -21,6 +22,7 @@ class HomeController extends Controller
             'products' => Product::available()->with(['media' => function($query) {
                 $query->where('type', 'image')->inRandomOrder();
             }])->get()->take(10),
+            'marketing_posters' => MarketingPoster::all()->take(5)
         ]);
     }
 }
