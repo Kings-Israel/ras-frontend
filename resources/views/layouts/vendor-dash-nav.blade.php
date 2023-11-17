@@ -176,6 +176,54 @@
                 </x-nav-item>
             </li>
             <li>
+                <x-nav-item :href="route('vendor.quotation.requests')" :active="request()->routeIs('vendor.quotation.requests') || request()->routeIs('vendor.quotation.requests.*')">
+                    {{-- <i class="w-5 h-5 fas fa-shopping-bag"></i> --}}
+                    @if (request()->routeIs('vendor.quotation.requests') || request()->routeIs('vendor.quotation.requests.*'))
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="27" height="26" viewBox="0 0 27 26">
+                            <defs>
+                            <style>
+                                .cls-1 {
+                                clip-path: url(#clip-_1_2);
+                                }
+
+                                .basket-2 {
+                                fill: #EE5D32;
+                                }
+                            </style>
+                            <clipPath id="clip-_1_2">
+                                <rect width="27" height="26"/>
+                            </clipPath>
+                            </defs>
+                            <g id="_1_2" data-name="1 – 2" class="cls-1">
+                            <path id="Icon_awesome-shopping-bag" data-name="Icon awesome-shopping-bag" class="basket-2" d="M14.816,6.735V5.388a5.388,5.388,0,0,0-10.775,0V6.735H0V18.183a3.367,3.367,0,0,0,3.367,3.367H15.49a3.367,3.367,0,0,0,3.367-3.367V6.735ZM6.735,5.388a2.694,2.694,0,1,1,5.388,0V6.735H6.735Zm6.735,5.051a1.01,1.01,0,1,1,1.01-1.01A1.01,1.01,0,0,1,13.469,10.439Zm-8.082,0A1.01,1.01,0,1,1,6.4,9.428,1.01,1.01,0,0,1,5.388,10.439Z" transform="translate(4.482 3.12)"/>
+                            </g>
+                        </svg>
+                    @else
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="27" height="26" viewBox="0 0 27 26">
+                            <defs>
+                            <style>
+                                .cls-1 {
+                                clip-path: url(#clip-_1_2);
+                                }
+
+                                .basket-2 {
+                                fill: #4f4f4f;
+                                }
+                            </style>
+                            <clipPath id="clip-_1_2">
+                                <rect width="27" height="26"/>
+                            </clipPath>
+                            </defs>
+                            <g id="_1_2" data-name="1 – 2" class="cls-1">
+                            <path id="Icon_awesome-shopping-bag" data-name="Icon awesome-shopping-bag" class="basket-2" d="M14.816,6.735V5.388a5.388,5.388,0,0,0-10.775,0V6.735H0V18.183a3.367,3.367,0,0,0,3.367,3.367H15.49a3.367,3.367,0,0,0,3.367-3.367V6.735ZM6.735,5.388a2.694,2.694,0,1,1,5.388,0V6.735H6.735Zm6.735,5.051a1.01,1.01,0,1,1,1.01-1.01A1.01,1.01,0,0,1,13.469,10.439Zm-8.082,0A1.01,1.01,0,1,1,6.4,9.428,1.01,1.01,0,0,1,5.388,10.439Z" transform="translate(4.482 3.12)"/>
+                            </g>
+                        </svg>
+                    @endif
+                    <span class="flex-1 ml-3 truncate">Quotation Requests</span>
+                    <span class="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-gray-200 bg-red-900 rounded-full">{{ auth()->user()->quotationRequests() }}</span>
+                </x-nav-item>
+            </li>
+            <li>
                 <x-nav-item :href="route('messages')" :active="request()->routeIs('messages')">
                     {{-- <i class="w-5 h-5 fas fa-comment"></i> --}}
                     @if (request()->routeIs('messages'))

@@ -62,6 +62,7 @@ Route::middleware(['auth', 'web', 'phone_verified', 'role:vendor', 'has_register
         Route::get('/{product}/edit', [VendorProductController::class, 'edit'])->name('products.edit');
         Route::patch('/{product}/update', [VendorProductController::class, 'update'])->name('products.update');
         Route::get('/orders', [VendorController::class, 'orders'])->name('orders');
+        Route::get('/quotation-requests', [VendorController::class, 'quotationRequests'])->name('quotation.requests');
         Route::get('/orders/{order}', [VendorController::class, 'order'])->name('orders.show');
         Route::get('/orders/{order}/{status}/update', [VendorController::class, 'orderUpdate'])->name('orders.status.update');
         Route::post('/orders/{order}/quote/update', [VendorController::class, 'quoteUpdate'])->name('orders.quote.update');

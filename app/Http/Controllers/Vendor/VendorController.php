@@ -146,6 +146,11 @@ class VendorController extends Controller
         return view('business.orders');
     }
 
+    public function quotationRequests()
+    {
+        return view('business.quotation-requests');
+    }
+
     public function order(Order $order)
     {
         $order->load('orderItems.product', 'orderItems.warehouseOrder', 'user');

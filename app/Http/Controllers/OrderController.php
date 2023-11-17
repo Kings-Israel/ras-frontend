@@ -6,6 +6,8 @@ use App\Models\Business;
 use App\Models\FinancingInstitution;
 use App\Models\InspectingInstitution;
 use App\Models\InspectionRequest;
+use App\Models\InsuranceCompany;
+use App\Models\InsuranceRequest;
 use App\Models\Invoice;
 use App\Models\LogisticsCompany;
 use App\Models\Order;
@@ -131,8 +133,9 @@ class OrderController extends Controller
 
                 $inspection_requests = collect($request->request_inspection)->filter(function ($value, $key) use ($item) { return $key == $item->id; });
 
-                if (count($inspection_requests) > 0) {
-                    $inspectors = InspectingInstitution::all();
+                $inspectors = InspectingInstitution::all();
+
+                if (count($inspection_requests) > 0 && $inspectors->count() > 0) {
 
                     $inspectors->each(function ($inspector) use ($order_item) {
                         InspectionRequest::create([
@@ -144,8 +147,9 @@ class OrderController extends Controller
 
                 $shipping_requests = collect($request->request_logistics)->filter(function ($value, $key) use ($item) { return $key == $item->id; });
 
-                if (count($shipping_requests) > 0) {
-                    $logistics = LogisticsCompany::all();
+                $logistics = LogisticsCompany::all();
+
+                if (count($shipping_requests) > 0 && $logistics->count() > 0) {
 
                     $logistics->each(function ($logistics) use ($order_item) {
                         OrderDeliveryRequest::create([
@@ -157,13 +161,28 @@ class OrderController extends Controller
 
                 $warehousing_requests = collect($request->request_warehousing)->filter(function ($value, $key) use ($item) { return $key == $item->id; });
 
-                if (count($warehousing_requests) > 0) {
-                    $warehouses = Warehouse::all();
+                $warehouses = Warehouse::all();
+
+                if (count($warehousing_requests) > 0 && $warehouses->count() > 0) {
 
                     $warehouses->each(function ($warehouse) use ($order_item) {
                         OrderStorageRequest::create([
                             'order_item_id' => $order_item->id,
                             'warehouse_id' => $warehouse->id,
+                        ]);
+                    });
+                }
+
+                $insurance_requests = collect($request->request_insurance)->filter(function ($value, $key) use ($item) { return $key == $item->id; });
+
+                $insurance_companies = InsuranceCompany::all();
+
+                if (count($insurance_requests) > 0 && $insurance_companies->count() > 0) {
+
+                    $insurance_companies->each(function ($insurance_company) use ($order_item) {
+                        InsuranceRequest::create([
+                            'order_item_id' => $order_item->id,
+                            'insurance_company_id' => $insurance_company->id,
                         ]);
                     });
                 }

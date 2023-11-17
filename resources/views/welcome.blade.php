@@ -18,7 +18,7 @@
                         </div>
                         @foreach ($marketing_posters as $poster)
                             <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                                <img src="{{ $poster->image }}" class="absolute block lg:h-[400px] lg:object-cover -z-10 w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                                <img src="{{ $poster->image }}" class="absolute block lg:h-[400px] lg:object-contain -z-10 w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
                                 @if ($poster->description)
                                     <div class="mx-auto py-8 px-1.5 z-50 space-y-3">
                                         <h5 class="text-{{ $poster->description_text_align }} px-2 text-white" style="font-size: {{ $poster->font_size }}px; color: {{ Str::lower($poster->description_text_color) }}">{{ $poster->description }}</h5>
