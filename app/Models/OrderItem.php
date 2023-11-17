@@ -93,4 +93,12 @@ class OrderItem extends Model
     {
         return $this->hasMany(QuotationRequestResponse::class);
     }
+
+    /**
+     * Get the insuranceRequest associated with the OrderItem
+     */
+    public function insuranceRequest(): HasOne
+    {
+        return $this->hasOne(InsuranceRequest::class);
+    }
 }

@@ -136,7 +136,6 @@ class OrderController extends Controller
                 $inspectors = InspectingInstitution::all();
 
                 if (count($inspection_requests) > 0 && $inspectors->count() > 0) {
-
                     $inspectors->each(function ($inspector) use ($order_item) {
                         InspectionRequest::create([
                             'order_item_id' => $order_item->id,
@@ -150,7 +149,6 @@ class OrderController extends Controller
                 $logistics = LogisticsCompany::all();
 
                 if (count($shipping_requests) > 0 && $logistics->count() > 0) {
-
                     $logistics->each(function ($logistics) use ($order_item) {
                         OrderDeliveryRequest::create([
                             'order_item_id' => $order_item->id,
@@ -164,7 +162,6 @@ class OrderController extends Controller
                 $warehouses = Warehouse::all();
 
                 if (count($warehousing_requests) > 0 && $warehouses->count() > 0) {
-
                     $warehouses->each(function ($warehouse) use ($order_item) {
                         OrderStorageRequest::create([
                             'order_item_id' => $order_item->id,
@@ -187,14 +184,6 @@ class OrderController extends Controller
                     });
                 }
             }
-
-            // if ($request->has('request_inspection')) {
-            //     if ($request->has('inspector_id')) {
-            //         $order->inspectionRequests()->create([
-            //             'inspector_id' => $request->get('inspector_id'),
-            //         ]);
-            //     }
-            // }
 
             $business = Business::find($key);
             // $business->notify(new NewOrder($order));

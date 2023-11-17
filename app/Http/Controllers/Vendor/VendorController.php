@@ -175,7 +175,11 @@ class VendorController extends Controller
             // Check if order financing was requested
             if ($order->invoice->financingRequest) {
                 // Send notification to financier to view order
-                FinancingInstitution::find(1)->notify(new FinancingRequested($order->invoice));
+                $financing_institutions = FinancingInstitution::all();
+                foreach($financing_institutions as $financing_instruction) {
+                    $financing_instruction->notify(new FinancingRequested($order->invoice));
+                }
+                // FinancingInstitution::find(1)->notify(new FinancingRequested($order->invoice));
             }
         }
 
