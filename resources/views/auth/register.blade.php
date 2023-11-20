@@ -1,4 +1,4 @@
-<x-guest-layout class="w-[98%] md:w-[70%] lg:w-[40%] my-10 md:my-16">
+<x-guest-layout class="w-[98%] md:w-[70%] lg:w-[40%] my-10 md:my-16 bg-white">
     <div class="flex flex-col text-center py-3">
         <h1 class="text-3xl font-bold p-2">{{ Str::ucfirst($type) }} Sign Up</h1>
         <span class="p-1">Your Gateway to Finding and Selling Awesome Products Across The Continent</span>

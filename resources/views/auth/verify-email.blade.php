@@ -1,4 +1,4 @@
-<x-guest-layout class="w-full md:w-[60%] lg:w-[30%] my-16 md:my-20">
+<x-guest-layout class="w-full md:w-[60%] lg:w-[30%] my-16 md:my-20 bg-white">
     <div class="flex flex-col text-center py-10">
         <h1 class="text-3xl font-bold p-2">Verify Email</h1>
     </div>
