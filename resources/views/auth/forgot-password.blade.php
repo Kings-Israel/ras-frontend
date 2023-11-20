@@ -1,4 +1,4 @@
-<x-guest-layout class="w-[96%] md:w-[70%] lg:w-[30%] my-10 md:my-20">
+<x-guest-layout class="w-[96%] md:w-[70%] lg:w-[30%] my-10 md:my-20 bg-white">
     <div class="flex flex-col text-center py-10">
         <h1 class="text-3xl font-bold p-2">Forgot Password</h1>
         <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">

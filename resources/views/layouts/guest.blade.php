@@ -36,28 +36,28 @@
                 </div>
                 @guest
                     @if (Route::is('login') || Route::is('verify-phone'))
-                        <a href="{{ route('register') }}">
-                            <x-secondary-button class="px-8">
+                        <a href="{{ route('select-type') }}">
+                            <x-secondary-button class="px-8 font-bold text-xl">
                                 Sign Up
                             </x-secondary-button>
                         </a>
-                        @elseif (Route::is('register'))
+                    @elseif (Route::is('register'))
                         <div class="flex">
                             <a href="{{ route('select-type') }}">
                                 <h2 class="mr-3 text-white mt-2 md:my-auto font-bold lg:text-2xl md:text-lg md:mt-2 sm:mt-10">Switch User</h2>
                             </a>
                             <a href="{{ route('login') }}">
-                                <x-secondary-button class="px-8">
+                                <x-secondary-button class="px-8 font-bold text-xl">
                                     Login
                                 </x-secondary-button>
                             </a>
                         </div>
-                    @elseif (Route::is('select-type'))
+                    {{-- @elseif (Route::is('select-type'))
                         <a href="{{ route('register') }}">
-                            <x-secondary-button class="px-8">
+                            <x-secondary-button class="px-8 font-bold">
                                 Sign Up
                             </x-secondary-button>
-                        </a>
+                        </a> --}}
                     @endif
                 @else
                     <form method="POST" action="{{ route('logout') }}">
@@ -71,7 +71,7 @@
                     </form>
                 @endguest
             </x-guest-nav>
-            <div {!! $attributes->merge(['class' => 'px-6 py-4 bg-white overflow-hidden sm:rounded-lg mx-auto rounded-md']) !!}>
+            <div {!! $attributes->merge(['class' => 'px-6 py-4 overflow-hidden sm:rounded-lg mx-auto rounded-md']) !!}>
                 {{ $slot }}
             </div>
             {{-- <div class="flex flex-col sm:justify-center items-center lg:mt-10 pt-6 sm:pt-0 bg-transparent">
