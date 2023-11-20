@@ -68,4 +68,7 @@
             </button>
         </form>
     </div>
+    <div class="mt-4 text-center">
+        <h3 class="">Already Have An Account? <a href="{{ route('login') }}" class="underline decoration-orange-500 text-orange-400 font-bold hover:text-orange-500 focus:text-orange-600 transition ease-in-out duration-150">Login</a></h3>
+    </div>
 </x-guest-layout>
