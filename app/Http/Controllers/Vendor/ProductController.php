@@ -72,14 +72,14 @@ class ProductController extends Controller
             'capacity_in_warehouse' => $request->product_capacity,
         ]);
 
-        if (count(explode(',', $request->warehouses)) > 0) {
-            foreach(explode(',', $request->warehouses) as $warehouse) {
-                WarehouseProduct::create([
-                    'warehouse_id' => $warehouse,
-                    'product_id' => $product->id
-                ]);
-            };
-        }
+        // if (count(explode(',', $request->warehouses)) > 0) {
+        //     foreach(explode(',', $request->warehouses) as $warehouse) {
+        //         WarehouseProduct::create([
+        //             'warehouse_id' => $warehouse,
+        //             'product_id' => $product->id
+        //         ]);
+        //     };
+        // }
 
         foreach ($request->images as $image) {
             ProductMedia::create([

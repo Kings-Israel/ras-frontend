@@ -1,4 +1,4 @@
-<div class="space-y-2 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-4 4xl:grid-cols-5 gap-2 py-4">
+<div class="space-y-2 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-5 4xl:grid-cols-5 gap-2 py-4">
     @foreach ($products as $product)
         <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
             <a href="{{ route('product', ['slug' => $product->slug]) }}">
