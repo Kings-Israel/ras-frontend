@@ -1,4 +1,4 @@
-<x-guest-layout class="w-[98%] md:w-[80%] lg:w-[60%] my-10 md:my-16">
+<x-guest-layout class="w-[98%] md:w-[80%] lg:w-[60%] my-10 md:my-16 bg-white">
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/bs-stepper/bs-stepper.css') }}">
     <link rel="stylesheet" href="{{asset('assets/vendor/libs/select2/select2.css')}}" />
     <link rel="stylesheet" href="{{asset('assets/vendor/libs/tagify/tagify.css')}}" />

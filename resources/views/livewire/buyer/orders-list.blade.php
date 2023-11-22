@@ -44,7 +44,7 @@
         </span>
         <div class="block lg:flex p-4 gap-12">
             <div class="basis-3/4 bg-gray-50 p-2 rounded-lg">
-                <h3 class="text-3xl text-gray-600 font-bold mb-2">{{ $invoice->invoice_id }} Invoice Orders</h3>
+                <h3 class="text-3xl text-gray-900 font-bold mb-2">{{ $invoice->invoice_id }} Invoice Orders</h3>
                 <div class="space-y-2">
                     {{-- <div>
                         <div class="flex justify-between border border-gray-200 rounded-lg px-1 py-1 md:px-2 md:py-2">
@@ -60,7 +60,7 @@
                         <div class="flex justify-between">
                             <span class="flex gap-2 divide-x-2 divide-gray-300">
                                 <div class="flex gap-2">
-                                    <h3 class="text-gray-500 font-bold">{{ Str::upper($key) }}</h3>
+                                    <h3 class="text-gray-800 font-bold">{{ Str::upper($key) }}</h3>
                                     <a class="bg-primary-one py-1 px-2 text-white font-bold tracking-tight rounded-md hover:bg-orange-500 transition duration-150 ease-in-out" href="{{ route('messages', ['user' => json_decode($order, true)[0]['business']['user_id']]) }}">
                                         Message Vendor
                                     </a>
@@ -69,12 +69,12 @@
                             <div class="flex gap-2">
                                 <span>
                                     <div class="flex gap-2">
-                                        <h3 class="text-gray-500 font-bold">ORDER ID: <strong>{{ json_decode($order, true)[0]['order_id'] }}</strong></h3>
+                                        <h3 class="text-gray-900 font-bold">ORDER ID: <strong>{{ json_decode($order, true)[0]['order_id'] }}</strong></h3>
                                     </div>
                                 </span>
                                 <span>
                                     <div class="flex gap-2">
-                                        <h3 class="text-gray-500 font-bold">STATUS: <strong>{{ Str::title(json_decode($order, true)[0]['status']) }}</strong></h3>
+                                        <h3 class="text-gray-900 font-bold">STATUS: <strong>{{ Str::title(json_decode($order, true)[0]['status']) }}</strong></h3>
                                     </div>
                                 </span>
                             </div>
@@ -87,8 +87,8 @@
                                             @if ($order_item->product->media->where('type', 'image')->first())
                                                 <img src="{{ $order_item->product->media->where('type', 'image')->first()->file }}" alt="" class="w-10 h-10 lg:w-20 lg:h-20 object-cover rounded-md border border-orange-400">
                                             @endif
-                                            <div class="flex flex-col">
-                                                <a href="{{ route('product', ['slug' => $order_item->product->slug]) }}" class="text-gray-500 font-bold text-md my-auto hover:text-gray-700">
+                                            <div class="flex">
+                                                <a href="{{ route('product', ['slug' => $order_item->product->slug]) }}" class="text-gray-900 font-bold text-md my-auto hover:text-gray-800">
                                                     {{ $order_item->product->name }}
                                                 </a>
                                             </div>
@@ -98,7 +98,7 @@
                                                 <div class="flex gap-3">
                                                     <div class="custom-number-input h-10">
                                                         <div class="flex flex-row h-8 w-full rounded-lg relative bg-transparent my-auto">
-                                                            <span id="order_quantity" class="border border-1 rounded-lg border-gray-500 px-3 my-auto text-center w-full bg-gray-300 font-semibold text-md text-gray-700">{{ $order_item->quantity }}</span>
+                                                            <span id="order_quantity" class="border border-1 rounded-lg border-gray-500 px-3 my-auto text-center w-full bg-gray-300 font-semibold text-md text-gray-800">{{ $order_item->quantity }}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -135,16 +135,28 @@
                                             </div> --}}
                                             <div class="my-auto">
                                                 <span class="flex gap-1">
-                                                    <h3 class="font-semibold text-gray-400">{{ $order_item->product->currency }}</h3>
-                                                    <h3 class="font-bold text-gray-500">{{ $order_item->amount }}</h3>
+                                                    <h3 class="font-semibold text-gray-700">{{ $order_item->product->currency }}</h3>
+                                                    <h3 class="font-bold text-gray-900">{{ $order_item->amount }}</h3>
                                                 </span>
                                             </div>
                                         </div>
                                         <span class="col-span-4 max-h-40 overflow-scroll">
-                                            @if ($order_item->inspectionRequest()->exists() && $order_item->inspectionRequest->cost != NULL)
+                                            @if ($order_item->inspectionRequest()->exists())
                                                 <div class="flex gap-2">
-                                                    <h4 class="font-semibold">Inspection Cost: </h4>
-                                                    <span class="font-bold">USD {{ number_format($order_item->inspectionRequest->cost) }}</span>
+                                                    <span>Inspection Request Status: <h5 class="font-bold">{{ Str::title($order_item->inspectionRequest->status) }}</h5></span>
+                                                    @if ($order_item->inspectionRequest->cost != NULL)
+                                                        <h4 class="font-semibold">Inspection Cost: </h4>
+                                                        <span class="font-bold">USD {{ number_format($order_item->inspectionRequest->cost) }}</span>
+                                                    @endif
+                                                </div>
+                                            @endif
+                                            @if ($order_item->insuranceRequest()->exists())
+                                                <div class="flex gap-2">
+                                                    <span>Insurance Request Status: <h5 class="font-bold">{{ Str::title($order_item->insuranceRequest->status) }}</h5></span>
+                                                    @if ($order_item->insuranceRequest->cost != NULL)
+                                                        <h4 class="font-semibold">Insurance Cost: </h4>
+                                                        <span class="font-bold">USD {{ number_format($order_item->insuranceRequest->cost) }}</span>
+                                                    @endif
                                                 </div>
                                             @endif
                                             @if (json_decode($order, true)[0]['status'] == 'quotation request' && $order_item->quotationResponses->count() <= 0)
@@ -176,7 +188,7 @@
                                                         <div class="grid grid-cols-4 gap-2 p-2 rounded-md border-b-2 border-gray-500">
                                                             <span>{{ $response->quantity }} {{ explode(' ', $response->orderItem->product->min_order_quantity)[1] }}</span>
                                                             <span>{{ $response->delivery_date->format('d M Y') }}</span>
-                                                            <span class="flex gap-2"><h3 class="font-semibold text-gray-500">{{ $response->orderItem->product->currency }}</h3> <h3 class="font-bold text-gray-600">{{ $response->amount }}</h3></span>
+                                                            <span class="flex gap-2"><h3 class="font-semibold text-gray-800">{{ $response->orderItem->product->currency }}</h3> <h3 class="font-bold text-gray-900">{{ $response->amount }}</h3></span>
                                                             <span></span>
                                                         </div>
                                                     @endif
@@ -193,30 +205,30 @@
             <div class="basis-1/4 space-y-2">
                 <div class="border border-gray-300 p-4 space-y-4 rounded-lg">
                     <div>
-                        <h4 class="text-md font-semibold text-gray-500">Total:</h4>
+                        <h4 class="text-md font-semibold text-gray-800">Total:</h4>
                         <div class="flex gap-1">
-                            <h3 class="font-bold text-xl text-gray-600 my-auto">USD</h3>
-                            <span class="font-bold text-xl text-gray-800">{{ number_format($total_amount) }}</span>
+                            <h3 class="font-bold text-xl text-gray-700 my-auto">USD</h3>
+                            <span class="font-bold text-xl text-gray-900">{{ number_format($total_amount) }}</span>
                         </div>
-                        <h4 class="text-md font-semibold text-gray-500">Total Inspection Cost:</h4>
+                        <h4 class="text-md font-semibold text-gray-800">Total Inspection Cost:</h4>
                         <div class="flex gap-1">
-                            <h3 class="font-bold text-xl text-gray-600 my-auto">USD</h3>
-                            <span class="font-bold text-xl text-gray-800">{{ number_format($inspection_cost) }}</span>
+                            <h3 class="font-bold text-xl text-gray-700 my-auto">USD</h3>
+                            <span class="font-bold text-xl text-gray-900">{{ number_format($inspection_cost) }}</span>
                         </div>
-                        <h4 class="text-md font-semibold text-gray-500">Total Shipping Cost:</h4>
+                        <h4 class="text-md font-semibold text-gray-800">Total Shipping Cost:</h4>
                         <div class="flex gap-1">
-                            <h3 class="font-bold text-xl text-gray-600 my-auto">USD</h3>
-                            <span class="font-bold text-xl text-gray-800">{{ number_format($delivery_cost) }}</span>
+                            <h3 class="font-bold text-xl text-gray-700 my-auto">USD</h3>
+                            <span class="font-bold text-xl text-gray-900">{{ number_format($delivery_cost) }}</span>
                         </div>
-                        <h4 class="text-md font-semibold text-gray-500">Total Warehousing Cost:</h4>
+                        <h4 class="text-md font-semibold text-gray-800">Total Warehousing Cost:</h4>
                         <div class="flex gap-1">
-                            <h3 class="font-bold text-xl text-gray-600 my-auto">USD</h3>
-                            <span class="font-bold text-xl text-gray-800">{{ number_format($warehousing_cost) }}</span>
+                            <h3 class="font-bold text-xl text-gray-700 my-auto">USD</h3>
+                            <span class="font-bold text-xl text-gray-900">{{ number_format($warehousing_cost) }}</span>
                         </div>
-                        <h4 class="text-md font-semibold text-gray-500">Total Insurance Cost:</h4>
+                        <h4 class="text-md font-semibold text-gray-800">Total Insurance Cost:</h4>
                         <div class="flex gap-1">
-                            <h3 class="font-bold text-xl text-gray-600 my-auto">USD</h3>
-                            <span class="font-bold text-xl text-gray-800">{{ number_format($insurance_cost) }}</span>
+                            <h3 class="font-bold text-xl text-gray-700 my-auto">USD</h3>
+                            <span class="font-bold text-xl text-gray-900">{{ number_format($insurance_cost) }}</span>
                         </div>
                         {{-- @if ($inspection_cost > 0)
                             <div class="flex gap-2">
@@ -230,8 +242,8 @@
                     </div>
                 </div>
                 <div class="border border-gray-300 p-4 space-y-4 rounded-lg">
-                    <h4 class="text-sm font-semibold text-gray-500">Delivery Location</h4>
-                    <h3 class="font-bold text-xl text-gray-600 my-auto">{{ $invoice->delivery_location_address }}</h3>
+                    <h4 class="text-sm font-semibold text-gray-800">Delivery Location</h4>
+                    <h3 class="font-bold text-xl text-gray-900 my-auto">{{ $invoice->delivery_location_address }}</h3>
                 </div>
                 @if ($invoice->canRequestFinancing() && !$invoice->financingRequest)
                     <a href="{{ route('invoice.financing.request', ['invoice' => $invoice]) }}">
@@ -240,8 +252,8 @@
                 @endif
                 @if ($invoice->financingRequest)
                     <div class="border border-gray-300 p-4 space-y-4 rounded-lg">
-                        <h4 class="text-sm font-semibold text-gray-500">Financing Request Status</h4>
-                        <h3 class="font-bold text-xl text-gray-600 my-auto">{{ Str::title($invoice->financingRequest->status) }}</h3>
+                        <h4 class="text-sm font-semibold text-gray-800">Financing Request Status</h4>
+                        <h3 class="font-bold text-xl text-gray-900 my-auto">{{ Str::title($invoice->financingRequest->status) }}</h3>
                     </div>
                 @endif
                 @if ($invoice->canRequestFinancing() && !$invoice->financingRequest)
