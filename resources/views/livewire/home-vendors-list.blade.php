@@ -1,4 +1,4 @@
-<div class="grid md:grid-cols-1 lg:grid-cols-2 4xl:grid-cols-3 gap-4 py-4">
+<div class="grid md:grid-cols-1 lg:grid-cols-3 4xl:grid-cols-3 gap-4 py-4">
     @foreach ($businesses as $business)
         <x-card class="border-2 border-gray-400 grid md:grid-cols-2 gap-1">
             <div>
@@ -10,11 +10,11 @@
                             <h1 class="font-bold text-sm">{{ $business->name }}</h1>
                             @if ($business->verified())
                                 <div class="flex gap-2">
-                                    <h4 class="text-xs text-gray-500">Verified</h4>
+                                    <h4 class="text-xs text-gray-800">Verified</h4>
                                     <i class="fas fa-shield-alt text-sm text-red-800"></i>
                                 </div>
                             @endif
-                            <h5 class="text-xs text-gray-400">{{ $business->created_at->diffForHumans() }}</h5>
+                            <h5 class="text-xs text-gray-800">{{ $business->created_at->diffForHumans() }}</h5>
                         </div>
                     </div>
                 </a>
@@ -63,14 +63,14 @@
                 @auth
                     @if (auth()->user()->hasRole('buyer') && (auth()->id() != $business->user->id))
                         <a href="{{ route('messages', ['user' => $business->user]) }}">
-                            <x-secondary-outline-button class="text-center text-primary-one w-full font-semibold justify-center hover:bg-orange-300 hover:border-orange-400">
+                            <x-secondary-outline-button class="text-center tracking-tighter border-2 border-orange-200 text-primary-one w-full justify-center hover:bg-orange-300 hover:border-orange-400">
                                 Message Vendor
                             </x-secondary-outline-button>
                         </a>
                     @endif
                 @else
                     <a href="{{ route('messages', ['user' => $business->user]) }}">
-                        <x-secondary-outline-button class="text-center text-primary-one w-full font-semibold justify-center hover:bg-orange-300 hover:border-orange-400">
+                        <x-secondary-outline-button class="text-center text-primary-one w-full justify-center hover:bg-orange-300 hover:border-orange-400">
                             Message Vendor
                         </x-secondary-outline-button>
                     </a>

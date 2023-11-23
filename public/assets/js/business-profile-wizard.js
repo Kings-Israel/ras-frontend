@@ -45,13 +45,6 @@
                   }
                 }
             },
-            primary_cover_image: {
-                validators: {
-                  notEmpty: {
-                    message: 'Please upload a cover image'
-                  }
-                }
-            },
         },
         plugins: {
             trigger: new FormValidation.plugins.Trigger(),
@@ -69,39 +62,24 @@
             validationStepper.next();
         });
 
-        const plPropertyType = $('#plPropertyType');
-
-        if (plPropertyType.length) {
-            plPropertyType.wrap('<div class="position-relative"></div>');
-            plPropertyType
-                .select2({
-                    placeholder: 'Select property type',
-                    dropdownParent: plPropertyType.parent()
-                })
-                .on('change.select2', function () {
-                    // Revalidate the color field when an option is chosen
-                    FormValidation2.revalidateField('plPropertyType');
-                });
-        }
-
         // Property Details
         const FormValidation2 = FormValidation.formValidation(wizardBusinessDetailsFormStep2, {
-        fields: {},
+        fields: {
+            primary_cover_image: {
+                validators: {
+                  notEmpty: {
+                    message: 'Please upload a cover image'
+                  }
+                }
+            },
+        },
         plugins: {
             trigger: new FormValidation.plugins.Trigger(),
             bootstrap5: new FormValidation.plugins.Bootstrap5({
-            // Use this for enabling/changing valid/invalid class
-            // eleInvalidClass: '',
-            eleValidClass: '',
-            rowSelector: function (field, ele) {
-                // field is the field name & ele is the field element
-                switch (field) {
-                    case 'plAddress':
-                        return '.col-lg-12';
-                    default:
-                        return '.col-sm-6';
-                    }
-                }
+                // Use this for enabling/changing valid/invalid class
+                // eleInvalidClass: '',
+                eleValidClass: '',
+                rowSelector: '.form-group'
             }),
             autoFocus: new FormValidation.plugins.AutoFocus(),
             submitButton: new FormValidation.plugins.SubmitButton()
