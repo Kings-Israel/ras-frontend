@@ -41,7 +41,9 @@ Route::middleware(['auth', 'web', 'phone_verified'])->group(function () {
     Route::post('/cart/add', [CartController::class, 'store'])->name('cart.store');
 
     Route::get('/invoices', [OrderController::class, 'index'])->name('invoices.index');
-    Route::get('/invoices/{invoice}/orders', [OrderController::class, 'orders'])->name('invoice.orders');
+    // Route::get('/invoices/{invoice}/orders', [OrderController::class, 'orders'])->name('invoice.orders');
+    Route::get('/orders', [OrderController::class, 'orders'])->name('orders');
+    Route::get('/orders/{order}', [OrderController::class, 'order'])->name('orders.show');
     Route::get('/invoices/{invoice}/financing/request', [OrderController::class, 'requestFinancing'])->name('invoice.financing.request');
     Route::post('/order/create', [OrderController::class, 'store'])->name('order.store');
     Route::get('/order/quotation/{quotation}/update/{status}', [OrderController::class, 'updateQuotation'])->name('order.quotation.update');

@@ -14,5 +14,6 @@
             outline: none !important;
         }
     </style>
-    <livewire:buyer.orders-list :invoice="$invoice" />
+    {{-- <livewire:buyer.orders-list :invoice="$invoice" /> --}}
+    <livewire:buyer.orders-list />
 </x-main>

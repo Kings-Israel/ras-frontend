@@ -88,6 +88,16 @@ class Order extends Model
         return $this->hasMany(InspectionRequest::class);
     }
 
+    public function getTotalAmount(): int
+    {
+        $amount = 0;
+        foreach ($this->orderItems as $item) {
+            $amount += (int) explode(' ', $item->quantity)[0] * (int) $item->amount;
+        }
+
+        return $amount;
+    }
+
     public function checkInspectionIsComplete(): DateTime|bool
     {
         $last_inspection_report_date = $this->updated_at;
@@ -95,7 +105,7 @@ class Order extends Model
             if (!$item->inspectionReport()->exists()) {
                 return false;
             }
-            
+
             if (Carbon::parse($item->inspectionReport->created_at)->greaterThan(Carbon::parse($last_inspection_report_date))) {
                 $last_inspection_report_date = $item->inspectionReport->created_at;
             }
