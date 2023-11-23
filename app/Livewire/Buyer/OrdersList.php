@@ -8,14 +8,7 @@ use Livewire\Component;
 
 class OrdersList extends Component
 {
-    public $invoice;
-
     public $status = 'all';
-
-    public function mount(Invoice $invoice)
-    {
-        $this->invoice = $invoice->load('financingRequest');
-    }
 
     public function updateStatus($status)
     {
@@ -24,15 +17,13 @@ class OrdersList extends Component
 
     public function render()
     {
-        $orders = Order::with('orderItems.product.media', 'business')
-                            ->where('invoice_id', $this->invoice->id)
+        $orders = Order::with('orderItems.product.media', 'business', 'invoice')
+                            ->where('user_id', auth()->id())
                             ->when($this->status && $this->status != 'all', function ($query) {
                                 $query->where('status', $this->status);
                             })
-                            ->get()
-                            ->groupBy(function ($item) {
-                                return $item['business']['name'];
-                            });
+                            ->orderBy('created_at', 'DESC')
+                            ->get();
 
         $inspection_cost = 0;
 
@@ -46,7 +37,7 @@ class OrdersList extends Component
 
         $total_amount = 0;
 
-        foreach ($this->invoice->orders as $order) {
+        foreach ($orders as $order) {
             foreach($order->orderItems as $order_item) {
                 $quantity = explode(' ', $order_item->quantity)[0];
                 $total_amount += $order_item->amount * $quantity;

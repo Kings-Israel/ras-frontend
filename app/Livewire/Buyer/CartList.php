@@ -7,6 +7,9 @@ use App\Models\CartItem;
 use App\Models\Country;
 use App\Models\Product;
 use App\Models\InspectingInstitution;
+use App\Models\InsuranceCompany;
+use App\Models\LogisticsCompany;
+use App\Models\Warehouse;
 use App\Notifications\NewOrder;
 use Livewire\Component;
 use Livewire\Attributes\Rule;
@@ -75,8 +78,17 @@ class CartList extends Component
 
     public function render()
     {
+        $inspectors = InspectingInstitution::with('country')->get();
+        $insurers = InsuranceCompany::with('country')->get();
+        $warehouses = Warehouse::with('country')->get();
+        $logistics = LogisticsCompany::with('country')->get();
+
         return view('livewire.buyer.cart-list', [
             'cart' => $this->cart,
+            'inspectors' => $inspectors,
+            'insurers' => $insurers,
+            'warehouses' => $warehouses,
+            'logistics' => $logistics
         ]);
     }
 }

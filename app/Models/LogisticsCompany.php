@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class LogisticsCompany extends Model
@@ -28,5 +29,13 @@ class LogisticsCompany extends Model
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'logistics_company_users', 'logistics_company_id', 'user_id');
+    }
+
+    /**
+     * Get the country that owns the InspectingInstitution
+     */
+    public function country(): BelongsTo
+    {
+        return $this->belongsTo(Country::class);
     }
 }

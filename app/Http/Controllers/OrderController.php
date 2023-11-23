@@ -39,13 +39,25 @@ class OrderController extends Controller
         return view('invoices');
     }
 
-    public function orders(Invoice $invoice)
-    {
-        if (!$invoice) {
-            return redirect()->route('welcome');
-        }
+    // public function orders(Invoice $invoice)
+    // {
+    //     if (!$invoice) {
+    //         return redirect()->route('welcome');
+    //     }
 
-        return view('orders', compact('invoice'));
+    //     return view('orders', compact('invoice'));
+    // }
+
+    public function orders()
+    {
+        return view('orders');
+    }
+
+    public function order(Order $order)
+    {
+        $order->load('orderItems.product.media', 'orderItems.product.business');
+
+        return view('order', compact('order'));
     }
 
     public function store(Request $request)
@@ -135,53 +147,52 @@ class OrderController extends Controller
 
                 $inspectors = InspectingInstitution::all();
 
-                if (count($inspection_requests) > 0 && $inspectors->count() > 0) {
-                    $inspectors->each(function ($inspector) use ($order_item) {
-                        InspectionRequest::create([
-                            'order_item_id' => $order_item->id,
-                            'inspector_id' => $inspector->id,
-                        ]);
-                    });
+                if (count($inspection_requests) > 0 && $inspectors->count() > 0 && $request->has('inspector')) {
+                    InspectionRequest::create([
+                        'order_item_id' => $order_item->id,
+                        'inspector_id' => $request->inspector,
+                    ]);
+                    // $inspectors->each(function ($inspector) use ($order_item) {
+                    // });
                 }
 
                 $shipping_requests = collect($request->request_logistics)->filter(function ($value, $key) use ($item) { return $key == $item->id; });
 
                 $logistics = LogisticsCompany::all();
 
-                if (count($shipping_requests) > 0 && $logistics->count() > 0) {
-                    $logistics->each(function ($logistics) use ($order_item) {
-                        OrderDeliveryRequest::create([
-                            'order_item_id' => $order_item->id,
-                            'logistics_company_id' => $logistics->id,
-                        ]);
-                    });
+                if (count($shipping_requests) > 0 && $logistics->count() > 0 && $request->has('logistics_provider')) {
+                    OrderDeliveryRequest::create([
+                        'order_item_id' => $order_item->id,
+                        'logistics_company_id' => $request->logistics_provider,
+                    ]);
+                    // $logistics->each(function ($logistics) use ($order_item) {
+                    // });
                 }
 
                 $warehousing_requests = collect($request->request_warehousing)->filter(function ($value, $key) use ($item) { return $key == $item->id; });
 
                 $warehouses = Warehouse::all();
 
-                if (count($warehousing_requests) > 0 && $warehouses->count() > 0) {
-                    $warehouses->each(function ($warehouse) use ($order_item) {
-                        OrderStorageRequest::create([
-                            'order_item_id' => $order_item->id,
-                            'warehouse_id' => $warehouse->id,
-                        ]);
-                    });
+                if (count($warehousing_requests) > 0 && $warehouses->count() > 0 && $request->has('warehouse')) {
+                    OrderStorageRequest::create([
+                        'order_item_id' => $order_item->id,
+                        'warehouse_id' => $request->warehouse,
+                    ]);
+                    // $warehouses->each(function ($warehouse) use ($order_item) {
+                    // });
                 }
 
                 $insurance_requests = collect($request->request_insurance)->filter(function ($value, $key) use ($item) { return $key == $item->id; });
 
                 $insurance_companies = InsuranceCompany::all();
 
-                if (count($insurance_requests) > 0 && $insurance_companies->count() > 0) {
-
-                    $insurance_companies->each(function ($insurance_company) use ($order_item) {
-                        InsuranceRequest::create([
-                            'order_item_id' => $order_item->id,
-                            'insurance_company_id' => $insurance_company->id,
-                        ]);
-                    });
+                if (count($insurance_requests) > 0 && $insurance_companies->count() > 0 && $request->has('insurer')) {
+                    InsuranceRequest::create([
+                        'order_item_id' => $order_item->id,
+                        'insurance_company_id' => $request->insurer,
+                    ]);
+                    // $insurance_companies->each(function ($insurance_company) use ($order_item) {
+                    // });
                 }
             }
 
@@ -190,16 +201,16 @@ class OrderController extends Controller
             $business->user->notify(new NewOrder($order));
         }
 
-        if ($request->has('request_financing')) {
-            $invoice->financingRequest()->create();
-        }
+        // if ($request->has('request_financing')) {
+        //     $invoice->financingRequest()->create();
+        // }
 
         // Delete Cart
         auth()->user()->cart->delete();
 
         toastr()->success('', 'Order(s) created successfully and vendor(s) have been notified');
 
-        return redirect()->route('invoice.orders', ['invoice' => $invoice]);
+        return redirect()->route('orders.show', ['order' => $order]);
     }
 
     public function updateQuotation(QuotationRequestResponse $quotation, $status)

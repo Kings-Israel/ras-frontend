@@ -1,4 +1,41 @@
 <div>
+    <div class="hidden lg:flex lg:px-28 mt-2">
+        <ol class="flex items-center w-full p-3 space-x-2 text-sm font-medium text-center text-gray-500 bg-white border border-gray-200 rounded-lg shadow-sm dark:text-gray-400 sm:text-base dark:bg-gray-800 dark:border-gray-700 sm:p-4 sm:space-x-4 rtl:space-x-reverse">
+            <li class="flex items-center text-primary-one">
+                Order <span class="hidden sm:inline-flex sm:ms-2">Request</span>
+                <svg class="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4"/>
+                </svg>
+            </li>
+            <li class="flex items-center">
+                Negotiating
+                <svg class="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4"/>
+                </svg>
+            </li>
+            <li class="flex items-center">
+                Order <span class="hidden sm:inline-flex sm:ms-2"> Confirmed </span>
+                <svg class="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4"/>
+                </svg>
+            </li>
+            <li class="flex items-center">
+                Funded <span class="hidden sm:inline-flex sm:ms-2"> To Escrow </span>
+                <svg class="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4"/>
+                </svg>
+            </li>
+            <li class="flex items-center">
+                Shipped
+                <svg class="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4"/>
+                </svg>
+            </li>
+            <li class="flex items-center">
+                Order <span class="hidden sm:inline-flex sm:ms-2"> Complete </span>
+            </li>
+        </ol>
+    </div>
     <form action="{{ route('order.store') }}" method="post" id="submit-cart-form" class="block lg:flex px-4 lg:px-28 p-4 gap-12">
         @csrf
         <div class="basis-3/4 bg-gray-50 p-2 rounded-lg">
@@ -259,194 +296,82 @@
                             </div>
                         </div> --}}
                     </div>
-                    <div>
-                        <div class="grid md:flex justify-between border border-gray-200 rounded-lg p-2">
-                            <div class="md:basis-1/5 flex gap-2 px-1 md:px-2 text-gray-500">
-                                <input id="checkbox-table-search-1" type="checkbox" checked class="w-4 h-4 mt-1 text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                <h2 class="font-semibold">Warehousing</h2>
-                            </div>
-                            <div class="md:basis-4/5">
-                                <div class="flex justify-between mx-2">
-                                    <div class="hidden md:block md:basis-1/5"></div>
-                                    <div class="w-full md:basis-4/5 flex justify-between">
-                                        <div class="flex justify-between w-[60%] md:w-[40%]">
-                                            <div class="flex">
-                                                <input id="checkbox-table-search-1" type="radio" name="warehouse_location" checked class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
-                                                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                                <h2 class="font-semibold text-sm ml-2">Sebuleni, Nairobi, Kenya</h2>
-                                            </div>
-                                        </div>
-                                    </div>
+                    @if ($warehouses->count() > 0)
+                        <div>
+                            <div class="grid md:flex justify-between border border-gray-200 rounded-lg p-2">
+                                <div class="md:basis-1/5 flex gap-2 px-1 md:px-2 text-gray-500">
+                                    <input id="checkbox-table-search-1" type="checkbox" onchange="selectedService('select-warehouse')" name="request_warehousing[{{ $item->product->id }}]" class="w-4 h-4 mt-1 text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                                    <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                                    <h2 class="font-semibold">Request Storage</h2>
                                 </div>
-                                <div class="flex justify-between mx-2">
-                                    <div class="hidden md:block md:basis-1/5"></div>
-                                    <div class="w-full md:basis-4/5 flex justify-between">
-                                        <div class="flex justify-between w-[60%] md:w-[40%]">
-                                            <div class="flex">
-                                                <input id="checkbox-table-search-1" type="radio" name="warehouse_location" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
-                                                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                                <h2 class="font-semibold text-sm ml-2">Sokostore, Limuru, Kenya</h2>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex justify-between mx-2">
-                                    <div class="hidden md:block basis-1/5"></div>
-                                    <div class="w-full md:basis-4/5 flex justify-between">
-                                        <div class="flex justify-between w-[60%] md:w-[40%]">
-                                            <div class="flex">
-                                                <input id="checkbox-table-search-1" type="radio" name="warehouse_location" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
-                                                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                                <h2 class="font-semibold text-sm ml-2">Bidhaa, Kitengela, Kenya</h2>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="md:basis-4/5 hidden" id="select-warehouse">
+                                    <select name="warehouse" class="form-control py-1 rounded-lg border-gray-600 w-96" id="">
+                                        <option value="">Select Warehouse</option>
+                                        @foreach ($warehouses as $warehouse)
+                                            <option value="{{ $warehouse->id }}">{{ $warehouse->name }} - {{ $warehouse->country->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div>
-                        <div class="grid md:flex justify-between border border-gray-200 rounded-lg p-2">
-                            <div class="md:basis-1/5 flex gap-2 px-1 md:px-2 text-gray-500">
-                                <input id="checkbox-table-search-1" type="checkbox" checked class="w-4 h-4 mt-1 text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                <h2 class="font-semibold">Request Inspection</h2>
-                            </div>
-                            <div class="md:basis-4/5">
-                                <div class="flex justify-between mx-2">
-                                    <div class="hidden md:block md:basis-1/5"></div>
-                                    <div class="w-full md:basis-4/5 flex justify-between">
-                                        <div class="flex justify-between w-[60%] md:w-[40%]">
-                                            <div class="flex">
-                                                <input id="checkbox-table-search-1" type="radio" name="warehouse_location" checked class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
-                                                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                                <h2 class="font-semibold text-sm ml-2">Sebuleni, Nairobi, Kenya</h2>
-                                            </div>
-                                        </div>
-                                    </div>
+                    @endif
+                    @if (count($inspectors) > 0)
+                        <div>
+                            <div class="grid md:flex justify-between border border-gray-200 rounded-lg p-2">
+                                <div class="md:basis-1/5 flex gap-2 px-1 md:px-2 text-gray-500">
+                                    <input id="checkbox-table-search-1" type="checkbox" onchange="selectedService('select-inspector')" name="request_inspection[{{ $item->product->id }}]" class="w-4 h-4 mt-1 text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                                    <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                                    <h2 class="font-semibold">Request Inspection</h2>
                                 </div>
-                                <div class="flex justify-between mx-2">
-                                    <div class="hidden md:block md:basis-1/5"></div>
-                                    <div class="w-full md:basis-4/5 flex justify-between">
-                                        <div class="flex justify-between w-[60%] md:w-[40%]">
-                                            <div class="flex">
-                                                <input id="checkbox-table-search-1" type="radio" name="warehouse_location" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
-                                                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                                <h2 class="font-semibold text-sm ml-2">Sokostore, Limuru, Kenya</h2>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex justify-between mx-2">
-                                    <div class="hidden md:block basis-1/5"></div>
-                                    <div class="w-full md:basis-4/5 flex justify-between">
-                                        <div class="flex justify-between w-[60%] md:w-[40%]">
-                                            <div class="flex">
-                                                <input id="checkbox-table-search-1" type="radio" name="warehouse_location" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
-                                                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                                <h2 class="font-semibold text-sm ml-2">Bidhaa, Kitengela, Kenya</h2>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="md:basis-4/5 hidden" id="select-inspector">
+                                    <select name="inspector" class="form-control py-1 rounded-lg border-gray-600 w-96" id="">
+                                        <option value="">Select Inspector</option>
+                                        @foreach ($inspectors as $inspector)
+                                            <option value="{{ $inspector->id }}">{{ $inspector->name }} - {{ $inspector->country->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div>
-                        <div class="grid md:flex justify-between border border-gray-200 rounded-lg p-2">
-                            <div class="md:basis-1/5 flex gap-2 px-1 md:px-2 text-gray-500">
-                                <input id="checkbox-table-search-1" type="checkbox" checked class="w-4 h-4 mt-1 text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                <h2 class="font-semibold">Request Shipping</h2>
-                            </div>
-                            <div class="md:basis-4/5">
-                                <div class="flex justify-between mx-2">
-                                    <div class="hidden md:block md:basis-1/5"></div>
-                                    <div class="w-full md:basis-4/5 flex justify-between">
-                                        <div class="flex justify-between w-[60%] md:w-[40%]">
-                                            <div class="flex">
-                                                <input id="checkbox-table-search-1" type="radio" name="warehouse_location" checked class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
-                                                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                                <h2 class="font-semibold text-sm ml-2">Sebuleni, Nairobi, Kenya</h2>
-                                            </div>
-                                        </div>
-                                    </div>
+                    @endif
+                    @if (count($logistics) > 0)
+                        <div>
+                            <div class="grid md:flex justify-between border border-gray-200 rounded-lg p-2">
+                                <div class="md:basis-1/5 flex gap-2 px-1 md:px-2 text-gray-500">
+                                    <input id="checkbox-table-search-1" type="checkbox" onchange="selectedService('select-logistics')" name="request_shipping[{{ $item->product->id }}]" class="w-4 h-4 mt-1 text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                                    <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                                    <h2 class="font-semibold">Request Shipping</h2>
                                 </div>
-                                <div class="flex justify-between mx-2">
-                                    <div class="hidden md:block md:basis-1/5"></div>
-                                    <div class="w-full md:basis-4/5 flex justify-between">
-                                        <div class="flex justify-between w-[60%] md:w-[40%]">
-                                            <div class="flex">
-                                                <input id="checkbox-table-search-1" type="radio" name="warehouse_location" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
-                                                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                                <h2 class="font-semibold text-sm ml-2">Sokostore, Limuru, Kenya</h2>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex justify-between mx-2">
-                                    <div class="hidden md:block basis-1/5"></div>
-                                    <div class="w-full md:basis-4/5 flex justify-between">
-                                        <div class="flex justify-between w-[60%] md:w-[40%]">
-                                            <div class="flex">
-                                                <input id="checkbox-table-search-1" type="radio" name="warehouse_location" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
-                                                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                                <h2 class="font-semibold text-sm ml-2">Bidhaa, Kitengela, Kenya</h2>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="md:basis-4/5 hidden" id="select-logistics">
+                                    <select name="logistics_provider" class="form-control py-1 rounded-lg border-gray-600 w-96" id="">
+                                        <option value="">Select Logistics Provider</option>
+                                        @foreach ($logistics as $logsitics_company)
+                                            <option value="{{ $logsitics_company->id }}">{{ $logsitics_company->name }} - {{ $logsitics_company->country->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div>
-                        <div class="grid md:flex justify-between border border-gray-200 rounded-lg p-2">
-                            <div class="md:basis-1/5 flex gap-2 px-1 md:px-2 text-gray-500">
-                                <input id="checkbox-table-search-1" type="checkbox" checked class="w-4 h-4 mt-1 text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                <h2 class="font-semibold">Request Insurance</h2>
-                            </div>
-                            <div class="md:basis-4/5">
-                                <div class="flex justify-between mx-2">
-                                    <div class="hidden md:block md:basis-1/5"></div>
-                                    <div class="w-full md:basis-4/5 flex justify-between">
-                                        <div class="flex justify-between w-[60%] md:w-[40%]">
-                                            <div class="flex">
-                                                <input id="checkbox-table-search-1" type="radio" name="warehouse_location" checked class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
-                                                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                                <h2 class="font-semibold text-sm ml-2">Sebuleni, Nairobi, Kenya</h2>
-                                            </div>
-                                        </div>
-                                    </div>
+                    @endif
+                    @if (count($insurers) > 0)
+                        <div>
+                            <div class="grid md:flex justify-between border border-gray-200 rounded-lg p-2">
+                                <div class="md:basis-1/5 flex gap-2 px-1 md:px-2 text-gray-500">
+                                    <input id="checkbox-table-search-1" type="checkbox" onchange="selectedService('select-insurer')" name="request_insurance[{{ $item->product->id }}]" class="w-4 h-4 mt-1 text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                                    <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                                    <h2 class="font-semibold">Request Insurance</h2>
                                 </div>
-                                <div class="flex justify-between mx-2">
-                                    <div class="hidden md:block md:basis-1/5"></div>
-                                    <div class="w-full md:basis-4/5 flex justify-between">
-                                        <div class="flex justify-between w-[60%] md:w-[40%]">
-                                            <div class="flex">
-                                                <input id="checkbox-table-search-1" type="radio" name="warehouse_location" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
-                                                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                                <h2 class="font-semibold text-sm ml-2">Sokostore, Limuru, Kenya</h2>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex justify-between mx-2">
-                                    <div class="hidden md:block basis-1/5"></div>
-                                    <div class="w-full md:basis-4/5 flex justify-between">
-                                        <div class="flex justify-between w-[60%] md:w-[40%]">
-                                            <div class="flex">
-                                                <input id="checkbox-table-search-1" type="radio" name="warehouse_location" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
-                                                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                                <h2 class="font-semibold text-sm ml-2">Bidhaa, Kitengela, Kenya</h2>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="md:basis-4/5 hidden" id="select-insurer">
+                                    <select name="insurer" class="form-control py-1 rounded-lg border-gray-600 w-96" id="">
+                                        <option value="">Select Insurer</option>
+                                        @foreach ($insurers as $insurer)
+                                            <option value="{{ $insurer->id }}">{{ $insurer->name }} - {{ $insurer->country->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                     {{-- <div>
                         <div class="flex justify-between border border-gray-200 rounded-lg px-1 py-1 md:px-2 md:py-2">
                             <div class="basis-1/5 flex gap-2 px-2 text-gray-500">
@@ -479,7 +404,7 @@
                 <div>
                     <h4 class="text-sm font-semibold text-gray-500">Cart Subtotal:</h4>
                     <div class="flex gap-1">
-                        <h3 class="font-bold text-xl text-gray-600 my-auto">USD</h3>
+                        <h3 class="font-bold text-xl text-gray-600 my-auto">{{ Str::upper($cart->cartItems->first()->product->currency) }}</h3>
                         <span class="font-bold text-xl text-gray-800" id="total_cart_amount">0</span>
                         <input type="hidden" id="total_cart_amount_input" name="total_cart_amount" value="{{ old('total_cart_amount') }}" />
                     </div>
@@ -687,6 +612,10 @@
     //         });
     //     }
     // }
+
+    function selectedService(service) {
+        $('#'+service).toggleClass('hidden')
+    }
 
     function updateInspectorSelection() {
         $('#inspection-selection-warning').addClass('hidden')
