@@ -198,10 +198,21 @@
                             <h4 class="font-semibold text-gray-400">No Import Fees Deposit & $23.64 Shipping to Kenya</h4>
                             <h4 class="text-gray-500">Delivery: <strong class="font-bold">Friday, August 18</strong></h4>
                             <h5 class="font-thin text-gray-500 text-sm">Order Within: <span class="text-green-600">19h 38min</span></h5>
-                            <x-primary-button class="w-full my-2 py-2 tracking-wide">Place Order</x-primary-button>
+                            {{-- <x-primary-button class="w-full my-2 py-2 tracking-wide font-extrabold">Start Order</x-primary-button> --}}
+                            <form action="{{ route('cart.store') }}" method="post" id="add-to-cart-form">
+                                @csrf
+                                <input type="hidden" id="add-to-cart-product-id" name="product_id">
+                                <input type="hidden" id="add-to-cart-quantity" name="quantity">
+                                <input type="hidden" id="order-amount" name="amount">
+                                <x-primary-button class="w-full my-2 py-2 text-orange-400 justify-center gap-1 focus:text-orange-900 focus:ring-1 focus:ring-orange-900" id="add-to-cart-btn">
+                                    <span class="tracking-wide font-bold">
+                                        Start Order
+                                    </span>
+                                </x-primary-button>
+                            </form>
                         @endif
                     @endauth
-                    @guest
+                    {{-- @guest
                         <form action="{{ route('cart.store') }}" method="post" id="add-to-cart-form">
                             @csrf
                             <input type="hidden" id="add-to-cart-product-id" name="product_id">
@@ -214,11 +225,11 @@
                                 </span>
                             </x-primary-outline-button>
                         </form>
-                    @endguest
+                    @endguest --}}
                     @auth
                         @if (auth()->id() != $product->business->user->id)
                             @if (!$product->isInCart())
-                                <form action="{{ route('cart.store') }}" method="post" id="add-to-cart-form">
+                                {{-- <form action="{{ route('cart.store') }}" method="post" id="add-to-cart-form">
                                     @csrf
                                     <input type="hidden" id="add-to-cart-product-id" name="product_id">
                                     <input type="hidden" id="add-to-cart-quantity" name="quantity">
@@ -229,7 +240,7 @@
                                             Add To Cart
                                         </span>
                                     </x-primary-outline-button>
-                                </form>
+                                </form> --}}
                                 <x-primary-outline-button class="w-full my-2 py-1 text-orange-400 justify-center gap-1" data-modal-target="get-quote-modal" data-modal-toggle="get-quote-modal">
                                     <span class="tracking-tight">
                                         Get Quotation

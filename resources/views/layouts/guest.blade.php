@@ -64,7 +64,7 @@
                         @csrf
 
                         <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">
-                            <x-secondary-button class="px-8">
+                            <x-secondary-button class="px-8 font-bold text-xl">
                                 Sign Out
                             </x-secondary-button>
                         </a>

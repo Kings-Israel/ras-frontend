@@ -41,12 +41,7 @@ class CartController extends Controller
             $cart = auth()->user()->cart()->create();
         }
 
-        $item_exists = CartItem::where('cart_id', $cart->id)->where('product_id', $request->product_id)->first();
-
-        if ($item_exists) {
-            toastr()->error('', 'Item already exists in cart');
-            return back();
-        }
+        CartItem::where('cart_id', $cart->id)->delete();
 
         CartItem::create([
             'cart_id' => $cart->id,
@@ -55,7 +50,7 @@ class CartController extends Controller
             'amount' => $request->amount,
         ]);
 
-        toastr()->success('', 'Item added to cart successfully');
+        // toastr()->success('', 'Item added to cart successfully');
 
         if (request()->wantsJson()) {
             return response()->json(['cart' => $cart->load('cartItems.product.media')], 200);

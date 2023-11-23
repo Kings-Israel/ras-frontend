@@ -7,6 +7,7 @@ use App\Models\Business;
 use App\Models\BusinessDocument;
 use App\Models\Category;
 use App\Models\Country;
+use App\Models\CountryOfOperation;
 use App\Models\Document;
 use App\Models\FinancingInstitution;
 use App\Models\MeasurementUnit;
@@ -58,6 +59,7 @@ class VendorController extends Controller
             'user_id' => auth()->id(),
             'name' => $request->name,
             'country_id' => $request->country,
+            'city_id' => $request->has('city') ? $request->city : NULL,
             'primary_cover_image' => $request->hasFile('primary_cover_image') ? pathinfo($request->primary_cover_image->store('cover_image', 'vendor'), PATHINFO_BASENAME) : NULL,
             'secondary_cover_image' => $request->hasFile('secondary_cover_image') ? pathinfo($request->secondary_cover_image->store('cover_image', 'vendor'), PATHINFO_BASENAME) : NULL,
         ]);
@@ -70,6 +72,16 @@ class VendorController extends Controller
                     'file' => pathinfo($document->store('document', 'vendor'), PATHINFO_BASENAME),
                     'expires_on' => $request->document_expiry_date && array_key_exists($key, $request->document_expiry_date) ? $request->document_expiry_date[$key] : NULL,
                     // 'expiry_date' => $request->document_expiry_date[$key] ? $request->document_expiry_date[$key] : NULL,
+                ]);
+            }
+        }
+
+        if ($request->has('countries_of_operation')) {
+            foreach ($request->countries_of_operation as $country) {
+                CountryOfOperation::create([
+                    'operateable_id' => $business->id,
+                    'operateable_type' => Business::class,
+                    'country_id' => $country
                 ]);
             }
         }
@@ -105,6 +117,17 @@ class VendorController extends Controller
             auth()->user()->business()->update([
                 'secondary_cover_image' => pathinfo($request->secondary_cover_image->store('cover_image', 'vendor'), PATHINFO_BASENAME)
             ]);
+        }
+
+        if ($request->has('countries_of_operation')) {
+            auth()->user()->business->countriesOfOperation()->delete();
+            foreach ($request->countries_of_operation as $country) {
+                CountryOfOperation::create([
+                    'operateable_id' => auth()->user()->business->id,
+                    'operateable_type' => Business::class,
+                    'country_id' => $country
+                ]);
+            }
         }
 
         toastr()->success('', 'Business details updated successfully');
