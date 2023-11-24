@@ -4,7 +4,7 @@
     "src": "public/assets/img/talking.png"
   },
   "resources/css/app.css": {
-    "file": "assets/app-10e2edf9.css",
+    "file": "assets/app-8b0bed19.css",
     "isEntry": true,
     "src": "resources/css/app.css"
   },
@@ -12,7 +12,7 @@
     "assets": [
       "assets/talking-921b8355.png"
     ],
-    "file": "assets/app-03b25618.js",
+    "file": "assets/app-d753d3cb.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   }
