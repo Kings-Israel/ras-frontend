@@ -315,7 +315,7 @@
                             </div>
                         </div>
                     @endif
-                    {{-- @if (count($inspectors) > 0)
+                    @if (count($inspectors) > 0)
                         <div>
                             <div class="grid md:flex justify-between border border-gray-200 rounded-lg p-2">
                                 <div class="md:basis-1/5 flex gap-2 px-1 md:px-2 text-gray-500">
@@ -333,7 +333,7 @@
                                 </div>
                             </div>
                         </div>
-                    @endif --}}
+                    @endif
                     @if (count($logistics) > 0)
                         <div>
                             <div class="grid md:flex justify-between border border-gray-200 rounded-lg p-2">

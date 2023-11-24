@@ -23,7 +23,7 @@ class OrdersList extends Component
                                 $query->where('status', $this->status);
                             })
                             ->orderBy('created_at', 'DESC')
-                            ->get();
+                            ->paginate(10);
 
         $inspection_cost = 0;
 
@@ -37,7 +37,9 @@ class OrdersList extends Component
 
         $total_amount = 0;
 
-        foreach ($orders as $order) {
+        $all_orders = Order::with('orderItems')->where('user_id', auth()->id())->get();
+
+        foreach ($all_orders as $order) {
             foreach($order->orderItems as $order_item) {
                 $quantity = explode(' ', $order_item->quantity)[0];
                 $total_amount += $order_item->amount * $quantity;

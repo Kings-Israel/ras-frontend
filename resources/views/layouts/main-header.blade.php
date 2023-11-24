@@ -2,7 +2,7 @@
     <a href="{{ url('/') }}" class="">
         <x-application-logo class="w-[10rem] object-contain" />
     </a>
-    <div class="hidden md:block md:w-[50%]">
+    <div class="hidden lg:block md:w-[50%]">
         <livewire:home-main-search />
     </div>
     <div class="flex space-x-2">
