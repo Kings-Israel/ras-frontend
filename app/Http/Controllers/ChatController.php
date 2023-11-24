@@ -46,13 +46,15 @@ class ChatController extends Controller
         if (auth()->user()->hasRole('vendor')) {
             return view('business.chat.vue', [
                 'conversations' => ConversationResource::collection($conversations),
-                'conversation' => ['user' => $user, 'conversation_id' => $conversation ? $conversation_id : NULL, 'messages' => $conversation ? MessageResource::collection($conversation) : NULL]
+                'conversation' => ['user' => $user, 'conversation_id' => $conversation ? $conversation_id : NULL, 'messages' => $conversation ? MessageResource::collection($conversation) : NULL],
+                'user_id' => $user ? $user->id : NULL
             ]);
         }
 
         return view('chat.vue', [
             'conversations' => ConversationResource::collection($conversations),
-            'conversation' => ['user' => $user, 'conversation_id' => $conversation ? $conversation_id : NULL, 'messages' => $conversation ? MessageResource::collection($conversation) : NULL]
+            'conversation' => ['user' => $user, 'conversation_id' => $conversation ? $conversation_id : NULL, 'messages' => $conversation ? MessageResource::collection($conversation) : NULL],
+            'user_id' => $user ? $user->id : NULL
         ]);
     }
 
@@ -86,9 +88,8 @@ class ChatController extends Controller
         $conversations = Arr::pluck($conversations, 'conversation');
 
         return response()->json([
-            'conversations' => $conversations,
-            'conversation' => $conversation,
-            'email' => auth()->user()->email,
+            'conversations' => ConversationResource::collection($conversations),
+            'conversation' => ['user' => $user, 'conversation_id' => $conversation ? $conversation_id : NULL, 'messages' => $conversation ? MessageResource::collection($conversation) : NULL],
             'auth_id' => auth()->id(),
         ], 200);
     }

@@ -57,7 +57,16 @@ class OrderController extends Controller
     {
         $order->load('orderItems.product.media', 'orderItems.product.business');
 
-        return view('order', compact('order'));
+        $order_total = 0;
+        foreach ($order->orderItems as $order_item) {
+            $order_total += $order_item->amount * explode(' ', $order_item->quantity)[0];
+
+            if ($order_item->insuranceRequest()->exists() && $order_item->insuranceRequest->cost != null) {
+                $order_total += (int) $order_item->insuranceRequest->cost;
+            }
+        }
+
+        return view('order', compact('order', 'order_total'));
     }
 
     public function store(Request $request)

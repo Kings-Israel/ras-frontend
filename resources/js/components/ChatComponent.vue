@@ -140,7 +140,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="pb-2 relative">
+                <div class="pb-2 relative" v-show="receiver != null">
                     <div v-if="files.length > 0" class="absolute bottom-16 right-6 border-2 border-gray-500 bg-gray-300 z-20 rounded-lg transition duration-300 ease-in-out">
                         <ul class="list-none flex flex-col px-2 space-y-1">
                             <li v-for="file in files" :key="file">{{ file.name }}</li>
@@ -172,13 +172,14 @@ import moment from 'moment';
 import axios from 'axios';
 export default {
     name: "ChatComponent",
-    setup() {
+    props: ['email', 'user'],
+    setup(props) {
         const conversations = ref([])
         const const_conversations = ref([])
         const active_conversation = ref('')
         const conversation_log = ref([])
         const auth_id = ref('')
-        const receiver = ref('')
+        const receiver = ref(null)
         const files = ref([])
         const searchContacts = ref('')
         const refChatLogPS = ref('')
@@ -210,19 +211,41 @@ export default {
             conversations.value = new_conversations
         })
 
-        const getConversations = async () => {
-            const new_conversations = await axios.get('/conversations')
+        const getConversations = async (user_id) => {
+            let new_conversations
+            if (user_id != null) {
+                new_conversations = await axios.get('/conversations/'+user_id)
+            } else {
+                new_conversations = await axios.get('/conversations')
+            }
             conversations.value = new_conversations.data.conversations
             const_conversations.value = new_conversations.data.conversations
             const_conversations.value.forEach(conversation => {
                 conversation_ids.value.push(conversation.id)
             })
             auth_id.value = new_conversations.data.auth_id
-            email.value = new_conversations.data.email
+            if (new_conversations.data.conversation && new_conversations.data.conversation.user) {
+                active_conversation.value = new_conversations.data.conversation.conversation_id
+                receiver.value = new_conversations.data.conversation.user
+                conversation_log.value = new_conversations.data.conversation.messages
+                nextTick(() => {
+                    var container = refChatLogPS.value
+                    container.scrollTop = container.scrollHeight;
+                    if (window.innerWidth < 1536) {
+                        messagesSidebar.value.classList.add('hidden')
+                        messagesBox.value.classList.remove('hidden')
+                    }
+                    refMessageTextInput.value.focus()
+                    if (conversation_ids.value[active_conversation.value]) {
+                        conversation_ids.value[active_conversation.value].classList.add('hidden');
+                    }
+                })
+            }
         }
 
         onMounted(() => {
-            getConversations()
+            email.value = props.email
+            getConversations(props.user)
             echo
                 .channel(email.value)
                 .listen('.new.message', (e) => {

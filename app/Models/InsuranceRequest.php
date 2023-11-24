@@ -18,6 +18,17 @@ class InsuranceRequest extends Model
     protected $guarded = [];
 
     /**
+     * Get the cost description file
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getCostDescriptionFileAttribute($value)
+    {
+        return config('app.admin_url').'/storage/requests/insurance/'.$value;
+    }
+
+    /**
      * Get the orderItem that owns the InsuranceRequest
      */
     public function orderItem(): BelongsTo

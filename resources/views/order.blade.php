@@ -75,24 +75,32 @@
             </ol>
         </div>
         <div class="block lg:flex px-4 lg:px-28 p-4 gap-12">
-            <div class="basis-3/4 bg-gray-50 p-2 rounded-lg">
+            <div class="basis-2/3 bg-gray-50 p-2 rounded-lg">
                 <div class="mb-2">
-                    <span class="">
-                        <div class="flex gap-2">
-                            <a href="{{ route('vendor.storefront', ['slug' => $order->orderItems->first()->product->business->slug]) }}" class="text-gray-900 font-bold text-2xl my-auto hover:text-gray-800">
-                                {{ $order->orderItems->first()->product->business->name }}
-                            </a>
+                    <div class="flex justify-between">
+                        <div>
+                            <div class="flex gap-2">
+                                <a href="{{ route('vendor.storefront', ['slug' => $order->orderItems->first()->product->business->slug]) }}" class="text-gray-900 font-bold text-2xl my-auto hover:text-gray-800">
+                                    {{ $order->orderItems->first()->product->business->name }}
+                                </a>
+                            </div>
+                            <div class="flex gap-3 divide-x-2 divide-gray-500">
+                                @if ($order->orderItems->first()->product->business->verified())
+                                    <div class="flex gap-2">
+                                        <h4 class="text-xs text-gray-800">Verified</h4>
+                                        <i class="fas fa-shield-alt text-sm text-red-800"></i>
+                                    </div>
+                                @endif
+                            </div>
                         </div>
-                        <div class="flex gap-3 divide-x-2 divide-gray-500">
-                            @if ($order->orderItems->first()->product->business->verified())
-                                <div class="flex gap-2">
-                                    <h4 class="text-xs text-gray-800">Verified</h4>
-                                    <i class="fas fa-shield-alt text-sm text-red-800"></i>
-                                </div>
-                            @endif
-                            <h5 class="text-xs text-gray-800">{{ $order->orderItems->first()->product->business->created_at->diffForHumans() }}</h5>
+                        <div class="">
+                            <span class="font-bold text-xl">{{ Str::upper($order->order_id) }}</span>
+                            <div class="flex gap-1">
+                                <span class="">Status:</span>
+                                <span class="font-semibold">{{ Str::title($order->status) }}</span>
+                            </div>
                         </div>
-                    </span>
+                    </div>
                 </div>
                 <div class="space-y-2">
                     @foreach ($order->orderItems as $key => $item)
@@ -135,10 +143,6 @@
                                                     <input type="hidden" name="items_quantities_measurement_units[{{ $item->product->id }}]" value="{{ $product_measurement_unit }}">
                                                 </div>
                                             </div>
-                                            {{-- <div class="flex gap-1 md:col-span-1 md:ml-32">
-                                                <span class="text-sm font-semibold text-gray-500 my-auto">Color:</span>
-                                                <span class="text-sm font-bold my-auto">{{ $item->product->color }}</span>
-                                            </div> --}}
                                             <div class="my-auto md:col-span-1 md:ml-52 w-full">
                                                 @php($min_order_price = $item->product->min_price ? $item->product->min_price : $item->product->price)
                                                 <span class="flex gap-1">
@@ -152,16 +156,16 @@
                                         </div>
                                         <div class="flex justify-end">
                                             @if ($item->inspectionRequest()->exists())
-                                                <span>Requested Inspection</span>
+                                                <span class="mx-2 p-2 text-black font-semibold bg-secondary-four rounded-md">Requested Inspection</span>
                                             @endif
                                             @if ($item->insuranceRequest()->exists())
-                                                <span>Requested Insurance</span>
+                                                <span class="mx-2 p-2 text-black font-semibold bg-secondary-five rounded-md">Requested Insurance</span>
                                             @endif
                                             @if ($item->deliveryRequest()->exists())
-                                                <span>Requested Shipping</span>
+                                                <span class="mx-2 p-2 text-black font-semibold bg-secondary-two rounded-md">Requested Shipping</span>
                                             @endif
                                             @if ($item->storageRequest()->exists())
-                                                <span>Requested Warehousing</span>
+                                                <span class="mx-2 p-2 text-black font-semibold bg-secondary-one rounded-md">Requested Warehousing</span>
                                             @endif
                                         </div>
                                     </div>
@@ -178,13 +182,22 @@
                     @endif
                 </div>
             </div>
-            <div class="basis-1/4">
+            <div class="basis-1/3 space-y-2">
                 <div class="border border-gray-300 p-4 space-y-4 rounded-lg">
-                    <div>
-                        <h4 class="text-sm font-semibold text-gray-500">Order Subtotal:</h4>
-                        <div class="flex gap-1">
-                            <h3 class="font-bold text-xl text-gray-600 my-auto">{{ Str::upper($order->orderItems->first()->product->currency) }}</h3>
-                            <span class="font-bold text-xl text-gray-800" id="total_cart_amount">{{ number_format($order->getTotalAmount()) }}</span>
+                    <div class="flex justify-between">
+                        <div>
+                            <h4 class="text-sm font-semibold text-gray-500">Order Subtotal:</h4>
+                            <div class="flex gap-1">
+                                <h3 class="font-bold text-xl text-gray-600 my-auto">{{ Str::upper($order->orderItems->first()->product->currency) }}</h3>
+                                <span class="font-bold text-xl text-gray-800" id="total_cart_amount">{{ number_format($order->getTotalAmount()) }}</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-semibold text-gray-500">Order Total:</h4>
+                            <div class="flex gap-1">
+                                <h3 class="font-bold text-xl text-gray-600 my-auto">{{ Str::upper($order->orderItems->first()->product->currency) }}</h3>
+                                <span class="font-bold text-xl text-gray-800" id="total_cart_amount">{{ number_format($order_total) }}</span>
+                            </div>
                         </div>
                     </div>
                     <div class="block md:flex md:gap-2">
@@ -192,6 +205,108 @@
                         <h5 class="text-gray-900">{{ Carbon\Carbon::parse($order->orderItems->first()->delivery_date)->format('d M Y') }}</h5>
                     </div>
                 </div>
+                @foreach ($order->orderItems as $key => $item)
+                    @if ($item->insuranceRequest()->exists() && $item->insuranceRequest->cost != null)
+                        <div class="border border-gray-300 p-4 rounded-lg">
+                            <div class="flex flex-col">
+                                <h4 class="font-semibold text-gray-500">Insurance Quote:</h4>
+                                <div class="flex justify-between">
+                                    <div class="flex gap-1">
+                                        <h3 class="font-bold text-xl text-gray-600 my-auto">{{ Str::upper($order->orderItems->first()->product->currency) }}</h3>
+                                        <span class="font-bold text-xl text-gray-800" id="total_cart_amount">{{ number_format($item->insuranceRequest->cost) }}</span>
+                                    </div>
+                                    @if ($item->insuranceRequest->cost_description_file != null)
+                                        <div>
+                                            <a href="{{ $item->insuranceRequest->cost_description_file }}" target="_blank" class="p-2 text-black font-semibold bg-secondary-five rounded-md">View Pro-forma</a>
+                                        </div>
+                                    @endif
+                                </div>
+                                @if ($item->insuranceRequest->cost_description != null)
+                                    <span class="text-gray-500 font-bold underline underline-offset-1">Cost Description</span>
+                                    <span class="text-gray-900 font-semibold">{{ $item->insuranceRequest->cost_description }}</span>
+                                @endif
+                            </div>
+                            <div class="my-2">
+                                <a href="#" class="p-2 bg-primary-one text-white rounded-md font-bold">Accept Quote</a>
+                            </div>
+                        </div>
+                    @endif
+                    @if ($item->inspectionRequest()->exists() && $item->inspectionRequest->cost != null)
+                        <div class="border border-gray-300 p-4 rounded-lg">
+                            <div class="flex flex-col">
+                                <h4 class="font-semibold text-gray-500">Inspection Quote:</h4>
+                                <div class="flex justify-between">
+                                    <div class="flex gap-1">
+                                        <h3 class="font-bold text-xl text-gray-600 my-auto">{{ Str::upper($order->orderItems->first()->product->currency) }}</h3>
+                                        <span class="font-bold text-xl text-gray-800" id="total_cart_amount">{{ number_format($item->inspectionRequest->cost) }}</span>
+                                    </div>
+                                    @if ($item->inspectionRequest->cost_description_file != null)
+                                        <div>
+                                            <a href="{{ $item->inspectionRequest->cost_description_file }}" target="_blank" class="p-2 text-black font-semibold bg-secondary-four rounded-md">View Pro-forma</a>
+                                        </div>
+                                    @endif
+                                </div>
+                                @if ($item->inspectionRequest->cost_description != null)
+                                    <span class="text-gray-500 font-bold underline underline-offset-1">Cost Description</span>
+                                    <span class="text-gray-900 font-semibold">{{ $item->inspectionRequest->cost_description }}</span>
+                                @endif
+                            </div>
+                            <div class="my-2">
+                                <a href="#" class="p-2 bg-primary-one text-white rounded-md font-bold">Accept Quote</a>
+                            </div>
+                        </div>
+                    @endif
+                    @if ($item->storageRequest()->exists() && $item->storageRequest->cost != null)
+                        <div class="border border-gray-300 p-4 rounded-lg">
+                            <div class="flex flex-col">
+                                <h4 class="font-semibold text-gray-500">Insurance Quote:</h4>
+                                <div class="flex justify-between">
+                                    <div class="flex gap-1">
+                                        <h3 class="font-bold text-xl text-gray-600 my-auto">{{ Str::upper($order->orderItems->first()->product->currency) }}</h3>
+                                        <span class="font-bold text-xl text-gray-800" id="total_cart_amount">{{ number_format($item->storageRequest->cost) }}</span>
+                                    </div>
+                                    @if ($item->storageRequest->cost_description_file != null)
+                                        <div>
+                                            <a href="{{ $item->storageRequest->cost_description_file }}" target="_blank" class="p-2 text-black font-semibold bg-secondary-one rounded-md">View Pro-forma</a>
+                                        </div>
+                                    @endif
+                                </div>
+                                @if ($item->storageRequest->cost_description != null)
+                                    <span class="text-gray-500 font-bold underline underline-offset-1">Cost Description</span>
+                                    <span class="text-gray-900 font-semibold">{{ $item->storageRequest->cost_description }}</span>
+                                @endif
+                            </div>
+                            <div class="my-2">
+                                <a href="#" class="p-2 bg-primary-one text-white rounded-md font-bold">Accept Quote</a>
+                            </div>
+                        </div>
+                    @endif
+                    @if ($item->deliveryRequest()->exists() && $item->deliveryRequest->cost != null)
+                        <div class="border border-gray-300 p-4 rounded-lg">
+                            <div class="flex flex-col">
+                                <h4 class="font-semibold text-gray-500">Insurance Quote:</h4>
+                                <div class="flex justify-between">
+                                    <div class="flex gap-1">
+                                        <h3 class="font-bold text-xl text-gray-600 my-auto">{{ Str::upper($order->orderItems->first()->product->currency) }}</h3>
+                                        <span class="font-bold text-xl text-gray-800" id="total_cart_amount">{{ number_format($item->deliveryRequest->cost) }}</span>
+                                    </div>
+                                    @if ($item->deliveryRequest->cost_description_file != null)
+                                        <div>
+                                            <a href="{{ $item->deliveryRequest->cost_description_file }}" target="_blank" class="p-2 text-black font-semibold bg-secondary-four rounded-md">View Pro-forma</a>
+                                        </div>
+                                    @endif
+                                </div>
+                                @if ($item->deliveryRequest->cost_description != null)
+                                    <span class="text-gray-500 font-bold underline underline-offset-1">Cost Description</span>
+                                    <span class="text-gray-900 font-semibold">{{ $item->deliveryRequest->cost_description }}</span>
+                                @endif
+                            </div>
+                            <div class="my-2">
+                                <a href="#" class="p-2 bg-primary-one text-white rounded-md font-bold">Accept Quote</a>
+                            </div>
+                        </div>
+                    @endif
+                @endforeach
             </div>
         </div>
     </div>
