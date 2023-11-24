@@ -21,7 +21,7 @@
                         <button type="button" class="step-trigger">
                             <span class="bs-stepper-circle">1</span>
                             <span class="bs-stepper-label mt-1">
-                            <span class="bs-stepper-title">Product Details</span>
+                                <span class="bs-stepper-title">Product Details</span>
                             </span>
                         </button>
                     </div>
@@ -32,7 +32,7 @@
                         <button type="button" class="step-trigger">
                             <span class="bs-stepper-circle">2</span>
                             <span class="bs-stepper-label mt-1">
-                            <span class="bs-stepper-title">Media and More</span>
+                                <span class="bs-stepper-title">Media and More</span>
                             </span>
                         </button>
                     </div>

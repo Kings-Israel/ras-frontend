@@ -28,7 +28,7 @@ Route::get('/', [HomeController::class, 'index'])->name('welcome');
 Route::get('/product/{slug}', [ProductController::class, 'viewProduct'])->name('product');
 
 Route::middleware(['auth', 'web', 'phone_verified'])->group(function () {
-    Route::get('/conversations', [ChatController::class, 'conversations']);
+    Route::get('/conversations/{user?}', [ChatController::class, 'conversations']);
     Route::get('/chat/{user?}', [ChatController::class, 'index'])->name('messages');
     Route::get('/messages/chat/{id}', [ChatController::class, 'view'])->name('messages.chat');
     Route::post('/messages/send', [ChatController::class, 'store'])->name('messages.send');
