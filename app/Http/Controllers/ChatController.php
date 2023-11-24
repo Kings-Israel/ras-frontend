@@ -43,19 +43,54 @@ class ChatController extends Controller
 
         $conversations = Arr::pluck($conversations, 'conversation');
 
-        // dd($conversation);
-
         if (auth()->user()->hasRole('vendor')) {
-            return view('business.chat.index', [
+            return view('business.chat.vue', [
                 'conversations' => ConversationResource::collection($conversations),
                 'conversation' => ['user' => $user, 'conversation_id' => $conversation ? $conversation_id : NULL, 'messages' => $conversation ? MessageResource::collection($conversation) : NULL]
             ]);
         }
 
-        return view('chat.index', [
+        return view('chat.vue', [
             'conversations' => ConversationResource::collection($conversations),
             'conversation' => ['user' => $user, 'conversation_id' => $conversation ? $conversation_id : NULL, 'messages' => $conversation ? MessageResource::collection($conversation) : NULL]
         ]);
+    }
+
+    public function conversations(User $user = null)
+    {
+        $conversation = null;
+        $conversation_id = null;
+
+        if ($user) {
+            $conversation = Chat::conversations()->between(auth()->user(), $user);
+
+            if (!$conversation) {
+                $participants = [auth()->user(), $user];
+                $conversation = Chat::createConversation($participants);
+                $conversation->update([
+                    'direct_message' => true,
+                ]);
+            }
+
+            $conversation_id = $conversation->id;
+            Chat::conversation($conversation)->setParticipant(auth()->user())->readAll();
+            $conversation = Chat::conversation($conversation)->setParticipant(auth()->user())->limit(250000)->getMessages();
+
+            $user->load('business');
+        }
+
+        $conversations = Chat::conversations()
+                                ->setParticipant(auth()->user())
+                                ->get();
+
+        $conversations = Arr::pluck($conversations, 'conversation');
+
+        return response()->json([
+            'conversations' => $conversations,
+            'conversation' => $conversation,
+            'email' => auth()->user()->email,
+            'auth_id' => auth()->id(),
+        ], 200);
     }
 
     public function view($id)
@@ -103,6 +138,10 @@ class ChatController extends Controller
 
         if (!$user) {
             toastr()->error('', 'User not found');
+            if (request()->wantsJson()) {
+                return response()->json(['message' => 'User not found'], 404);
+            }
+
             return back();
         }
 
@@ -135,7 +174,8 @@ class ChatController extends Controller
 
         $message = Chat::message($request->message ? $request->message : 'files_only_message')->from(auth()->user())->data($files)->to($conversation)->send();
 
-        event(new SendMessage($user->email, $user, new MessageResource($message), new ConversationResource($conversation)));
+        // event(new SendMessage());
+        SendMessage::dispatch($user->email, $user, new MessageResource($message), new ConversationResource($conversation));
 
         if (request()->wantsJson()) {
             return response()->json(['message' => 'Message sent successfully', 'data' => new MessageResource($message)], 200);
