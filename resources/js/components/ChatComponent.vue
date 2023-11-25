@@ -7,7 +7,7 @@
             <form action="#" method="POST" class="m-3">
                 <div class="relative md:w-full sm:w-full">
                     <i class="fas fa-search absolute inset-y-0 left-1 flex items-center pl-1 pointer-events-none text-2xl"></i>
-                    <input class="pl-10 h-9 border-none rounded w-[99%] focus:border-b-3 focus:ring-0 transition duration-150" v-model="searchContacts" placeholder="Search Contacts..." />
+                    <input class="pl-10 h-9 border-2 border-gray-300 rounded-lg w-[99%] focus:border-3 focus:border-primary-one focus:ring-0 transition duration-150" v-model="searchContacts" placeholder="Search Contacts..." />
                 </div>
             </form>
             <ul class="list-none px-2 space-y-2 overflow-scroll max-h-[20rem] min-h-[20rem] md:min-h-[32rem] md:max-h-[37rem] 4xl:h-[55rem]">
@@ -34,7 +34,7 @@
                                                     {{ participant.messageable.first_name }} {{ participant.messageable.last_name }}
                                                 </span>
                                             </div>
-                                            <span v-if="conversation.last_message" class="text-xs font-bold my-auto w-16 truncate text-end">{{ moment(conversation.last_message.created_at).fromNow() }}</span>
+                                            <span v-if="conversation.last_message && conversation.last_message.created_at" class="text-xs font-bold my-auto w-16 truncate text-end">{{ moment(conversation.last_message.created_at).fromNow() }}</span>
                                         </div>
                                         <div v-if="(conversation.last_message && conversation.last_message.body) || (conversation.last_message && conversation.last_message.data && conversation.last_message.data.length > 0)">
                                             <div class="flex justify-between truncate">
@@ -69,7 +69,7 @@
                                                     {{ participant.messageable.first_name }} {{ participant.messageable.last_name }}
                                                 </span>
                                             </div>
-                                            <span v-if="conversation.last_message" class="text-xs font-bold my-auto w-16 truncate text-end">{{ moment(conversation.last_message.created_at).fromNow() }}</span>
+                                            <span v-if="conversation.last_message && conversation.last_message.created_at" class="text-xs font-bold my-auto w-16 truncate text-end">{{ moment(conversation.last_message.created_at).fromNow() }}</span>
                                         </div>
                                         <div v-if="(conversation.last_message && conversation.last_message.body) || (conversation.last_message && conversation.last_message.data && conversation.last_message.data.length > 0)">
                                             <div class="flex justify-between truncate">
@@ -147,7 +147,7 @@
                         </ul>
                     </div>
                     <form action="#" method="POST" class="mx-3 lg:my-2 w-full lg:w-[96%] flex gap-1" id="send-message-form" enctype="multipart/form-data" ref="sendMessageForm">
-                        <input class="w-[98%] md:w-full border-2 border-gray-400 rounded focus:border-b-3 focus:ring-0" id="send-message-input" autocomplete="off" placeholder="Type Your Message Here..." ref="refMessageTextInput" v-model="refMessageText" />
+                        <input class="w-[98%] md:w-full border-2 border-gray-400 rounded-lg focus:border-3 focus:border-primary-one focus:ring-0" id="send-message-input" autocomplete="off" placeholder="Type Your Message Here..." ref="refMessageTextInput" v-model="refMessageText" />
                         <i class="fas fa-paperclip text-gray-400 text-xl my-auto w-[5%] hover:cursor-pointer" id="upload-files" ref="uploadFilesBtn" @click.prevent="uploadFile"></i>
                         <input type="file" class="hidden" v-on:change="uploadFiles" multiple name="docs[]" id="docs-input" ref="docsInput">
                         <button class="bg-primary-one text-white rounded-full md:mx-auto my-auto w-[15%] md:w-12 h-10 hover:bg-orange-600" id="send-message-btn" ref="refMessageSubmit" @click.prevent="sendMessage">
@@ -249,7 +249,6 @@ export default {
             echo
                 .channel(email.value)
                 .listen('.new.message', (e) => {
-                    console.log(e)
                     if (active_conversation.value && (e.message.conversation_id === active_conversation.value)) {
                         conversation_log.value.push(e.message)
                         nextTick(() => {

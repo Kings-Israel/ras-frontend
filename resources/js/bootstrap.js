@@ -5,27 +5,42 @@
  */
 
 import axios from 'axios';
-window.axios = axios;
+import Pusher from 'pusher-js'
+import Echo from 'laravel-echo'
+import {createApp} from "vue/dist/vue.esm-bundler"
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+// window.axios = axios;
 
-/**
- * Echo exposes an expressive API for subscribing to channels and listening
- * for events that are broadcast by Laravel. Echo and event broadcasting
- * allows your team to easily build robust real-time web applications.
- */
+// window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-import Echo from 'laravel-echo';
+// window.Pusher = Pusher;
 
-import Pusher from 'pusher-js';
-window.Pusher = Pusher;
+// window.Echo = new Echo({
+//     broadcaster: 'pusher',
+//     key: 'W4R6LA.GZ7-qw',
+//     wsHost: 'realtime-pusher.ably.io',
+//     wsPort: 443,
+//     disableStats: true,
+//     encrypted: true,
+//     cluster: 'eu',
+// });
 
-window.Echo = new Echo({
+import ChatComponent from './components/ChatComponent.vue'
+
+const EchoInstance = new Echo({
     broadcaster: 'pusher',
-    key: 'W4R6LA.GZ7-qw',
+    key: 'cMtiHg.XV1L5g',
     wsHost: 'realtime-pusher.ably.io',
     wsPort: 443,
     disableStats: true,
     encrypted: true,
     cluster: 'eu',
-});
+})
+
+const app = createApp({})
+
+app.component('ChatComponent', ChatComponent)
+
+app.provide('echo', EchoInstance)
+
+app.mount("#app");
