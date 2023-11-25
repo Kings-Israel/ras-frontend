@@ -214,9 +214,9 @@ export default {
         const getConversations = async (user_id) => {
             let new_conversations
             if (user_id != null) {
-                new_conversations = await axios.get('/conversations/'+user_id)
+                new_conversations = await axios.get('/rsa/conversations/'+user_id)
             } else {
-                new_conversations = await axios.get('/conversations')
+                new_conversations = await axios.get('/rsa/conversations')
             }
             conversations.value = new_conversations.data.conversations
             const_conversations.value = new_conversations.data.conversations
@@ -275,7 +275,7 @@ export default {
 
         const getConversation = async (id) => {
             active_conversation.value = id
-            const response = await axios.get('/messages/chat/'+id)
+            const response = await axios.get('/rsa/messages/chat/'+id)
             conversation_log.value = response.data.conversations.messages
             receiver.value = response.data.conversations.user
             nextTick(() => {
