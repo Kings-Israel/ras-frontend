@@ -160,7 +160,7 @@
             </div>
         </div>
         <div v-else class="hidden lg:block w-full my-auto mx-auto">
-            <img src="../../../public/assets/img/talking.png" alt="" class="ml-40">
+            <img src="../../../rsa/public/assets/img/talking.png" alt="" class="ml-40">
         </div>
         <!-- End Chat Messages -->
     </div>
