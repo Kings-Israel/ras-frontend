@@ -1,18 +1,11 @@
 {
-  "public/assets/img/talking.png": {
-    "file": "assets/talking-921b8355.png",
-    "src": "public/assets/img/talking.png"
-  },
   "resources/css/app.css": {
     "file": "assets/app-8b0bed19.css",
     "isEntry": true,
     "src": "resources/css/app.css"
   },
   "resources/js/app.js": {
-    "assets": [
-      "assets/talking-921b8355.png"
-    ],
-    "file": "assets/app-56680c56.js",
+    "file": "assets/app-1d544943.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   }

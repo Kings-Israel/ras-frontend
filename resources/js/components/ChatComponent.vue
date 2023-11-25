@@ -160,7 +160,7 @@
             </div>
         </div>
         <div v-else class="hidden lg:block w-full my-auto mx-auto">
-            <img src="../../../rsa/public/assets/img/talking.png" alt="" class="ml-40">
+            <img src="/rsa/assets/img/talking.png" alt="" class="ml-40">
         </div>
         <!-- End Chat Messages -->
     </div>
@@ -309,7 +309,7 @@ export default {
             Array.from(files.value).forEach((file, index) => {
                 formData.append('files['+index+']', file)
             })
-            const response = await axios.post('/messages/send', formData)
+            const response = await axios.post('/rsa/messages/send', formData)
             conversation_log.value.push(response.data.data)
             refMessageText.value = ''
             files.value = []
