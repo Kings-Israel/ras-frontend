@@ -44,7 +44,6 @@ class OrderController extends Controller
     //     if (!$invoice) {
     //         return redirect()->route('welcome');
     //     }
-
     //     return view('orders', compact('invoice'));
     // }
 
