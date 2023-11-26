@@ -9,10 +9,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
+use Musonza\Chat\Traits\Messageable;
 
 class FinancingInstitution extends Model
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, Messageable;
 
     /**
      * The attributes that aren't mass assignable.

@@ -23,7 +23,7 @@ class OrdersList extends Component
                                 $query->where('status', $this->status);
                             })
                             ->orderBy('created_at', 'DESC')
-                            ->paginate(10);
+                            ->paginate(15);
 
         $inspection_cost = 0;
 

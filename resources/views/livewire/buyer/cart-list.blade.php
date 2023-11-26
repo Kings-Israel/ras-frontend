@@ -296,25 +296,6 @@
                             </div>
                         </div> --}}
                     </div>
-                    @if ($warehouses->count() > 0)
-                        <div>
-                            <div class="grid md:flex justify-between border border-gray-200 rounded-lg p-2">
-                                <div class="md:basis-1/5 flex gap-2 px-1 md:px-2 text-gray-500">
-                                    <input id="checkbox-table-search-1" type="checkbox" onchange="selectedService('select-warehouse')" name="request_warehousing[{{ $item->product->id }}]" class="w-4 h-4 mt-1 text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
-                                    <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                    <h2 class="font-semibold">Request Storage</h2>
-                                </div>
-                                <div class="md:basis-4/5 hidden" id="select-warehouse">
-                                    <select name="warehouse" class="form-control py-1 rounded-lg border-gray-600 w-96" id="">
-                                        <option value="">Select Warehouse</option>
-                                        @foreach ($warehouses as $warehouse)
-                                            <option value="{{ $warehouse->id }}">{{ $warehouse->name }} - {{ $warehouse->country->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
                     @if (count($inspectors) > 0)
                         <div>
                             <div class="grid md:flex justify-between border border-gray-200 rounded-lg p-2">
@@ -328,6 +309,25 @@
                                         <option value="">Select Inspector</option>
                                         @foreach ($inspectors as $inspector)
                                             <option value="{{ $inspector->id }}">{{ $inspector->name }} - {{ $inspector->country->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                    @if (count($warehouses) > 0)
+                        <div>
+                            <div class="grid md:flex justify-between border border-gray-200 rounded-lg p-2">
+                                <div class="md:basis-1/5 flex gap-2 px-1 md:px-2 text-gray-500">
+                                    <input id="checkbox-table-search-1" type="checkbox" onchange="selectedService('select-warehouse')" name="request_warehousing[{{ $item->product->id }}]" class="w-4 h-4 mt-1 text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                                    <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                                    <h2 class="font-semibold">Request Storage</h2>
+                                </div>
+                                <div class="md:basis-4/5 hidden" id="select-warehouse">
+                                    <select name="warehouse" class="form-control py-1 rounded-lg border-gray-600 w-96" id="">
+                                        <option value="">Select Warehouse</option>
+                                        @foreach ($warehouses as $warehouse)
+                                            <option value="{{ $warehouse->id }}">{{ $warehouse->name }} - {{ $warehouse->country->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>

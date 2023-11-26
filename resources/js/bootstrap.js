@@ -26,6 +26,7 @@ import {createApp} from "vue/dist/vue.esm-bundler"
 // });
 
 import ChatComponent from './components/ChatComponent.vue'
+import OrderChatComponent from './components/OrderChatComponent.vue'
 
 const EchoInstance = new Echo({
     broadcaster: 'pusher',
@@ -40,6 +41,7 @@ const EchoInstance = new Echo({
 const app = createApp({})
 
 app.component('ChatComponent', ChatComponent)
+app.component('OrderChatComponent', OrderChatComponent)
 
 app.provide('echo', EchoInstance)
 

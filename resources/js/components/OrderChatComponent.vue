@@ -194,7 +194,7 @@ import moment from 'moment';
 import axios from 'axios';
 export default {
     name: "ChatComponent",
-    props: ['email', 'user', 'order'],
+    props: ['email', 'order'],
     setup(props) {
         const conversations = ref([])
         const const_conversations = ref([])
@@ -233,43 +233,20 @@ export default {
             conversations.value = new_conversations
         })
 
-        const getConversations = async (user_id = null, order = null) => {
-            let new_conversations
-            if (user_id != null) {
-                new_conversations = await axios.get('/conversations/'+user_id)
-            } else if (order != null) {
-                new_conversations = await axios.get('/conversations/order/'+order)
-            } else {
-                new_conversations = await axios.get('/conversations')
-            }
+        const getConversations = async (order) => {
+            let new_conversations = await axios.get('/conversations/order/'+order)
+
             conversations.value = new_conversations.data.conversations
             const_conversations.value = new_conversations.data.conversations
             const_conversations.value.forEach(conversation => {
                 conversation_ids.value.push(conversation.id)
             })
             auth_id.value = new_conversations.data.auth_id
-            if (new_conversations.data.conversation && new_conversations.data.conversation.user) {
-                active_conversation.value = new_conversations.data.conversation.conversation_id
-                receiver.value = new_conversations.data.conversation.user
-                conversation_log.value = new_conversations.data.conversation.messages
-                nextTick(() => {
-                    var container = refChatLogPS.value
-                    container.scrollTop = container.scrollHeight;
-                    if (window.innerWidth < 1536) {
-                        messagesSidebar.value.classList.add('hidden')
-                        messagesBox.value.classList.remove('hidden')
-                    }
-                    refMessageTextInput.value.focus()
-                    if (conversation_ids.value[active_conversation.value]) {
-                        conversation_ids.value[active_conversation.value].classList.add('hidden');
-                    }
-                })
-            }
         }
 
         onMounted(() => {
             email.value = props.email
-            getConversations(props.user, props.order)
+            getConversations(props.order)
             echo
                 .channel(email.value)
                 .listen('.new.message', (e) => {

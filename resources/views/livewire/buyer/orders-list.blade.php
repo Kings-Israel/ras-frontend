@@ -317,13 +317,16 @@
                                 Date
                             </th>
                             <th scope="col" class="px-2 py-3 text-gray-900">
+                                Status
+                            </th>
+                            <th scope="col" class="px-2 py-3 text-gray-900">
                                 Payment
                             </th>
                             <th scope="col" class="px-2 py-3 text-gray-900">
-                                Created
+                                Amount
                             </th>
                             <th scope="col" class="px-2 py-3 text-gray-900">
-                                Amount
+                                Delivery Date
                             </th>
                             <th></th>
                         </tr>
@@ -337,6 +340,9 @@
                                 <td class="px-2 py-2 text-gray-600">
                                     {{ $order->created_at->format('M d, Y') }}
                                 </td>
+                                <td class="px-2 py-2 text-gray-600">
+                                    {{ Str::title($order->status) }}
+                                </td>
                                 <td class="px-2 py-2">
                                     <span class="{{ $order->invoice->resolvePaymentStatus() }} rounded-md px-3">{{ Str::title($order->invoice->payment_status) }}</span>
                                 </td>
@@ -344,7 +350,7 @@
                                     {{ number_format($order->getTotalAmount()) }}
                                 </td>
                                 <td class="px-2 py-2 text-gray-600">
-                                    {{ $order->created_at->format('d M Y') }}
+                                    {{ Carbon\Carbon::parse($order->orderItems->first()->delivery_date)->format('d M Y') }}
                                 </td>
                                 <td class="my-2">
                                     <a href="{{ route('orders.show', ['order' => $order]) }}" class="bg-primary-one font-bold text-white rounded-md px-4 py-1">View Details</a>
@@ -353,6 +359,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                <div class="mt-2">
+                    {{ $orders->links('vendor.livewire.tailwind') }}
+                </div>
             </div>
         </div>
         <div class="basis-1/4">
