@@ -6,14 +6,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Notifications\Notifiable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
+use Illuminate\Notifications\Notification;
 
 class Business extends Model implements Searchable
 {
-    use HasFactory, HasSlug;
+    use HasFactory, HasSlug, Notifiable;
 
     /**
      * The attributes that aren't mass assignable.
@@ -57,6 +60,17 @@ class Business extends Model implements Searchable
     }
 
     /**
+     * Route notifications for the mail channel.
+     *
+     * @return  array<string, string>|string
+     */
+    public function routeNotificationForMail(Notification $notification): array|string
+    {
+        // Return email address only...
+        return $this->contact_email;
+    }
+
+    /**
      * Get the primary image
      *
      * @param  string  $value
@@ -78,6 +92,15 @@ class Business extends Model implements Searchable
         if ($value) {
             return config('app.url').'/storage/vendor/cover_image/'.$value;
         }
+    }
+
+    public function verified():bool
+    {
+        if ($this->verified_on) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -104,6 +127,11 @@ class Business extends Model implements Searchable
         return $this->belongsTo(Country::class);
     }
 
+    public function countriesOfOperation(): MorphMany
+    {
+        return $this->morphMany(CountryOfOperation::class, 'operateable');
+    }
+
     /**
      * Get the city that owns the Business
      */
@@ -118,5 +146,13 @@ class Business extends Model implements Searchable
     public function products(): HasMany
     {
         return $this->hasMany(Product::class);
+    }
+
+    /**
+     * Get all of the orders for the Business
+     */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
     }
 }

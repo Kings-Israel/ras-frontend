@@ -131,7 +131,36 @@
                                 <x-input-error :messages="$errors->get('contact_phone_number')" class="mt-2" />
                             </div>
                         </div>
-                        <x-primary-button class="mt-2 px-8 py-2">
+                        <div class="basis-2/5 form-group">
+                            <div class="flex justify-between">
+                                <x-input-label for="currency" :value="__('Currency')" class="text-gray-500" />
+                                @php($vendor_currency = auth()->user()->business->global_currency)
+                                <div class="flex gap-2">
+                                    <x-input-label :value="__('Custom')" class="text-sm text-gray-500" />
+                                    <input type="checkbox" name="enter_custom_currency" @if((!in_array(old('currency'), $currencies->toArray()) && old('currency') != NULL) || !in_array($business->global_currency, $currencies->toArray())) checked @endif onchange="enterCustom(this, 'currency')" id="enter_custom_currency" class="my-auto w-4 h-4 mr-0.5 text-primary-one bg-gray-400 border-gray-500 rounded focus:ring-primary-one dark:focus:ring-primary-two dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                </div>
+                            </div>
+                            <input name="currency" id="custom_currency" oninput="setInput('currency')" type="text" class="@if(in_array($business->global_currency, $currencies->toArray())) hidden @endif bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+                            <select name="currency" id="currency"  class="@if(!in_array($business->global_currency, $currencies->toArray())) hidden @endif bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+                                @foreach ($currencies as $currency)
+                                    <option value="{{ $currency }}" @if($business->global_currency === $currency) selected @endif>{{ $currency }}</option>
+                                @endforeach
+                                @if (!in_array(old('currency'), $currencies->toArray()) && old('currency') != NULL)
+                                    <option value="{{ old('currency') }}" selected>{{ old('currency') }}</option>
+                                @endif
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            @php($current_countries_of_operation = auth()->user()->business->countriesOfOperation()->get()->pluck('country_id')->toArray())
+                            <x-input-label for="product_link_to_warehouse" :value="__('Countries Of Operation')" class="text-black" />
+                            <select name="countries_of_operation[]" id="select" class="border-2 border-gray-200 rounded-md bg-gray-200 w-full" multiple>
+                                @foreach ($countries as $country)
+                                    <option value="{{ $country->id }}" @if(in_array($country->id, $current_countries_of_operation)) selected @endif>{{ $country->name }}</option>
+                                @endforeach
+                            </select>
+                            <x-input-error :messages="$errors->get('countries_of_operation')" class="mt-2" />
+                        </div>
+                        <x-primary-button class="mt-2 px-8 py-2 float-right">
                             {{ __('Update Details') }}
                         </x-primary-button>
                     </form>
@@ -209,5 +238,21 @@
         change_primary_cover_image_input.addEventListener('change', function() {
             document.getElementById("change_primary_cover_image_form").submit();
         })
+
+        function enterCustom(value, element_id) {
+            if (value.checked) {
+                $('#'+element_id).addClass('hidden')
+                $('#'+element_id).removeClass('block')
+                $('#custom_'+element_id).addClass('block')
+                $('#custom_'+element_id).removeClass('hidden')
+                $('#custom_'+element_id).focus()
+            } else {
+                $('#'+element_id).addClass('block')
+                $('#'+element_id).removeClass('hidden')
+                $('#'+element_id).focus()
+                $('#custom_'+element_id).addClass('hidden')
+                $('#custom_'+element_id).removeClass('block')
+            }
+        }
     </script>
 </x-app-layout>

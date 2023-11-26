@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OtpController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
@@ -25,16 +27,28 @@ Route::get('/', [HomeController::class, 'index'])->name('welcome');
 
 Route::get('/product/{slug}', [ProductController::class, 'viewProduct'])->name('product');
 
-Route::middleware(['auth', 'phone_verified'])->group(function () {
+Route::middleware(['auth', 'web', 'phone_verified'])->group(function () {
+    Route::get('/conversations/{user?}', [ChatController::class, 'conversations']);
     Route::get('/chat/{user?}', [ChatController::class, 'index'])->name('messages');
     Route::get('/messages/chat/{id}', [ChatController::class, 'view'])->name('messages.chat');
     Route::post('/messages/send', [ChatController::class, 'store'])->name('messages.send');
+
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 });
 
-Route::middleware(['auth', 'phone_verified', 'role:buyer'])->group(function () {
-    Route::get('/cart', function() {
-        return view('cart');
-    })->name('cart');
+Route::middleware(['auth', 'web', 'phone_verified'])->group(function () {
+    Route::get('/cart', [CartController::class, 'index'])->name('cart');
+    Route::post('/cart/add', [CartController::class, 'store'])->name('cart.store');
+
+    Route::get('/invoices', [OrderController::class, 'index'])->name('invoices.index');
+    // Route::get('/invoices/{invoice}/orders', [OrderController::class, 'orders'])->name('invoice.orders');
+    Route::get('/orders', [OrderController::class, 'orders'])->name('orders');
+    Route::get('/orders/{order}', [OrderController::class, 'order'])->name('orders.show');
+    Route::get('/invoices/{invoice}/financing/request', [OrderController::class, 'requestFinancing'])->name('invoice.financing.request');
+    Route::post('/order/create', [OrderController::class, 'store'])->name('order.store');
+    Route::get('/order/quotation/{quotation}/update/{status}', [OrderController::class, 'updateQuotation'])->name('order.quotation.update');
+    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 Route::group(['prefix' => 'vendor', 'as' => 'vendor.'], function () {
@@ -43,14 +57,19 @@ Route::group(['prefix' => 'vendor', 'as' => 'vendor.'], function () {
     Route::get('/{slug}/storefront/compliance', [ProductController::class, 'storefrontDocuments'])->name('storefront.compliance');
 });
 
-Route::middleware(['auth', 'phone_verified', 'role:vendor', 'has_registered_business'])->group(function () {
+Route::middleware(['auth', 'web', 'phone_verified', 'role:vendor', 'has_registered_business'])->group(function () {
     Route::group(['prefix' => 'vendor/', 'as' => 'vendor.'], function() {
-        Route::get('/', [VendorController::class, 'dashboard'])->name('dashboard');
+        Route::get('/dashboard', [VendorController::class, 'dashboard'])->name('dashboard');
         Route::get('/products', [VendorProductController::class, 'index'])->name('products');
         Route::post('/products/store', [VendorProductController::class, 'store'])->name('products.store');
         Route::get('/{product}/edit', [VendorProductController::class, 'edit'])->name('products.edit');
         Route::patch('/{product}/update', [VendorProductController::class, 'update'])->name('products.update');
         Route::get('/orders', [VendorController::class, 'orders'])->name('orders');
+        Route::get('/quotation-requests', [VendorController::class, 'quotationRequests'])->name('quotation.requests');
+        Route::get('/orders/{order}', [VendorController::class, 'order'])->name('orders.show');
+        Route::get('/orders/{order}/{status}/update', [VendorController::class, 'orderUpdate'])->name('orders.status.update');
+        Route::post('/orders/{order}/quote/update', [VendorController::class, 'quoteUpdate'])->name('orders.quote.update');
+        Route::get('/orders/{order}/quotes/accept', [VendorController::class, 'acceptQuotes'])->name('orders.quotes.accept');
         Route::get('/messages', [ChatController::class, 'index'])->name('messages');
         Route::get('/messages/chat', [ChatController::class, 'view'])->name('messages.chat');
         Route::get('/customers', function () {
@@ -59,9 +78,8 @@ Route::middleware(['auth', 'phone_verified', 'role:vendor', 'has_registered_busi
         Route::get('/payments', function () {
             return view('business.payments');
         })->name('payments');
-        Route::get('/warehouses', function () {
-            return view('business.warehouses');
-        })->name('warehouses');
+        Route::get('/warehouses', [VendorController::class, 'warehouses'])->name('warehouses');
+        Route::post('/warehouses/{warehouse}/storage/request', [VendorController::class, 'requestWarehouseStorage'])->name('warehouses.storage.request');
         Route::get('/suppliers', function () {
             return view('business.suppliers');
         })->name('suppliers');
@@ -70,13 +88,11 @@ Route::middleware(['auth', 'phone_verified', 'role:vendor', 'has_registered_busi
         Route::post('/business/update', [VendorController::class, 'update'])->name('business.update');
         Route::patch('/business/image/update', [VendorController::class, 'updatePrimaryCoverImage'])->name('business.image.update');
     });
-    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 if (config('app.env') == 'production') {
     Livewire::setUpdateRoute(function ($handle) {
-        return Route::post('/ras/livewire/update', $handle);
+        return Route::post('/rsa/livewire/update', $handle);
     });
 }
 

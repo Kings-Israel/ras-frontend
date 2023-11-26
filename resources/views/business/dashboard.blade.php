@@ -68,37 +68,37 @@
             </div>
             <div class="mt-4">
                 <div class="flex gap-6">
-                    <span class="font-extrabold text-primary-one underline underline-offset-2 decoration-4">All Orders</span>
-                    <span class="font-extrabold text-gray-400">Paid</span>
-                    <span class="font-extrabold text-gray-400">Unpaid</span>
-                    <span class="font-extrabold text-gray-400">Cancelled</span>
-                    <span class="font-extrabold text-gray-400">In Progress</span>
+                    <span class="font-extrabold hover:cursor-pointer text-primary-one underline underline-offset-2 decoration-4" id="view_orders_btn" onclick="changeOrdersView('orders')">All Orders</span>
+                    <span class="font-extrabold hover:cursor-pointer text-gray-500" id="view_paid_orders_btn" onclick="changeOrdersView('paid_orders')">Paid</span>
+                    <span class="font-extrabold hover:cursor-pointer text-gray-500" id="view_pending_orders_btn" onclick="changeOrdersView('pending_orders')">Unpaid</span>
+                    <span class="font-extrabold hover:cursor-pointer text-gray-500" id="view_cancelled_orders_btn" onclick="changeOrdersView('cancelled_orders')">Cancelled</span>
+                    <span class="font-extrabold hover:cursor-pointer text-gray-500" id="view_in_progress_orders_btn" onclick="changeOrdersView('in_progress_orders')">In Progress</span>
                 </div>
-                <table class="w-full table-auto text-sm text-left text-gray-800 font-bold dark:text-gray-400 truncate">
+                {{-- <table class="w-full table-auto text-sm text-left text-gray-800 font-bold dark:text-gray-400 truncate">
                     <thead class="text-xs text-gray-500 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-t-2 border-b-2">
                         <tr>
-                            <th scope="col" class="px-2 py-3">
+                            <th scope="col" class="px-2 py-3 text-gray-900">
                                 ID
                             </th>
-                            <th scope="col" class="px-2 py-3">
+                            <th scope="col" class="px-2 py-3 text-gray-900">
                                 Date
                             </th>
-                            <th scope="col" class="px-2 py-3">
+                            <th scope="col" class="px-2 py-3 text-gray-900">
                                 Product
                             </th>
-                            <th scope="col" class="px-2 py-3">
+                            <th scope="col" class="px-2 py-3 text-gray-900">
                                 Quantity
                             </th>
-                            <th scope="col" class="px-2 py-3">
+                            <th scope="col" class="px-2 py-3 text-gray-900">
                                 Country
                             </th>
-                            <th scope="col" class="px-2 py-3">
+                            <th scope="col" class="px-2 py-3 text-gray-900">
                                 Payment
                             </th>
-                            <th scope="col" class="px-2 py-3">
+                            <th scope="col" class="px-2 py-3 text-gray-900">
                                 Fulfilment
                             </th>
-                            <th scope="col" class="px-2 py-3">
+                            <th scope="col" class="px-2 py-3 text-gray-900">
                                 Amount
                             </th>
                         </tr>
@@ -108,25 +108,25 @@
                             <th scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 348758
                             </th>
-                            <td class="px-2 py-2">
+                            <td class="px-2 py-2 text-gray-500">
                                 Mar 27, 2023
                             </td>
-                            <td class="px-2 py-2">
+                            <td class="px-2 py-2 text-gray-500">
                                 Bag of Copper Wire
                             </td>
-                            <td class="px-2 py-2">
+                            <td class="px-2 py-2 text-gray-500">
                                 23
                             </td>
-                            <td class="px-2 py-2">
+                            <td class="px-2 py-2 text-gray-500">
                                 Senegal
                             </td>
                             <td class="px-2 py-2">
                                 <span class="bg-green-200 rounded-md px-3">Paid</span>
                             </td>
-                            <td class="px-2 py-2">
+                            <td class="px-2 py-2 text-gray-500">
                                 Delivered
                             </td>
-                            <td class="px-2 py-2">
+                            <td class="px-2 py-2 text-gray-500">
                                 Ksh.235,387
                             </td>
                         </tr>
@@ -134,25 +134,25 @@
                             <th scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 349854
                             </th>
-                            <td class="px-2 py-2">
+                            <td class="px-2 py-2 text-gray-500">
                                 Apr 30, 2023
                             </td>
-                            <td class="px-2 py-2">
+                            <td class="px-2 py-2 text-gray-500">
                                 Gold Chains
                             </td>
-                            <td class="px-2 py-2">
+                            <td class="px-2 py-2 text-gray-500">
                                 300
                             </td>
-                            <td class="px-2 py-2">
+                            <td class="px-2 py-2 text-gray-500">
                                 Zambia
                             </td>
                             <td class="px-2 py-2">
                                 <span class="bg-gray-200 rounded-md px-3">Unpaid</span>
                             </td>
-                            <td class="px-2 py-2">
+                            <td class="px-2 py-2 text-gray-500">
                                 Cancelled
                             </td>
-                            <td class="px-2 py-2">
+                            <td class="px-2 py-2 text-gray-500">
                                 Ksh.452,453
                             </td>
                         </tr>
@@ -160,25 +160,25 @@
                             <th scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 56858
                             </th>
-                            <td class="px-2 py-2">
+                            <td class="px-2 py-2 text-gray-500">
                                 Jan 27, 2023
                             </td>
-                            <td class="px-2 py-2">
+                            <td class="px-2 py-2 text-gray-500">
                                 Tanzanite
                             </td>
-                            <td class="px-2 py-2">
+                            <td class="px-2 py-2 text-gray-500">
                                 180
                             </td>
-                            <td class="px-2 py-2">
+                            <td class="px-2 py-2 text-gray-500">
                                 Kenya
                             </td>
-                            <td class="px-2 py-2">
+                            <td class="px-2 py-2 text-gray-500">
                                 <span class="bg-green-200 rounded-md px-2">Paid</span>
                             </td>
-                            <td class="px-2 py-2">
+                            <td class="px-2 py-2 text-gray-500">
                                 Delivered
                             </td>
-                            <td class="px-2 py-2">
+                            <td class="px-2 py-2 text-gray-500">
                                 Ksh.235,387
                             </td>
                         </tr>
@@ -186,25 +186,25 @@
                             <th scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 349854
                             </th>
-                            <td class="px-2 py-2">
+                            <td class="px-2 py-2 text-gray-500">
                                 Apr 30, 2023
                             </td>
-                            <td class="px-2 py-2">
+                            <td class="px-2 py-2 text-gray-500">
                                 Gold Chains
                             </td>
-                            <td class="px-2 py-2">
+                            <td class="px-2 py-2 text-gray-500">
                                 300
                             </td>
-                            <td class="px-2 py-2">
+                            <td class="px-2 py-2 text-gray-500">
                                 Zambia
                             </td>
                             <td class="px-2 py-2">
                                 <span class="bg-gray-200 rounded-md px-3">Unpaid</span>
                             </td>
-                            <td class="px-2 py-2">
+                            <td class="px-2 py-2 text-gray-500">
                                 Cancelled
                             </td>
-                            <td class="px-2 py-2">
+                            <td class="px-2 py-2 text-gray-500">
                                 Ksh.452,453
                             </td>
                         </tr>
@@ -212,30 +212,49 @@
                             <th scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 565434
                             </th>
-                            <td class="px-2 py-2">
+                            <td class="px-2 py-2 text-gray-500">
                                 Apr 26, 2023
                             </td>
-                            <td class="px-2 py-2">
+                            <td class="px-2 py-2 text-gray-500">
                                 Diamond
                             </td>
-                            <td class="px-2 py-2">
+                            <td class="px-2 py-2 text-gray-500">
                                 30
                             </td>
-                            <td class="px-2 py-2">
+                            <td class="px-2 py-2 text-gray-500">
                                 South Africa
                             </td>
                             <td class="px-2 py-2">
                                 <span class="bg-gray-200 rounded-md px-3">Unpaid</span>
                             </td>
-                            <td class="px-2 py-2">
+                            <td class="px-2 py-2 text-gray-500">
                                 Cancelled
                             </td>
-                            <td class="px-2 py-2">
+                            <td class="px-2 py-2 text-gray-500">
                                 Ksh.1,452,453
                             </td>
                         </tr>
                     </tbody>
-                </table>
+                </table> --}}
+                <div id="orders">
+                    <livewire:vendor.dashboard-orders-list />
+                </div>
+
+                <div class="hidden" id="paid_orders">
+                    <livewire:vendor.dashboard-paid-orders-list />
+                </div>
+
+                <div class="hidden" id="pending_orders">
+                    <livewire:vendor.dashboard-pending-orders-list />
+                </div>
+
+                <div class="hidden" id="cancelled_orders">
+                    <livewire:vendor.dashboard-cancelled-orders-list />
+                </div>
+
+                <div class="hidden" id="in_progress_orders">
+                    <livewire:vendor.dashboard-in-progress-orders-list />
+                </div>
             </div>
             <a
                 href="{{ route('vendor.orders') }}"
@@ -448,6 +467,42 @@
                     chart.render();
                 }
             });
+        </script>
+        <script>
+            const orders_btn = document.querySelector('#view_orders_btn');
+            const paid_orders_btn = document.querySelector('#view_paid_orders_btn');
+            const pending_orders_btn = document.querySelector('#view_pending_orders_btn');
+            const cancelled_orders_btn = document.querySelector('#view_cancelled_orders_btn');
+            const in_progress_orders_btn = document.querySelector('#view_in_progress_orders_btn');
+
+            const orders = document.querySelector('#orders');
+            const paid_orders = document.querySelector('#paid_orders');
+            const pending_orders = document.querySelector('#pending_orders');
+            const cancelled_orders = document.querySelector('#cancelled_orders');
+            const in_progress_orders = document.querySelector('#in_progress_orders');
+
+            let views = [orders, paid_orders, pending_orders, cancelled_orders, in_progress_orders]
+            let views_btns = [orders_btn, paid_orders_btn, pending_orders_btn, cancelled_orders_btn, in_progress_orders_btn]
+
+            function changeOrdersView(selected_view) {
+                views.forEach(view => {
+                    if (selected_view == view.attributes.id.value) {
+                        view.classList.remove('hidden')
+                    } else {
+                        view.classList.add('hidden')
+                    }
+                });
+
+                views_btns.forEach(btn => {
+                    if ('view_'+selected_view+'_btn' == btn.attributes.id.value) {
+                        btn.classList.add('text-primary-one', 'underline', 'underline-offset-2', 'decoration-4')
+                        btn.classList.remove('text-gray-500')
+                    } else {
+                        btn.classList.remove('text-primary-one', 'underline', 'underline-offset-2', 'decoration-4')
+                        btn.classList.add('text-gray-500')
+                    }
+                })
+            }
         </script>
     @endpush
 </x-app-layout>

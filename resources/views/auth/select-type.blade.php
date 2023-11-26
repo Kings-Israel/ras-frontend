@@ -1,11 +1,11 @@
-<x-guest-layout class="w-[96%] md:w-[60%] lg:w-[30%] my-16 md:my-20">
+<x-guest-layout class="w-[96%] md:w-[60%] lg:w-[50%] my-16 md:my-20 bg-white">
 
     <div class="flex flex-col text-center py-10">
         <h1 class="text-3xl font-bold p-2">Select Account Type</h1>
         <span class="p-1">Your Gateway to Finding Awesome Products Across The Continent</span>
     </div>
 
-    <form method="POST" action="{{ route('selected-type') }}">
+    {{-- <form method="POST" action="{{ route('selected-type') }}">
         @csrf
 
         <label
@@ -49,5 +49,26 @@
         <div class="mt-4 text-center">
             <h3 class="">Already Have an Account? <a href="{{ route('login') }}" class="underline decoration-orange-500 text-orange-400 font-bold hover:text-orange-500 focus:text-orange-600 transition ease-in-out duration-150">Login</a></h3>
         </div>
-    </form>
+    </form> --}}
+    <div class="flex gap-8 justify-center pb-6">
+        <form action="{{ route('selected-type') }}" method="POST">
+            @csrf
+            <input type="hidden" name="account_type" value="vendor">
+            <button type="submit" class="text-center px-4 py-4 border border-orange-300 hover:bg-orange-200 hover:text-black hover:cursor-pointer transition duration-200 ease-in-out rounded-lg">
+                <h3 class="font-bold text-2xl">Proceed as Vendor</h3>
+                <span class="font-semibold">Create your business and upload your products to reach a wider range of customers</span>
+            </button>
+        </form>
+        <form action="{{ route('selected-type') }}" method="post">
+            @csrf
+            <input type="hidden" name="account_type" value="buyer">
+            <button type="submit" class="text-center px-4 py-4 border border-orange-300 hover:bg-orange-200 hover:text-black hover:cursor-pointer transition duration-200 ease-in-out rounded-lg">
+                <h3 class="font-bold text-2xl">Proceed as Buyer</h3>
+                <span class="font-semibold">Find the best quality products from verified businesses delivered to you promptly</span>
+            </button>
+        </form>
+    </div>
+    <div class="mt-4 text-center">
+        <h3 class="">Already Have An Account? <a href="{{ route('login') }}" class="underline decoration-orange-500 text-orange-400 font-bold hover:text-orange-500 focus:text-orange-600 transition ease-in-out duration-150">Login</a></h3>
+    </div>
 </x-guest-layout>

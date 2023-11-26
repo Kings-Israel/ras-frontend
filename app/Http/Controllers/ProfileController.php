@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Jobs\SendSMS;
+use App\Models\Country;
 use App\Models\Otp;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -23,6 +24,13 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        if (auth()->user()->hasRole('vendor')) {
+            return view('business.profile', [
+                'business' => auth()->user()->hasRole('vendor') ? auth()->user()->business : NULL,
+                'currencies' => collect(['USD', 'EUR', 'GBP', 'KSH', 'JPY']),
+            ]);
+        }
+
         return view('profile.edit', [
             'user' => $request->user(),
         ]);
@@ -90,8 +98,12 @@ class ProfileController extends Controller
 
     public function businessProfile()
     {
+        $countries = Country::all();
+
         return view('business.profile', [
-            'business' => auth()->user()->hasRole('vendor') ? auth()->user()->business : NULL
+            'business' => auth()->user()->hasRole('vendor') ? auth()->user()->business : NULL,
+            'currencies' => collect(['USD', 'EUR', 'GBP', 'KSH', 'JPY']),
+            'countries' => $countries,
         ]);
     }
 }

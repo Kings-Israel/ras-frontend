@@ -14,6 +14,7 @@
   "public/assets/img/auth-bg-1.png": {
     "file": "assets/auth-bg-1-4161d694.png",
     "src": "public/assets/img/auth-bg-1.png"
+<<<<<<< HEAD
   },
   "public/assets/img/banner.png": {
     "file": "assets/banner-3f8aa010.png",
@@ -21,11 +22,20 @@
   },
   "resources/css/app.css": {
     "file": "assets/app-f96db848.css",
+=======
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-5ae20960.css",
+>>>>>>> kings
     "isEntry": true,
     "src": "resources/css/app.css"
   },
   "resources/js/app.js": {
+<<<<<<< HEAD
     "file": "assets/app-ed770095.js",
+=======
+    "file": "assets/app-98d598f5.js",
+>>>>>>> kings
     "isEntry": true,
     "src": "resources/js/app.js"
   }

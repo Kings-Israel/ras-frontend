@@ -17,6 +17,7 @@ use Ramsey\Uuid\Uuid;
 use Spatie\Permission\Traits\HasRoles;
 use Chat;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -68,12 +69,81 @@ class User extends Authenticatable implements MustVerifyEmail
         return config('app.url').'/assets/img/user.png';
     }
 
+    public function unreadMessagesCount(): int
+    {
+        $unread_messages_count = 0;
+
+        if (auth()->check()) {
+            $unread_messages_count = Chat::messages()->setParticipant(auth()->user())->unreadCount();
+        }
+
+        return $unread_messages_count;
+    }
+
+    public function pendingOrders(): int
+    {
+        $pending_orders = 0;
+
+        if (auth()->check() && auth()->user()->hasRole('vendor')) {
+            if (auth()->user()->business) {
+                $pending_orders = auth()->user()->business->orders->where('status', 'pending')->count();
+            }
+        }
+
+        return $pending_orders;
+    }
+
+    public function quotationRequests(): int
+    {
+        $pending_orders = 0;
+
+        if (auth()->check() && auth()->user()->hasRole('vendor')) {
+            if (auth()->user()->business) {
+                $pending_orders = auth()->user()->business->orders->where('status', 'quotation request')->count();
+            }
+        }
+
+        return $pending_orders;
+    }
+
     /**
      * Get the business associated with the User
      */
     public function business(): HasOne
     {
         return $this->hasOne(Business::class);
+    }
+
+    /**
+     * Get the cart associated with the User
+     */
+    public function cart(): HasOne
+    {
+        return $this->hasOne(Cart::class);
+    }
+
+    /**
+     * Get all of the orders for the User
+     */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    /**
+     * Get all of the cartItems for the User
+     */
+    public function cartItems(): HasManyThrough
+    {
+        return $this->hasManyThrough(CartItem::class, Cart::class);
+    }
+
+    /**
+     * Get all of the invoices for the User
+     */
+    public function invoices(): HasMany
+    {
+        return $this->hasMany(Invoice::class);
     }
 
     /**
@@ -84,14 +154,45 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Warehouse::class, 'user_warehouses', 'warehouse_id', 'user_id');
     }
 
-    public function unreadMessagesCount(): int
+    /**
+     * The financingInstitutions that belong to the User
+     */
+    public function financingInstitutions(): BelongsToMany
     {
-        $unread_messages_count = 0;
+        return $this->belongsToMany(FinancingInstitution::class, 'financing_institution_users', 'user_id', 'financing_institution_id');
+    }
 
-        if (auth()->check()) {
-            $unread_messages_count = Chat::messages()->setParticipant(auth()->user())->unreadCount();
-        }
+    /**
+     * The financingInstitutions that belong to the User
+     */
+    public function inspectors(): BelongsToMany
+    {
+        return $this->belongsToMany(InspectingInstitution::class, 'inspector_users', 'user_id', 'inspector_id');
+    }
 
-        return $unread_messages_count;
+    /**
+     * The logisticsCompanies that belong to the User
+     */
+    public function logisticsCompanies(): BelongsToMany
+    {
+        return $this->belongsToMany(LogisticsCompany::class, 'logistics_company_user', 'user_id', 'logistics_company_id');
+    }
+
+    /**
+     * Get all of the inspectionReports for the User
+     */
+    public function inspectionReports(): HasMany
+    {
+        return $this->hasMany(InspectionReport::class);
+    }
+
+    /**
+     * Get all of the quotationResponses for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function quotationResponses(): HasMany
+    {
+        return $this->hasMany(QuotationRequestResponse::class);
     }
 }

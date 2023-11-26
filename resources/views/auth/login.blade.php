@@ -1,4 +1,4 @@
-<x-guest-layout class="w-[96%] md:w-[70%] lg:w-[30%] my-10 md:my-20">
+<x-guest-layout class="w-[96%] md:w-[70%] lg:w-[30%] my-10 md:my-20 bg-white">
     <div class="">
         <!-- Session Status -->
         <x-auth-session-status class="mb-4" :status="session('status')" />
@@ -12,8 +12,8 @@
             @csrf
             <!-- Email Address -->
             <div>
-                <x-input-label for="email" :value="__('Email or Phone Number')" />
-                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+                <x-input-label for="email" :value="__('Email')" />
+                <x-text-input id="email" class="block mt-1 w-full" type="text" name="email" :value="old('email')" required autofocus autocomplete="username" />
                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
             </div>
 

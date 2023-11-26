@@ -9,6 +9,7 @@ use App\Models\MeasurementUnit;
 use App\Models\Product;
 use App\Models\ProductMedia;
 use App\Models\Warehouse;
+use App\Models\WarehouseProduct;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -71,11 +72,14 @@ class ProductController extends Controller
             'capacity_in_warehouse' => $request->product_capacity,
         ]);
 
-        if ($product->warehouse) {
-            $product->warehouse()->update([
-                'occupied_capacity' => $request->product_capacity,
-            ]);
-        }
+        // if (count(explode(',', $request->warehouses)) > 0) {
+        //     foreach(explode(',', $request->warehouses) as $warehouse) {
+        //         WarehouseProduct::create([
+        //             'warehouse_id' => $warehouse,
+        //             'product_id' => $product->id
+        //         ]);
+        //     };
+        // }
 
         foreach ($request->images as $image) {
             ProductMedia::create([
@@ -103,7 +107,7 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         return view('business.product.edit', [
-            'product' => $product,
+            'product' => $product->load('warehouses'),
             'categories' => Category::all(),
             'units' => MeasurementUnit::all(),
             'warehouses' => Warehouse::all(),
@@ -157,10 +161,15 @@ class ProductController extends Controller
             'capacity_in_warehouse' => $request->product_capacity,
         ]);
 
-        if ($product->warehouse) {
-            $product->warehouse()->update([
-                'occupied_capacity' => $request->product_capacity,
-            ]);
+        if ($request->warehouses != null && count(explode(',', $request->warehouses)) > 0) {
+            WarehouseProduct::where('product_id', $product->id)->delete();
+
+            foreach(explode(',', $request->warehouses) as $warehouse) {
+                WarehouseProduct::create([
+                    'warehouse_id' => $warehouse,
+                    'product_id' => $product->id
+                ]);
+            };
         }
 
         if ($request->has('images') && count($request->images) > 0) {
@@ -197,7 +206,7 @@ class ProductController extends Controller
             ]);
         }
 
-        activity()->causedBy(auth()->user())->performedOn($product)->log('added updated the product');
+        activity()->causedBy(auth()->user())->performedOn($product)->log('updated the product');
 
         toastr()->success('', 'Product updated successfully');
 

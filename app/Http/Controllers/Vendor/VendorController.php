@@ -7,12 +7,21 @@ use App\Models\Business;
 use App\Models\BusinessDocument;
 use App\Models\Category;
 use App\Models\Country;
+use App\Models\CountryOfOperation;
 use App\Models\Document;
+use App\Models\FinancingInstitution;
 use App\Models\MeasurementUnit;
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\RequiredDocumentPerCountry;
+use App\Models\StorageRequest;
 use App\Models\Warehouse;
+use App\Notifications\FinancingRequested;
+use App\Notifications\QuotationAdded;
+use App\Notifications\UpdatedOrder;
 use App\Rules\PhoneNumber;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class VendorController extends Controller
 {
@@ -50,6 +59,7 @@ class VendorController extends Controller
             'user_id' => auth()->id(),
             'name' => $request->name,
             'country_id' => $request->country,
+            'city_id' => $request->has('city') ? $request->city : NULL,
             'primary_cover_image' => $request->hasFile('primary_cover_image') ? pathinfo($request->primary_cover_image->store('cover_image', 'vendor'), PATHINFO_BASENAME) : NULL,
             'secondary_cover_image' => $request->hasFile('secondary_cover_image') ? pathinfo($request->secondary_cover_image->store('cover_image', 'vendor'), PATHINFO_BASENAME) : NULL,
         ]);
@@ -66,6 +76,16 @@ class VendorController extends Controller
             }
         }
 
+        if ($request->has('countries_of_operation')) {
+            foreach ($request->countries_of_operation as $country) {
+                CountryOfOperation::create([
+                    'operateable_id' => $business->id,
+                    'operateable_type' => Business::class,
+                    'country_id' => $country
+                ]);
+            }
+        }
+
         return redirect()->route('vendor.dashboard');
     }
 
@@ -75,23 +95,39 @@ class VendorController extends Controller
             'business_name' => ['required'],
             'secondary_cover_image' => ['nullable', 'mimes:png,jpg,jpeg', 'max:4096'],
             'contact_email' => ['nullable', 'email'],
-            'contact_phone_number' => ['nullable', new PhoneNumber]
+            'contact_phone_number' => ['nullable', new PhoneNumber],
+            'about' => ['nullable', 'max:200'],
+            'vision' => ['nullable', 'max:100'],
+            'mission' => ['nullable', 'max:100'],
+            'tag_line' => ['nullable', 'max:100'],
         ]);
 
         auth()->user()->business()->update([
             'name' => $request->business_name,
             'about' => $request->has('about') && $request->about != null ? $request->about : auth()->user()->business->about,
-            'tag_line' => $request->has('tag_line') && $request->about != null ? $request->tag_line : auth()->user()->business->tag_line,
+            'tag_line' => $request->has('tag_line') && $request->tag_line != null ? $request->tag_line : auth()->user()->business->tag_line,
             'mission' => $request->has('mission') && $request->mission != null ? $request->mission : auth()->user()->business->mission,
             'vision' => $request->has('vision') && $request->vision != null ? $request->vision : auth()->user()->business->vision,
             'contact_email' => $request->has('contact_email') && $request->contact_email != null ? $request->contact_email : auth()->user()->business->contact_email,
             'contact_phone_number' => $request->has('contact_phone_number') && $request->contact_phone_number != null ? $request->contact_phone_number : auth()->user()->business->contact_phone_number,
+            'global_currency' => $request->has('currency') && $request->currency != NULL ? $request->currency : NULL,
         ]);
 
         if ($request->hasFile('secondary_cover_image')) {
             auth()->user()->business()->update([
                 'secondary_cover_image' => pathinfo($request->secondary_cover_image->store('cover_image', 'vendor'), PATHINFO_BASENAME)
             ]);
+        }
+
+        if ($request->has('countries_of_operation')) {
+            auth()->user()->business->countriesOfOperation()->delete();
+            foreach ($request->countries_of_operation as $country) {
+                CountryOfOperation::create([
+                    'operateable_id' => auth()->user()->business->id,
+                    'operateable_type' => Business::class,
+                    'country_id' => $country
+                ]);
+            }
         }
 
         toastr()->success('', 'Business details updated successfully');
@@ -131,5 +167,126 @@ class VendorController extends Controller
     public function orders()
     {
         return view('business.orders');
+    }
+
+    public function quotationRequests()
+    {
+        return view('business.quotation-requests');
+    }
+
+    public function order(Order $order)
+    {
+        $order->load('orderItems.product', 'orderItems.warehouseOrder', 'user');
+
+        $total_amount = 0;
+        foreach($order->orderItems as $order_item) {
+            $quantity = explode(' ', $order_item->quantity)[0];
+            $total_amount += $order_item->amount * $quantity;
+        }
+
+        return view('business.order', compact('order', 'total_amount'));
+    }
+
+    public function orderUpdate(Order $order, $status)
+    {
+        $order->update(['status' => $status]);
+
+        // Send Notification to user of updated order status
+        $order->user->notify(new UpdatedOrder($order));
+
+        if($status === 'accepted') {
+            // Check if order financing was requested
+            if ($order->invoice->financingRequest) {
+                // Send notification to financier to view order
+                $financing_institutions = FinancingInstitution::all();
+                foreach($financing_institutions as $financing_instruction) {
+                    $financing_instruction->notify(new FinancingRequested($order->invoice));
+                }
+                // FinancingInstitution::find(1)->notify(new FinancingRequested($order->invoice));
+            }
+        }
+
+        toastr()->success('', 'Order updated successfully');
+
+        return back();
+    }
+
+    public function warehouses()
+    {
+        $warehouses = Warehouse::with(['country', 'city', 'products' => function ($query) {
+                                    $products_ids = auth()->user()->business->products->pluck('id');
+                                    $query->whereIn('products.id', $products_ids);
+                                }])
+                                ->get();
+
+        $units = MeasurementUnit::all();
+
+        return view('business.warehouses', compact('warehouses', 'units'));
+    }
+
+    public function requestWarehouseStorage(Request $request, Warehouse $warehouse)
+    {
+        StorageRequest::create([
+            'request_code' => explode('-', Str::uuid())[0],
+            'customer_id' => auth()->id(),
+            'warehouse_id' => $warehouse->id,
+            'quantity' => $request->quantity.' '.$request->storage_quantity_unit,
+            'requested_on' => now()
+        ]);
+
+        toastr()->success('', 'Request sent successfully');
+
+        return back();
+    }
+
+    public function quoteUpdate(Request $request)
+    {
+        $request->validate([
+            'items_ids' => ['required', 'array'],
+            'items_ids.*' => ['integer'],
+            'items_quantities' => ['required', 'array'],
+            'items_quantities.*' => ['integer'],
+            'items_prices' => ['required', 'array'],
+            'items_prices.*' => ['integer'],
+        ]);
+
+        foreach($request->items_ids as $item) {
+            $item_price = collect($request->items_prices)->filter(function ($value, $key) use ($item) { return $key == $item; });
+            $item_quantity = collect($request->items_quantities)->filter(function ($value, $key) use ($item) { return $key == $item; });
+
+            auth()->user()->quotationResponses()->create([
+                'order_item_id' => $item,
+                'quantity' => collect($item_quantity)->first(),
+                'amount' => collect($item_price)->first(),
+                'delivery_date' => $request->delivery_date,
+            ]);
+
+            $order_item = OrderItem::find($item);
+
+            $order_item->order->user->notify(new QuotationAdded($order_item->load('order.user', 'order.invoice')));
+        }
+
+        toastr()->success('Quotation sent successfully');
+
+        return back();
+    }
+
+    public function acceptQuotes(Order $order)
+    {
+        foreach ($order->orderItems as $item) {
+            $item->update([
+                'status' => 'accepted',
+            ]);
+        }
+
+        $order->update([
+            'status' => 'accepted',
+        ]);
+
+        $order->user->notify(new UpdatedOrder($order, 'pending'));
+
+        toastr()->success('', 'Order updated successfully');
+
+        return back();
     }
 }

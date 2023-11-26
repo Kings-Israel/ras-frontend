@@ -38,5 +38,15 @@ return [
         // SMS
         'sms_client_id' => env('JAMBOPAY_SMS_CLIENT_ID'),
         'sms_client_secret' => env('JAMBOPAY_SMS_CLIENT_SECRET'),
+        // CHECKOUT
+        'url' => env('JAMBOPAY_ENV') === 'LIVE' ? env('JAMBOPAY_LIVE_URL') : env('JAMBOPAY_TEST_URL'),
+        'client_key' => env('JAMBOPAY_CLIENT_KEY'),
+        'username' => env('JAMBOPAY_ENV') === 'LIVE' ? env('JAMBOPAY_USERNAME') :  env('JAMBOPAY_TEST_USERNAME'),
+        'password' => env('JAMBOPAY_ENV') === 'LIVE' ? env('JAMBOPAY_PASSWORD') : env('JAMBOPAY_TEST_PASSWORD'),
+        'checksum' => env('JAMBOPAY_CHECKSUM'),
+    ],
+    'maps' => [
+        'key' => env('GOOGLE_MAPS_KEY'),
+        'partial_key' => env('MAPS_KEY')
     ],
 ];

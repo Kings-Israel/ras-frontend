@@ -5,45 +5,42 @@
  */
 
 import axios from 'axios';
-window.axios = axios;
+import Pusher from 'pusher-js'
+import Echo from 'laravel-echo'
+import {createApp} from "vue/dist/vue.esm-bundler"
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+// window.axios = axios;
 
-/**
- * Echo exposes an expressive API for subscribing to channels and listening
- * for events that are broadcast by Laravel. Echo and event broadcasting
- * allows your team to easily build robust real-time web applications.
- */
+// window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-import Echo from 'laravel-echo';
+// window.Pusher = Pusher;
 
-import Pusher from 'pusher-js';
-window.Pusher = Pusher;
+// window.Echo = new Echo({
+//     broadcaster: 'pusher',
+//     key: 'W4R6LA.GZ7-qw',
+//     wsHost: 'realtime-pusher.ably.io',
+//     wsPort: 443,
+//     disableStats: true,
+//     encrypted: true,
+//     cluster: 'eu',
+// });
 
-const HOST = process.env.NODE_ENV == 'production' ? '194.163.129.200' : '127.0.0.1';
+import ChatComponent from './components/ChatComponent.vue'
 
-window.Echo = new Echo({
-    // Laravel Websockets Config
+const EchoInstance = new Echo({
     broadcaster: 'pusher',
-    key: 'local',
-    wsHost: HOST,
-    wsPort: 6001,
-    wssPort: 6001,
-    cluster : 'mt1',
-    forceTLS: false,
-    encrypted: true,
+    key: 'cMtiHg.XV1L5g',
+    wsHost: 'realtime-pusher.ably.io',
+    wsPort: 443,
     disableStats: true,
-    enabledTransports: ['ws', 'wss'],
+    encrypted: true,
+    cluster: 'eu',
+})
 
-    // // Ably config
-    // broadcaster: 'pusher',
-    // key: 'W4R6LA.GZ7-qw',
-    // wsHost: window.location.hostname,
-    // wssHost: window.location.hostname,
-    // wsPort: 6001,
-    // wssPort: 6001,
-    // disableStats: true,
-    // encrypted: true,
-    // cluster: 'eu',
-    // enabledTransports: ['ws', 'wss'],
-});
+const app = createApp({})
+
+app.component('ChatComponent', ChatComponent)
+
+app.provide('echo', EchoInstance)
+
+app.mount("#app");

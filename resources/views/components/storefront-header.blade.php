@@ -5,10 +5,12 @@
             <img src="https://ui-avatars.com/api/?name={!! $business->name !!}&rounded=true&size=60" alt="" />
             <div class="-space-y-1">
                 <h1 class="font-bold text-sm text-slate-700">{{ $business->name }}</h1>
-                <div class="flex gap-2">
-                    <h4 class="text-xs text-gray-500">Verified</h4>
-                    <i class="fas fa-shield-alt text-sm text-red-800"></i>
-                </div>
+                @if ($business->verified())
+                    <div class="flex gap-2">
+                        <h4 class="text-xs text-gray-500">Verified</h4>
+                        <i class="fas fa-shield-alt text-sm text-red-800"></i>
+                    </div>
+                @endif
                 <h5 class="text-sm text-gray-500">{{ $business->created_at->diffForHumans() }}</h5>
             </div>
         </div>

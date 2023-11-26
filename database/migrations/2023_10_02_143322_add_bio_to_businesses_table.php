@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('businesses', function (Blueprint $table) {
             $table->string('tag_line',)->nullable();
-            $table->string('about',)->nullable();
+            $table->text('about')->nullable();
             $table->string('mission')->nullable();
             $table->string('vision')->nullable();
             $table->string('contact_email')->nullable();
