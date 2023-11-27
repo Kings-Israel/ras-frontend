@@ -94,7 +94,7 @@ Route::middleware(['auth', 'web', 'phone_verified', 'role:vendor', 'has_register
 
 if (config('app.env') == 'production') {
     Livewire::setUpdateRoute(function ($handle) {
-        return Route::post('/rsa/livewire/update', $handle);
+        return Route::post('/livewire/update', $handle);
     });
 }
 

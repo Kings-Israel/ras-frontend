@@ -236,15 +236,11 @@ export default {
         const getConversations = async (user_id = null, order = null) => {
             let new_conversations
             if (user_id != null) {
-<<<<<<< HEAD
-                new_conversations = await axios.get('/rsa/conversations/'+user_id)
-=======
                 new_conversations = await axios.get('/conversations/'+user_id)
             } else if (order != null) {
                 new_conversations = await axios.get('/conversations/order/'+order)
->>>>>>> kings
             } else {
-                new_conversations = await axios.get('/rsa/conversations')
+                new_conversations = await axios.get('/conversations')
             }
             conversations.value = new_conversations.data.conversations
             const_conversations.value = new_conversations.data.conversations
