@@ -88,6 +88,14 @@ class Order extends Model
         return $this->hasMany(InspectionRequest::class);
     }
 
+    /**
+     * Get all of the conversations for the Order
+     */
+    public function conversations(): HasMany
+    {
+        return $this->hasMany(OrderConversation::class);
+    }
+
     public function getTotalAmount(): int
     {
         $amount = 0;

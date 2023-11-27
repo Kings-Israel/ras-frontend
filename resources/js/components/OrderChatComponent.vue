@@ -1,6 +1,4 @@
 <template>
-    <!-- <div class="lg:mx-60 lg:my-10 mt-2 border-2 border-gray-300 rounded-lg bg-white">
-    </div> -->
     <div class="lg:grid lg:grid-cols-3 h-full" id="messages-container">
         <!-- Chat Sidebar -->
         <div class="lg:col-span-1 pb-0 border-r-2 border-gray-300" id="messages-sidebar" ref="messagesSidebar">
@@ -10,7 +8,7 @@
                     <input class="pl-10 h-9 border-2 border-gray-300 rounded-lg w-[99%] focus:border-3 focus:border-primary-one focus:ring-0 transition duration-150" v-model="searchContacts" placeholder="Search Contacts..." />
                 </div>
             </form>
-            <ul class="list-none px-2 space-y-2 overflow-scroll max-h-[20rem] min-h-[20rem] md:min-h-[32rem] md:max-h-[37rem] 4xl:h-[55rem]">
+            <ul class="list-none px-2 space-y-2 overflow-scroll max-h-[20rem] min-h-[20rem] md:min-h-[32rem] md:max-h-[32rem] 4xl:h-[55rem]">
                 <div v-if="conversations.length > 0">
                     <li v-for="conversation in conversations" v-bind:key="conversation.id" class="hover:cursor-pointer rounded-md transition duration-150" v-on:click="getConversation(conversation.id)">
                         <div v-for="participant in conversation.participants" :key="participant.id">
@@ -182,7 +180,7 @@
             </div>
         </div>
         <div v-else class="hidden lg:block w-full my-auto mx-auto">
-            <img src="/rsa/assets/img/talking.png" alt="" class="ml-40">
+            <img src="../../../public/assets/img/talking.png" alt="" class="ml-40">
         </div>
         <!-- End Chat Messages -->
     </div>
@@ -194,7 +192,7 @@ import moment from 'moment';
 import axios from 'axios';
 export default {
     name: "ChatComponent",
-    props: ['email', 'user', 'order'],
+    props: ['email', 'order', 'order_conversation'],
     setup(props) {
         const conversations = ref([])
         const const_conversations = ref([])
@@ -233,47 +231,25 @@ export default {
             conversations.value = new_conversations
         })
 
-        const getConversations = async (user_id = null, order = null) => {
+        const getConversations = async (order = null, order_conversation = null) => {
             let new_conversations
-            if (user_id != null) {
-<<<<<<< HEAD
-                new_conversations = await axios.get('/rsa/conversations/'+user_id)
-=======
-                new_conversations = await axios.get('/conversations/'+user_id)
-            } else if (order != null) {
-                new_conversations = await axios.get('/conversations/order/'+order)
->>>>>>> kings
+            if (order) {
+                new_conversations = await axios.get('/conversations/order/'+order+'?type=order')
             } else {
-                new_conversations = await axios.get('/rsa/conversations')
+                new_conversations = await axios.get('/conversations/order/'+order_conversation+'?type=order_conversation')
             }
+
             conversations.value = new_conversations.data.conversations
             const_conversations.value = new_conversations.data.conversations
             const_conversations.value.forEach(conversation => {
                 conversation_ids.value.push(conversation.id)
             })
             auth_id.value = new_conversations.data.auth_id
-            if (new_conversations.data.conversation && new_conversations.data.conversation.user) {
-                active_conversation.value = new_conversations.data.conversation.conversation_id
-                receiver.value = new_conversations.data.conversation.user
-                conversation_log.value = new_conversations.data.conversation.messages
-                nextTick(() => {
-                    var container = refChatLogPS.value
-                    container.scrollTop = container.scrollHeight;
-                    if (window.innerWidth < 1536) {
-                        messagesSidebar.value.classList.add('hidden')
-                        messagesBox.value.classList.remove('hidden')
-                    }
-                    refMessageTextInput.value.focus()
-                    if (conversation_ids.value[active_conversation.value]) {
-                        conversation_ids.value[active_conversation.value].classList.add('hidden');
-                    }
-                })
-            }
         }
 
         onMounted(() => {
             email.value = props.email
-            getConversations(props.user, props.order)
+            getConversations(props.order, props.order_conversation)
             echo
                 .channel(email.value)
                 .listen('.new.message', (e) => {
@@ -303,7 +279,7 @@ export default {
 
         const getConversation = async (id) => {
             active_conversation.value = id
-            const response = await axios.get('/rsa/messages/chat/'+id)
+            const response = await axios.get('/messages/chat/'+id)
             conversation_log.value = response.data.conversations.messages
             receiver.value = response.data.conversations.receiver
             nextTick(() => {
@@ -331,13 +307,13 @@ export default {
 
         const sendMessage = async () => {
             const formData = new FormData()
-            formData.append('receiver_id', receiver.value.id)
+            formData.append('conversation_id', active_conversation.value)
             formData.append('message', refMessageText.value)
             // Read selected files
             Array.from(files.value).forEach((file, index) => {
                 formData.append('files['+index+']', file)
             })
-            const response = await axios.post('/rsa/messages/send', formData)
+            const response = await axios.post('/messages/order/send', formData)
             conversation_log.value.push(response.data.data)
             refMessageText.value = ''
             files.value = []

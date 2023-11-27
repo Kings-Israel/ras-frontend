@@ -8,6 +8,7 @@
         "php": "^8.2",
         "ably/ably-php": "^1.1",
         "africastalking/africastalking": "^3.0",
+        "beyondcode/laravel-websockets": "^1.14",
         "davcpas1234/laravelpdfviewer": "^1.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",

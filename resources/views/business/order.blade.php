@@ -284,6 +284,12 @@
                     </div>
                 </div> --}}
             </div>
+            <div id="app" class="mt-2">
+                <h3 class="text-lg text-black p-2 font-bold">Order Conversations</h3>
+                <div class="bg-gray-50 border-2 border-gray-400 rounded-lg">
+                    <order-chat-component email="{!! auth()->user()->email !!}" order_conversation="{!! $order_conversation->id !!}"></order-chat-component>
+                </div>
+            </div>
         </div>
 
         <x-right-side-bar />

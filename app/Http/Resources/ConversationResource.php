@@ -2,6 +2,15 @@
 
 namespace App\Http\Resources;
 
+use App\Models\InspectingInstitution;
+use App\Models\InspectorUser;
+use App\Models\InsuranceCompany;
+use App\Models\InsuranceCompanyUser;
+use App\Models\LogisticsCompany;
+use App\Models\LogisticsCompanyUser;
+use App\Models\User;
+use App\Models\UserWarehouse;
+use App\Models\Warehouse;
 use Chat;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -21,10 +30,61 @@ class ConversationResource extends JsonResource
         if ($this->last_message) {
             $conversation = $conversation = Chat::conversations()->getById($this->id);
             foreach ($conversation->getParticipants() as $participant) {
-                if ($participant->id != auth()->id()) {
-                    $receiver_unread_count = Chat::conversation($conversation)->setParticipant($participant)->unreadCount();
-                } else {
-                    $unread_count = Chat::conversation($conversation)->setParticipant($participant)->unreadCount();
+                info($participant);
+                if ($participant instanceof User) {
+                    if ($participant->id != auth()->id()) {
+                        $receiver_unread_count = Chat::conversation($conversation)->setParticipant($participant)->unreadCount();
+                    } else {
+                        $unread_count = Chat::conversation($conversation)->setParticipant($participant)->unreadCount();
+                    }
+                } elseif ($participant instanceof Warehouse) {
+                    $warehouses_manager_warehouses = UserWarehouse::where('user_id', $participant->id)->get()->pluck('warehouse_id');
+                    $warehouses = Warehouse::whereHas('users', function ($query) use ($warehouses_manager_warehouses) {
+                                                $query->whereIn('id', $warehouses_manager_warehouses);
+                                            })
+                                            ->get()
+                                            ->pluck('id');
+                    if (!collect($warehouses)->contains($participant->id)) {
+                        $receiver_unread_count = Chat::conversation($conversation)->setParticipant($participant)->unreadCount();
+                    } else {
+                        $unread_count = Chat::conversation($conversation)->setParticipant($participant)->unreadCount();
+                    }
+                } elseif ($participant instanceof InspectingInstitution) {
+                    $user_inspecting_institutions = InspectorUser::where('user_id', $participant->id)->get()->pluck('inspector_id');
+                    $inspectors = InspectingInstitution::whereHas('users', function ($query) use ($user_inspecting_institutions) {
+                                                $query->whereIn('id', $user_inspecting_institutions);
+                                            })
+                                            ->get()
+                                            ->pluck('id');
+                    if (!collect($inspectors)->contains($participant->id)) {
+                        $receiver_unread_count = Chat::conversation($conversation)->setParticipant($participant)->unreadCount();
+                    } else {
+                        $unread_count = Chat::conversation($conversation)->setParticipant($participant)->unreadCount();
+                    }
+                } elseif ($participant instanceof InsuranceCompany) {
+                    $user_insurance_companies = InsuranceCompanyUser::where('user_id', $participant->id)->get()->pluck('inspector_id');
+                    $insurers = InsuranceCompany::whereHas('users', function ($query) use ($user_insurance_companies) {
+                                                $query->whereIn('id', $user_insurance_companies);
+                                            })
+                                            ->get()
+                                            ->pluck('id');
+                    if (!collect($insurers)->contains($participant->id)) {
+                        $receiver_unread_count = Chat::conversation($conversation)->setParticipant($participant)->unreadCount();
+                    } else {
+                        $unread_count = Chat::conversation($conversation)->setParticipant($participant)->unreadCount();
+                    }
+                } elseif ($participant instanceof LogisticsCompany) {
+                    $user_logistics_company = LogisticsCompanyUser::where('user_id', $participant->id)->get()->pluck('inspector_id');
+                    $logistics_companies = LogisticsCompany::whereHas('users', function ($query) use ($user_logistics_company) {
+                                                $query->whereIn('id', $user_logistics_company);
+                                            })
+                                            ->get()
+                                            ->pluck('id');
+                    if (!collect($logistics_companies)->contains($participant->id)) {
+                        $receiver_unread_count = Chat::conversation($conversation)->setParticipant($participant)->unreadCount();
+                    } else {
+                        $unread_count = Chat::conversation($conversation)->setParticipant($participant)->unreadCount();
+                    }
                 }
             }
         }
@@ -52,7 +112,7 @@ class ConversationResource extends JsonResource
                 'body' => $this->last_message ? $this->last_message->body : NULL,
                 'type' => $this->last_message ? $this->last_message->type : NULL,
                 'data' => $this->last_message ? $this->last_message->data : NULL,
-                'sender' => $this->last_message ? new UserResource($this->last_message->sender) : NULL,
+                'sender' => $this->last_message ? new ConversationParticipantResource($this->last_message->sender) : NULL,
                 'from_now' => $this->last_message ? Carbon::parse($this->last_message->created_at)->diffForHumans() : NULL,
             ],
             'participants' => ConversationParticipantResource::collection($this->participants),

@@ -20,7 +20,7 @@ class CartList extends Component
 
     public $products_locations = [];
 
-    public $inspectors = [];
+    // public $inspectors = [];
 
     public function mount()
     {
@@ -31,23 +31,23 @@ class CartList extends Component
             return back();
         }
 
-        foreach ($cart->cartItems as $cart_item) {
-            if ($cart_item->product->warehouse) {
-                array_push($this->products_locations, $cart_item->product->warehouse->country->name);
-            } else {
-                array_push($this->products_locations, $cart_item->product->business->country->name);
-            }
-        }
+        // foreach ($cart->cartItems as $cart_item) {
+        //     if ($cart_item->product->warehouse) {
+        //         array_push($this->products_locations, $cart_item->product->warehouse->country->name);
+        //     } else {
+        //         array_push($this->products_locations, $cart_item->product->business->country->name);
+        //     }
+        // }
 
-        $this->products_locations = collect($this->products_locations)->unique();
+        // $this->products_locations = collect($this->products_locations)->unique();
 
-        foreach ($this->products_locations as $product_location) {
-            $country = Country::where('name', $product_location)->first();
-            $inspector = InspectingInstitution::where('country_id', $country->id)->inRandomOrder()->first();
-            if ($inspector) {
-                array_push($this->inspectors, $inspector);
-            }
-        }
+        // foreach ($this->products_locations as $product_location) {
+        //     $country = Country::where('name', $product_location)->first();
+        //     $inspector = InspectingInstitution::where('country_id', $country->id)->inRandomOrder()->first();
+        //     if ($inspector) {
+        //         array_push($this->inspectors, $inspector);
+        //     }
+        // }
 
         $this->cart = $cart;
     }
@@ -85,10 +85,10 @@ class CartList extends Component
 
         return view('livewire.buyer.cart-list', [
             'cart' => $this->cart,
-            'inspectors' => $inspectors,
             'insurers' => $insurers,
             'warehouses' => $warehouses,
-            'logistics' => $logistics
+            'logistics' => $logistics,
+            'inspectors' => $inspectors,
         ]);
     }
 }
