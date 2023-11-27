@@ -30,6 +30,7 @@ class ConversationResource extends JsonResource
         if ($this->last_message) {
             $conversation = $conversation = Chat::conversations()->getById($this->id);
             foreach ($conversation->getParticipants() as $participant) {
+                info($participant);
                 if ($participant instanceof User) {
                     if ($participant->id != auth()->id()) {
                         $receiver_unread_count = Chat::conversation($conversation)->setParticipant($participant)->unreadCount();
@@ -111,7 +112,7 @@ class ConversationResource extends JsonResource
                 'body' => $this->last_message ? $this->last_message->body : NULL,
                 'type' => $this->last_message ? $this->last_message->type : NULL,
                 'data' => $this->last_message ? $this->last_message->data : NULL,
-                'sender' => $this->last_message ? new UserResource($this->last_message->sender) : NULL,
+                'sender' => $this->last_message ? new ConversationParticipantResource($this->last_message->sender) : NULL,
                 'from_now' => $this->last_message ? Carbon::parse($this->last_message->created_at)->diffForHumans() : NULL,
             ],
             'participants' => ConversationParticipantResource::collection($this->participants),

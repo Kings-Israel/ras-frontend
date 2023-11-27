@@ -12,6 +12,7 @@ use App\Models\Document;
 use App\Models\FinancingInstitution;
 use App\Models\MeasurementUnit;
 use App\Models\Order;
+use App\Models\OrderConversation;
 use App\Models\OrderItem;
 use App\Models\RequiredDocumentPerCountry;
 use App\Models\StorageRequest;
@@ -22,6 +23,7 @@ use App\Notifications\UpdatedOrder;
 use App\Rules\PhoneNumber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Chat;
 
 class VendorController extends Controller
 {
@@ -179,12 +181,28 @@ class VendorController extends Controller
         $order->load('orderItems.product', 'orderItems.warehouseOrder', 'user');
 
         $total_amount = 0;
+
         foreach($order->orderItems as $order_item) {
             $quantity = explode(' ', $order_item->quantity)[0];
             $total_amount += $order_item->amount * $quantity;
         }
 
-        return view('business.order', compact('order', 'total_amount'));
+        $conversation = Chat::conversations()->between(auth()->user(), $order->user);
+
+        if (!$conversation) {
+            $participants = [auth()->user(), $order->user];
+            $conversation = Chat::createConversation($participants);
+            $conversation->update([
+                'direct_message' => true,
+            ]);
+        }
+
+        $order_conversation = OrderConversation::firstOrCreate([
+            'order_id' => $order->id,
+            'conversation_id' => $conversation->id,
+        ]);
+
+        return view('business.order', compact('order', 'total_amount', 'order_conversation'));
     }
 
     public function orderUpdate(Order $order, $status)

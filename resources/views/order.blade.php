@@ -185,7 +185,7 @@
                 </div>
                 <div id="app" class="mt-2">
                     <h3 class="text-lg text-black p-2 font-bold">Order Conversations</h3>
-                    <div class="bg-gray-50">
+                    <div class="bg-gray-50 border-2 border-gray-400 rounded-lg">
                         <order-chat-component email="{!! auth()->user()->email !!}" order="{!! $order->id !!}"></order-chat-component>
                     </div>
                 </div>
@@ -267,7 +267,7 @@
                     @if ($item->storageRequest()->exists() && $item->storageRequest->cost != null)
                         <div class="border border-gray-300 p-4 rounded-lg">
                             <div class="flex flex-col">
-                                <h4 class="font-semibold text-gray-500">Insurance Quote:</h4>
+                                <h4 class="font-semibold text-gray-500">Warehousing Quote:</h4>
                                 <div class="flex justify-between">
                                     <div class="flex gap-1">
                                         <h3 class="font-bold text-xl text-gray-600 my-auto">{{ Str::upper($order->orderItems->first()->product->currency) }}</h3>

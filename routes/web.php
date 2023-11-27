@@ -29,10 +29,11 @@ Route::get('/product/{slug}', [ProductController::class, 'viewProduct'])->name('
 
 Route::middleware(['auth', 'web', 'phone_verified'])->group(function () {
     Route::get('/conversations/{user?}', [ChatController::class, 'conversations']);
-    Route::get('/conversations/order/{order}', [ChatController::class, 'orderConversations']);
+    Route::get('/conversations/order/{id}', [ChatController::class, 'orderConversations']);
     Route::get('/chat/{user?}', [ChatController::class, 'index'])->name('messages');
     Route::get('/messages/chat/{id}', [ChatController::class, 'view'])->name('messages.chat');
     Route::post('/messages/send', [ChatController::class, 'store'])->name('messages.send');
+    Route::post('/messages/order/send', [ChatController::class, 'orderStore'])->name('messages.order.send');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
