@@ -240,7 +240,7 @@ export default {
             } else if (order != null) {
                 new_conversations = await axios.get('/conversations/order/'+order)
             } else {
-                new_conversations = await axios.get('/conversations')
+                new_conversations = await axios.get('/conversations') 
             }
             conversations.value = new_conversations.data.conversations
             const_conversations.value = new_conversations.data.conversations
