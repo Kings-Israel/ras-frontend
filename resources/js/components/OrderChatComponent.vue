@@ -179,8 +179,9 @@
                 </div>
             </div>
         </div>
-        <div v-else class="hidden lg:block w-full my-auto mx-auto">
-            <img src="../../../public/assets/img/talking.png" alt="" class="ml-40">
+        <div v-else class="hidden lg:col-span-2 lg:block text-center my-auto mx-auto">
+            <img src="../../../public/assets/img/talking.png" alt="" class="object-contain">
+            <span class="text-gray-600 font-bold text-xl">Select User to start chatting</span>
         </div>
         <!-- End Chat Messages -->
     </div>
@@ -334,6 +335,7 @@ export default {
         const uploadFiles = (e) => {
             files.value = e.target.files
         }
+
         const downloadFile = (file) => {
             axios.get(file.file_url, { responseType: 'blob' })
                 .then(response => {
@@ -345,6 +347,7 @@ export default {
                     URL.revokeObjectURL(link.href)
                 }).catch(console.error)
         }
+
         const formatBytes = (bytes, decimals = 2) => {
             if (!+bytes) return '0 Bytes'
 

@@ -76,7 +76,7 @@
         </div>
         <div class="block lg:flex px-4 lg:px-28 p-4 gap-12">
             <div>
-                <div class="basis-2/3 bg-gray-50 p-2 rounded-lg">
+                <div class="basis-3/5 bg-gray-50 p-2 rounded-lg">
                     <div class="mb-2">
                         <div class="flex justify-between">
                             <div>
@@ -94,7 +94,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="">
+                            <div class="text-end">
                                 <span class="font-bold text-xl">{{ Str::upper($order->order_id) }}</span>
                                 <div class="flex gap-1">
                                     <span class="">Status:</span>
@@ -112,63 +112,64 @@
                             @php($product_measurement_unit = $item->product->min_order_quantity ? explode(" ", $item->product->min_order_quantity)[1] : 'Kilograms')
                             <div>
                                 <div class="flex w-full border border-gray-200 rounded-lg px-1 py-1 md:px-2 md:py-2">
-                                    <div class="basis-6/7 grid md:flex md:justify-between gap-2 px-2 text-gray-500">
-                                        <div class="flex gap-3 md:min-w-fit md:mr-10">
-                                            {{-- <input id="cart_items_ids[]" value="{{ $item->id }}" type="checkbox" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
-                                            <label for="cart_items_ids" class="sr-only">checkbox</label> --}}
-                                            @if ($item->product->media->where('type', 'image')->first())
-                                                <img src="{{ $item->product->media->where('type', 'image')->first()->file }}" alt="" class="w-10 h-10 lg:w-20 lg:h-20 object-cover rounded-md border border-orange-400">
-                                            @endif
-                                            <div class="flex flex-col">
-                                                <input type="hidden" name="items_ids[]" value="{{ $item->product->id }}">
-                                                <a href="{{ route('product', ['slug' => $item->product->slug]) }}" class="text-gray-500 font-bold text-md my-auto hover:text-gray-700">
-                                                    {{ $item->product->name }}
-                                                </a>
-                                                <a href="{{ route('vendor.storefront', ['slug' => $item->product->business->slug]) }}" class="text-gray-400 font-semibold text-md my-auto hover:text-gray-600">
-                                                    {{ $item->product->business->name }}
-                                                </a>
+                                    <div class="">
+                                        <div class="basis-6/7 grid md:flex md:justify-between gap-2 px-2">
+                                            <div class="flex gap-3 md:min-w-fit md:mr-10">
+                                                {{-- <input id="cart_items_ids[]" value="{{ $item->id }}" type="checkbox" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                                                <label for="cart_items_ids" class="sr-only">checkbox</label> --}}
+                                                @if ($item->product->media->where('type', 'image')->first())
+                                                    <img src="{{ $item->product->media->where('type', 'image')->first()->file }}" alt="" class="w-10 h-10 lg:w-20 lg:h-20 object-cover rounded-md border border-orange-400">
+                                                @endif
+                                                <div class="flex flex-col">
+                                                    <input type="hidden" name="items_ids[]" value="{{ $item->product->id }}">
+                                                    <a href="{{ route('product', ['slug' => $item->product->slug]) }}" class="text-gray-900 font-bold text-md my-auto hover:text-gray-800">
+                                                        {{ $item->product->name }}
+                                                    </a>
+                                                    <a href="{{ route('vendor.storefront', ['slug' => $item->product->business->slug]) }}" class="text-gray-800 font-semibold text-md my-auto hover:text-gray-700">
+                                                        {{ $item->product->business->name }}
+                                                    </a>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="space-y-3">
-                                            <div class="md:w-[90%] md:justify-items-center md:grid md:grid-cols-4">
-                                                <div class="my-auto md:col-span-2">
-                                                    <div class="flex gap-3">
-                                                        <div class="custom-number-input h-10">
-                                                            <div class="flex flex-row h-8 w-full rounded-lg relative bg-transparent mt-1">
-                                                                <span id="order_quantity_{{ $item->id }}" name="items_quantities[{{ $item->product->id }}]" class="quantities border-0 outline-none focus:outline-none text-center w-full font-semibold flex items-center text-gray-900">
-                                                                    {{ explode(' ', $item->quantity)[0] }}
-                                                                </span>
+                                            <div class="space-y-3">
+                                                <div class="md:w-[90%] md:justify-items-center md:grid md:grid-cols-4">
+                                                    <div class="my-auto md:col-span-2">
+                                                        <div class="flex gap-3">
+                                                            <div class="custom-number-input h-10">
+                                                                <div class="flex flex-row h-8 w-full rounded-lg relative bg-transparent mt-1">
+                                                                    <span id="order_quantity_{{ $item->id }}" name="items_quantities[{{ $item->product->id }}]" class="quantities border-0 outline-none focus:outline-none text-center w-full font-semibold flex items-center text-gray-900">
+                                                                        {{ explode(' ', $item->quantity)[0] }}
+                                                                    </span>
+                                                                </div>
                                                             </div>
+                                                            <span class="text-gray-500 text-sm font-bold my-auto mr-1">{{ $product_measurement_unit }}</span>
+                                                            <input type="hidden" name="items_quantities_measurement_units[{{ $item->product->id }}]" value="{{ $product_measurement_unit }}">
                                                         </div>
-                                                        <span class="text-gray-500 text-sm font-bold my-auto mr-1">{{ $product_measurement_unit }}</span>
-                                                        <input type="hidden" name="items_quantities_measurement_units[{{ $item->product->id }}]" value="{{ $product_measurement_unit }}">
+                                                    </div>
+                                                    <div class="my-auto md:col-span-1 md:ml-52 w-full">
+                                                        <span class="flex gap-1">
+                                                            <h4 class="text-gray-700 whitespace-nowrap my-auto">Unit Price:</h4>
+                                                            <h3 class="font-semibold text-gray-600 my-auto">{{ $item->product->currency }}</h3>
+                                                            <span class="prices text-gray-900 font-bold" name="items_prices[{{ $item->product->id }}]" id="items_prices_{{ $item->id }}">
+                                                                {{ $item->amount }}
+                                                            </span>
+                                                        </span>
                                                     </div>
                                                 </div>
-                                                <div class="my-auto md:col-span-1 md:ml-52 w-full">
-                                                    @php($min_order_price = $item->product->min_price ? $item->product->min_price : $item->product->price)
-                                                    <span class="flex gap-1">
-                                                        <h4 class="text-gray-700 whitespace-nowrap my-auto">Unit Price:</h4>
-                                                        <h3 class="font-semibold text-gray-600 my-auto">{{ $item->product->currency }}</h3>
-                                                        <span class="prices text-gray-900 font-bold" name="items_prices[{{ $item->product->id }}]" id="items_prices_{{ $item->id }}">
-                                                            {{ $item->amount }}
-                                                        </span>
-                                                    </span>
-                                                </div>
                                             </div>
-                                            <div class="flex justify-end">
-                                                @if ($item->inspectionRequest()->exists())
-                                                    <span class="mx-2 p-2 text-black font-semibold bg-secondary-four rounded-md">Requested Inspection</span>
-                                                @endif
-                                                @if ($item->insuranceRequest()->exists())
-                                                    <span class="mx-2 p-2 text-black font-semibold bg-secondary-five rounded-md">Requested Insurance</span>
-                                                @endif
-                                                @if ($item->deliveryRequest()->exists())
-                                                    <span class="mx-2 p-2 text-black font-semibold bg-secondary-two rounded-md">Requested Shipping</span>
-                                                @endif
-                                                @if ($item->storageRequest()->exists())
-                                                    <span class="mx-2 p-2 text-black font-semibold bg-secondary-one rounded-md">Requested Warehousing</span>
-                                                @endif
-                                            </div>
+                                        </div>
+                                        <div class="flex justify-end w-full">
+                                            @if ($item->inspectionRequest()->exists())
+                                                <span class="mx-1 p-1 text-black font-semibold bg-secondary-four rounded-md">Requested Inspection</span>
+                                            @endif
+                                            @if ($item->insuranceRequest()->exists())
+                                                <span class="mx-1 p-1 text-black font-semibold bg-secondary-five rounded-md">Requested Insurance</span>
+                                            @endif
+                                            @if ($item->deliveryRequest()->exists())
+                                                <span class="mx-1 p-1 text-black font-semibold bg-secondary-two rounded-md">Requested Shipping</span>
+                                            @endif
+                                            @if ($item->storageRequest()->exists())
+                                                <span class="mx-1 p-1 text-black font-semibold bg-secondary-one rounded-md">Requested Warehousing</span>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -184,13 +185,13 @@
                     </div>
                 </div>
                 <div id="app" class="mt-2">
-                    <h3 class="text-lg text-black p-2 font-bold">Order Conversations</h3>
+                    <h3 class="text-lg text-black p-2 font-bold">Order Messages</h3>
                     <div class="bg-gray-50 border-2 border-gray-400 rounded-lg">
                         <order-chat-component email="{!! auth()->user()->email !!}" order="{!! $order->id !!}"></order-chat-component>
                     </div>
                 </div>
             </div>
-            <div class="basis-1/3 space-y-2">
+            <div class="basis-2/5 space-y-2">
                 <div class="border border-gray-300 p-4 space-y-4 rounded-lg">
                     <div class="flex justify-between">
                         <div>
@@ -225,7 +226,7 @@
                                     </div>
                                     @if ($item->insuranceRequest->cost_description_file != null)
                                         <div>
-                                            <a href="{{ $item->insuranceRequest->cost_description_file }}" target="_blank" class="p-2 text-black font-semibold bg-secondary-five rounded-md">View Pro-forma</a>
+                                            <a href="{{ $item->insuranceRequest->cost_description_file }}" target="_blank" class="p-1 text-black font-semibold bg-secondary-five rounded-md">View Pro-forma</a>
                                         </div>
                                     @endif
                                 </div>
@@ -234,9 +235,11 @@
                                     <span class="text-gray-900 font-semibold">{{ $item->insuranceRequest->cost_description }}</span>
                                 @endif
                             </div>
-                            <div class="my-2">
-                                <a href="#" class="p-2 bg-primary-one text-white rounded-md font-bold">Accept Quote</a>
-                            </div>
+                            @if ($item->insuranceRequest->status != 'accpeted')
+                                <div class="my-2">
+                                    <a href="{{ route('order.request.update', ['request' => $item->insuranceRequest->id, 'status' => 'accepted', 'type' => 'App\\Models\\InsuranceRequest']) }}" class="p-1 bg-primary-one text-white rounded-md font-semibold">Accept Quote</a>
+                                </div>
+                            @endif
                         </div>
                     @endif
                     @if ($item->inspectionRequest()->exists() && $item->inspectionRequest->cost != null)
@@ -250,7 +253,7 @@
                                     </div>
                                     @if ($item->inspectionRequest->cost_description_file != null)
                                         <div>
-                                            <a href="{{ $item->inspectionRequest->cost_description_file }}" target="_blank" class="p-2 text-black font-semibold bg-secondary-four rounded-md">View Pro-forma</a>
+                                            <a href="{{ $item->inspectionRequest->cost_description_file }}" target="_blank" class="p-1 text-black font-semibold bg-secondary-four rounded-md">View Pro-forma</a>
                                         </div>
                                     @endif
                                 </div>
@@ -260,7 +263,7 @@
                                 @endif
                             </div>
                             <div class="my-2">
-                                <a href="#" class="p-2 bg-primary-one text-white rounded-md font-bold">Accept Quote</a>
+                                <a href="{{ route('order.request.update', ['request' => $item->inspectionRequest->id, 'status' => 'accepted', 'type' => 'App\\Models\\InspectionRequest']) }}" class="p-1 bg-primary-one text-white rounded-md font-semibold">Accept Quote</a>
                             </div>
                         </div>
                     @endif
@@ -275,7 +278,7 @@
                                     </div>
                                     @if ($item->storageRequest->cost_description_file != null)
                                         <div>
-                                            <a href="{{ $item->storageRequest->cost_description_file }}" target="_blank" class="p-2 text-black font-semibold bg-secondary-one rounded-md">View Pro-forma</a>
+                                            <a href="{{ $item->storageRequest->cost_description_file }}" target="_blank" class="p-1 text-black font-semibold bg-secondary-one rounded-md">View Pro-forma</a>
                                         </div>
                                     @endif
                                 </div>
@@ -285,7 +288,7 @@
                                 @endif
                             </div>
                             <div class="my-2">
-                                <a href="#" class="p-2 bg-primary-one text-white rounded-md font-bold">Accept Quote</a>
+                                <a href="{{ route('order.request.update', ['request' => $item->storageRequest->id, 'status' => 'accepted', 'type' => 'App\\Models\\OrderStorageRequest']) }}" class="p-1 bg-primary-one text-white rounded-md font-semibold">Accept Quote</a>
                             </div>
                         </div>
                     @endif
@@ -300,7 +303,7 @@
                                     </div>
                                     @if ($item->deliveryRequest->cost_description_file != null)
                                         <div>
-                                            <a href="{{ $item->deliveryRequest->cost_description_file }}" target="_blank" class="p-2 text-black font-semibold bg-secondary-four rounded-md">View Pro-forma</a>
+                                            <a href="{{ $item->deliveryRequest->cost_description_file }}" target="_blank" class="p-1 text-black font-semibold bg-secondary-four rounded-md">View Pro-forma</a>
                                         </div>
                                     @endif
                                 </div>
@@ -310,7 +313,7 @@
                                 @endif
                             </div>
                             <div class="my-2">
-                                <a href="#" class="p-2 bg-primary-one text-white rounded-md font-bold">Accept Quote</a>
+                                <a href="{{ route('order.request.update', ['request' => $item->deliveryRequest->id, 'status' => 'accepted', 'type' => 'App\\Models\\OrderDeliveryRequest']) }}" class="p-1 bg-primary-one text-white rounded-md font-semibold">Accept Quote</a>
                             </div>
                         </div>
                     @endif

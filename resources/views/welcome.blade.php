@@ -8,9 +8,9 @@
             </div>
             @if ($marketing_posters->count() > 0)
                 <div id="default-carousel" class="col-span-3 mt-4 relative w-full" data-carousel="slide">
-                    <div class="relative h-56 overflow-hidden rounded-lg md:h-[400px]">
+                    <div class="relative h-56 overflow-hidden rounded-lg md:h-[360px]">
                         <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                            <img src="{{ asset('assets/img/banner.png') }}" alt="" class="absolute lg:h-[400px] lg:object-cover -z-10 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+                            <img src="{{ asset('assets/img/banner.png') }}" alt="" class="absolute lg:object-cover h-[360px] -z-10 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
                             <div class="flex flex-col mx-auto py-8 px-1.5 z-50 space-y-3">
                                 <h1 class="text-2xl md:text-2xl lg:text-4xl font-[600] md:font-[800] lg:font-[900] text-center hero-main-text text-gray-900">Find The Best Products, From Top Notch Suppliers</h1>
                                 <h5 class="text-center font-semibold px-2">Real African Sources is where to go to easily access raw materials and business opportunities from vetted suppliers across Africa.</h5>
@@ -18,7 +18,7 @@
                         </div>
                         @foreach ($marketing_posters as $poster)
                             <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                                <img src="{{ $poster->image }}" class="absolute block lg:h-[400px] lg:object-fill -z-10 w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                                <img src="{{ $poster->image }}" class="absolute block lg:object-cover -z-10 w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
                                 @if ($poster->description)
                                     <div class="mx-auto py-8 px-1.5 z-50 space-y-3">
                                         <h5 class="text-{{ $poster->description_text_align }} px-2 text-white" style="font-size: {{ $poster->font_size }}px; color: {{ Str::lower($poster->description_text_color) }}">{{ $poster->description }}</h5>
@@ -51,14 +51,14 @@
             <div class="hidden lg:block col-span-1 mt-4">
                 <div class="bg-primary-three rounded-md p-2">
                     <h3 class="font-bold text-xl text-slate-800">Your Buying Requests</h3>
-                    <form action="" class="space-y-4">
+                    <form action="" class="space-y-2">
                         @csrf
                         <!-- Email Address -->
                         <div>
-                            <x-text-input id="email" class="block w-full bg-white h-14 border-none focus:border-2 placeholder-gray-400" type="text" name="email" placeholder="Your Email Address" required autocomplete="off" />
+                            <x-text-input id="email" class="block w-full bg-white h-12 border-none focus:border-2 placeholder-gray-400" type="text" name="email" placeholder="Your Email Address" required autocomplete="off" />
                         </div>
                         <div>
-                            <x-text-input id="product_name" class="block w-full bg-white h-14 border-none focus:border-2 placeholder-gray-400" type="text" name="product_name" placeholder="Product Name" autocomplete="off" />
+                            <x-text-input id="product_name" class="block w-full bg-white h-12 border-none focus:border-2 placeholder-gray-400" type="text" name="product_name" placeholder="Product Name" autocomplete="off" />
                         </div>
                         <textarea name="message" rows="5" class="w-full border border-gray-300 rounded-lg placeholder-gray-400" placeholder="Your Message Here, can include product description, size, etc..."></textarea>
                         <x-primary-button class="w-full py-2">Submit</x-primary-button>

@@ -50,6 +50,7 @@ Route::middleware(['auth', 'web', 'phone_verified'])->group(function () {
     Route::get('/invoices/{invoice}/financing/request', [OrderController::class, 'requestFinancing'])->name('invoice.financing.request');
     Route::post('/order/create', [OrderController::class, 'store'])->name('order.store');
     Route::get('/order/quotation/{quotation}/update/{status}', [OrderController::class, 'updateQuotation'])->name('order.quotation.update');
+    Route::get('/order/request/{request}/update/{status}', [OrderController::class, 'updateRequest'])->name('order.request.update');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 

@@ -23,7 +23,7 @@ class OrdersList extends Component
                                 $query->where('status', $this->status);
                             })
                             ->orderBy('created_at', 'DESC')
-                            ->paginate(15);
+                            ->paginate(14);
 
         $inspection_cost = 0;
 
@@ -58,6 +58,24 @@ class OrdersList extends Component
             }
         }
 
-        return view('livewire.buyer.orders-list', compact('orders', 'total_amount', 'inspection_cost', 'delivery_cost', 'insurance_cost', 'warehousing_cost'));
+        $pending_orders = $all_orders->where('status', 'pending')->count();
+        $quotation_requests_orders = $all_orders->where('status', 'quotation request')->count();
+        $accepted_orders = $all_orders->where('status', 'accepted')->count();
+        $rejected_orders = $all_orders->where('status', 'denied')->count();
+        $in_progress_orders = $all_orders->where('status', 'in progress')->count();
+
+        return view('livewire.buyer.orders-list', compact(
+            'orders',
+            'total_amount',
+            'inspection_cost',
+            'delivery_cost',
+            'insurance_cost',
+            'warehousing_cost',
+            'pending_orders',
+            'quotation_requests_orders',
+            'accepted_orders',
+            'rejected_orders',
+            'in_progress_orders',
+        ));
     }
 }

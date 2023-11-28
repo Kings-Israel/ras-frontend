@@ -387,4 +387,19 @@ class OrderController extends Controller
 
         return back();
     }
+
+    public function updateRequest(Request $request, $quote, $status)
+    {
+        $type = $request->query('type');
+
+        $quote = $type::find($quote);
+
+        $quote->update([
+            'status' => $status,
+        ]);
+
+        toastr()->success('', 'Request updated successfully');
+
+        return back();
+    }
 }

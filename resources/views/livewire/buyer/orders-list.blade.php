@@ -261,7 +261,7 @@
                 <button id="dropdown-button" data-dropdown-toggle="invoice-status-dropdown" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-800 space-x-3" type="button">
                     <i class="fas fa-bars"></i>
                     <span class="">
-                        Filter Status
+                        Filter By Status
                     </span>
                     <svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
@@ -271,6 +271,9 @@
                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-button">
                         <li>
                             <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" wire:click.prevent="updateStatus('all')">All</button>
+                        </li>
+                        <li>
+                            <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" wire:click.prevent="updateStatus('quotation request')">Quotation Requests</button>
                         </li>
                         <li>
                             <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" wire:click.prevent="updateStatus('delivered')">Delivered</button>
@@ -364,13 +367,58 @@
                 </div>
             </div>
         </div>
-        <div class="basis-1/4">
+        <div class="basis-1/4 space-y-2">
             <div class="border border-gray-300 p-4 space-y-4 rounded-lg">
                 <div>
                     <h4 class="text-sm font-semibold text-gray-500">Total:</h4>
                     <div class="flex gap-1">
                         <h3 class="font-bold text-xl text-gray-600 my-auto"></h3>
                         <span class="font-bold text-xl text-gray-800">{{ number_format($total_amount) }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="border border-gray-300 p-4 space-y-4 rounded-lg">
+                <div>
+                    <h4 class="text-sm font-semibold text-gray-500">Pending Orders:</h4>
+                    <div class="flex gap-1">
+                        <h3 class="font-bold text-xl text-gray-600 my-auto"></h3>
+                        <span class="font-bold text-xl text-gray-800">{{ $pending_orders }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="border border-gray-300 p-4 space-y-4 rounded-lg">
+                <div>
+                    <h4 class="text-sm font-semibold text-gray-500">Quotation Requests:</h4>
+                    <div class="flex gap-1">
+                        <h3 class="font-bold text-xl text-gray-600 my-auto"></h3>
+                        <span class="font-bold text-xl text-gray-800">{{ $quotation_requests_orders }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="border border-gray-300 p-4 space-y-4 rounded-lg">
+                <div>
+                    <h4 class="text-sm font-semibold text-gray-500">Accepted:</h4>
+                    <div class="flex gap-1">
+                        <h3 class="font-bold text-xl text-gray-600 my-auto"></h3>
+                        <span class="font-bold text-xl text-gray-800">{{ $accepted_orders }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="border border-gray-300 p-4 space-y-4 rounded-lg">
+                <div>
+                    <h4 class="text-sm font-semibold text-gray-500">In Progress:</h4>
+                    <div class="flex gap-1">
+                        <h3 class="font-bold text-xl text-gray-600 my-auto"></h3>
+                        <span class="font-bold text-xl text-gray-800">{{ $in_progress_orders }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="border border-gray-300 p-4 space-y-4 rounded-lg">
+                <div>
+                    <h4 class="text-sm font-semibold text-gray-500">Rejected:</h4>
+                    <div class="flex gap-1">
+                        <h3 class="font-bold text-xl text-gray-600 my-auto"></h3>
+                        <span class="font-bold text-xl text-gray-800">{{ $rejected_orders }}</span>
                     </div>
                 </div>
             </div>
