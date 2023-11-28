@@ -101,4 +101,34 @@ class OrderItem extends Model
     {
         return $this->hasOne(InsuranceRequest::class);
     }
+
+    /**
+     * Get all of the orderRequests for the OrderItem
+     */
+    public function orderRequests(): HasMany
+    {
+        return $this->hasMany(OrderRequest::class);
+    }
+
+    public function hasAcceptedAllRequests(): bool
+    {
+        $order_requests = $this->orderRequests->groupBy('requesteable_type');
+
+        $requested_services_count = count($order_requests);
+
+        $accepted_requests_count = 0;
+
+        foreach ($order_requests as $key => $order_request) {
+            if (collect($order_request)->where('status', 'accepted')->first()) {
+                $accepted_requests_count += 1;
+                continue;
+            }
+        }
+
+        if ($accepted_requests_count == $requested_services_count) {
+            return true;
+        }
+
+        return false;
+    }
 }

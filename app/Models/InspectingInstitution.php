@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Notifications\Notifiable;
 use Musonza\Chat\Traits\Messageable;
 
@@ -48,5 +49,10 @@ class InspectingInstitution extends Model
     public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class);
+    }
+
+    public function orderRequests(): MorphMany
+    {
+        return $this->morphMany(OrderRequest::class, 'requesteable');
     }
 }

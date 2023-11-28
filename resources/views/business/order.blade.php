@@ -24,8 +24,8 @@
                         <a href="{{ route('vendor.orders.status.update', ['order' => $order, 'status' => 'rejected']) }}" class="bg-red-600 rounded-md px-2 py-1 text-white hover:bg-red-500 transition duration-200 ease-in-out">Reject</a>
                     @endif
                     @if ($order->status == 'quotation request')
-                        <a href="{{ route('vendor.orders.quotes.accept', ['order' => $order, 'status' => 'accepted']) }}" class="bg-secondary-four rounded-md px-2 py-1 text-black font-semibold hover:bg-yellow-400 transition duration-200 ease-in-out">Accept Quotations</a>
-                        <button data-modal-target="update-quote-modal" data-modal-toggle="update-quote-modal" class="bg-red-600 rounded-md px-2 py-1 text-white hover:bg-red-500 transition duration-200 ease-in-out">Add/Modify Quotation</button>
+                        <a href="{{ route('vendor.orders.quotes.accept', ['order' => $order, 'status' => 'accepted']) }}" class="bg-secondary-four rounded-md px-2 py-1 text-black font-semibold hover:bg-yellow-400 transition duration-200 ease-in-out">Accept Buyer Quotation</a>
+                        <button data-modal-target="update-quote-modal" data-modal-toggle="update-quote-modal" class="bg-red-600 rounded-md px-2 py-1 text-white hover:bg-red-500 transition duration-200 ease-in-out">Add Quotation</button>
                         <x-modal modal_id="update-quote-modal">
                             <div class="relative w-full max-w-4xl max-h-full p-4">
                                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -39,11 +39,11 @@
                                         <h3 class="mb-2 text-2xl font-bold text-gray-900 dark:text-white space-y-4">Update Quote</h3>
                                         <form action="{{ route('vendor.orders.quote.update', ['order' => $order]) }}" method="post">
                                             @csrf
-                                            <div class="">
+                                            <div class="space-y-2">
                                                 @foreach ($order->orderItems as $key => $item)
                                                     <input type="hidden" name="items_ids[]" value="{{ $item->id }}">
-                                                    <div class="grid grid-cols-3 gap-4 space-y-2">
-                                                        <span class="font-semibold text-lg text-gray-800">{{ $item->product->name }}</span>
+                                                    <div class="grid grid-cols-3 gap-4 border border-gray-400 p-2 rounded-lg">
+                                                        <span class="font-semibold text-lg text-gray-800 my-auto">{{ $item->product->name }}</span>
                                                         <div class="flex justify-between col-span-2">
                                                             <div class="custom-number-input h-10">
                                                                 <div class="flex flex-row h-8 w-[80%] rounded-lg relative bg-transparent mt-1">
@@ -67,8 +67,8 @@
                                                     </div>
                                                 @endforeach
                                             </div>
-                                            <div class="flex mt-4">
-                                                <div class="basis-2/3 flex justify-between mr-4">
+                                            <div class="flex mt-4 justify-end">
+                                                {{-- <div class="basis-2/3 flex justify-between mr-4">
                                                     <div class="flex gap-2">
                                                         <h4 class="basis-1/3 text-gray-500 my-auto font-semibold w-full">Delivery On:</h4>
                                                         <x-text-input type="date" name="delivery_date" value="{{ $item->delivery_date->format('m/d/Y') }}" class="basis-2/3 w-full" placeholder="Select Delivery Date" required></x-text-input>
@@ -80,7 +80,7 @@
                                                             <input type="hidden" id="total_cart_amount_input" name="total_cart_amount" value="{{ $total_amount }}" />
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                                 <x-primary-button type="submit" class="basis-1/3 text-xl p-2">Submit</x-primary-button>
                                             </div>
                                         </form>
@@ -184,7 +184,7 @@
                         <span class="text-end font-bold">Amount</span>
                     </div>
                     @foreach ($order->orderItems as $item)
-                        <div class="grid grid-cols-5 gap-2 w-full border-b-2 ">
+                        <div class="grid grid-cols-5 gap-2 w-full border-b-2 pb-2">
                             <span class="font-semibold text-lg text-gray-800">{{ $item->product->name }}</span>
                             @if ($item->warehouseOrder()->exists())
                                 <span class="font-semibold truncate text-lg text-gray-800">{{ $item->warehouseOrder->warehouse->name }}, {{ $item->warehouseOrder->warehouse->country->name }}</span>
@@ -194,46 +194,69 @@
                             <span class="font-semibold text-gray-600">{{ $item->quantity }}</span>
                             <span class="font-semibold text-gray-600">{{ $item->delivery_date ? $item->delivery_date->format('d M Y') : '' }}</span>
                             <span class="font-semibold text-lg text-gray-700 text-end">{{ $item->product->currency }} {{ number_format($item->amount) }}</span>
-                            <span class="col-span-2"></span>
-                            <span class="col-span-3">
-                                @if ($item->quotationResponses->count() > 0)
-                                    <div class="border-2 border-gray-400 rounded-md p-1">
-                                        <h4 class="font-bold">Quotations</h4>
-                                        @foreach ($item->quotationResponses as $response)
-                                            @if ($response->user_id == auth()->id())
-                                                <div class="grid grid-cols-3 gap-2 w-full bg-yellow-200 p-2 rounded-md">
-                                                    <span>{{ $response->quantity }} {{ explode(' ', $response->orderItem->product->min_order_quantity)[1] }}</span>
-                                                    <span>{{ $response->delivery_date->format('d M Y') }}</span>
-                                                    <span class="text-end">{{ $response->amount }}</span>
+                            @if ($item->quotationResponses->count() > 0)
+                                <span class="col-span-5 flex justify-end">
+                                    <button data-modal-target="quotation-responses-modal" data-modal-toggle="quotation-responses-modal" class="bg-primary-one rounded-md px-2 py-1 text-white hover:bg-orange-500 transition duration-200 ease-in-out">View Your Quotations</button>
+                                </span>
+                            @endif
+                            <x-modal modal_id="quotation-responses-modal">
+                                <div class="relative w-full max-w-4xl max-h-full p-4">
+                                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                        <button type="button" data-modal-hide="quotation-responses-modal" class="absolute top-1 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                            </svg>
+                                            <span class="sr-only">Close modal</span>
+                                        </button>
+                                        <div class="px-2 py-2 lg:px-4">
+                                            <h3 class="mb-2 text-2xl font-bold text-gray-900 dark:text-white space-y-4">Suggested Quotations</h3>
+                                            <div class="border-2 border-gray-400 rounded-md p-1">
+                                                <div class="grid grid-cols-4">
+                                                    <span class="font-bold">Order Quantity</span>
+                                                    <span class="font-bold">Amount</span>
+                                                    <span class="font-bold">Added On</span>
+                                                    <span class="font-bold">Status</span>
                                                 </div>
-                                            @else
-                                                <div class="grid grid-cols-3 gap-2 w-full p-2 rounded-md">
-                                                    <span>{{ $response->quantity }} {{ explode(' ', $response->orderItem->product->min_order_quantity)[1] }}</span>
-                                                    <span>{{ $response->delivery_date->format('d M Y') }}</span>
-                                                    <span class="text-end">
-                                                        {{ $response->orderItem->product->business->global_currency ? $response->orderItem->product->business->global_currency : 'USD'}}
-                                                        {{ $response->amount }}
-                                                    </span>
+                                                <div class="space-y-2">
+                                                    @foreach ($item->quotationResponses as $response)
+                                                        @if ($response->user_id == auth()->id())
+                                                            <div class="grid grid-cols-4 gap-2 w-full bg-yellow-200 p-2 rounded-md">
+                                                                <span>{{ $response->quantity }} {{ explode(' ', $response->orderItem->product->min_order_quantity)[1] }}</span>
+                                                                <span class="">
+                                                                    {{ $response->orderItem->product->business->global_currency ? $response->orderItem->product->business->global_currency : 'USD'}}
+                                                                    {{ $response->amount }}
+                                                                </span>
+                                                                <span class="">
+                                                                    {{ $response->created_at->format('d M Y H:i a') }}
+                                                                </span>
+                                                                <span>
+                                                                    {{ Str::title($response->status) }}
+                                                                </span>
+                                                            </div>
+                                                        @else
+                                                            <div class="grid grid-cols-3 gap-2 w-full p-2 rounded-md">
+                                                                <span>{{ $response->quantity }} {{ explode(' ', $response->orderItem->product->min_order_quantity)[1] }}</span>
+                                                                <span class="">
+                                                                    {{ $response->orderItem->product->business->global_currency ? $response->orderItem->product->business->global_currency : 'USD'}}
+                                                                    {{ $response->amount }}
+                                                                </span>
+                                                                <span class="">
+                                                                    {{ $response->created_at->format('d M Y H:i a') }}
+                                                                </span>
+                                                                <span>
+                                                                    {{ Str::title($response->status) }}
+                                                                </span>
+                                                            </div>
+                                                        @endif
+                                                    @endforeach
                                                 </div>
-                                            @endif
-                                        @endforeach
+                                            </div>
+                                        </div>
                                     </div>
-                                @endif
-                            </span>
+                                </div>
+                            </x-modal>
                         </div>
                     @endforeach
-                    {{-- <div class="flex justify-between mt-4">
-                        <h2 class="font-semibold">Total</h2>
-                        <span class="font-bold">{{ $total_amount }}</span>
-                    </div> --}}
-                    {{-- <div class="bg-gray-50 p-2">
-                        <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-52 h-40 mx-auto md:mx-0 object-cover rounded-md">
-                        <div class="flex justify-between mt-2 mx-8 md:mx-0">
-                            <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-16 h-16 lg:w-18 lg:h-18 object-cover rounded-md border border-primary-one">
-                            <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-16 h-16 lg:w-18 lg:h-18 object-cover rounded-md border border-primary-one">
-                            <img src="{{ asset('assets/img/3skZmX.jpg') }}" alt="" class="w-16 h-16 lg:w-18 lg:h-18 object-cover rounded-md border border-primary-one">
-                        </div>
-                    </div> --}}
                 </div>
                 <div class="col-span-2">
                     <div class="border border-gray-300 p-4 space-y-4 rounded-lg">
@@ -285,7 +308,7 @@
                 </div> --}}
             </div>
             <div id="app" class="mt-2">
-                <h3 class="text-lg text-black p-2 font-bold">Order Conversations</h3>
+                <h3 class="text-lg text-black p-2 font-bold">Order Messages</h3>
                 <div class="bg-gray-50 border-2 border-gray-400 rounded-lg">
                     <order-chat-component email="{!! auth()->user()->email !!}" order_conversation="{!! $order_conversation->id !!}"></order-chat-component>
                 </div>

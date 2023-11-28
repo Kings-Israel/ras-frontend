@@ -1,8 +1,8 @@
-<div class="sticky top-0 bg-transparent flex lg:flex-wrap lg:items-center justify-between mx-auto pt-1 py-1 lg:px-24 md:px-10 sm:px-8 z-50 duration-200" id="main-header">
+<div class="sticky top-0 bg-transparent flex lg:flex-wrap lg:items-center justify-between mx-auto pt-1 py-1 lg:px-24 md:px-10 sm:px-8 z-40 duration-200" id="main-header">
     <a href="{{ url('/') }}" class="">
         <x-application-logo class="w-[10rem] object-contain" />
     </a>
-    <div class="hidden lg:block md:w-[50%]">
+    <div class="hidden lg:block  md:w-[50%]">
         <livewire:home-main-search />
     </div>
     <div class="flex space-x-2">
@@ -47,11 +47,9 @@
                 </ul>
             </div>
             <livewire:notifications-list />
-            @if (auth()->user()->hasRole('buyer'))
-                <a href="{{ route('cart') }}" class="text-gray-800 bg-gray-300 rounded-full w-7 h-7 my-auto lg:my-0 md:w-8 md:h-8 text-center pt-0.5 md:pt-1">
-                    <i class="w-5 h-5 fas fa-shopping-bag"></i>
-                </a>
-            @endif
+            <a href="{{ route('cart') }}" class="text-gray-800 bg-gray-300 rounded-full w-7 h-7 my-auto lg:my-0 md:w-8 md:h-8 text-center pt-0.5 md:pt-1">
+                <i class="w-5 h-5 fas fa-shopping-bag"></i>
+            </a>
         @else
             <a href="{{ route('login') }}">
                 <x-primary-button class="py-2">Login</x-primary-button>
