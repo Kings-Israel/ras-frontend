@@ -119,11 +119,11 @@
                                             <span class="text-sm font-semibold text-gray-500 my-auto">Color:</span>
                                             <span class="text-sm font-bold my-auto">{{ $item->product->color }}</span>
                                         </div> --}}
-                                        <div class="my-auto md:col-span-1 md:ml-52 w-full">
+                                        <div class="my-auto md:col-span-1 md:ml-32 w-full">
                                             @php($min_order_price = $item->product->min_price ? $item->product->min_price : $item->product->price)
                                             <span class="flex gap-1">
                                                 <h4 class="text-gray-700 whitespace-nowrap my-auto">Unit Price:</h4>
-                                                <h3 class="font-semibold text-gray-400 my-auto">{{ $item->product->currency }}</h3>
+                                                <h3 class="font-semibold text-gray-500 my-auto">{{ $item->product->currency }}</h3>
                                                 {{-- <h3 class="font-bold text-gray-500" id="order_price_{{ $item->id }}">{{ $item->amount }}</h3> --}}
                                                 <x-text-input type="number" class="prices" name="items_prices[{{ $item->product->id }}]" id="items_prices_{{ $item->id }}" data-price-id="{{ $item->id }}" data-item-id="{{ $item->id }}" oninput="updatePrice()"></x-text-input>
                                             </span>
@@ -131,7 +131,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <i class="fas fa-trash-alt my-auto text-gray-500 basis-1/7 flex justify-end hover:cursor-pointer" wire:click="remove({{ $item }})"></i>
+                            {{-- <i class="fas fa-trash-alt my-auto text-gray-500 basis-1/7 flex justify-end hover:cursor-pointer" wire:click="remove({{ $item }})"></i> --}}
                         </div>
                         {{-- <div class="w-full">
                             <div class="flex gap-2 justify-end w-full">
@@ -305,8 +305,8 @@
                                     <h2 class="font-semibold">Request Inspection</h2>
                                 </div>
                                 <div class="md:basis-4/5 hidden" id="select-inspector">
-                                    <select name="inspector" class="form-control py-1 rounded-lg border-gray-600 w-96" id="">
-                                        <option value="">Select Inspector</option>
+                                    <x-input-label class="font-semibold">Select Inspector</x-input-label>
+                                    <select name="inspector[]" multiple size="3" class="form-control py-1 rounded-lg border-gray-600 w-96" id="selected-inspectors">
                                         @foreach ($inspectors as $inspector)
                                             <option value="{{ $inspector->id }}">{{ $inspector->name }} - {{ $inspector->country->name }}</option>
                                         @endforeach
@@ -324,8 +324,8 @@
                                     <h2 class="font-semibold">Request Storage</h2>
                                 </div>
                                 <div class="md:basis-4/5 hidden" id="select-warehouse">
-                                    <select name="warehouse" class="form-control py-1 rounded-lg border-gray-600 w-96" id="">
-                                        <option value="">Select Warehouse</option>
+                                    <x-input-label class="font-semibold">Select Warehouse</x-input-label>
+                                    <select name="warehouse[]" multiple class="form-control py-1 rounded-lg border-gray-600 w-96" id="">
                                         @foreach ($warehouses as $warehouse)
                                             <option value="{{ $warehouse->id }}">{{ $warehouse->name }} - {{ $warehouse->country->name }}</option>
                                         @endforeach
@@ -336,19 +336,32 @@
                     @endif
                     @if (count($logistics) > 0)
                         <div>
-                            <div class="grid md:flex justify-between border border-gray-200 rounded-lg p-2">
-                                <div class="md:basis-1/5 flex gap-2 px-1 md:px-2 text-gray-500">
+                            <div class="grid md:flex md:gap-3 justify-between border border-gray-200 rounded-lg p-2">
+                                <div class="md:basis-1/5 flex gap-2 px-1 md:px-2 text-gray-500 whitespace-nowrap">
                                     <input id="checkbox-table-search-1" type="checkbox" onchange="selectedService('select-logistics')" name="request_shipping[{{ $item->product->id }}]" class="w-4 h-4 mt-1 text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
                                     <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
                                     <h2 class="font-semibold">Request Shipping</h2>
                                 </div>
                                 <div class="md:basis-4/5 hidden" id="select-logistics">
-                                    <select name="logistics_provider" class="form-control py-1 rounded-lg border-gray-600 w-96" id="">
-                                        <option value="">Select Logistics Provider</option>
-                                        @foreach ($logistics as $logsitics_company)
-                                            <option value="{{ $logsitics_company->id }}">{{ $logsitics_company->name }} - {{ $logsitics_company->country->name }}</option>
-                                        @endforeach
-                                    </select>
+                                    <div class="flex gap-2">
+                                        <div>
+                                            <x-input-label class="font-semibold">Select Logistics Provider</x-input-label>
+                                            <select name="logistics_provider[]" multiple class="form-control py-1 rounded-lg border border-gray-600 w-96" id="">
+                                                @foreach ($logistics as $logsitics_company)
+                                                    <option value="{{ $logsitics_company->id }}">{{ $logsitics_company->name }} - {{ $logsitics_company->country->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="">
+                                            <x-input-label class="font-semibold">Preferred Shipping Method</x-input-label>
+                                            <select name="transport_method" class="form-control py-1 rounded-lg border border-gray-600 w-72" id="">
+                                                @foreach ($transport_methods as $method)
+                                                    <option value="">Select</option>
+                                                    <option value="{{ $method }}">{{ $method }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -362,8 +375,8 @@
                                     <h2 class="font-semibold">Request Insurance</h2>
                                 </div>
                                 <div class="md:basis-4/5 hidden" id="select-insurer">
-                                    <select name="insurer" class="form-control py-1 rounded-lg border-gray-600 w-96" id="">
-                                        <option value="">Select Insurer</option>
+                                    <x-input-label class="font-semibold">Select Insurer</x-input-label>
+                                    <select name="insurer[]" multiple class="form-control py-1 rounded-lg border-gray-600 w-96" id="">
                                         @foreach ($insurers as $insurer)
                                             <option value="{{ $insurer->id }}">{{ $insurer->name }} - {{ $insurer->country->name }}</option>
                                         @endforeach
@@ -409,7 +422,7 @@
                         <input type="hidden" id="total_cart_amount_input" name="total_cart_amount" value="{{ old('total_cart_amount') }}" />
                     </div>
                 </div>
-                <div class="block md:flex md:gap-2">
+                <div class="block">
                     <h4 class="text-gray-500 my-auto font-semibold">Delivery On:</h4>
                     {{-- <x-text-input type="date" datepicker name="delivery_date" class="w-full" placeholder="Select Delivery Date"></x-text-input> --}}
                     <div class="relative max-w-sm">
@@ -615,6 +628,10 @@
 
     function selectedService(service) {
         $('#'+service).toggleClass('hidden')
+
+        if (service == 'select-logistics') {
+            $('#select-transport-method').toggleClass('hidden')
+        }
     }
 
     function updateInspectorSelection() {

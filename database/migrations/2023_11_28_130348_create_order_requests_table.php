@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('requesteable_id')->nullable();
             $table->string('requesteable_type')->nullable();
             $table->enum('status', ['pending', 'accepted', 'rejected'])->nullable()->default('pending');
-            $table->bigInteger('cost')->nullable()->default(12);
+            $table->bigInteger('cost')->nullable();
             $table->string('cost_description_file')->nullable();
             $table->string('cost_description')->nullable();
             $table->timestamps();

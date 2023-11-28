@@ -178,7 +178,7 @@ class VendorController extends Controller
 
     public function order(Order $order)
     {
-        $order->load('orderItems.product', 'orderItems.warehouseOrder', 'user');
+        $order->load('orderItems.product', 'orderItems.warehouseOrder', 'user', 'orderItems.quotationResponses');
 
         $total_amount = 0;
 

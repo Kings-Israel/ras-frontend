@@ -14,6 +14,7 @@ use App\Models\Order;
 use App\Models\OrderConversation;
 use App\Models\OrderDeliveryRequest;
 use App\Models\OrderItem;
+use App\Models\OrderRequest;
 use App\Models\OrderStorageRequest;
 use App\Models\Product;
 use App\Models\QuotationRequestResponse;
@@ -55,30 +56,18 @@ class OrderController extends Controller
 
     public function order(Order $order)
     {
-        $order->load('orderItems.product.media', 'orderItems.product.business');
+        $order->load('orderItems.product.media', 'orderItems.product.business', 'orderItems.orderRequests', 'orderItems.quotationResponses');
 
         $order_total = 0;
+        $order_requests = null;
         foreach ($order->orderItems as $order_item) {
             $order_total += $order_item->amount * explode(' ', $order_item->quantity)[0];
+            $order_total += $order_item->orderRequests->where('status', 'accepted')->sum('cost');
 
-            if ($order_item->insuranceRequest()->exists() && $order_item->insuranceRequest->cost != null) {
-                $order_total += (int) $order_item->insuranceRequest->cost;
-            }
-
-            if ($order_item->inspectionRequest()->exists() && $order_item->inspectionRequest->cost != null) {
-                $order_total += (int) $order_item->inspectionRequest->cost;
-            }
-
-            if ($order_item->storageRequest()->exists() && $order_item->storageRequest->cost != null) {
-                $order_total += (int) $order_item->storageRequest->cost;
-            }
-
-            if ($order_item->deliveryRequest()->exists() && $order_item->deliveryRequest->cost != null) {
-                $order_total += (int) $order_item->deliveryRequest->cost;
-            }
+            $order_requests = $order_item->orderRequests->groupBy('requesteable_type');
         }
 
-        return view('order', compact('order', 'order_total'));
+        return view('order', compact('order', 'order_total', 'order_requests'));
     }
 
     public function store(Request $request)
@@ -186,123 +175,240 @@ class OrderController extends Controller
                 $inspectors = InspectingInstitution::all();
 
                 // Create Inspection Request
-                if (count($inspection_requests) > 0 && $inspectors->count() > 0 && $request->has('inspector')) {
-                    InspectionRequest::create([
-                        'order_item_id' => $order_item->id,
-                        'inspector_id' => $request->inspector,
-                    ]);
-                    $inspector = InspectingInstitution::find($request->inspector);
+                if (count($inspection_requests) > 0 && $inspectors->count() > 0 && count($request->inspector) > 0) {
+                    foreach ($request->inspector as $inspector) {
+                        // InspectionRequest::create([
+                        //     'order_item_id' => $order_item->id,
+                        //     'inspector_id' => $inspector,
+                        // ]);
 
-                    $conversation = Chat::conversations()->between(auth()->user(), $inspector);
+                        $inspector = InspectingInstitution::find($inspector);
 
-                    if (!$conversation) {
-                        $participants = [auth()->user(), $inspector];
-                        $conversation = Chat::createConversation($participants);
-                        $conversation->update([
-                            'direct_message' => true,
+                        OrderRequest::create([
+                            'order_item_id' => $order_item->id,
+                            'requesteable_type' => InspectingInstitution::class,
+                            'requesteable_id' => $inspector->id,
+                        ]);
+
+                        $conversation = Chat::conversations()->between(auth()->user(), $inspector);
+
+                        if (!$conversation) {
+                            $participants = [auth()->user(), $inspector];
+                            $conversation = Chat::createConversation($participants);
+                            $conversation->update([
+                                'direct_message' => true,
+                            ]);
+                        }
+
+                        OrderConversation::create([
+                            'order_id' => $order->id,
+                            'conversation_id' => $conversation->id,
                         ]);
                     }
-
-                    OrderConversation::create([
-                        'order_id' => $order->id,
-                        'conversation_id' => $conversation->id,
-                    ]);
-                    // $inspectors->each(function ($inspector) use ($order_item) {
-                    // });
                 }
+
+                // if (count($inspection_requests) > 0 && $inspectors->count() > 0 && $request->has('inspector')) {
+                //     InspectionRequest::create([
+                //         'order_item_id' => $order_item->id,
+                //         'inspector_id' => $request->inspector,
+                //     ]);
+                //     $inspector = InspectingInstitution::find($request->inspector);
+
+                //     $conversation = Chat::conversations()->between(auth()->user(), $inspector);
+
+                //     if (!$conversation) {
+                //         $participants = [auth()->user(), $inspector];
+                //         $conversation = Chat::createConversation($participants);
+                //         $conversation->update([
+                //             'direct_message' => true,
+                //         ]);
+                //     }
+
+                //     OrderConversation::create([
+                //         'order_id' => $order->id,
+                //         'conversation_id' => $conversation->id,
+                //     ]);
+                //     // $inspectors->each(function ($inspector) use ($order_item) {
+                //     // });
+                // }
 
                 $shipping_requests = collect($request->request_shipping)->filter(function ($value, $key) use ($item) { return $key == $item->id; });
 
                 $logistics = LogisticsCompany::all();
 
                 // Create Delivery Request
-                if (count($shipping_requests) > 0 && $logistics->count() > 0 && $request->has('logistics_provider')) {
-                    OrderDeliveryRequest::create([
-                        'order_item_id' => $order_item->id,
-                        'logistics_company_id' => $request->logistics_provider,
-                    ]);
+                if (count($shipping_requests) > 0 && $logistics->count() > 0 && count($request->logistics_provider) > 0) {
+                    foreach ($request->logistics_provider as $logistics_provider) {
+                        $logistics_company = LogisticsCompany::find($logistics_provider);
 
-                    $logistics_company = LogisticsCompany::find($request->logistics_provider);
+                        OrderRequest::create([
+                            'order_item_id' => $order_item->id,
+                            'requesteable_id' => $logistics_company->id,
+                            'requesteable_type' => LogisticsCompany::class,
+                            'transportation_method' => $request->has('transport_method') ? $request->transport_method : NULL,
+                        ]);
 
-                    $conversation = Chat::conversations()->between(auth()->user(), $logistics_company);
+                        $conversation = Chat::conversations()->between(auth()->user(), $logistics_company);
 
-                    if (!$conversation) {
-                        $participants = [auth()->user(), $logistics_company];
-                        $conversation = Chat::createConversation($participants);
-                        $conversation->update([
-                            'direct_message' => true,
+                        if (!$conversation) {
+                            $participants = [auth()->user(), $logistics_company];
+                            $conversation = Chat::createConversation($participants);
+                            $conversation->update([
+                                'direct_message' => true,
+                            ]);
+                        }
+
+                        OrderConversation::create([
+                            'order_id' => $order->id,
+                            'conversation_id' => $conversation->id,
                         ]);
                     }
-
-                    OrderConversation::create([
-                        'order_id' => $order->id,
-                        'conversation_id' => $conversation->id,
-                    ]);
                     // $logistics->each(function ($logistics) use ($order_item) {
                     // });
                 }
+                // if (count($shipping_requests) > 0 && $logistics->count() > 0 && $request->has('logistics_provider')) {
+                //     OrderDeliveryRequest::create([
+                //         'order_item_id' => $order_item->id,
+                //         'logistics_company_id' => $request->logistics_provider,
+                //     ]);
+
+                //     $logistics_company = LogisticsCompany::find($request->logistics_provider);
+
+                //     $conversation = Chat::conversations()->between(auth()->user(), $logistics_company);
+
+                //     if (!$conversation) {
+                //         $participants = [auth()->user(), $logistics_company];
+                //         $conversation = Chat::createConversation($participants);
+                //         $conversation->update([
+                //             'direct_message' => true,
+                //         ]);
+                //     }
+
+                //     OrderConversation::create([
+                //         'order_id' => $order->id,
+                //         'conversation_id' => $conversation->id,
+                //     ]);
+                //     // $logistics->each(function ($logistics) use ($order_item) {
+                //     // });
+                // }
 
                 $warehousing_requests = collect($request->request_warehousing)->filter(function ($value, $key) use ($item) { return $key == $item->id; });
 
                 $warehouses = Warehouse::all();
 
                 // Create storage request
-                if (count($warehousing_requests) > 0 && $warehouses->count() > 0 && $request->has('warehouse')) {
-                    OrderStorageRequest::create([
-                        'order_item_id' => $order_item->id,
-                        'warehouse_id' => $request->warehouse,
-                    ]);
+                if (count($warehousing_requests) > 0 && $warehouses->count() > 0 && count($request->warehouse) > 0) {
+                    foreach ($request->warehouse as $warehouse) {
+                        $warehouse = Warehouse::find($warehouse);
 
-                    $warehouse = Warehouse::find($request->warehouse);
+                        OrderRequest::create([
+                            'order_item_id' => $order_item->id,
+                            'requesteable_id' => $warehouse->id,
+                            'requesteable_type' => Warehouse::class,
+                        ]);
 
-                    $conversation = Chat::conversations()->between(auth()->user(), $warehouse);
+                        $conversation = Chat::conversations()->between(auth()->user(), $warehouse);
 
-                    if (!$conversation) {
-                        $participants = [auth()->user(), $warehouse];
-                        $conversation = Chat::createConversation($participants);
-                        $conversation->update([
-                            'direct_message' => true,
+                        if (!$conversation) {
+                            $participants = [auth()->user(), $warehouse];
+                            $conversation = Chat::createConversation($participants);
+                            $conversation->update([
+                                'direct_message' => true,
+                            ]);
+                        }
+
+                        OrderConversation::create([
+                            'order_id' => $order->id,
+                            'conversation_id' => $conversation->id,
                         ]);
                     }
-
-                    OrderConversation::create([
-                        'order_id' => $order->id,
-                        'conversation_id' => $conversation->id,
-                    ]);
                     // $warehouses->each(function ($warehouse) use ($order_item) {
                     // });
                 }
+                // if (count($warehousing_requests) > 0 && $warehouses->count() > 0 && $request->has('warehouse')) {
+                //     OrderStorageRequest::create([
+                //         'order_item_id' => $order_item->id,
+                //         'warehouse_id' => $request->warehouse,
+                //     ]);
+
+                //     $warehouse = Warehouse::find($request->warehouse);
+
+                //     $conversation = Chat::conversations()->between(auth()->user(), $warehouse);
+
+                //     if (!$conversation) {
+                //         $participants = [auth()->user(), $warehouse];
+                //         $conversation = Chat::createConversation($participants);
+                //         $conversation->update([
+                //             'direct_message' => true,
+                //         ]);
+                //     }
+
+                //     OrderConversation::create([
+                //         'order_id' => $order->id,
+                //         'conversation_id' => $conversation->id,
+                //     ]);
+                //     // $warehouses->each(function ($warehouse) use ($order_item) {
+                //     // });
+                // }
 
                 $insurance_requests = collect($request->request_insurance)->filter(function ($value, $key) use ($item) { return $key == $item->id; });
 
                 $insurance_companies = InsuranceCompany::all();
 
                 // Create insurance request
-                if (count($insurance_requests) > 0 && $insurance_companies->count() > 0 && $request->has('insurer')) {
-                    InsuranceRequest::create([
-                        'order_item_id' => $order_item->id,
-                        'insurance_company_id' => $request->insurer,
-                    ]);
+                if (count($insurance_requests) > 0 && $insurance_companies->count() > 0 && count($request->insurer) > 0) {
+                    foreach ($request->insurer as $insurer) {
+                        $insurance_company = InsuranceCompany::find($insurer);
 
-                    $insurance_company = InsuranceCompany::find($request->insurer);
+                        OrderRequest::create([
+                            'order_item_id' => $order_item->id,
+                            'requesteable_id' => $insurance_company->id,
+                            'requesteable_type' => InsuranceCompany::class,
+                        ]);
 
-                    $conversation = Chat::conversations()->between(auth()->user(), $insurance_company);
+                        $conversation = Chat::conversations()->between(auth()->user(), $insurance_company);
 
-                    if (!$conversation) {
-                        $participants = [auth()->user(), $insurance_company];
-                        $conversation = Chat::createConversation($participants);
-                        $conversation->update([
-                            'direct_message' => true,
+                        if (!$conversation) {
+                            $participants = [auth()->user(), $insurance_company];
+                            $conversation = Chat::createConversation($participants);
+                            $conversation->update([
+                                'direct_message' => true,
+                            ]);
+                        }
+
+                        OrderConversation::create([
+                            'order_id' => $order->id,
+                            'conversation_id' => $conversation->id,
                         ]);
                     }
-
-                    OrderConversation::create([
-                        'order_id' => $order->id,
-                        'conversation_id' => $conversation->id,
-                    ]);
                     // $insurance_companies->each(function ($insurance_company) use ($order_item) {
                     // });
                 }
+                // if (count($insurance_requests) > 0 && $insurance_companies->count() > 0 && $request->has('insurer')) {
+                //     InsuranceRequest::create([
+                //         'order_item_id' => $order_item->id,
+                //         'insurance_company_id' => $request->insurer,
+                //     ]);
+
+                //     $insurance_company = InsuranceCompany::find($request->insurer);
+
+                //     $conversation = Chat::conversations()->between(auth()->user(), $insurance_company);
+
+                //     if (!$conversation) {
+                //         $participants = [auth()->user(), $insurance_company];
+                //         $conversation = Chat::createConversation($participants);
+                //         $conversation->update([
+                //             'direct_message' => true,
+                //         ]);
+                //     }
+
+                //     OrderConversation::create([
+                //         'order_id' => $order->id,
+                //         'conversation_id' => $conversation->id,
+                //     ]);
+                //     // $insurance_companies->each(function ($insurance_company) use ($order_item) {
+                //     // });
+                // }
             }
 
             $business = Business::find($key);
@@ -322,6 +428,32 @@ class OrderController extends Controller
         return redirect()->route('orders.show', ['order' => $order]);
     }
 
+    public function update(Request $request, Order $order)
+    {
+        $order->update([
+            'status' => $request->status
+        ]);
+
+        toastr()->success('', 'Order updated successfully');
+
+        return back();
+    }
+
+    public function delete(Order $order)
+    {
+        if ($order->status == 'quotation request' || $order->status == 'pending') {
+            $order->delete();
+
+            toastr()->success('', 'Order deleted successfully');
+
+            return redirect()->route('orders');
+        }
+
+        toastr()->error('', 'Cannot delete ongoing order');
+
+        return back();
+    }
+
     public function updateQuotation(QuotationRequestResponse $quotation, $status)
     {
         $order_item = OrderItem::find($quotation->order_item_id);
@@ -331,36 +463,37 @@ class OrderController extends Controller
             return back();
         }
 
-        $order_item->update([
-            'quantity' => $quotation->quantity.' '.explode(' ', $order_item->product->min_order_quantity)[1],
-            'amount' => $quotation->amount,
-            'delivery_date' => $quotation->delivery_date,
-            'status' => 'accepted'
+        if ($status == 'accepted') {
+            QuotationRequestResponse::where('order_item_id', $order_item->id)->update(['status' => 'rejected']);
+
+            $order_item->update([
+                'quantity' => $quotation->quantity.' '.explode(' ', $order_item->product->min_order_quantity)[1],
+                'amount' => $quotation->amount,
+                // 'delivery_date' => $quotation->delivery_date,
+                'status' => 'accepted'
+            ]);
+        }
+
+        $quotation->update([
+            'status' => $status
         ]);
 
-        // $quotation->update([
-        //     'status' => $status
-        // ]);
+        // // Check for other items and quotation requests for the order
+        // // If all quotation requests are accepted, then update the order to pending
+        // $order_items = OrderItem::where('order_id', $order_item->order_id)
+        //                             ->where(function ($query) {{
+        //                                 $query->where('status', 'pending')
+        //                                         ->orWhere('status', 'rejected');
+        //                             }})
+        //                             ->count();
 
-        // Delete Other quotation requests
-        QuotationRequestResponse::where('order_item_id', $order_item->id)->delete();
-
-        // Check for other items and quotation requests for the order
-        // If all quotation requests are accepted, then update the order to pending
-        $order_items = OrderItem::where('order_id', $order_item->order_id)
-                                    ->where(function ($query) {{
-                                        $query->where('status', 'pending')
-                                                ->orWhere('status', 'rejected');
-                                    }})
-                                    ->count();
-
-        if ($order_items <= 0) {
-            Order::where('id', $order_item->order_id)
-                ->first()
-                ->update([
-                    'status' => 'pending',
-                ]);
-            }
+        // if ($order_items <= 0) {
+        //     Order::where('id', $order_item->order_id)
+        //         ->first()
+        //         ->update([
+        //             'status' => 'pending',
+        //         ]);
+        // }
 
         activity()->causedBy(auth()->user())->performedOn($quotation)->log('accepted quotation for order item '.$order_item->product->name.' for order '.$order_item->order->order_id);
 
@@ -388,13 +521,13 @@ class OrderController extends Controller
         return back();
     }
 
-    public function updateRequest(Request $request, $quote, $status)
+    public function updateRequest(OrderRequest $order_request, $status)
     {
-        $type = $request->query('type');
+        if ($status == 'accepted') {
+            OrderRequest::where('order_item_id', $order_request->order_item_id)->where('requesteable_type', $order_request->requesteable_type)->update(['status' => 'rejected']);
+        }
 
-        $quote = $type::find($quote);
-
-        $quote->update([
+        $order_request->update([
             'status' => $status,
         ]);
 

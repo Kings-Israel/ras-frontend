@@ -83,12 +83,15 @@ class CartList extends Component
         $warehouses = Warehouse::with('country')->get();
         $logistics = LogisticsCompany::with('country')->get();
 
+        $transportation_methods = ['Air', 'Road', 'Water', 'Rail'];
+
         return view('livewire.buyer.cart-list', [
             'cart' => $this->cart,
             'insurers' => $insurers,
             'warehouses' => $warehouses,
             'logistics' => $logistics,
             'inspectors' => $inspectors,
+            'transport_methods' => $transportation_methods,
         ]);
     }
 }

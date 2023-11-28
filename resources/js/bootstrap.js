@@ -39,10 +39,14 @@ const EchoInstance = new Echo({
 })
 
 const app = createApp({})
+const app_orders = createApp({})
 
 app.component('ChatComponent', ChatComponent)
 app.component('OrderChatComponent', OrderChatComponent)
+app_orders.component('OrderChatComponent', OrderChatComponent)
 
 app.provide('echo', EchoInstance)
+app_orders.provide('echo', EchoInstance)
 
 app.mount("#app");
+app_orders.mount("#app-orders");
