@@ -504,17 +504,17 @@ class OrderController extends Controller
 
     public function requestFinancing(Invoice $invoice)
     {
-        $financiers = FinancingInstitution::with('users')->get();
+        $financier = FinancingInstitution::with('users')->first();
 
-        foreach($financiers as $financier) {
-            $invoice->financingRequest()->create([
-                'financing_institution_id' => $financier->id
-            ]);
+        $invoice->financingRequest()->create([
+            'financing_institution_id' => $financier->id
+        ]);
 
-            foreach ($financier->users as $user) {
-                $user->notify(new FinancingRequested($invoice));
-            }
+        foreach ($financier->users as $user) {
+            $user->notify(new FinancingRequested($invoice));
         }
+        // foreach($financiers as $financier) {
+        // }
 
         toastr()->success('', 'Financing Request sent successfully');
 
