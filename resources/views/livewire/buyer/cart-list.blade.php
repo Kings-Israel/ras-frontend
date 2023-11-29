@@ -355,8 +355,8 @@
                                         <div class="">
                                             <x-input-label class="font-semibold">Preferred Shipping Method</x-input-label>
                                             <select name="transport_method" class="form-control py-1 rounded-lg border border-gray-600 w-72" id="">
+                                                <option value="">Select</option>
                                                 @foreach ($transport_methods as $method)
-                                                    <option value="">Select</option>
                                                     <option value="{{ $method }}">{{ $method }}</option>
                                                 @endforeach
                                             </select>
