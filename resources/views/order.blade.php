@@ -829,13 +829,16 @@
                                     <button type="submit" class="bg-primary-one rounded-lg w-full p-2 text-white text-center font-semibold">Pay For Order</button>
                                 </div>
                             </form>
-                            <form action="#" method="POST">
-                                @csrf
-                                <input type="hidden" name="status" value="pending">
+                            @if (!$item->order->invoice->financingRequest()->exists())
                                 <div class="w-full flex">
-                                    <button type="submit" class="bg-primary-one rounded-lg w-full p-2 text-white text-center font-semibold">Request For Financing</button>
+                                    <a href="{{ route('invoice.financing.request', ['invoice' => $item->order->invoice]) }}" class="bg-primary-one rounded-lg w-full p-2 text-white text-center font-semibold">Request For Financing</a>
                                 </div>
-                            </form>
+                            @else
+                                <div class="block md:flex md:flex-col md:gap-1">
+                                    <span class="font-semibold text-gray-800 mr-2">Financing Request Status:</span>
+                                    <span class="font-semibold text-gray-900 text-xl">{{ Str::title($item->order->invoice->financingRequest->status) }}</span>
+                                </div>
+                            @endif
                         @endif
                     </div>
                     @foreach ($order->orderItems as $key => $item)
