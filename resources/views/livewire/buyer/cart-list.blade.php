@@ -378,7 +378,7 @@
                                     <x-input-label class="font-semibold">Select Insurer</x-input-label>
                                     <select name="insurer[]" multiple class="form-control py-1 rounded-lg border-gray-600 w-96" id="">
                                         @foreach ($insurers as $insurer)
-                                            <option value="{{ $insurer->id }}">{{ $insurer->name }} - {{ $insurer->country->name }}</option>
+                                            <option value="{{ $insurer->id }}">{{ $insurer->name }} @if($insurer->country) - {{ $insurer->country->name }} @endif</option>
                                         @endforeach
                                     </select>
                                 </div>
