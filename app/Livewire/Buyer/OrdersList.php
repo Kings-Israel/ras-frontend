@@ -5,9 +5,12 @@ namespace App\Livewire\Buyer;
 use App\Models\Invoice;
 use App\Models\Order;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class OrdersList extends Component
 {
+    use WithPagination;
+
     public $status = 'all';
 
     public function updateStatus($status)
