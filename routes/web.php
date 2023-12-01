@@ -74,9 +74,9 @@ Route::group(['prefix' => 'vendor', 'as' => 'vendor.'], function () {
     Route::get('/{slug}/storefront/compliance', [ProductController::class, 'storefrontDocuments'])->name('storefront.compliance');
 });
 
-Route::middleware(['auth', 'web', 'phone_verified', 'role:vendor', 'has_registered_business', 'has_wallet'])->group(function () {
+Route::middleware(['auth', 'web', 'phone_verified', 'role:vendor', 'has_registered_business'])->group(function () {
     Route::group(['prefix' => 'vendor/', 'as' => 'vendor.'], function() {
-        Route::get('/dashboard', [VendorController::class, 'dashboard'])->name('dashboard');
+        Route::get('/dashboard', [VendorController::class, 'dashboard'])->name('dashboard')->middleware('has_wallet');
         Route::get('/products', [VendorProductController::class, 'index'])->name('products');
         Route::post('/products/store', [VendorProductController::class, 'store'])->name('products.store');
         Route::get('/{product}/edit', [VendorProductController::class, 'edit'])->name('products.edit');
