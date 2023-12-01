@@ -101,6 +101,7 @@ class Order extends Model
         $amount = 0;
         foreach ($this->orderItems as $item) {
             $amount += (int) explode(' ', $item->quantity)[0] * (int) $item->amount;
+            $amount += $item->orderRequests->where('status', 'accepted')->sum('cost');
         }
 
         return $amount;
