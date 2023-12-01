@@ -61,7 +61,11 @@ class WalletController extends Controller
         if (!collect(json_decode($response))->has('statusCode')) {
             toastr()->success('', 'Wallet Created Successfully');
 
-            return redirect()->route('orders');
+            if (auth()->user()->hasRole('buyer')) {
+                return redirect()->route('orders');
+            }
+
+            return redirect()->route('vendor.dashboard');
         }
 
         toastr()->error('', 'Error while creating wallet profile');
