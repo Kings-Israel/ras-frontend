@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         'phone_verified' => \App\Http\Middleware\EnsurePhoneVerified::class,
         'has_registered_business' => \App\Http\Middleware\HasRegisteredBusiness::class,
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
+        'has_wallet' => \App\Http\Middleware\HasWallet::class
     ];
 }

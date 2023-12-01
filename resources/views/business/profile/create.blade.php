@@ -164,15 +164,22 @@
                     <!-- Primary Cover Image -->
                     <div class="mt-3 form-group">
                         <x-input-label for="primary_cover_image" :value="__('Primary Cover Image')" />
-                        <x-input-file id="primary_cover_image" type="file" name="primary_cover_image" :value="old('primary_cover_image')" />
+                        <x-input-file id="primary_cover_image" accept=".jpg,.png,.jpeg" type="file" name="primary_cover_image" :value="old('primary_cover_image')" />
                         <x-input-error :messages="$errors->get('primary_cover_image')" class="mt-1" />
                     </div>
 
                     <!-- Secondary Cover Image -->
                     <div class="mt-3">
                         <x-input-label for="secondary_cover_image" :value="__('Secondary Cover Image')" />
-                        <x-input-file id="secondary_cover_image" type="file" name="secondary_cover_image" :value="old('secondary_cover_image')" />
+                        <x-input-file id="secondary_cover_image" accept=".jpg,.png,.jpeg" type="file" name="secondary_cover_image" :value="old('secondary_cover_image')" />
                         <x-input-error :messages="$errors->get('secondary_cover_image')" class="mt-1" />
+                    </div>
+
+                    <!-- Business Profile -->
+                    <div class="mt-3 form-group">
+                        <x-input-label for="business_profile" :value="__('Business Profile in PDF')" />
+                        <x-input-file id="business_profile" accept=".pdf" type="file" name="business_profile" :value="old('business_profile')" />
+                        <x-input-error :messages="$errors->get('business_profile')" class="mt-1" />
                     </div>
 
                     <div class="flex mt-3 justify-end gap-2">

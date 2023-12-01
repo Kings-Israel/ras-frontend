@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Helpers\JambopayToken;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,6 +20,7 @@ use Chat;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Support\Facades\Http;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -194,5 +196,36 @@ class User extends Authenticatable implements MustVerifyEmail
     public function quotationResponses(): HasMany
     {
         return $this->hasMany(QuotationRequestResponse::class);
+    }
+
+    /**
+     * Get all of the escrowPayments for the User
+     */
+    public function escrowPayments(): HasMany
+    {
+        return $this->hasMany(EscrowPayment::class);
+    }
+
+    public function hasWallet($token = NULL): bool
+    {
+        return true;
+        if (!$token) {
+            $token = JambopayToken::walletAccessToken();
+        }
+
+        $phone_number = strlen($this->phone_number) == 9 ? '0'.$this->phone_number : '0'.substr($this->phone_number, -9);
+
+        $response = Http::withHeaders([
+                        'Authorization' => $token->token_type.' '.$token->access_token
+                    ])->get(config('services.jambopay.wallet_url').'/wallet/account', [
+                        'accountNo' => config('services.jambopay.wallet_account_number'),
+                        'phoneNumber' => $phone_number
+                    ]);
+
+        if (collect(json_decode($response))->has('statusCode') || count(json_decode($response)->data) <= 0) {
+            return false;
+        }
+
+        return true;
     }
 }
