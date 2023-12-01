@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\JambopayToken;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\Rule;
@@ -31,6 +32,11 @@ class WalletController extends Controller
             'county' => ['required', 'string'],
             'physical_address' => ['required'],
         ]);
+
+        if (Carbon::parse($request->date_of_birth)->diffInYears(now()) < 18 || Carbon::parse($request->date_of_birth) > now()) {
+            toastr()->error('', 'Invalid date of birth');
+            return back();
+        }
 
         $phone_number = strlen(auth()->user()->phone_number) == 9 ? '0'.auth()->user()->phone_number : '0'.substr(auth()->user()->phone_number, -9);
 

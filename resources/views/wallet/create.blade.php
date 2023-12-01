@@ -89,19 +89,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.1.1/datepicker.min.js"></script>
     <script>
-            $('#submit-wallet-form').on('submit', function(e) {
-                e.preventDefault()
-                let selected_date = new Date($('#date-select').val())
-                let current_date = new Date()
-                if (selected_date > current_date) {
-                    $('#date-select-error').removeClass('hidden')
-                    $('#date-select').removeClass('border-gray-300').addClass('border-red-500')
-                    setTimeout(() => {
-                        $('#date-select-error').addClass('hidden')
-                    }, 5000);
-                } else {
-                    $(this).submit()
-                }
-            })
+        // $('#submit-wallet-form').on('submit', function(e) {
+        //     e.preventDefault()
+        //     let selected_date = new Date($('#date-select').val())
+        //     let current_date = new Date()
+        //     // console.log(selected_date)
+        //     if (selected_date > current_date) {
+        //         $('#date-select-error').removeClass('hidden')
+        //         $('#date-select').removeClass('border-gray-300').addClass('border-red-500')
+        //         setTimeout(() => {
+        //             $('#date-select-error').addClass('hidden')
+        //         }, 5000);
+        //     } else {
+        //         $(this).submit()
+        //     }
+        // })
     </script>
 </x-guest-layout>

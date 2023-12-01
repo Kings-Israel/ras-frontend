@@ -178,7 +178,7 @@
                 <span class="font-semibold text-gray-800 mr-2">Delivery To: </span>
                 <span class="font-semibold text-gray-900 underline underline-offset-1">{{ $item->order->invoice->delivery_location_address }}</span>
             </div>
-            @if ($item->hasAcceptedAllRequests() && $order->status == 'quotation request')
+            @if ($item->hasAcceptedAllRequests() && ($order->status == 'quotation request' || $order->status == 'accepted'))
                 <form action="{{ route('orders.update', ['order' => $order]) }}" method="POST">
                     @csrf
                     <input type="hidden" name="status" value="pending">

@@ -208,7 +208,6 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function hasWallet($token = NULL): bool
     {
-        return true;
         if (!$token) {
             $token = JambopayToken::walletAccessToken();
         }
