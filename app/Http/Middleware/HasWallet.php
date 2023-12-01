@@ -17,6 +17,9 @@ class HasWallet
     {
         if (!$request->user()->hasWallet()) {
             toastr()->error('', 'Create Wallet Account to proceed');
+            if ($request->wantsJson()) {
+                return response()->json(['route' => route('wallet.create')], 301);
+            }
             return redirect()->route('wallet.create');
         }
 
