@@ -252,8 +252,8 @@
                                                 @endif
                                             </div>
                                         @else
-                                            <div>
-                                                <span class="underline text-red-600">Report not yet uploaded</span>
+                                            <div class="px-2">
+                                                <span class="font-semibold text-red-600">Report not yet uploaded</span>
                                             </div>
                                         @endif
                                     </div>
