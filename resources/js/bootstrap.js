@@ -39,14 +39,20 @@ const EchoInstance = new Echo({
 })
 
 const app = createApp({})
+// Show chat in confirmed order section
 const app_orders = createApp({})
+// Show Chat in paid order section
+const app_paid_orders = createApp({})
 
 app.component('ChatComponent', ChatComponent)
 app.component('OrderChatComponent', OrderChatComponent)
 app_orders.component('OrderChatComponent', OrderChatComponent)
+app_paid_orders.component('OrderChatComponent', OrderChatComponent)
 
 app.provide('echo', EchoInstance)
 app_orders.provide('echo', EchoInstance)
+app_paid_orders.provide('echo', EchoInstance)
 
 app.mount("#app");
 app_orders.mount("#app-orders");
+app_paid_orders.mount("#app-paid-orders");

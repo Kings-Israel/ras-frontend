@@ -56,7 +56,7 @@ class OrderController extends Controller
 
     public function order(Order $order)
     {
-        $order->load('orderItems.product.media', 'orderItems.product.business', 'orderItems.orderRequests', 'orderItems.quotationResponses');
+        $order->load('orderItems.product.media', 'orderItems.product.business', 'orderItems.orderRequests', 'orderItems.quotationResponses', 'invoice');
 
         $order_total = 0;
         $order_requests = null;

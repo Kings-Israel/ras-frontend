@@ -55,6 +55,7 @@ class VendorController extends Controller
             'name' => 'required', 'string',
             'country' => 'required',
             'primary_cover_image' => ['required', 'mimes:png,jpg,jpeg', 'max:5192'],
+            'business_profile' => ['nullable', 'mimes:pdf', 'max:5192'],
         ]);
 
         $business = Business::create([
@@ -64,6 +65,7 @@ class VendorController extends Controller
             'city_id' => $request->has('city') ? $request->city : NULL,
             'primary_cover_image' => $request->hasFile('primary_cover_image') ? pathinfo($request->primary_cover_image->store('cover_image', 'vendor'), PATHINFO_BASENAME) : NULL,
             'secondary_cover_image' => $request->hasFile('secondary_cover_image') ? pathinfo($request->secondary_cover_image->store('cover_image', 'vendor'), PATHINFO_BASENAME) : NULL,
+            'business_profile' => $request->hasFile('business_profile') ? pathinfo($request->business_profile->store('profile', 'vendor'), PATHINFO_BASENAME) : NULL,
         ]);
 
         if ($request->has('document_files') && collect($request->document_files)->count() > 0) {
