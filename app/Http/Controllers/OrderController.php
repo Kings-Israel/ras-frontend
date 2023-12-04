@@ -110,15 +110,16 @@ class OrderController extends Controller
 
             $business_user = $order->business->user;
 
-            $conversation = Chat::conversations()->between(auth()->user(), $business_user);
+            // $conversation = Chat::conversations()->between(auth()->user(), $business_user);
 
-            if (!$conversation) {
-                $participants = [auth()->user(), $business_user];
-                $conversation = Chat::createConversation($participants);
-                $conversation->update([
-                    'direct_message' => true,
-                ]);
-            }
+            // if (!$conversation) {
+            // }
+
+            $participants = [auth()->user(), $business_user];
+            $conversation = Chat::createConversation($participants);
+            $conversation->update([
+                'direct_message' => true,
+            ]);
 
             OrderConversation::create([
                 'order_id' => $order->id,
@@ -190,15 +191,15 @@ class OrderController extends Controller
                             'requesteable_id' => $inspector->id,
                         ]);
 
-                        $conversation = Chat::conversations()->between(auth()->user(), $inspector);
+                        // $conversation = Chat::conversations()->between(auth()->user(), $inspector);
 
-                        if (!$conversation) {
-                            $participants = [auth()->user(), $inspector];
-                            $conversation = Chat::createConversation($participants);
-                            $conversation->update([
-                                'direct_message' => true,
-                            ]);
-                        }
+                        // if (!$conversation) {
+                        // }
+                        $participants = [auth()->user(), $inspector];
+                        $conversation = Chat::createConversation($participants);
+                        $conversation->update([
+                            'direct_message' => true,
+                        ]);
 
                         OrderConversation::create([
                             'order_id' => $order->id,
@@ -248,15 +249,15 @@ class OrderController extends Controller
                             'transportation_method' => $request->has('transport_method') ? $request->transport_method : NULL,
                         ]);
 
-                        $conversation = Chat::conversations()->between(auth()->user(), $logistics_company);
+                        // $conversation = Chat::conversations()->between(auth()->user(), $logistics_company);
 
-                        if (!$conversation) {
-                            $participants = [auth()->user(), $logistics_company];
-                            $conversation = Chat::createConversation($participants);
-                            $conversation->update([
-                                'direct_message' => true,
-                            ]);
-                        }
+                        // if (!$conversation) {
+                        // }
+                        $participants = [auth()->user(), $logistics_company];
+                        $conversation = Chat::createConversation($participants);
+                        $conversation->update([
+                            'direct_message' => true,
+                        ]);
 
                         OrderConversation::create([
                             'order_id' => $order->id,
@@ -307,15 +308,15 @@ class OrderController extends Controller
                             'requesteable_type' => Warehouse::class,
                         ]);
 
-                        $conversation = Chat::conversations()->between(auth()->user(), $warehouse);
+                        // $conversation = Chat::conversations()->between(auth()->user(), $warehouse);
 
-                        if (!$conversation) {
-                            $participants = [auth()->user(), $warehouse];
-                            $conversation = Chat::createConversation($participants);
-                            $conversation->update([
-                                'direct_message' => true,
-                            ]);
-                        }
+                        // if (!$conversation) {
+                        // }
+                        $participants = [auth()->user(), $warehouse];
+                        $conversation = Chat::createConversation($participants);
+                        $conversation->update([
+                            'direct_message' => true,
+                        ]);
 
                         OrderConversation::create([
                             'order_id' => $order->id,
@@ -366,15 +367,15 @@ class OrderController extends Controller
                             'requesteable_type' => InsuranceCompany::class,
                         ]);
 
-                        $conversation = Chat::conversations()->between(auth()->user(), $insurance_company);
+                        // $conversation = Chat::conversations()->between(auth()->user(), $insurance_company);
 
-                        if (!$conversation) {
-                            $participants = [auth()->user(), $insurance_company];
-                            $conversation = Chat::createConversation($participants);
-                            $conversation->update([
-                                'direct_message' => true,
-                            ]);
-                        }
+                        // if (!$conversation) {
+                        // }
+                        $participants = [auth()->user(), $insurance_company];
+                        $conversation = Chat::createConversation($participants);
+                        $conversation->update([
+                            'direct_message' => true,
+                        ]);
 
                         OrderConversation::create([
                             'order_id' => $order->id,

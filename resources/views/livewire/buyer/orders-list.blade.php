@@ -295,6 +295,10 @@
             </div>
         </form>
     </div>
+    <span class="lg:flex lg:px-28 mt-2 gap-2 text-sm">
+        <a href="{{ route('welcome') }}" class="text-gray-500">Home ></a>
+        <a href="{{ route('orders') }}" class="">Orders</a>
+    </span>
     <form action="#" method="post" class="block lg:flex px-4 lg:px-28 p-4 gap-12">
         @csrf
         <div class="basis-3/4 bg-gray-50 p-2 rounded-lg">
