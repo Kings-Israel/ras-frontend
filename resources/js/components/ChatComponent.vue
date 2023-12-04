@@ -119,7 +119,7 @@
                         <h2 v-else class="text-2xl font-bold text-gray-800">{{ receiver.first_name }} {{ receiver.last_name }}</h2>
                     </div>
                     <div v-else>
-                        <h2 class="text-2xl font-bold text-gray-800">{{ receiver.data.name }}</h2>
+                        <h2 class="text-2xl font-bold text-gray-800">{{ receiver.first_name }} {{ receiver.last_name }}</h2>
                     </div>
                 </div>
                 <!-- <form action="#" method="POST" class="hidden md:block my-auto">
@@ -240,8 +240,9 @@ export default {
             } else if (order != null) {
                 new_conversations = await axios.get('/conversations/order/'+order)
             } else {
-                new_conversations = await axios.get('/conversations') 
+                new_conversations = await axios.get('/conversations')
             }
+
             conversations.value = new_conversations.data.conversations
             const_conversations.value = new_conversations.data.conversations
             const_conversations.value.forEach(conversation => {

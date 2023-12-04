@@ -89,9 +89,7 @@ Route::middleware(['auth', 'web', 'phone_verified', 'role:vendor', 'has_register
         Route::get('/orders/{order}/quotes/accept', [VendorController::class, 'acceptQuotes'])->name('orders.quotes.accept');
         Route::get('/messages', [ChatController::class, 'index'])->name('messages');
         Route::get('/messages/chat', [ChatController::class, 'view'])->name('messages.chat');
-        Route::get('/customers', function () {
-            return view('business.customers');
-        })->name('customers');
+        Route::get('/customers', [VendorController::class, 'customers'])->name('customers');
         Route::get('/payments', function () {
             return view('business.payments');
         })->name('payments');
