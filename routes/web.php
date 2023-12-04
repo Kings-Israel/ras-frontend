@@ -95,9 +95,7 @@ Route::middleware(['auth', 'web', 'phone_verified', 'role:vendor', 'has_register
         })->name('payments');
         Route::get('/warehouses', [VendorController::class, 'warehouses'])->name('warehouses');
         Route::post('/warehouses/{warehouse}/storage/request', [VendorController::class, 'requestWarehouseStorage'])->name('warehouses.storage.request');
-        Route::get('/suppliers', function () {
-            return view('business.suppliers');
-        })->name('suppliers');
+        Route::get('/suppliers', [VendorController::class, 'suppliers'])->name('suppliers');
         Route::get('/profile', [ProfileController::class, 'businessProfile'])->name('profile');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::post('/business/update', [VendorController::class, 'update'])->name('business.update');

@@ -343,4 +343,9 @@ class VendorController extends Controller
     {
         return view('business.customers');
     }
+
+    public function suppliers()
+    {
+        return view('business.suppliers');
+    }
 }
