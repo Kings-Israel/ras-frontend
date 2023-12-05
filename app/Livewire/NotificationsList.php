@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Invoice;
 use Livewire\Component;
 use App\Models\Order;
 use Illuminate\Http\Response as HttpResponse;
@@ -37,6 +38,9 @@ class NotificationsList extends Component
 
         if ($notification->type == 'App\\Notifications\\QuotationAdded') {
             $order = Order::with('invoice')->find($notification->data['order_item']['order_id']);
+        } else if ($notification->type == 'App\\Notifications\\FinancingRequestUpdated') {
+            $invoice = Invoice::with('orders')->find($notification->data['invoice']['id']);
+            $order = $invoice->orders->first();
         } else {
             $order = Order::with('invoice')->find($notification->data['order']['id']);
         }
@@ -49,7 +53,7 @@ class NotificationsList extends Component
         if (auth()->user()->hasRole('vendor')) {
             return redirect()->route('vendor.orders');
         } else {
-            return redirect()->route('invoice.orders', ['invoice' => $order->invoice]);
+            return redirect()->route('orders.show', ['order' => $order]);
         }
     }
 
@@ -76,10 +80,10 @@ class NotificationsList extends Component
 
     public function getNotifications()
     {
-        $this->notifications = auth()->user()->unreadNotifications()->get()->take(4);
+        $this->notifications = auth()->user()->unreadNotifications()->get()->take(6);
 
         if (auth()->user()->hasRole('vendor')) {
-            auth()->user()->business->unreadNotifications()->get()->take(4)->each(function ($notification) {
+            auth()->user()->business->unreadNotifications()->get()->take(6)->each(function ($notification) {
                 $this->notifications->push($notification);
             });
         }
