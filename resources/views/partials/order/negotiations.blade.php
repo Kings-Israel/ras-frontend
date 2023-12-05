@@ -572,10 +572,31 @@
                 </div>
             @endif
         @endforeach
-        @if ($order->status == 'quotation request' || $order->status == 'pending')
+        @if (($order->status == 'quotation request' || $order->status == 'pending') && $order->invoice->payment_status != 'paid')
             <div class="flex justify-end">
-                <a href="{{ route('orders.delete', ['order' => $order]) }}" class="bg-red-500 hover:bg-red-400 rounded-lg p-2 text-white text-center font-semibold">Delete Order</a>
+                <button data-modal-target="delete-order" data-modal-toggle="delete-order" class="bg-red-500 hover:bg-red-400 rounded-lg p-2 text-white text-center font-semibold transition duration-150 ease-in-out">Delete Order</button>
             </div>
+            <x-modal modal_id="delete-order">
+                <div class="relative w-full max-w-2xl max-h-full">
+                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                        <button type="button" class="absolute top-1 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="delete-order">
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                            </svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                        <h2 class="px-2 py-2 lg:px-4 font-bold text-xl">Delete Order</h2>
+                        <div class="px-2 py-2 lg:px-4">
+                            <span class="font-semibold">Are You Sure You Want to delete the Order, {{ Str::upper($order->order_id) }}?</span><br>
+                            <span class="font-semibold text-red-600">This action cannot be undone.</span>
+                            <div class="flex gap-2 justify-end">
+                                <a href="{{ route('orders.delete', ['order' => $order]) }}" class="bg-red-800 hover:bg-red-700 rounded-lg p-2 text-white text-center font-semibold transition duration-150 ease-in-out">Delete</a>
+                                <button data-modal-hide="delete-order" class="bg-gray-800 hover:bg-gray-600 rounded-lg p-2 text-white text-center font-semibold transition duration-150 ease-in-out">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </x-modal>
         @endif
     </div>
 </div>
