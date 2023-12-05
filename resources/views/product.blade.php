@@ -204,7 +204,7 @@
                                 <input type="hidden" id="add-to-cart-product-id" name="product_id">
                                 <input type="hidden" id="add-to-cart-quantity" name="quantity">
                                 <input type="hidden" id="order-amount" name="amount">
-                                <x-primary-button class="w-full my-2 py-2 text-orange-400 justify-center gap-1 focus:text-orange-900 focus:ring-1 focus:ring-orange-900" id="add-to-cart-btn">
+                                <x-primary-button class="w-full my-2 py-2 text-orange-400 justify-center gap-1 focus:bg-primary-one focus:text-orange-900 focus:ring focus:ring-orange-900" id="add-to-cart-btn">
                                     <span class="tracking-wide font-bold">
                                         Start Order
                                     </span>
@@ -212,20 +212,20 @@
                             </form>
                         @endif
                     @endauth
-                    {{-- @guest
+                    @guest
                         <form action="{{ route('cart.store') }}" method="post" id="add-to-cart-form">
                             @csrf
                             <input type="hidden" id="add-to-cart-product-id" name="product_id">
                             <input type="hidden" id="add-to-cart-quantity" name="quantity">
                             <input type="hidden" id="order-amount" name="amount">
-                            <x-primary-outline-button class="w-full my-2 py-1 text-orange-400 justify-center gap-1 focus:text-orange-900 focus:ring-1 focus:ring-orange-900" id="add-to-cart-btn">
+                            <x-primary-outline-button class="w-full my-2 py-1 text-orange-400 justify-center gap-1 focus:text-orange-900 focus:ring focus:ring-orange-900" id="add-to-cart-btn">
                                 <i class="fas fa-plus text-sm"></i>
                                 <span class="tracking-tight">
                                     Add To Cart
                                 </span>
                             </x-primary-outline-button>
                         </form>
-                    @endguest --}}
+                    @endguest
                     @auth
                         @if (auth()->id() != $product->business->user->id)
                             @if (!$product->isInCart())
@@ -241,7 +241,7 @@
                                         </span>
                                     </x-primary-outline-button>
                                 </form> --}}
-                                <x-primary-outline-button class="w-full my-2 py-1 text-orange-400 justify-center gap-1" data-modal-target="get-quote-modal" data-modal-toggle="get-quote-modal">
+                                <x-primary-outline-button class="w-full my-2 py-1 text-orange-400 focus:bg-orange-300 focus:text-orange-600 justify-center gap-1" data-modal-target="get-quote-modal" data-modal-toggle="get-quote-modal">
                                     <span class="tracking-tight">
                                         Get Quotation
                                     </span>

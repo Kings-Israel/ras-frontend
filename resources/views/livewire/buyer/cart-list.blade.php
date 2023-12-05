@@ -300,19 +300,20 @@
                         <div>
                             <div class="grid md:flex justify-between border border-gray-200 rounded-lg p-2">
                                 <div class="md:basis-1/5 flex gap-2 px-1 md:px-2 text-gray-500">
-                                    <input id="checkbox-table-search-1" type="checkbox" onchange="selectedService('select-inspector')" name="request_inspection[{{ $item->product->id }}]" class="w-4 h-4 mt-1 text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                                    <input id="checkbox-table-search-1" type="checkbox" onchange="selectedService('select-inspector')" name="request_inspection[{{ $item->product->id }}]" class="select-inspectors w-4 h-4 mt-1 text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
                                     <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
                                     <h2 class="font-semibold">Request Inspection</h2>
                                 </div>
-                                <div class="md:basis-4/5 hidden" id="select-inspector">
+                                <div class="md:basis-4/5 hidden" id="select-inspector-box">
                                     <x-input-label class="font-semibold">Select Inspector</x-input-label>
-                                    <select name="inspector[]" multiple size="3" class="form-control py-1 rounded-lg border-gray-600 w-96" id="selected-inspectors">
+                                    <select name="inspector[]" multiple size="3" class="form-control py-1 rounded-lg border-gray-600 w-96 selected-inspectors">
                                         @foreach ($inspectors as $inspector)
                                             <option value="{{ $inspector->id }}">{{ $inspector->name }} - {{ $inspector->country->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
+                            <span class="text-red-600 font-semibold transition duration-150 ease-in-out" id="selected_inspectors_warning"><span class="underline">N/B</span>: You'll be required to upload an inspection report if no inspector is selected.</span>
                         </div>
                     @endif
                     @if (count($warehouses) > 0)
@@ -615,16 +616,14 @@
         btn.addEventListener("click", increment);
     });
 
-    // function placeMarker(location) {
-    //     if (marker) {
-    //         marker.setPosition(location);
-    //     } else {
-    //         marker = new google.maps.Marker({
-    //             position: location,
-    //             map: mapInstance
-    //         });
-    //     }
-    // }
+    $('.selected-inspectors').on('change', function() {
+        let selected_count = $(":selected", this).length
+        if (selected_count > 0) {
+            $('#selected_inspectors_warning').addClass('hidden')
+        } else {
+            $('#selected_inspectors_warning').removeClass('hidden')
+        }
+    })
 
     function selectedService(service) {
         $('#'+service).toggleClass('hidden')
@@ -632,7 +631,17 @@
         if (service == 'select-logistics') {
             $('#select-transport-method').toggleClass('hidden')
         }
+
+        if (service == 'select-inspector') {
+            $('#select-inspector-box').toggleClass('hidden')
+        }
     }
+
+    $('.select-inspectors').on('change', function() {
+        if (!$(this).is(':checked')) {
+            $('#selected_inspectors_warning').removeClass('hidden')
+        }
+    })
 
     function updateInspectorSelection() {
         $('#inspection-selection-warning').addClass('hidden')
@@ -664,32 +673,6 @@
                 return;
             }
 
-            // map.setCenter(place.geometry.location);
-            // map.setZoom(17);
-
-            // foreach ($warehouse_location['results'][0]['address_components'] as $place) {
-            //     if (collect($place['types'])->contains('country')) {
-            //         $country = Country::where('name', 'LIKE', $place['long_name'])->orWhere('iso', 'LIKE', $place['short_name'])->first();
-            //         if (!$country) {
-            //             toastr()->error('', 'Please select a valid location');
-            //             return back();
-            //         }
-            //     }
-            // }
-
-            // place.address_components.forEach(component => {
-            //     if (component.types.includes('country')) {
-            //         let selected_country = component.long_name
-            //         if (!products_locations.includes(selected_country)) {
-            //             $('#request_inspection').prop('checked', true);
-            //             $('#inspection-selection-warning').removeClass('hidden')
-            //         } else {
-            //             $('#request_inspection').prop('checked', false);
-            //             $('#inspection-selection-warning').addClass('hidden')
-            //         }
-            //     }
-            // })
-
             document.getElementById('place_id').value = place.place_id
             document.getElementById('delivery_location_place_id').value = place.place_id
             document.getElementById('delivery_location_lat').value = place.geometry.location.lat()
@@ -698,29 +681,7 @@
             document.getElementById('location').innerHTML = place.formatted_address
 
             $('#delivery-location-section').removeClass('border-red-500').addClass('border-gray-200')
-
-            // placeMarker(place.geometry.location);
-            // marker.setVisible(true);
         });
-
-        // geocoder = new google.maps.Geocoder;
-
-        // google.maps.event.addListener(map, 'click', function(event) {
-        //     geocoder.geocode({
-        //         'location': event.latLng
-        //     }, function(results, status) {
-        //         if (status === google.maps.GeocoderStatus.OK) {
-        //         if (results[0]) {
-        //             document.getElementById('place_id').value = results[0].place_id
-        //         } else {
-        //             console.log('No results found');
-        //         }
-        //         } else {
-        //         console.log('Geocoder failed due to: ' + status);
-        //         }
-        //     });
-        //     placeMarker(event.latLng);
-        // });
     }
 </script>
 <script src="{!! config('services.maps.key') !!}" async defer></script>
