@@ -1,6 +1,11 @@
 <x-main>
-    <div class="">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/bs-stepper/bs-stepper.css') }}">
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/select2/select2.css')}}" />
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/tagify/tagify.css')}}" />
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/flatpickr/flatpickr.css')}}" />
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/formvalidation/dist/css/formValidation.min.css')}}" />
 
+    <div class="">
         <div class="bg-gray-200 mx-auto px-1 md:px-8 lg:px-24 py-1 sticky top-16 z-30">
             <form class="md:w-2/5 md:my-auto">
                 <div class="flex">
@@ -84,7 +89,19 @@
             @include('partials.order.paid')
         </section>
     </div>
-    <script src="{{ asset('assets/js/jquery-1.12.4.js') }}"></script>
+    <!-- Scripts -->
+    {{-- <script src="{{ asset('assets/js/jquery-1.12.4.js') }}"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{{ asset('assets/vendor/libs/cleavejs/cleave.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/cleavejs/cleave-phone.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/bs-stepper/bs-stepper.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/select2/select2.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/tagify/tagify.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js') }}"></script>
+    <script src="{{ asset('assets/js/financing-request-wizard.js') }}"></script>
     <script>
         const order_status = {!! json_encode($order->status) !!}
         const order_delivery_status = {!! json_encode($order->delivery_status) !!}
@@ -147,6 +164,10 @@
 
         $('#pay-form').on('submit', function(e) {
             e.preventDefault();
+            $('#pay-order-btn').attr('disabled', 'disabled');
+            $('#pay-order-btn').addClass('bg-orange-400');
+            $('#pay-order-btn').removeClass('bg-primary-one');
+            $('#pay-order-btn').html('Processing...');
             let formData = $(this).serializeArray()
             $.ajax({
                 method: "POST",
@@ -157,16 +178,22 @@
                 url: "{{ route('wallet.pay') }}",
                 data: formData,
                 success: (response) => {
-                    console.log(response);
                     $('#transaction_ref').val(response.ref)
                     $('#confirm-payment-btn').click()
+                    $('#pay-order-btn').removeAttr('disabled');
+                    $('#pay-order-btn').removeClass('bg-orange-400');
+                    $('#pay-order-btn').addClass('bg-primary-one');
+                    $('#pay-order-btn').html('Pay For Order');
                 },
                 error: (response) => {
                     if (response.status == 301) {
                         window.location.href = response.responseJSON.route
                         // console.log(response.responseJSON.route)
                     }
-                    console.log(response.status);
+                    $('#pay-order-btn').removeAttr('disabled');
+                    $('#pay-order-btn').removeClass('bg-orange-400');
+                    $('#pay-order-btn').addClass('bg-primary-one');
+                    $('#pay-order-btn').html('Pay For Order');
                 }
             })
         })

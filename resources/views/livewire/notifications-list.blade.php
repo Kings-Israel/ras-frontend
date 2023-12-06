@@ -17,7 +17,7 @@
                     @endif
                     @if ($notification->type == 'App\\Notifications\\UpdatedOrder')
                         <li class="hover:bg-gray-100 hover:cursor-pointer text-left p-2 border-b border-gray-300" wire:click="goToOrders({{ $notification }})">
-                            <span class="font-semibold">Your order was updated <strong>{{ $notification['data']['order']['order_id'] }}</strong></span>
+                            <span class="font-semibold">Your order, <strong>{{ $notification['data']['order']['order_id'] }}</strong>, was updated</span>
                         </li>
                     @endif
                     @if ($notification->type == 'App\\Notifications\\QuotationAdded')

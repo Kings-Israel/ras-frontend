@@ -194,15 +194,15 @@
     </div>
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="{{asset('assets/vendor/libs/cleavejs/cleave.js')}}"></script>
-    <script src="{{asset('assets/vendor/libs/cleavejs/cleave-phone.js')}}"></script>
-    <script src="{{asset('assets/vendor/libs/bs-stepper/bs-stepper.js')}}"></script>
-    <script src="{{asset('assets/vendor/libs/select2/select2.js')}}"></script>
-    <script src="{{asset('assets/vendor/libs/tagify/tagify.js')}}"></script>
-    <script src="{{asset('assets/vendor/libs/flatpickr/flatpickr.js')}}"></script>
-    <script src="{{asset('assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js')}}"></script>
-    <script src="{{asset('assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js')}}"></script>
-    <script src="{{asset('assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js')}}"></script>
+    <script src="{{ asset('assets/vendor/libs/cleavejs/cleave.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/cleavejs/cleave-phone.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/bs-stepper/bs-stepper.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/select2/select2.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/tagify/tagify.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js') }}"></script>
     <script src="{{ asset('assets/js/business-profile-wizard.js') }}"></script>
     <script>
         function getDetails() {
@@ -225,45 +225,45 @@
         }
 
         function dropdown() {
-                return {
-                    options: [],
-                    selected: [],
-                    show: false,
-                    open() { this.show = true },
-                    close() { this.show = false },
-                    isOpen() { return this.show === true },
-                    select(index, event) {
-                        if (!this.options[index].selected) {
+            return {
+                options: [],
+                selected: [],
+                show: false,
+                open() { this.show = true },
+                close() { this.show = false },
+                isOpen() { return this.show === true },
+                select(index, event) {
+                    if (!this.options[index].selected) {
 
-                            this.options[index].selected = true;
-                            this.options[index].element = event.target;
-                            this.selected.push(index);
+                        this.options[index].selected = true;
+                        this.options[index].element = event.target;
+                        this.selected.push(index);
 
-                        } else {
-                            this.selected.splice(this.selected.lastIndexOf(index), 1);
-                            this.options[index].selected = false
-                        }
-                    },
-                    remove(index, option) {
-                        this.options[option].selected = false;
-                        this.selected.splice(index, 1);
-                    },
-                    loadOptions() {
-                        const options = document.getElementById('select').options;
-                        for (let i = 0; i < options.length; i++) {
-                            this.options.push({
-                                value: options[i].value,
-                                text: options[i].innerText,
-                                selected: options[i].getAttribute('selected') != null ? options[i].getAttribute('selected') : false
-                            });
-                        }
-                    },
-                    selectedValues(){
-                        return this.selected.map((option)=>{
-                            return this.options[option].value;
-                        })
+                    } else {
+                        this.selected.splice(this.selected.lastIndexOf(index), 1);
+                        this.options[index].selected = false
                     }
+                },
+                remove(index, option) {
+                    this.options[option].selected = false;
+                    this.selected.splice(index, 1);
+                },
+                loadOptions() {
+                    const options = document.getElementById('select').options;
+                    for (let i = 0; i < options.length; i++) {
+                        this.options.push({
+                            value: options[i].value,
+                            text: options[i].innerText,
+                            selected: options[i].getAttribute('selected') != null ? options[i].getAttribute('selected') : false
+                        });
+                    }
+                },
+                selectedValues(){
+                    return this.selected.map((option)=>{
+                        return this.options[option].value;
+                    })
                 }
             }
+        }
     </script>
 </x-guest-layout>

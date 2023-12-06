@@ -155,7 +155,7 @@
                     <h4 class="text-sm font-semibold text-gray-500">Order Subtotal:</h4>
                     <div class="flex gap-1">
                         <h3 class="font-bold text-xl text-gray-600 my-auto">{{ Str::upper($order->orderItems->first()->product->currency) }}</h3>
-                        <span class="font-bold text-xl text-gray-800" id="total_cart_amount">{{ number_format($order->getTotalAmount()) }}</span>
+                        <span class="font-bold text-xl text-gray-800" id="total_cart_amount">{{ number_format($order->getTotalAmount(false)) }}</span>
                     </div>
                 </div>
                 <div>
@@ -174,66 +174,87 @@
                 <span class="font-semibold text-gray-800 mr-2">Delivery To: </span>
                 <span class="font-semibold text-gray-900 underline underline-offset-1">{{ $item->order->invoice->delivery_location_address }}</span>
             </div>
-            @if ($item->hasAcceptedAllRequests() && $order->status == 'pending')
-                <form action="{{ route('wallet.pay') }}" method="POST" id="pay-form">
-                    @csrf
-                    <input type="hidden" name="invoice_id" id="invoice_id" value="{{ $order->invoice->id }}">
-                    <div class="w-full flex">
-                        <button type="submit" class="bg-primary-one rounded-lg w-full p-2 text-white text-center font-semibold">Pay For Order</button>
-                    </div>
-                </form>
-                <button class="hidden" id="confirm-payment-btn" data-modal-target="confirm-payment-modal" data-modal-toggle="confirm-payment-modal"></button>
-                <x-modal modal_id="confirm-payment-modal">
-                    <div class="relative w-full max-w-lg max-h-full">
-                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                            <button type="button" class="absolute top-1 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="confirm-payment-modal">
-                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                </svg>
-                                <span class="sr-only">Close modal</span>
-                            </button>
-                            <h2 class="px-2 py-2 lg:px-4 font-bold text-xl">Confirm Payment</h2>
-                            <div class="space-y-2 p-2">
-                                <form action="{{ route('wallet.pay.confirm') }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="ref" id="transaction_ref">
+            @if (now()->lessThan(Carbon\Carbon::parse($order->orderItems->first()->delivery_date)))
+                @if ($item->hasAcceptedAllRequests() && $order->status == 'pending')
+                    <form action="{{ route('wallet.pay') }}" method="POST" id="pay-form">
+                        @csrf
+                        <input type="hidden" name="invoice_id" id="invoice_id" value="{{ $order->invoice->id }}">
+                        <div class="w-full flex">
+                            <button type="submit" class="bg-primary-one rounded-lg w-full p-2 text-white text-center font-semibold" id="pay-order-btn">Pay For Order</button>
+                        </div>
+                    </form>
+                    <button class="hidden" id="confirm-payment-btn" data-modal-target="confirm-payment-modal" data-modal-toggle="confirm-payment-modal"></button>
+                    <x-modal modal_id="confirm-payment-modal">
+                        <div class="relative w-full max-w-lg max-h-full">
+                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                <button type="button" class="absolute top-1 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="confirm-payment-modal">
+                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                    </svg>
+                                    <span class="sr-only">Close modal</span>
+                                </button>
+                                <h2 class="px-2 py-2 lg:px-4 font-bold text-xl">Confirm Payment</h2>
+                                <div class="space-y-2 p-2">
+                                    <form action="{{ route('wallet.pay.confirm') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="ref" id="transaction_ref">
 
-                                    <div class="form-group mt-2">
-                                        <x-input-label for="Enter Code" :value="__('Enter Code to Confirm Payment')" />
-                                        <x-text-input id="otp" class="block mt-1 w-full" type="text" name="otp" autocomplete="off" />
-                                        <x-input-error :messages="$errors->get('otp')" class="mt-1" />
-                                    </div>
-                                    <div class="w-full flex mt-2">
-                                        <button type="submit" class="bg-primary-one rounded-lg w-full p-2 text-white text-center font-semibold">Pay</button>
-                                    </div>
-                                </form>
+                                        <div class="form-group mt-2">
+                                            <x-input-label for="Enter Code" :value="__('Enter Code to Confirm Payment')" />
+                                            <x-text-input id="otp" class="block mt-1 w-full" type="text" name="otp" autocomplete="off" />
+                                            <x-input-error :messages="$errors->get('otp')" class="mt-1" />
+                                        </div>
+                                        <div class="w-full flex mt-2">
+                                            <button type="submit" class="bg-primary-one rounded-lg w-full p-2 text-white text-center font-semibold">Pay</button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </x-modal>
-                @if (!$item->order->invoice->financingRequest()->exists())
-                    <div class="w-full flex">
-                        <a href="{{ route('invoice.financing.request', ['invoice' => $item->order->invoice]) }}" class="bg-primary-one rounded-lg w-full p-2 text-white text-center font-semibold">Request For Financing</a>
-                    </div>
+                    </x-modal>
+                    @if (!$item->order->invoice->financingRequest()->exists())
+                        <div class="w-full flex">
+                            {{-- <a href="{{ route('invoice.financing.request', ['invoice' => $item->order->invoice]) }}" class="bg-primary-one rounded-lg w-full p-2 text-white text-center font-semibold">Request For Financing</a> --}}
+                            <button data-modal-target="request-financing" data-modal-toggle="request-financing" class="bg-primary-one rounded-lg w-full p-2 text-white text-center font-semibold transition duration-150 ease-in-out">Request For Financing</button>
+                        </div>
+                        <x-modal modal_id="request-financing">
+                            <div class="relative w-full max-w-6xl max-h-full">
+                                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                    <button type="button" class="absolute top-1 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="request-financing">
+                                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                        </svg>
+                                        <span class="sr-only">Close modal</span>
+                                    </button>
+                                    {{-- @include('partials.finanicing-request.request') --}}
+                                    <span class="text-lg font-bold">Form goes here</span>
+                                </div>
+                            </div>
+                        </x-modal>
+                    @else
+                        <div class="block md:flex md:flex-col md:gap-1">
+                            <span class="font-semibold text-gray-800 mr-2">Financing Request Status:</span>
+                            <span class="font-semibold text-gray-900 text-xl">{{ Str::title($item->order->invoice->financingRequest->status) }}</span>
+                        </div>
+                    @endif
                 @else
-                    <div class="block md:flex md:flex-col md:gap-1">
-                        <span class="font-semibold text-gray-800 mr-2">Financing Request Status:</span>
-                        <span class="font-semibold text-gray-900 text-xl">{{ Str::title($item->order->invoice->financingRequest->status) }}</span>
-                    </div>
+                    @if ($item->order->invoice->payment_status == 'paid')
+                        <div class="flex justify-between">
+                            <span class="text-xl font-semibold">Order Status:</span>
+                            <span class="font-semibold bg-secondary-six px-2 py-1 rounded-md">Paid</span>
+                        </div>
+                    @endif
+                    @if ($item->order->status == 'cancelled')
+                        <div class="flex justify-between">
+                            <span class="text-xl font-semibold">Order Status:</span>
+                            <span class="font-semibold bg-red-700 px-2 py-1 rounded-md">Cancelled</span>
+                        </div>
+                    @endif
                 @endif
             @else
-                @if ($item->order->invoice->payment_status == 'paid')
-                    <div class="flex justify-between">
-                        <span class="text-xl font-semibold">Order Status:</span>
-                        <span class="font-semibold bg-secondary-six px-2 py-1 rounded-md">Paid</span>
-                    </div>
-                @endif
-                @if ($item->order->status == 'cancelled')
-                    <div class="flex justify-between">
-                        <span class="text-xl font-semibold">Order Status:</span>
-                        <span class="font-semibold bg-red-700 px-2 py-1 rounded-md">Cancelled</span>
-                    </div>
-                @endif
+                <div class="bg-red-200 p-2 text-center rounded-lg">
+                    <span class="text-lg text-red-700 w-full">Delivery Date For this order has passed the current date</span>
+                </div>
             @endif
         </div>
         @foreach ($order->orderItems as $key => $item)
@@ -509,5 +530,31 @@
                 @endif
             @endforeach
         @endforeach
+        @if (($order->status == 'quotation request' || $order->status == 'pending' || $order->status == 'accepted') && $order->invoice->payment_status != 'paid')
+            <div class="flex justify-end">
+                <button data-modal-target="delete-order-confirmed" data-modal-toggle="delete-order-confirmed" class="bg-red-500 hover:bg-red-400 rounded-lg p-2 text-white text-center font-semibold transition duration-150 ease-in-out">Delete Order</button>
+            </div>
+            <x-modal modal_id="delete-order-confirmed">
+                <div class="relative w-full max-w-2xl max-h-full">
+                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                        <button type="button" class="absolute top-1 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="delete-order-confirmed">
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                            </svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                        <h2 class="px-2 py-2 lg:px-4 font-bold text-xl">Delete Order</h2>
+                        <div class="px-2 py-2 lg:px-4">
+                            <span class="font-semibold">Are You Sure You Want to delete the Order, {{ Str::upper($order->order_id) }}?</span><br>
+                            <span class="font-semibold text-red-600">This action cannot be undone.</span>
+                            <div class="flex gap-2 justify-end">
+                                <a href="{{ route('orders.delete', ['order' => $order]) }}" class="bg-red-800 hover:bg-red-700 rounded-lg p-2 text-white text-center font-semibold transition duration-150 ease-in-out">Delete</a>
+                                <button data-modal-hide="delete-order-confirmed" class="bg-gray-800 hover:bg-gray-600 rounded-lg p-2 text-white text-center font-semibold transition duration-150 ease-in-out">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </x-modal>
+        @endif
     </div>
 </div>

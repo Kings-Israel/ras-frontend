@@ -7,6 +7,8 @@ use App\Helpers\NumberGenerator;
 use App\Models\EscrowPayment;
 use App\Models\Invoice;
 use App\Models\Payment;
+use App\Models\User;
+use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
@@ -39,47 +41,65 @@ class PaymentController extends Controller
             return back();
         }
 
-        // $token = JambopayToken::walletAccessToken();
+        $token = JambopayToken::walletAccessToken();
 
-        // if (!auth()->user()->hasWallet($token)) {
-        //     return $this->respondError('You do not have a wallet. Create one to perform this action.');
-        // }
+        if (!auth()->user()->hasWallet($token)) {
+            return $this->respondError('You do not have a wallet. Create one to perform this action.');
+        }
 
-        // if (!$invoice->orders->first()->business->user->hasWallet($token)) {
-        //     toastr()->error('', 'Vendor has not created a wallet account');
-        //     return back();
-        // }
+        if (!$invoice->orders->first()->business->user->hasWallet($token)) {
+            toastr()->error('', 'Vendor has not created a wallet account');
+            return back();
+        }
 
         $phone_number = strlen(auth()->user()->phone_number) == 9 ? '0'.auth()->user()->phone_number : '0'.substr(auth()->user()->phone_number, -9);
 
-        // // Check wallet balance
-        // $account_response = Http::withHeaders([
-        //                             'Authorization' => $token->token_type.' '.$token->access_token
-        //                         ])->get(config('services.jambopay.wallet_url').'/wallet/account', [
-        //                             'accountNo' => config('services.jambopay.wallet_account_number'),
-        //                             'phoneNumber' => $phone_number
-        //                         ]);
+        $user_wallet_account = Wallet::where('walleteable_id', auth()->id())->where('walleteable_type', User::class)->first();
+        if (!$user_wallet_account) {
+            // Get User Wallet Account
+            $wallet_account = Http::withHeaders([
+                                            'Authorization' => $token->token_type.' '.$token->access_token,
+                                            'Content-Type' => 'application/json',
+                                        ])->get(config('services.jambopay.wallet_url').'/wallet/account', [
+                                            'accountNo' => config('services.jambopay.wallet_account_number'),
+                                            'phoneNumber' => $phone_number
+                                        ]);
 
-        // if ($account_response->failed() || $account_response->requestTimeout() || $account_response->serverError()) {
-        //     toastr()->error('', 'An error occurred while retrieving wallet information');
-        //     return back();
-        // }
+            $user_wallet_account = Wallet::create([
+                'walleteable_type' => User::class,
+                'walleteable_id' => auth()->id(),
+                'account_number' => $wallet_account['data'][0]['accountNo'],
+            ]);
+        }
 
-        // if (collect(json_decode($account_response))->has('statusCode')) {
-        //     if (json_decode($account_response)->message[0] === 'Wrong credentials') {
-        //         toastr()->error('', 'An error occurred while retrieving wallet information');
-        //         return back();
-        //     }
-        //     toastr()->error('', 'An error occurred while retrieving wallet information');
+        // Check wallet balance
+        $account_response = Http::withHeaders([
+                                    'Authorization' => $token->token_type.' '.$token->access_token
+                                ])->get(config('services.jambopay.wallet_url').'/wallet/account', [
+                                    'accountNo' => $user_wallet_account->account_number,
+                                    'phoneNumber' => $phone_number
+                                ]);
 
-        //     return back();
-        // }
+        if ($account_response->failed() || $account_response->requestTimeout() || $account_response->serverError()) {
+            toastr()->error('', 'An error occurred while retrieving wallet information');
+            return back();
+        }
 
-        // $response = Http::withHeaders([
-        //         'Authorization' => $token->token_type.' '.$token->access_token,
-        //     ])->post(config('services.jambopay.wallet_url').'/wallet/balance', [
-        //         'accountNo' => (string) $account_response['data'][0]['accountNo'],
-        //     ]);
+        if (collect(json_decode($account_response))->has('statusCode')) {
+            if (json_decode($account_response)->message[0] === 'Wrong credentials') {
+                toastr()->error('', 'An error occurred while retrieving wallet information');
+                return back();
+            }
+            toastr()->error('', 'An error occurred while retrieving wallet information');
+
+            return back();
+        }
+
+        $response = Http::withHeaders([
+                'Authorization' => $token->token_type.' '.$token->access_token,
+            ])->post(config('services.jambopay.wallet_url').'/wallet/balance', [
+                'accountNo' => (string) $account_response['data'][0]['accountNo'],
+            ]);
 
         $order_total = 0;
         foreach ($invoice->orders as $order) {
@@ -96,52 +116,45 @@ class PaymentController extends Controller
 
         $phone_number = strlen(auth()->user()->phone_number) == 9 ? '0'.auth()->user()->phone_number : '0'.substr(auth()->user()->phone_number, -9);
 
-        // // Get User Wallet Account
-        // $user_wallet_account = Http::withHeaders([
-        //                                 'Authorization' => $token->token_type.' '.$token->access_token,
-        //                                 'Content-Type' => 'application/json',
-        //                             ])->get(config('services.jambopay.wallet_url').'/wallet/account', [
-        //                                 'accountNo' => config('services.jambopay.wallet_account_number'),
-        //                                 'phoneNumber' => $phone_number
-        //                             ]);
-
         $order_id = NumberGenerator::generateUniqueNumber(Payment::class, 'jambopay_checkout_id', 10000000, 99999999);
 
-        // $response = Http::withHeaders([
-        //     'Authorization' => $token->token_type.' '.$token->access_token
-        // ])->post(config('services.jambopay.wallet_url').'/wallet/transaction/transfer', [
-        //     'amount' => $order_total,
-        //     'accountTo' => (string) config('services.jambopay.wallet_commission_account_number'),
-        //     'accountFrom' => (string) $user_wallet_account['data'][0]['accountNo'],
-        //     'orderId' => $order_id,
-        //     'phoneNumber' => $phone_number,
-        //     'callbackUrl' => route('jambopay.topup.callback'),
-        //     'partnerCode' => '100',
-        // ]);
+        $response = Http::withHeaders([
+            'Authorization' => $token->token_type.' '.$token->access_token
+        ])->post(config('services.jambopay.wallet_url').'/wallet/transaction/transfer', [
+            'amount' => $order_total,
+            'accountTo' => (string) config('services.jambopay.wallet_commission_account_number'),
+            'accountFrom' => (string) $user_wallet_account->account_number,
+            'orderId' => $order_id,
+            'phoneNumber' => $phone_number,
+            'callbackUrl' => route('jambopay.payment.callback'),
+            'partnerCode' => '100',
+        ]);
 
-        // if (collect(json_decode($response))->has('statusCode')) {
-        //     toastr()->error('', 'An error occurred while processing payment');
-        //     return back();
-        // }
+        if (collect(json_decode($response))->has('statusCode')) {
+            toastr()->error('', 'An error occurred while processing payment');
+            return back();
+        }
 
-        $ref = Str::random(8);
+        $ref = json_decode($response)->ref;
 
         Payment::create([
             'user_id' => auth()->id(),
-            // 'jambopay_checkout_id' => json_decode($response)->ref,
             'jambopay_checkout_id' => $ref,
             'amount' => $order_total,
             'payable_type' => EscrowPayment::class,
             'payable_id' => $escrow->id
         ]);
 
-        // toastr()->success('', 'Payment is being processed. Please enter the confirmation code');
-
         if ($request->wantsJson()) {
             return response()->json(['ref' => $ref]);
         }
 
         return back()->with(['ref' => $ref]);
+    }
+
+    public function paymentCallback(Request $request)
+    {
+        info($request);
     }
 
     public function completeTransaction(Request $request)
@@ -155,28 +168,28 @@ class PaymentController extends Controller
             return response()->json($validator->messages(), 422);
         }
 
-        // $token = $this->token();
+        $token = $this->token();
 
-        // $response = Http::withHeaders([
-        //     'Authorization' => $token->token_type.' '.$token->access_token
-        // ])->post(config('services.jambopay.wallet_url').'/wallet/transaction/authorize', [
-        //     'otp' => $request->otp,
-        //     'ref' => $request->ref
-        // ]);
+        $response = Http::withHeaders([
+            'Authorization' => $token->token_type.' '.$token->access_token
+        ])->post(config('services.jambopay.wallet_url').'/wallet/transaction/authorize', [
+            'otp' => $request->otp,
+            'ref' => $request->ref
+        ]);
 
-        // if (collect(json_decode($response))->has('statusCode')) {
-        //     info($response);
-        //     toastr()->error('', json_decode($response)->message[0]);
-        //     return back();
-        // }
 
-        // $payment = Payment::where('jambopay_checkout_id', json_decode($response)->ref)->first();
-        $payment = Payment::where('jambopay_checkout_id', $request->ref)->first();
+        if (collect(json_decode($response))->has('statusCode')) {
+            toastr()->error('', 'An error occurred while processing the payment');
+            return back();
+        }
+
+        $ref = json_decode($response)->ref;
+
+        $payment = Payment::where('jambopay_checkout_id', $ref)->first();
 
         if ($payment) {
             $payment->update([
-                // 'transaction_ref' => json_decode($response)->ref,
-                'transaction_ref' => $request->ref,
+                'transaction_ref' => $ref,
             ]);
 
             switch ($payment->payable_type) {
@@ -210,7 +223,5 @@ class PaymentController extends Controller
 
             return back();
         }
-
-
     }
 }

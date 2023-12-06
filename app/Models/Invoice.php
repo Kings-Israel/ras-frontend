@@ -62,7 +62,6 @@ class Invoice extends Model
 
     public function getDeliveryCountry(): string
     {
-        return 'Kenya';
         $user_location = Http::withOptions(['verify' => false])->get('https://maps.googleapis.com/maps/api/geocode/json?latlng='.$this->delivery_location_lat.','.$this->delivery_location_lng.'&key=AIzaSyCisnVFSnc5QVfU2Jm2W3oRLqMDrKwOEoM');
 
         foreach ($user_location['results'][0]['address_components'] as $place) {

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\JambopayToken;
+use App\Models\User;
+use App\Models\Wallet;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -59,6 +61,21 @@ class WalletController extends Controller
         ]);
 
         if (!collect(json_decode($response))->has('statusCode')) {
+            $wallet = Http::withHeaders([
+                            'Authorization' => $token->token_type.' '.$token->access_token,
+                            'Content-Type' => 'application/json'
+                        ])->post(config('services.jambopay.wallet_url').'/wallet/profile', [
+                            'currency' => 'KES, USD',
+                            'phoneNumber' => auth()->user()->phone_number,
+                            'accountNo' => config('services.jambopay.wallet_account_number')
+                        ]);
+
+            Wallet::create([
+                'account_number' => $wallet['accountNo'],
+                'walleteable_id' => auth()->id(),
+                'walleteable_type' => User::class,
+            ]);
+
             toastr()->success('', 'Wallet Created Successfully');
 
             if (auth()->user()->hasRole('buyer')) {
@@ -69,6 +86,63 @@ class WalletController extends Controller
         }
 
         toastr()->error('', 'Error while creating wallet profile');
+
+        return back();
+    }
+
+    public function balance()
+    {
+        $wallet = Wallet::where('walleteable_id', auth()->id())->where('walleteable_type', User::class)->first();
+
+        $token = $this->token();
+
+        if (!$wallet) {
+            $phone_number = strlen(auth()->user()->phone_number) == 9 ? '0'.auth()->user()->phone_number : '0'.substr(auth()->user()->phone_number, -9);
+
+            $wallet_account = Http::withHeaders([
+                                    'Authorization' => $token->token_type.' '.$token->access_token,
+                                    'Content-Type' => 'application/json',
+                                ])->get(config('services.jambopay.wallet_url').'/wallet/account', [
+                                    'accountNo' => config('services.jambopay.wallet_account_number'),
+                                    'phoneNumber' => $phone_number
+                                ]);
+
+            $wallet = Wallet::create([
+                                'walleteable_type' => User::class,
+                                'walleteable_id' => auth()->id(),
+                                'account_number' => $wallet_account['data'][0]['accountNo'],
+                            ]);
+        }
+
+        if ($wallet) {
+            $response = Http::withHeaders([
+                                'Authorization' => $token->token_type.' '.$token->access_token,
+                                'Content-Type' => 'application/json'
+                            ])
+                            ->post(config('services.jambopay.wallet_url').'/wallet/balance', [
+                                "accountNo" => $wallet->account_number
+                            ]);
+
+            if (!collect(json_decode($response))->has('statusCode')) {
+                $wallet->update([
+                    'balance' => $response['balance'],
+                ]);
+            }
+
+            if(request()->wantsJson()) {
+                return response()->json(['balance' => $response['balance']], 200);
+            }
+
+            toastr()->success('', 'Wallet balance was successfully updated.');
+
+            return back();
+        }
+
+        if(request()->wantsJson()) {
+            return response()->json(['error' => 'Error fetching wallet.'], 200);
+        }
+
+        toastr()->error('', 'Error fetching wallet');
 
         return back();
     }

@@ -100,7 +100,7 @@
                     <h4 class="text-sm font-semibold text-gray-500">Order Subtotal:</h4>
                     <div class="flex gap-1">
                         <h3 class="font-bold text-xl text-gray-600 my-auto">{{ Str::upper($order->orderItems->first()->product->currency) }}</h3>
-                        <span class="font-bold text-xl text-gray-800" id="total_cart_amount">{{ number_format($order->getTotalAmount()) }}</span>
+                        <span class="font-bold text-xl text-gray-800" id="total_cart_amount">{{ number_format($order->getTotalAmount(false)) }}</span>
                     </div>
                 </div>
                 <div>

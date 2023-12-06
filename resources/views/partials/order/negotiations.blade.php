@@ -159,7 +159,7 @@
                     <h4 class="text-sm font-semibold text-gray-500">Order Subtotal:</h4>
                     <div class="flex gap-1">
                         <h3 class="font-bold text-xl text-gray-600 my-auto">{{ Str::upper($order->orderItems->first()->product->currency) }}</h3>
-                        <span class="font-bold text-xl text-gray-800" id="total_cart_amount">{{ number_format($order->getTotalAmount()) }}</span>
+                        <span class="font-bold text-xl text-gray-800" id="total_cart_amount">{{ number_format($order->getTotalAmount(false)) }}</span>
                     </div>
                 </div>
                 <div>
@@ -178,27 +178,33 @@
                 <span class="font-semibold text-gray-800 mr-2">Delivery To: </span>
                 <span class="font-semibold text-gray-900 underline underline-offset-1">{{ $item->order->invoice->delivery_location_address }}</span>
             </div>
-            @if ($item->hasAcceptedAllRequests() && ($order->status == 'quotation request' || $order->status == 'accepted'))
-                <form action="{{ route('orders.update', ['order' => $order]) }}" method="POST">
-                    @csrf
-                    <input type="hidden" name="status" value="pending">
-                    <div class="w-full flex">
-                        <button type="submit" class="bg-primary-one rounded-lg w-full p-2 text-white text-center font-semibold">Confirm Order</button>
-                    </div>
-                </form>
+            @if (now()->lessThan(Carbon\Carbon::parse($order->orderItems->first()->delivery_date)))
+                @if ($item->hasAcceptedAllRequests() && ($order->status == 'quotation request' || $order->status == 'accepted'))
+                    <form action="{{ route('orders.update', ['order' => $order]) }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="status" value="pending">
+                        <div class="w-full flex">
+                            <button type="submit" class="bg-primary-one rounded-lg w-full p-2 text-white text-center font-semibold">Confirm Order</button>
+                        </div>
+                    </form>
+                @else
+                    @if ($item->order->invoice->payment_status == 'paid')
+                        <div class="flex justify-between">
+                            <span class="text-xl font-semibold">Order Status:</span>
+                            <span class="font-semibold bg-secondary-six px-2 py-1 rounded-md">Paid</span>
+                        </div>
+                    @endif
+                    @if ($item->order->status == 'cancelled')
+                        <div class="flex justify-between">
+                            <span class="text-xl font-semibold">Order Status:</span>
+                            <span class="font-semibold bg-red-700 px-2 py-1 rounded-md">Cancelled</span>
+                        </div>
+                    @endif
+                @endif
             @else
-                @if ($item->order->invoice->payment_status == 'paid')
-                    <div class="flex justify-between">
-                        <span class="text-xl font-semibold">Order Status:</span>
-                        <span class="font-semibold bg-secondary-six px-2 py-1 rounded-md">Paid</span>
-                    </div>
-                @endif
-                @if ($item->order->status == 'cancelled')
-                    <div class="flex justify-between">
-                        <span class="text-xl font-semibold">Order Status:</span>
-                        <span class="font-semibold bg-red-700 px-2 py-1 rounded-md">Cancelled</span>
-                    </div>
-                @endif
+                <div class="bg-red-200 p-2 text-center rounded-lg">
+                    <span class="text-lg text-red-700 w-full">Delivery Date For this order has passed the current date</span>
+                </div>
             @endif
         </div>
         @foreach ($order->orderItems as $key => $item)
@@ -469,110 +475,8 @@
                     </div>
                 @endif
             @endforeach
-            @if ($item->insuranceRequest()->exists() && $item->insuranceRequest->cost != null)
-                <div class="border border-gray-300 p-4 rounded-lg">
-                    <div class="flex flex-col">
-                        <h4 class="font-semibold text-gray-500">Insurance Quote:</h4>
-                        <div class="flex justify-between">
-                            <div class="flex gap-1">
-                                <h3 class="font-bold text-xl text-gray-600 my-auto">{{ Str::upper($order->orderItems->first()->product->currency) }}</h3>
-                                <span class="font-bold text-xl text-gray-800" id="total_cart_amount">{{ number_format($item->insuranceRequest->cost) }}</span>
-                            </div>
-                            @if ($item->insuranceRequest->cost_description_file != null)
-                                <div>
-                                    <a href="{{ $item->insuranceRequest->cost_description_file }}" target="_blank" class="p-1 text-black font-semibold bg-secondary-five rounded-md">View Pro-forma</a>
-                                </div>
-                            @endif
-                        </div>
-                        @if ($item->insuranceRequest->cost_description != null)
-                            <span class="text-gray-500 font-bold underline underline-offset-1">Cost Description</span>
-                            <span class="text-gray-900 font-semibold">{{ $item->insuranceRequest->cost_description }}</span>
-                        @endif
-                    </div>
-                    @if ($item->insuranceRequest->status != 'accpeted')
-                        <div class="my-2">
-                            <a href="{{ route('order.request.update', ['request' => $item->insuranceRequest->id, 'status' => 'accepted', 'type' => 'App\\Models\\InsuranceRequest']) }}" class="p-1 bg-primary-one text-white rounded-md font-semibold">Accept Quote</a>
-                        </div>
-                    @endif
-                </div>
-            @endif
-            @if ($item->inspectionRequest()->exists() && $item->inspectionRequest->cost != null)
-                <div class="border border-gray-300 p-4 rounded-lg">
-                    <div class="flex flex-col">
-                        <h4 class="font-semibold text-gray-500">Inspection Quote:</h4>
-                        <div class="flex justify-between">
-                            <div class="flex gap-1">
-                                <h3 class="font-bold text-xl text-gray-600 my-auto">{{ Str::upper($order->orderItems->first()->product->currency) }}</h3>
-                                <span class="font-bold text-xl text-gray-800" id="total_cart_amount">{{ number_format($item->inspectionRequest->cost) }}</span>
-                            </div>
-                            @if ($item->inspectionRequest->cost_description_file != null)
-                                <div>
-                                    <a href="{{ $item->inspectionRequest->cost_description_file }}" target="_blank" class="p-1 text-black font-semibold bg-secondary-four rounded-md">View Pro-forma</a>
-                                </div>
-                            @endif
-                        </div>
-                        @if ($item->inspectionRequest->cost_description != null)
-                            <span class="text-gray-500 font-bold underline underline-offset-1">Cost Description</span>
-                            <span class="text-gray-900 font-semibold">{{ $item->inspectionRequest->cost_description }}</span>
-                        @endif
-                    </div>
-                    <div class="my-2">
-                        <a href="{{ route('order.request.update', ['request' => $item->inspectionRequest->id, 'status' => 'accepted', 'type' => 'App\\Models\\InspectionRequest']) }}" class="p-1 bg-primary-one text-white rounded-md font-semibold">Accept Quote</a>
-                    </div>
-                </div>
-            @endif
-            @if ($item->storageRequest()->exists() && $item->storageRequest->cost != null)
-                <div class="border border-gray-300 p-4 rounded-lg">
-                    <div class="flex flex-col">
-                        <h4 class="font-semibold text-gray-500">Warehousing Quote:</h4>
-                        <div class="flex justify-between">
-                            <div class="flex gap-1">
-                                <h3 class="font-bold text-xl text-gray-600 my-auto">{{ Str::upper($order->orderItems->first()->product->currency) }}</h3>
-                                <span class="font-bold text-xl text-gray-800" id="total_cart_amount">{{ number_format($item->storageRequest->cost) }}</span>
-                            </div>
-                            @if ($item->storageRequest->cost_description_file != null)
-                                <div>
-                                    <a href="{{ $item->storageRequest->cost_description_file }}" target="_blank" class="p-1 text-black font-semibold bg-secondary-one rounded-md">View Pro-forma</a>
-                                </div>
-                            @endif
-                        </div>
-                        @if ($item->storageRequest->cost_description != null)
-                            <span class="text-gray-500 font-bold underline underline-offset-1">Cost Description</span>
-                            <span class="text-gray-900 font-semibold">{{ $item->storageRequest->cost_description }}</span>
-                        @endif
-                    </div>
-                    <div class="my-2">
-                        <a href="{{ route('order.request.update', ['request' => $item->storageRequest->id, 'status' => 'accepted', 'type' => 'App\\Models\\OrderStorageRequest']) }}" class="p-1 bg-primary-one text-white rounded-md font-semibold">Accept Quote</a>
-                    </div>
-                </div>
-            @endif
-            @if ($item->deliveryRequest()->exists() && $item->deliveryRequest->cost != null)
-                <div class="border border-gray-300 p-4 rounded-lg">
-                    <div class="flex flex-col">
-                        <h4 class="font-semibold text-gray-500">Insurance Quote:</h4>
-                        <div class="flex justify-between">
-                            <div class="flex gap-1">
-                                <h3 class="font-bold text-xl text-gray-600 my-auto">{{ Str::upper($order->orderItems->first()->product->currency) }}</h3>
-                                <span class="font-bold text-xl text-gray-800" id="total_cart_amount">{{ number_format($item->deliveryRequest->cost) }}</span>
-                            </div>
-                            @if ($item->deliveryRequest->cost_description_file != null)
-                                <div>
-                                    <a href="{{ $item->deliveryRequest->cost_description_file }}" target="_blank" class="p-1 text-black font-semibold bg-secondary-four rounded-md">View Pro-forma</a>
-                                </div>
-                            @endif
-                        </div>
-                        @if ($item->deliveryRequest->cost_description != null)
-                            <span class="text-gray-500 font-bold underline underline-offset-1">Cost Description</span>
-                            <span class="text-gray-900 font-semibold">{{ $item->deliveryRequest->cost_description }}</span>
-                        @endif
-                    </div>
-                    <div class="my-2">
-                        <a href="{{ route('order.request.update', ['request' => $item->deliveryRequest->id, 'status' => 'accepted', 'type' => 'App\\Models\\OrderDeliveryRequest']) }}" class="p-1 bg-primary-one text-white rounded-md font-semibold">Accept Quote</a>
-                    </div>
-                </div>
-            @endif
         @endforeach
-        @if (($order->status == 'quotation request' || $order->status == 'pending') && $order->invoice->payment_status != 'paid')
+        @if (($order->status == 'quotation request' || $order->status == 'pending' || $order->status == 'accepted') && $order->invoice->payment_status != 'paid')
             <div class="flex justify-end">
                 <button data-modal-target="delete-order" data-modal-toggle="delete-order" class="bg-red-500 hover:bg-red-400 rounded-lg p-2 text-white text-center font-semibold transition duration-150 ease-in-out">Delete Order</button>
             </div>

@@ -38,7 +38,7 @@ class UpdatedOrder extends Notification
         return (new MailMessage)
                     ->greeting('Hello, '.$notifiable->first_name)
                     ->line('An update was made on your order.')
-                    ->action('Click to view order', url('/invoices/'.$this->order->invoice->id.'/orders'))
+                    ->action('Click to view order', url('/orders/'.$this->order->id))
                     ->line('Thank you for using our application!');
     }
 
