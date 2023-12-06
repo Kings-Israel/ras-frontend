@@ -65,7 +65,7 @@
                         {{ Str::title($order->invoice->status) }}
                     </td>
                     <td class="px-2 py-2 text-gray-500">
-                        Ksh.{{ number_format($order->invoice->total_amount) }}
+                        {{ number_format($order->getTotalAmount(false)) }}
                     </td>
                 </tr>
                 <tr class="bg-gray-100 border-b-2 border-r-2 border-l-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer childTableRow">

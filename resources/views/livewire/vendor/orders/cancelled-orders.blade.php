@@ -53,7 +53,7 @@
                         {{ Str::title($order->status) }}
                     </td>
                     <td class="px-2 py-2 text-gray-600">
-                        {{ number_format($order->invoice->total_amount) }}
+                        {{ number_format($order->getTotalAmount(false)) }}
                     </td>
                 </tr>
             @endforeach

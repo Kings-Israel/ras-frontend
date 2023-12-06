@@ -20,6 +20,7 @@ use Chat;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Facades\Http;
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -208,24 +209,33 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function hasWallet($token = NULL): bool
     {
-        return true;
-        if (!$token) {
-            $token = JambopayToken::walletAccessToken();
-        }
+        // if (!$token) {
+        //     $token = JambopayToken::walletAccessToken();
+        // }
 
-        $phone_number = strlen($this->phone_number) == 9 ? '0'.$this->phone_number : '0'.substr($this->phone_number, -9);
+        // $phone_number = strlen($this->phone_number) == 9 ? '0'.$this->phone_number : '0'.substr($this->phone_number, -9);
 
-        $response = Http::withHeaders([
-                        'Authorization' => $token->token_type.' '.$token->access_token
-                    ])->get(config('services.jambopay.wallet_url').'/wallet/account', [
-                        'accountNo' => config('services.jambopay.wallet_account_number'),
-                        'phoneNumber' => $phone_number
-                    ]);
+        // $response = Http::withHeaders([
+        //                 'Authorization' => $token->token_type.' '.$token->access_token
+        //             ])->get(config('services.jambopay.wallet_url').'/wallet/account', [
+        //                 'accountNo' => config('services.jambopay.wallet_account_number'),
+        //                 'phoneNumber' => $phone_number
+        //             ]);
 
-        if (collect(json_decode($response))->has('statusCode') || count(json_decode($response)->data) <= 0) {
+        // if (collect(json_decode($response))->has('statusCode') || count(json_decode($response)->data) <= 0) {
+        //     return false;
+        // }
+
+        // return true;
+        if (!$this->wallet()) {
             return false;
         }
 
         return true;
+    }
+
+    public function wallet(): MorphOne
+    {
+        return $this->morphOne(Wallet::class, 'walleteable');
     }
 }
