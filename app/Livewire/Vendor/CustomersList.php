@@ -16,6 +16,9 @@ class CustomersList extends Component
     public function mount()
     {
         $this->user_ids = Order::where('business_id', auth()->user()->business->id)
+                                ->whereHas('invoice', function ($query) {
+                                    $query->where('payment_status', 'paid');
+                                })
                                 ->get()
                                 ->pluck('user_id');
     }
