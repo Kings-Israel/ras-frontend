@@ -94,6 +94,19 @@ class Business extends Model implements Searchable
         }
     }
 
+    /**
+     * Get the business profile
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getBusinessProfileAttribute($value)
+    {
+        if ($value) {
+            return config('app.url').'/storage/vendor/profile/'.$value;
+        }
+    }
+
     public function verified():bool
     {
         if ($this->verified_on) {

@@ -96,11 +96,14 @@ class Order extends Model
         return $this->hasMany(OrderConversation::class);
     }
 
-    public function getTotalAmount(): int
+    public function getTotalAmount($with_services = true): int
     {
         $amount = 0;
         foreach ($this->orderItems as $item) {
             $amount += (int) explode(' ', $item->quantity)[0] * (int) $item->amount;
+            if ($with_services) {
+                $amount += $item->orderRequests->where('status', 'accepted')->sum('cost');
+            }
         }
 
         return $amount;

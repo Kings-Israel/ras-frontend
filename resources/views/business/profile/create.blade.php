@@ -164,15 +164,22 @@
                     <!-- Primary Cover Image -->
                     <div class="mt-3 form-group">
                         <x-input-label for="primary_cover_image" :value="__('Primary Cover Image')" />
-                        <x-input-file id="primary_cover_image" type="file" name="primary_cover_image" :value="old('primary_cover_image')" />
+                        <x-input-file id="primary_cover_image" accept=".jpg,.png,.jpeg" type="file" name="primary_cover_image" :value="old('primary_cover_image')" />
                         <x-input-error :messages="$errors->get('primary_cover_image')" class="mt-1" />
                     </div>
 
                     <!-- Secondary Cover Image -->
                     <div class="mt-3">
                         <x-input-label for="secondary_cover_image" :value="__('Secondary Cover Image')" />
-                        <x-input-file id="secondary_cover_image" type="file" name="secondary_cover_image" :value="old('secondary_cover_image')" />
+                        <x-input-file id="secondary_cover_image" accept=".jpg,.png,.jpeg" type="file" name="secondary_cover_image" :value="old('secondary_cover_image')" />
                         <x-input-error :messages="$errors->get('secondary_cover_image')" class="mt-1" />
+                    </div>
+
+                    <!-- Business Profile -->
+                    <div class="mt-3 form-group">
+                        <x-input-label for="business_profile" :value="__('Business Profile in PDF')" />
+                        <x-input-file id="business_profile" accept=".pdf" type="file" name="business_profile" :value="old('business_profile')" />
+                        <x-input-error :messages="$errors->get('business_profile')" class="mt-1" />
                     </div>
 
                     <div class="flex mt-3 justify-end gap-2">
@@ -187,15 +194,15 @@
     </div>
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="{{asset('assets/vendor/libs/cleavejs/cleave.js')}}"></script>
-    <script src="{{asset('assets/vendor/libs/cleavejs/cleave-phone.js')}}"></script>
-    <script src="{{asset('assets/vendor/libs/bs-stepper/bs-stepper.js')}}"></script>
-    <script src="{{asset('assets/vendor/libs/select2/select2.js')}}"></script>
-    <script src="{{asset('assets/vendor/libs/tagify/tagify.js')}}"></script>
-    <script src="{{asset('assets/vendor/libs/flatpickr/flatpickr.js')}}"></script>
-    <script src="{{asset('assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js')}}"></script>
-    <script src="{{asset('assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js')}}"></script>
-    <script src="{{asset('assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js')}}"></script>
+    <script src="{{ asset('assets/vendor/libs/cleavejs/cleave.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/cleavejs/cleave-phone.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/bs-stepper/bs-stepper.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/select2/select2.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/tagify/tagify.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js') }}"></script>
     <script src="{{ asset('assets/js/business-profile-wizard.js') }}"></script>
     <script>
         function getDetails() {
@@ -218,45 +225,45 @@
         }
 
         function dropdown() {
-                return {
-                    options: [],
-                    selected: [],
-                    show: false,
-                    open() { this.show = true },
-                    close() { this.show = false },
-                    isOpen() { return this.show === true },
-                    select(index, event) {
-                        if (!this.options[index].selected) {
+            return {
+                options: [],
+                selected: [],
+                show: false,
+                open() { this.show = true },
+                close() { this.show = false },
+                isOpen() { return this.show === true },
+                select(index, event) {
+                    if (!this.options[index].selected) {
 
-                            this.options[index].selected = true;
-                            this.options[index].element = event.target;
-                            this.selected.push(index);
+                        this.options[index].selected = true;
+                        this.options[index].element = event.target;
+                        this.selected.push(index);
 
-                        } else {
-                            this.selected.splice(this.selected.lastIndexOf(index), 1);
-                            this.options[index].selected = false
-                        }
-                    },
-                    remove(index, option) {
-                        this.options[option].selected = false;
-                        this.selected.splice(index, 1);
-                    },
-                    loadOptions() {
-                        const options = document.getElementById('select').options;
-                        for (let i = 0; i < options.length; i++) {
-                            this.options.push({
-                                value: options[i].value,
-                                text: options[i].innerText,
-                                selected: options[i].getAttribute('selected') != null ? options[i].getAttribute('selected') : false
-                            });
-                        }
-                    },
-                    selectedValues(){
-                        return this.selected.map((option)=>{
-                            return this.options[option].value;
-                        })
+                    } else {
+                        this.selected.splice(this.selected.lastIndexOf(index), 1);
+                        this.options[index].selected = false
                     }
+                },
+                remove(index, option) {
+                    this.options[option].selected = false;
+                    this.selected.splice(index, 1);
+                },
+                loadOptions() {
+                    const options = document.getElementById('select').options;
+                    for (let i = 0; i < options.length; i++) {
+                        this.options.push({
+                            value: options[i].value,
+                            text: options[i].innerText,
+                            selected: options[i].getAttribute('selected') != null ? options[i].getAttribute('selected') : false
+                        });
+                    }
+                },
+                selectedValues(){
+                    return this.selected.map((option)=>{
+                        return this.options[option].value;
+                    })
                 }
             }
+        }
     </script>
 </x-guest-layout>

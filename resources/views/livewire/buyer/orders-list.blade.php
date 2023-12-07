@@ -295,6 +295,10 @@
             </div>
         </form>
     </div>
+    <span class="lg:flex lg:px-28 mt-2 gap-2 text-sm">
+        <a href="{{ route('welcome') }}" class="text-gray-500">Home ></a>
+        <a href="{{ route('orders') }}" class="">Orders</a>
+    </span>
     <form action="#" method="post" class="block lg:flex px-4 lg:px-28 p-4 gap-12">
         @csrf
         <div class="basis-3/4 bg-gray-50 p-2 rounded-lg">
@@ -338,7 +342,9 @@
                         @foreach ($orders as $order)
                             <tr class="bg-gray-50 border-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
                                 <th scope="row" class="px-2 py-2 font-extrabold text-gray-700 whitespace-nowrap dark:text-white hover:text-gray-800">
-                                    {{ $order->order_id }}
+                                    <a href="{{ route('orders.show', ['order' => $order]) }}" class="hover:text-gray-700">
+                                        {{ $order->order_id }}
+                                    </a>
                                 </th>
                                 <td class="px-2 py-2 text-gray-600">
                                     {{ $order->created_at->format('M d, Y') }}

@@ -56,7 +56,7 @@ class OrderController extends Controller
 
     public function order(Order $order)
     {
-        $order->load('orderItems.product.media', 'orderItems.product.business', 'orderItems.orderRequests', 'orderItems.quotationResponses');
+        $order->load('orderItems.product.media', 'orderItems.product.business', 'orderItems.orderRequests', 'orderItems.quotationResponses', 'invoice');
         $order_total = 0;
         $order_requests = null;
         foreach ($order->orderItems as $order_item) {
@@ -67,7 +67,21 @@ class OrderController extends Controller
             $order_requests = $order_item->orderRequests->groupBy('requesteable_type');
         }
 
-        return view('order', compact('order', 'order_total', 'order_requests'));
+        $available_facilities = [
+            'letter_of_invoice_discouting' => 'Letter of Invoice Discouting',
+            'lpo_financing' => 'LPO Financing',
+            'contract_financing' => 'Contract Financing',
+            'reverse_factoring' => 'Reverse Factoring',
+            'cheque_discouting' => 'Cheque Discouting',
+        ];
+
+        $durations = [
+            '30 Days',
+            '60 Days',
+            '90 Days',
+        ];
+
+        return view('order', compact('order', 'order_total', 'order_requests', 'available_facilities', 'durations'));
     }
 
     public function store(Request $request)
@@ -119,6 +133,7 @@ class OrderController extends Controller
                     'direct_message' => true,
                 ]);
             }
+
 
             OrderConversation::create([
                 'order_id' => $order->id,
@@ -441,7 +456,7 @@ class OrderController extends Controller
 
     public function delete(Order $order)
     {
-        if ($order->status == 'quotation request' || $order->status == 'pending') {
+        if (($order->status == 'quotation request' || $order->status == 'pending' || $order->status == 'accepted') && $order->invoice->payment_status != 'paid') {
             $order->delete();
 
             toastr()->success('', 'Order deleted successfully');

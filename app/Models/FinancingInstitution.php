@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
 use Musonza\Chat\Traits\Messageable;
@@ -44,5 +45,10 @@ class FinancingInstitution extends Model
     public function orderFinancings(): HasMany
     {
         return $this->hasMany(OrderFinancing::class);
+    }
+
+    public function wallet(): MorphOne
+    {
+        return $this->morphOne(Wallet::class, 'walleteable');
     }
 }

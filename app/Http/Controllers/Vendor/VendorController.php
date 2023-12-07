@@ -55,6 +55,7 @@ class VendorController extends Controller
             'name' => 'required', 'string',
             'country' => 'required',
             'primary_cover_image' => ['required', 'mimes:png,jpg,jpeg', 'max:5192'],
+            'business_profile' => ['nullable', 'mimes:pdf', 'max:5192'],
         ]);
 
         $business = Business::create([
@@ -64,6 +65,7 @@ class VendorController extends Controller
             'city_id' => $request->has('city') ? $request->city : NULL,
             'primary_cover_image' => $request->hasFile('primary_cover_image') ? pathinfo($request->primary_cover_image->store('cover_image', 'vendor'), PATHINFO_BASENAME) : NULL,
             'secondary_cover_image' => $request->hasFile('secondary_cover_image') ? pathinfo($request->secondary_cover_image->store('cover_image', 'vendor'), PATHINFO_BASENAME) : NULL,
+            'business_profile' => $request->hasFile('business_profile') ? pathinfo($request->business_profile->store('profile', 'vendor'), PATHINFO_BASENAME) : NULL,
         ]);
 
         if ($request->has('document_files') && collect($request->document_files)->count() > 0) {
@@ -163,7 +165,36 @@ class VendorController extends Controller
 
     public function dashboard()
     {
-        return view('business.dashboard');
+        $vendor = auth()->user()->business;
+
+        // Get Payments for the last 7 days
+        $payments_in_last_seven_days = [];
+        $days = [now()->subDays(6), now()->subDays(5), now()->subDays(4), now()->subDays(3), now()->subDays(2), now()];
+        foreach ($days as $day) {
+            $orders = Order::with('orderItems', 'invoice')
+                                ->where('business_id', $vendor->id)
+                                ->whereHas('invoice', function ($query) use ($day) {
+                                    $query->where('payment_status', 'paid')->whereDate('updated_at', $day);
+                                })
+                                ->get();
+
+            $amount = 0;
+            foreach ($orders as $order) {
+                $amount += $order->invoice->total_amount;
+            }
+
+            array_push($payments_in_last_seven_days, $amount);
+        }
+
+        $formatted_days = [];
+        foreach($days as $day) {
+            array_push($formatted_days, $day->format('M d'));
+        }
+
+        return view('business.dashboard', [
+            'days' => $formatted_days,
+            'payments_in_last_seven_days' => $payments_in_last_seven_days
+        ]);
     }
 
     public function orders()
@@ -306,5 +337,15 @@ class VendorController extends Controller
         toastr()->success('', 'Order updated successfully');
 
         return back();
+    }
+
+    public function customers()
+    {
+        return view('business.customers');
+    }
+
+    public function suppliers()
+    {
+        return view('business.suppliers');
     }
 }

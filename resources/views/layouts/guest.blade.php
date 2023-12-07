@@ -60,15 +60,17 @@
                         </a> --}}
                     @endif
                 @else
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
+                    @if (!Route::is('wallet.create'))
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
 
-                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">
-                            <x-secondary-button class="px-8 font-bold text-xl">
-                                Sign Out
-                            </x-secondary-button>
-                        </a>
-                    </form>
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">
+                                <x-secondary-button class="px-8 font-bold text-xl">
+                                    Sign Out
+                                </x-secondary-button>
+                            </a>
+                        </form>
+                    @endif
                 @endguest
             </x-guest-nav>
             <div {!! $attributes->merge(['class' => 'px-6 py-4 overflow-hidden sm:rounded-lg mx-auto rounded-md']) !!}>

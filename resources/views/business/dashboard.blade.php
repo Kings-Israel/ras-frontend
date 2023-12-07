@@ -270,6 +270,8 @@
     </div>
     @push('scripts')
         <script>
+            let days = {!! json_encode($days) !!}
+            let payments_in_last_seven_days = {!! json_encode($payments_in_last_seven_days) !!}
             // ApexCharts options and config
             window.addEventListener("load", function() {
                 const getChartOptions = () => {
@@ -441,12 +443,12 @@
                     series: [
                         {
                             name: "Sales",
-                            data: [6500, 6418, 6456, 6526, 6356, 6456],
+                            data: payments_in_last_seven_days,
                             color: "#EE5D32",
                         },
                     ],
                     xaxis: {
-                        categories: ['Mar 27', 'Mar 28', 'Mar 29', 'Mar 30', 'mar 31', 'Apr 1', 'Apr 2'],
+                        categories: days,
                         labels: {
                             show: true,
                         },

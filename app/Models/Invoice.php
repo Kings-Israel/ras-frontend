@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
@@ -116,5 +117,10 @@ class Invoice extends Model
     public function orderFinancing(): HasOne
     {
         return $this->hasOne(OrderFinancing::class);
+    }
+
+    public function payment(): MorphTo
+    {
+        return $this->morphTo(EscrowPayment::class, 'payable');
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Resources\ConversationParticipantResource;
 use App\Http\Resources\ConversationResource;
 use App\Http\Resources\MessageResource;
 use App\Http\Resources\UserResource;
+use App\Jobs\MessageSend;
 use App\Models\InspectingInstitution;
 use App\Models\InspectorUser;
 use App\Models\InsuranceCompany;
@@ -109,19 +110,19 @@ class ChatController extends Controller
 
         $conversations = Arr::pluck($conversations, 'conversation');
 
-        $order_conversations = [];
+        // $order_conversations = [];
 
-        if (auth()->user()->hasRole('vendor')) {
-            $orders = auth()->user()->business->orders->pluck('id');
-            $order_conversations = OrderConversation::whereIn('order_id', $orders)->get()->pluck('conversation_id');
-        }
+        // if (auth()->user()->hasRole('vendor')) {
+        //     $orders = auth()->user()->business->orders->pluck('id');
+        //     $order_conversations = OrderConversation::whereIn('order_id', $orders)->get()->pluck('conversation_id');
+        // }
 
-        if (auth()->user()->hasRole('buyer')) {
-            $orders = auth()->user()->orders->pluck('id');
-            $order_conversations = OrderConversation::whereIn('order_id', $orders)->get()->pluck('conversation_id');
-        }
+        // if (auth()->user()->hasRole('buyer')) {
+        //     $orders = auth()->user()->orders->pluck('id');
+        //     $order_conversations = OrderConversation::whereIn('order_id', $orders)->get()->pluck('conversation_id');
+        // }
 
-        $conversations = collect($conversations)->whereNotIn('id', $order_conversations);
+        // $conversations = collect($conversations)->whereNotIn('id', $order_conversations);
 
         return response()->json([
             'conversations' => ConversationResource::collection($conversations),
@@ -302,7 +303,7 @@ class ChatController extends Controller
         $message = Chat::message($request->message ? $request->message : 'files_only_message')->from(auth()->user())->data($files)->to($conversation)->send();
 
         // event(new SendMessage());
-        SendMessage::dispatch($user->email, $user, new MessageResource($message), new ConversationResource($conversation));
+        MessageSend::dispatchAfterResponse($user, $message, $conversation);
 
         if (request()->wantsJson()) {
             return response()->json(['message' => 'Message sent successfully', 'data' => new MessageResource($message)], 200);
@@ -345,12 +346,12 @@ class ChatController extends Controller
         }
 
         $message = Chat::message($request->message ? $request->message : 'files_only_message')->from(auth()->user())->data($files)->to($conversation)->send();
-
+        $receiver = null;
         foreach ($conversation->getParticipants() as $participant) {
             if ($participant instanceof User) {
                 if ($participant->id != auth()->id()) {
                     $receiver = new UserResource($participant);
-                    SendMessage::dispatch($receiver->email, $receiver, new MessageResource($message), new ConversationResource($conversation));
+                    // SendMessage::dispatch($receiver->email, $receiver, new MessageResource($message), new ConversationResource($conversation));
                     break;
                 }
             } elseif ($participant instanceof Warehouse) {
@@ -362,7 +363,7 @@ class ChatController extends Controller
                                         ->pluck('id');
                 if (!collect($warehouses)->contains($participant->id)) {
                     $receiver = $participant;
-                    SendMessage::dispatch($receiver->email, $receiver, new MessageResource($message), new ConversationResource($conversation));
+                    // SendMessage::dispatch($receiver->email, $receiver, new MessageResource($message), new ConversationResource($conversation));
                     break;
                 }
             } elseif ($participant instanceof InspectingInstitution) {
@@ -374,7 +375,7 @@ class ChatController extends Controller
                                         ->pluck('id');
                 if (!collect($inspectors)->contains($participant->id)) {
                     $receiver = $participant;
-                    SendMessage::dispatch($receiver->email, $receiver, new MessageResource($message), new ConversationResource($conversation));
+                    // SendMessage::dispatch($receiver->email, $receiver, new MessageResource($message), new ConversationResource($conversation));
                     break;
                 }
             } elseif ($participant instanceof InsuranceCompany) {
@@ -386,7 +387,7 @@ class ChatController extends Controller
                                         ->pluck('id');
                 if (!collect($insurers)->contains($participant->id)) {
                     $receiver = $participant;
-                    SendMessage::dispatch($receiver->email, $receiver, new MessageResource($message), new ConversationResource($conversation));
+                    // SendMessage::dispatch($receiver->email, $receiver, new MessageResource($message), new ConversationResource($conversation));
                     break;
                 }
             } elseif ($participant instanceof LogisticsCompany) {
@@ -398,10 +399,13 @@ class ChatController extends Controller
                                         ->pluck('id');
                 if (!collect($logistics_companies)->contains($participant->id)) {
                     $receiver = $participant;
-                    SendMessage::dispatch($receiver->email, $receiver, new MessageResource($message), new ConversationResource($conversation));
+                    // SendMessage::dispatch($receiver->email, $receiver, new MessageResource($message), new ConversationResource($conversation));
                     break;
                 }
             }
+        }
+        if ($receiver) {
+            MessageSend::dispatchAfterResponse($receiver, $message, $conversation);
         }
 
         if (request()->wantsJson()) {
