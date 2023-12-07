@@ -57,6 +57,7 @@
                         </span>
                     </div>
                 </div>
+                <livewire:bookmark-vendor :business="$business" />
             </div>
             <div class="flex flex-col gap-3">
                 <img src="{{ $business->primary_cover_image }}" alt="" class="w-full h-44 object-cover rounded-md">

@@ -168,4 +168,30 @@ class Business extends Model implements Searchable
     {
         return $this->hasMany(Order::class);
     }
+
+    public function isBookmarked(?User $user): bool
+    {
+        if (!$user) {
+            return false;
+        }
+
+        return VendorBookmark::where('business_id', $this->id)
+                                ->where('user_id', auth()->id())
+                                ->exists();
+    }
+
+    public function addToBookmarks(User $user)
+    {
+        VendorBookmark::create([
+            'user_id' => $user->id,
+            'business_id' => $this->id
+        ]);
+    }
+
+    public function removeFromBookmarks(User $user)
+    {
+        VendorBookmark::where('business_id', $this->id)
+                                ->where('user_id', auth()->id())
+                                ->delete();
+    }
 }
