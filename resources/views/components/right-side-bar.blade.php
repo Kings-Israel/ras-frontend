@@ -15,26 +15,26 @@
     </div>
     <div class="mt-10 space-y-4">
         <div class="bg-lime-100 dark:bg-lime-100 p-3 rounded-md flex gap-2 mx-2">
-            <span class="inline-flex items-center justify-center px-4 py-2 ml-2 text-yellow-500 text-xl bg-white rounded-full">
+            <span class="inline-flex items-center justify-center px-4 py-2 ml-2 text-yellow-500 text-md bg-white rounded-full">
                 <i class="fas fa-shopping-bag"></i>
             </span>
             <div class="ml-2 overflow-x-auto">
                 <span class="text-sm">Orders</span>
-                <h1 class="text-xl font-semibold">{{ $orders_count }}</h1>
+                <h1 class="text-md font-bold">{{ $orders_count }}</h1>
             </div>
         </div>
         <div class="bg-rose-200 dark:bg-pink-100 p-3 rounded-md flex gap-2 mx-2">
-            <span class="inline-flex items-center justify-center px-4 py-2 ml-2 text-pink-600 text-xl bg-white rounded-full">
+            <span class="inline-flex items-center justify-center px-4 py-2 ml-2 text-pink-600 text-md bg-white rounded-full">
                 <i class="fas fa-wallet"></i>
             </span>
             <div class="ml-2 overflow-x-auto">
                 <span class="text-sm">Revenue</span>
-                <h1 class="text-xl font-semibold">USD.{{ number_format($revenue) }}</h1>
+                <h1 class="text-md font-bold">USD.{{ number_format($revenue) }}</h1>
             </div>
         </div>
         <div class="bg-gray-200 dark:bg-gray-200 p-3 rounded-md">
             <div class="flex gap-2 mx-2">
-                <span class="inline-flex items-center justify-center px-4 py-2 ml-2 text-green-600 text-xl bg-white rounded-full">
+                <span class="inline-flex items-center justify-center px-4 py-2 ml-2 text-green-600 text-md bg-white rounded-full">
                     <i class="fas fa-money-bill-alt"></i>
                 </span>
                 <div class="ml-2 overflow-x-auto w-full">
@@ -42,7 +42,7 @@
                         <span class="text-sm">Wallet Balance</span>
                         <span class="text-sm text-end font-bold hover:cursor-pointer" id="update-wallet-btn">Update</span>
                     </div>
-                    <h1 class="text-xl font-semibold">USD. <span id="wallet-balance">{{ number_format($wallet_balance) }}</span></h1>
+                    <h1 class="text-md font-bold">USD. <span id="wallet-balance">{{ number_format($wallet_balance) }}</span></h1>
                 </div>
             </div>
         </div>

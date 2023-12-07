@@ -20,8 +20,12 @@ class BookmarkVendor extends Component
     {
         if ($this->isBookmarked) {
             $this->business->removeFromBookmarks(auth()->user());
+
+            $this->isBookmarked = false;
         } else {
             $this->business->addToBookmarks(auth()->user());
+
+            $this->isBookmarked = true;
         }
     }
 
