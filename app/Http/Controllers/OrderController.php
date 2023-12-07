@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Business;
+use App\Models\Country;
 use App\Models\FinancingInstitution;
 use App\Models\InspectingInstitution;
 use App\Models\InspectionRequest;
@@ -27,6 +28,16 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Chat;
+use App\Models\FinancingRequestDocument;
+use App\Models\FinancingRequestCompany;
+use App\Models\FinancingRequestBanker;
+use App\Models\FinancingRequestCapitalStructure;
+use App\Models\FinancingRequestShareholder;
+use App\Models\FinancingRequestCompanyManagement;
+use App\Models\FinancingRequestBankDebt;
+use App\Models\FinancingRequestOperatingDebt;
+use App\Models\FinancingRequestAnchorHistory;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -519,21 +530,207 @@ class OrderController extends Controller
 
     public function requestFinancing(Invoice $invoice)
     {
+        if($invoice->financingRequest()->exists()) {
+            toastr()->error('', 'Financing request already exists');
+
+            return redirect()->route('orders.show', ['order' => $invoice->orders->first()]);
+        }
+
+        $order_total = 0;
+        foreach ($invoice->orders as $order) {
+            foreach ($order->orderItems as $order_item) {
+                $order_total += $order_item->amount * explode(' ', $order_item->quantity)[0];
+                $order_total += $order_item->orderRequests->where('status', 'accepted')->sum('cost');
+            }
+        }
+
+        $available_facilities = [
+            'letter_of_invoice_discouting' => 'Letter of Invoice Discouting',
+            'lpo_financing' => 'LPO Financing',
+            'contract_financing' => 'Contract Financing',
+            'reverse_factoring' => 'Reverse Factoring',
+            'cheque_discouting' => 'Cheque Discouting',
+        ];
+
+        $durations = [
+            '30 Days',
+            '60 Days',
+            '90 Days',
+        ];
+
+        $documents = [
+            'details_of_facilities_required' => 'Application giving details of facilities required, purpose, justification and proposed repayment term',
+            'business_license' => 'Valid Trading/Business License',
+            'Business Registration Documents' => [
+                'certificate_of_incorporation' => 'Certificate of Incorporation',
+                'cr_12' => 'CR 12',
+                'memorandum_of_association' => 'Memorandum of Association',
+                'article_of_association' => 'Article of Association',
+                'kra_pin' => 'KRA PIN'
+            ],
+            'annuals_returns' => 'Annual Returns',
+            'filing_receipts' => 'Filing Receipt',
+            'business_profile' => 'Business/Company Profile',
+            'directors_ids' => 'Directors IDs',
+            'directors_pins' => 'Directors PINs',
+            'certified_bank_statment' => 'Certified Bank Statment for past 12 Months',
+            'projected_pl_account' => 'Projected P&L Account',
+            'cash_flow_statement' => 'Cash Flow Statement',
+            'balance_sheet' => 'Balance Sheet covering period of facility',
+            'list_of_debtors_and_creditors' => 'Aged list of Dedbtors and Creditors at the most recent date',
+            'board_resolution' => 'Borrower\'s Board Resolution authorizing the borrowing',
+        ];
+
+        $countries = Country::all();
+
+        return view('partials.order.financing-request', compact('invoice', 'available_facilities', 'durations', 'order_total', 'documents', 'countries'));
+    }
+
+    public function storeFinancingRequest(Request $request, Invoice $invoice)
+    {
         $financier = FinancingInstitution::with('users')->first();
 
-        $invoice->financingRequest()->create([
-            'financing_institution_id' => $financier->id
-        ]);
-
-        foreach ($financier->users as $user) {
-            $user->notify(new FinancingRequested($invoice));
+        if (!$request->has('agree_to_terms_and_conditions')) {
+            toastr()->error('', 'You must agree to terms and conditions.');
+            return back();
         }
+
+        try {
+            DB::beginTransaction();
+
+            $financing_request = $invoice->financingRequest()->create([
+                'financing_institution_id' => $financier->id,
+                'requested_facility' => $request->has('requested_facility') ? $request->requested_facility : NULL,
+                'facility_duration' => $request->has('facility_duration') ? $request->facility_duration : NULL,
+                'facility_purpose' => $request->has('facility_purpose') ? $request->facility_purpose : NULL,
+            ]);
+
+            if ($request->has('company_documents') && count($request->company_documents) > 0) {
+                foreach ($request->company_documents as $key => $company_doc) {
+                    FinancingRequestDocument::create([
+                        'financing_request_id' => $financing_request->id,
+                        'document_name' => $key,
+                        'document_url' => pathinfo($request->company_documents[$key]->store('documents', 'financing_request'), PATHINFO_BASENAME),
+                    ]);
+                }
+            }
+
+            if ($request->has('company_name') && $request->has('company_registration_number') && $request->has('country')) {
+                FinancingRequestCompany::create([
+                    'financing_request_id' => $financing_request->id,
+                    'name' => $request->company_name,
+                    'registration_number' => $request->company_registration_number,
+                    'country' => $request->country,
+                    'country_of_incorporation' => $request->has('country_of_incorporation') ? $request->country_of_incorporation : NULL,
+                    'pin_no' => $request->has('company_pin_number') ? $request->company_pin_number : NULL,
+                    'date_trade_started' => $request->has('date_trade_started') ? Carbon::parse($request->date_trade_started) : NULL,
+                    'postal_address' => $request->has('company_postal_address') ? $request->company_postal_address : NULL,
+                    'postal_code' => $request->has('company_postal_code') ? $request->company_postal_code : NULL,
+                    'city' => $request->has('company_city') ? $request->company_city : NULL,
+                    'physical_address' => $request->has('company_physical_address') ? $request->company_physical_address : NULL,
+                    'phone_number' => $request->has('company_phone_number') ? $request->company_phone_number : NULL,
+                    'email' => $request->has('company_email') ? $request->company_email : NULL,
+                    'business_nature' => $request->has('company_business_nature') ? $request->company_business_nature : NULL,
+                    'clients_information' => $request->has('company_clients_information') ? $request->company_clients_information : NULL,
+                ]);
+            }
+
+            if ($request->has('bank_names') && count($request->bank_names) > 0) {
+                foreach ($request->bank_names as $key => $bank_name) {
+                    FinancingRequestBanker::create([
+                        'financing_request_id' => $financing_request->id,
+                        'bank_name' => $bank_name,
+                        'bank_branch' => $request->bank_branches[$key] ? $request->bank_branches[$key] : NULL,
+                        'account_number' => $request->bank_account_numbers[$key] ? $request->bank_account_numbers[$key] : NULL,
+                        'period_with_bank' => $request->period_with_banks[$key] ? $request->period_with_banks[$key] : NULL,
+                    ]);
+                }
+            }
+
+            if ($request->has('authorized_capital_amount') && $request->has('paid_up_capital_amount')) {
+                FinancingRequestCapitalStructure::create([
+                    'financing_request_id' => $financing_request->id,
+                    'authorized_capital_amount' => $request->authorized_capital_amount,
+                    'authorized_capital_shares' => $request->has('authorized_capital_shares_count') ? $request->authorized_capital_shares_count : NULL,
+                    'authorized_capital_share_value' => $request->has('authorized_capital_share_value') ? $request->authorized_capital_share_value : NULL,
+                    'paid_up_capital_amount' => $request->paid_up_capital_amount,
+                    'paid_up_capital_shares' => $request->has('paid_up_capital_shares_count') ? $request->paid_up_capital_shares_count : NULL,
+                    'paid_up_capital_share_value' => $request->has('paid_up_capital_share_value') ? $request->paid_up_capital_share_value : NULL,
+                ]);
+            }
+
+            if ($request->has('shareholders') && count($request->shareholders) > 0) {
+                foreach ($request->shareholders as $shareholder) {
+                    FinancingRequestShareholder::create([
+                        'financing_request_id' => $financing_request->id,
+                        'name' => $shareholder
+                    ]);
+                }
+            }
+
+            if ($request->has('manager_name') && count($request->manager_name) > 0) {
+                foreach ($request->manager_name as $key => $manager_name) {
+                    FinancingRequestCompanyManagement::create([
+                        'financing_request_id' => $financing_request->id,
+                        'name' => $manager_name,
+                        'position' => $request->manager_position[$key] ? $request->manager_position[$key] : NULL,
+                        'duration' => $request->manager_position_duration[$key] ? $request->manager_position_duration[$key] : NULL,
+                    ]);
+                }
+            }
+
+            if ($request->has('debt_bank_name') && count($request->debt_bank_name) > 0) {
+                foreach ($request->debt_bank_name as $key => $debt_bank_name) {
+                    FinancingRequestBankDebt::create([
+                        'financing_request_id' => $financing_request->id,
+                        'bank_name' => $debt_bank_name,
+                        'facility_limits' => array_key_exists($key, $request->debt_facility_limits) ? $request->debt_facility_limits[$key] : NULL,
+                        'debt_reason' => array_key_exists($key, $request->debt_reason) ? $request->debt_reason[$key] : NULL,
+                        'outstanding_amounts' => array_key_exists($key, $request->debt_outstanding_amounts) ? $request->debt_outstanding_amounts[$key] : NULL,
+                    ]);
+                }
+            }
+
+            if ($request->has('creditor_name') && count($request->creditor_name) > 0) {
+                foreach ($request->creditor_name as $key => $creditor_name) {
+                    FinancingRequestOperatingDebt::create([
+                        'financing_request_id' => $financing_request->id,
+                        'creditor_name' => $creditor_name,
+                        'facility_limit' => array_key_exists($key, $request->credit_facility_limits) ? $request->credit_facility_limits[$key] : NULL,
+                        'debt_reason' => array_key_exists($key, $request->credit_reason) ? $request->credit_reason[$key] : NULL,
+                        'outstanding_amount' => array_key_exists($key, $request->credit_outstanding_amounts) ? $request->credit_outstanding_amounts[$key] : NULL,
+                    ]);
+                }
+            }
+
+            if ($request->has('anchor_transaction_history') || $request->has('anchor_terms_of_transaction')) {
+                FinancingRequestAnchorHistory::create([
+                    'financing_request_id' => $financing_request->id,
+                    'transaction_description' => $request->has('anchor_transaction_history') ? $request->anchor_transaction_history : NULL,
+                    'transaction_terms' => $request->has('anchor_terms_of_transaction') ? $request->anchor_terms_of_transaction : NULL,
+                ]);
+            }
+
+            foreach ($financier->users as $user) {
+                $user->notify(new FinancingRequested($invoice));
+            }
+
+            DB::commit();
+
+            toastr()->success('', 'Financing Request Sent Successfully');
+
+            return redirect()->route('orders.show', ['order' => $invoice->orders->first()]);
+        } catch (\Exception $e) {
+            info($e->getMessage());
+            DB::rollback();
+            toastr()->error('', 'An error occurred. Please check data and try again.');
+            return back();
+        }
+
         // foreach($financiers as $financier) {
         // }
 
         toastr()->success('', 'Financing Request sent successfully');
-
-        return back();
     }
 
     public function updateRequest(OrderRequest $order_request, $status)

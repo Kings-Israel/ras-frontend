@@ -80,6 +80,14 @@ return [
             'throw' => false,
         ],
 
+        'financing_request' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/financing_request'),
+            'url' => env('APP_URL').'/storage/financing_request',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
     ],
 
     /*

@@ -52,6 +52,7 @@ Route::middleware(['auth', 'web', 'phone_verified'])->group(function () {
     Route::post('/orders/{order}/update', [OrderController::class, 'update'])->name('orders.update');
     Route::get('/orders/{order}/delete', [OrderController::class, 'delete'])->name('orders.delete');
     Route::get('/invoices/{invoice}/financing/request', [OrderController::class, 'requestFinancing'])->name('invoice.financing.request');
+    Route::post('/invoices/{invoice}/financing/request/store', [OrderController::class, 'storeFinancingRequest'])->name('invoice.financing.request.store');
     Route::post('/order/create', [OrderController::class, 'store'])->name('order.store');
     Route::get('/order/quotation/{quotation}/update/{status}', [OrderController::class, 'updateQuotation'])->name('order.quotation.update');
     Route::get('/order/request/{order_request}/update/{status}', [OrderController::class, 'updateRequest'])->name('order.request.update');

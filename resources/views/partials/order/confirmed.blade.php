@@ -214,10 +214,10 @@
                     </x-modal>
                     @if (!$item->order->invoice->financingRequest()->exists())
                         <div class="w-full flex">
-                            {{-- <a href="{{ route('invoice.financing.request', ['invoice' => $item->order->invoice]) }}" class="bg-primary-one rounded-lg w-full p-2 text-white text-center font-semibold">Request For Financing</a> --}}
-                            <button data-modal-target="request-financing" data-modal-toggle="request-financing" class="bg-primary-one rounded-lg w-full p-2 text-white text-center font-semibold transition duration-150 ease-in-out">Request For Financing</button>
+                            <a href="{{ route('invoice.financing.request', ['invoice' => $item->order->invoice]) }}" class="bg-primary-one rounded-lg w-full p-2 text-white text-center font-semibold">Request For Financing</a>
+                            {{-- <button data-modal-target="request-financing" data-modal-toggle="request-financing" class="bg-primary-one rounded-lg w-full p-2 text-white text-center font-semibold transition duration-150 ease-in-out">Request For Financing</button> --}}
                         </div>
-                        <x-modal modal_id="request-financing">
+                        {{-- <x-modal modal_id="request-financing">
                             <div class="relative w-full max-w-6xl max-h-full">
                                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                                     <button type="button" class="absolute top-1 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="request-financing">
@@ -226,11 +226,11 @@
                                         </svg>
                                         <span class="sr-only">Close modal</span>
                                     </button>
-                                    {{-- @include('partials.finanicing-request.request') --}}
+                                    @include('partials.finanicing-request.request')
                                     <span class="text-lg font-bold">Form goes here</span>
                                 </div>
                             </div>
-                        </x-modal>
+                        </x-modal> --}}
                     @else
                         <div class="block md:flex md:flex-col md:gap-1">
                             <span class="font-semibold text-gray-800 mr-2">Financing Request Status:</span>
