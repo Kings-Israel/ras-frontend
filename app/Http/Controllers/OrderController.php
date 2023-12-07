@@ -57,10 +57,10 @@ class OrderController extends Controller
     public function order(Order $order)
     {
         $order->load('orderItems.product.media', 'orderItems.product.business', 'orderItems.orderRequests', 'orderItems.quotationResponses');
-
         $order_total = 0;
         $order_requests = null;
         foreach ($order->orderItems as $order_item) {
+            dd($order_item);
             $order_total += $order_item->amount * explode(' ', $order_item->quantity)[0];
             $order_total += $order_item->orderRequests->where('status', 'accepted')->sum('cost');
 
