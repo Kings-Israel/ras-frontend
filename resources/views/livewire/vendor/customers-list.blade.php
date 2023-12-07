@@ -48,7 +48,7 @@
                         {{ $user->first_name }} {{ $user->last_name }}
                     </th>
                     <td class="px-2 py-2">
-                        {{ $user->orders->last()->getTotalAmount(false) }}
+                        {{ count($user->orders > 0) ? $user->orders->last()->getTotalAmount(false) : 'No Complete Orders' }}
                     </td>
                     <td class="px-2 py-2">
                         {{ $user->orders->last()->order_id }}
