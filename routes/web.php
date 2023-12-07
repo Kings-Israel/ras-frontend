@@ -92,9 +92,7 @@ Route::middleware(['auth', 'web', 'phone_verified', 'role:vendor', 'has_register
         Route::get('/messages', [ChatController::class, 'index'])->name('messages');
         Route::get('/messages/chat', [ChatController::class, 'view'])->name('messages.chat');
         Route::get('/customers', [VendorController::class, 'customers'])->name('customers');
-        Route::get('/payments', function () {
-            return view('business.payments');
-        })->name('payments');
+        Route::get('/payments', [VendorController::class, 'payments'])->name('payments');
         Route::get('/warehouses', [VendorController::class, 'warehouses'])->name('warehouses');
         Route::post('/warehouses/{warehouse}/storage/request', [VendorController::class, 'requestWarehouseStorage'])->name('warehouses.storage.request');
         Route::get('/suppliers', [VendorController::class, 'suppliers'])->name('suppliers');

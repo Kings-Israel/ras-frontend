@@ -1,10 +1,9 @@
 <div>
-    {{-- Because she competes with no one, no one can compete with her. --}}
     <span class="icon-heart">
         @if($isBookmarked)
-           <i wire:click="bookmark" class="fas fa-heart text-red-600 mt-1 font-thin hover:cursor-pointer"></i>
+           <i wire:click="bookmark" class="fas fa-bookmark py-2 px-2 font-thin bg-primary-one hover:cursor-pointer rounded-md"></i>
         @else
-           <i wire:click="bookmark" class="far fa-heart mt-1 font-thin hover:cursor-pointer"></i>
+           <i wire:click="bookmark" class="fas fa-bookmark font-thin bg-white py-2 px-2 hover:cursor-pointer rounded-md"></i>
         @endif
      </span>
 </div>
