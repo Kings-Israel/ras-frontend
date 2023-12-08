@@ -11,8 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('wing_storage_location', function (Blueprint $table) {
+        Schema::create('shelves', function (Blueprint $table) {
             $table->id();
+            $table->string('shelve_label');
+            $table->double('height')->nullable();
+            $table->double('width')->nullable();
+            $table->double('square_fit')->nullable();
+             $table->foreignId('wing_location_id')->constrained();
             $table->timestamps();
         });
     }
@@ -22,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('wing_storage_location');
+        Schema::dropIfExists('shelves');
     }
 };

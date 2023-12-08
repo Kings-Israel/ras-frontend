@@ -59,6 +59,28 @@
                 </div>
             </div>
             <div class="flex flex-col gap-3">
+                @auth
+                <span>
+                 @php
+                        $isBookmarked = auth()->user()->vendors->contains($business->id);
+                    @endphp
+                       <form method="POST" action="{{ route('favorite.add', ['vendor' => $business->id]) }}">
+                           @csrf
+                           <button type="submit" class="bookmark-icon" style="color: {{ $isBookmarked ? 'pink' : 'lightgray' }}">
+                               <i class="fas fa-heart"></i>
+                           </button>
+                       </form>
+                   </span>
+                   @else
+                   <span>                
+                    <a href="{{ route('favorite.add', ['user' => $business->id]) }}" class="bookmark-icon" data-vendor-id="{{ $business->id }}"
+                    style="color:'lightgray'"
+                    onclick="toggleBookmark({{ $business->id }})"
+                    >
+                        <i class="fas fa-heart"></i>
+                    </a>
+                    </span>
+                   @endauth
                 <img src="{{ $business->primary_cover_image }}" alt="" class="w-full h-44 object-cover rounded-md">
                 @auth
                     @if (auth()->user()->hasRole('buyer') && (auth()->id() != $business->user->id))
@@ -66,7 +88,7 @@
                             <x-secondary-outline-button class="text-center tracking-tighter border-2 border-orange-200 text-primary-one w-full justify-center hover:bg-orange-300 hover:border-orange-400">
                                 Message Vendor
                             </x-secondary-outline-button>
-                        </a>
+                        </a>                        
                     @endif
                 @else
                     <a href="{{ route('messages', ['user' => $business->user]) }}">
