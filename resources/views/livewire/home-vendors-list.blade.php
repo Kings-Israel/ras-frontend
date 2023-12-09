@@ -67,7 +67,9 @@
                             </div>
                         @endif
                     @endauth
-                    <img src="{{ $business->primary_cover_image }}" alt="" class="w-full h-44 object-cover rounded-md">
+                    <a href="{{ route('vendor.storefront', ['slug' => $business->slug]) }}">
+                        <img src="{{ $business->primary_cover_image }}" alt="" class="w-full h-44 object-cover rounded-md">
+                    </a>
                 </div>
                 @auth
                     <a href="{{ route('messages', ['user' => $business->user]) }}">

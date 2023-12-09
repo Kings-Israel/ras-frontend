@@ -39,6 +39,10 @@ Route::middleware(['auth', 'web', 'phone_verified'])->group(function () {
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+
+    Route::get('/notifications', [HomeController::class, 'notifications'])->name('notifications');
+    Route::get('/notification/{notification}', [HomeController::class, 'notification'])->name('notification');
+    Route::get('/notifications/read/all', [HomeController::class, 'notificationsReadAll'])->name('notifications.read.all');
 });
 
 Route::middleware(['auth', 'web', 'phone_verified'])->group(function () {
@@ -89,6 +93,7 @@ Route::middleware(['auth', 'web', 'phone_verified', 'role:vendor', 'has_register
         Route::get('/orders/{order}/{status}/update', [VendorController::class, 'orderUpdate'])->name('orders.status.update');
         Route::post('/orders/{order}/quote/update', [VendorController::class, 'quoteUpdate'])->name('orders.quote.update');
         Route::get('/orders/{order}/quotes/accept', [VendorController::class, 'acceptQuotes'])->name('orders.quotes.accept');
+        Route::get('/orders/{order}/insurance/report', [VendorController::class, 'createInsuranceReport'])->name('orders.insurance.report.create');
         Route::get('/messages', [ChatController::class, 'index'])->name('messages');
         Route::get('/messages/chat', [ChatController::class, 'view'])->name('messages.chat');
         Route::get('/customers', [VendorController::class, 'customers'])->name('customers');

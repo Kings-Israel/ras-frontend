@@ -11,23 +11,20 @@
                 <th scope="col" class="px-2 py-3">
                     Products
                 </th>
-                <th scope="col" class="px-2 py-3">
+                {{-- <th scope="col" class="px-2 py-3">
                     Quantity
-                </th>
+                </th> --}}
                 <th scope="col" class="px-2 py-3">
                     Import Country
                 </th>
                 {{-- <th scope="col" class="px-2 py-3">
                     Export Country
                 </th> --}}
-                {{-- <th scope="col" class="px-2 py-3">
-                    Warehouse Location
-                </th> --}}
                 <th scope="col" class="px-2 py-3">
-                    Payment
+                    Warehouse
                 </th>
                 <th scope="col" class="px-2 py-3">
-                    Fulfilment
+                    Payment
                 </th>
                 <th scope="col" class="px-2 py-3">
                     Amount
@@ -37,8 +34,16 @@
         <tbody>
             @foreach ($orders as $order)
                 <tr class="bg-gray-50 border-t-2 border-r-2 border-l-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer mb-3 expandChildTable">
-                    <th scope="row" class="px-2 py-2 font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                        {{ $order->order_id }}
+                    <th scope="row" class="px-2 py-2 font-extrabold text-gray-700 whitespace-nowrap dark:text-white hover:text-gray-800 flex">
+                        <span>{{ $order->order_id }}</span>
+                        @foreach ($order->orderItems as $orderItem)
+                            @if ($orderItem->orderRequests()->where('requesteable_type', 'App\Models\InsuranceCompany')->exists() && !$orderItem->inspectionReport()->exists())
+                                <span class="relative flex h-2 w-2" title="Upload Insurance Report">
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-600 opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-2 w-2 bg-red-700"></span>
+                                </span>
+                            @endif
+                        @endforeach
                     </th>
                     <td class="px-2 py-2 text-gray-500">
                         {{ $order->created_at->format('M D, Y') }}
@@ -46,23 +51,26 @@
                     <td class="px-2 py-2 text-gray-500">
                         {{ $order->orderItems->count() }}
                     </td>
-                    <td class="px-2 py-2 text-gray-500">
+                    {{-- <td class="px-2 py-2 text-gray-500">
                         23
-                    </td>
+                    </td> --}}
                     <td class="px-2 py-2 text-gray-500">
                         {{ $order->invoice->getDeliveryCountry() }}
                     </td>
                     {{-- <td class="px-2 py-2 text-gray-500">
                         Kenya
                     </td> --}}
-                    {{-- <td class="px-2 py-2 text-gray-500">
-                        Dakar
-                    </td> --}}
+                    <td class="px-2 py-2 text-gray-500">
+                        @foreach ($order->orderItems as $item)
+                            @if ($item->warehouseOrder()->exists())
+                                <span class="font-semibold truncate text-gray-800">{{ $item->warehouseOrder->warehouse->name }}, {{ $item->warehouseOrder->warehouse->country->name }}</span>
+                            @else
+                                <span class="font-semibold text-red-400 truncate">No Warehouse Selected</span>
+                            @endif
+                        @endforeach
+                    </td>
                     <td class="px-2 py-2">
                         <span class="{{ $order->invoice->resolvePaymentStatus() }} rounded-md px-3">{{ Str::title($order->invoice->payment_status) }}</span>
-                    </td>
-                    <td class="px-2 py-2 text-gray-500">
-                        {{ Str::title($order->invoice->status) }}
                     </td>
                     <td class="px-2 py-2 text-gray-500">
                         {{ number_format($order->getTotalAmount(false)) }}

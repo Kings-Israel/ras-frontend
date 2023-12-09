@@ -114,7 +114,7 @@
                     <form action="{{ route('invoice.financing.request.store', ['invoice' => $invoice]) }}" method="POST" id="financing-request-wizard-form" class="space-y-4 my-4" enctype="multipart/form-data">
                         @csrf
                         {{-- Financing Requirements --}}
-                        <div class="content" id="financing-requirements">
+                        <div class="content md:min-h-[70vh]" id="financing-requirements">
                             <div class="grid grid-cols-5 space-y-2 gap-3">
                                 <div class="form-group col-span-5 w-full">
                                     <x-input-label>Amount Required</x-input-label>
@@ -151,9 +151,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="flex justify-between my-2">
+                            <div class="flex justify-between my-2 sticky top-full">
                                 <a href="{{ route('orders.show', ['order' => $invoice->orders->first()->id]) }}">
-                                    <x-secondary-outline-button>
+                                    <x-secondary-outline-button class="border-gray-700">
                                         Cancel
                                     </x-secondary-outline-button>
                                 </a>
@@ -163,7 +163,7 @@
                             </div>
                         </div>
                         {{-- Documents --}}
-                        <div class="content" id="documentation">
+                        <div class="content md:min-h-[70vh]" id="documentation">
                             <div class="grid grid-cols-2 gap-3">
                                 @foreach ($documents as $key => $document)
                                     @if (is_array($document))
@@ -186,20 +186,20 @@
                                     @endif
                                 @endforeach
                             </div>
-                            <div class="flex justify-between my-2">
+                            <div class="flex justify-between my-2 sticky top-full">
                                 <a href="{{ route('orders.show', ['order' => $invoice->orders->first()->id]) }}">
-                                    <x-secondary-outline-button>
+                                    <x-secondary-outline-button class="border-gray-700">
                                         Cancel
                                     </x-secondary-outline-button>
                                 </a>
                                 <div class="flex gap-2">
-                                    <x-secondary-outline-button class="btn-prev"> <i class="fas fa-arrow-left mr-2 my-auto"></i> Back</x-secondary-outline-button>
+                                    <x-secondary-outline-button class="btn-prev border-gray-700"> <i class="fas fa-arrow-left mr-2 my-auto"></i> Back</x-secondary-outline-button>
                                     <x-primary-button class="px-4 py-2 text-lg btn-next">Next</x-primary-button>
                                 </div>
                             </div>
                         </div>
                         {{-- Company Details --}}
-                        <div class="content" id="company-details">
+                        <div class="content md:min-h-[70vh]" id="company-details">
                             <div class="grid grid-cols-6 gap-3">
                                 <div class="form-group col-span-2">
                                     <x-input-label>Company Name</x-input-label>
@@ -277,20 +277,20 @@
                                     <x-input-error :messages="$errors->get('company_clients_information')" class="mt-2" />
                                 </div>
                             </div>
-                            <div class="flex justify-between my-2">
+                            <div class="flex justify-between my-2 sticky top-full">
                                 <a href="{{ route('orders.show', ['order' => $invoice->orders->first()->id]) }}">
-                                    <x-secondary-outline-button>
+                                    <x-secondary-outline-button class="border-gray-700">
                                         Cancel
                                     </x-secondary-outline-button>
                                 </a>
                                 <div class="flex gap-2">
-                                    <x-secondary-outline-button class="btn-prev"> <i class="fas fa-arrow-left mr-2 my-auto"></i> Back</x-secondary-outline-button>
+                                    <x-secondary-outline-button class="btn-prev border-gray-700"> <i class="fas fa-arrow-left mr-2 my-auto"></i> Back</x-secondary-outline-button>
                                     <x-primary-button class="px-4 py-2 text-lg btn-next">Next</x-primary-button>
                                 </div>
                             </div>
                         </div>
                         {{-- Bankers and Capital Structure --}}
-                        <div class="content relative" id="bankers-capital-structure">
+                        <div class="content md:min-h-[70vh]" id="bankers-capital-structure">
                             <div class="grid grid-cols-8 gap-3">
                                 <span class="col-span-8 flex justify-between">
                                     <span class="font-bold text-xl">Bankers</span>
@@ -347,20 +347,20 @@
                                     <x-text-input name="paid_up_capital_share_value" type="number" class="w-full"></x-text-input>
                                 </div>
                             </div>
-                            <div class="flex justify-between my-2">
+                            <div class="flex justify-between my-2 sticky top-full">
                                 <a href="{{ route('orders.show', ['order' => $invoice->orders->first()->id]) }}">
-                                    <x-secondary-outline-button>
+                                    <x-secondary-outline-button class="border-gray-700">
                                         Cancel
                                     </x-secondary-outline-button>
                                 </a>
                                 <div class="flex gap-2">
-                                    <x-secondary-outline-button class="btn-prev"> <i class="fas fa-arrow-left mr-2 my-auto"></i> Back</x-secondary-outline-button>
+                                    <x-secondary-outline-button class="btn-prev border-gray-700"> <i class="fas fa-arrow-left mr-2 my-auto"></i> Back</x-secondary-outline-button>
                                     <x-primary-button class="px-4 py-2 text-lg btn-next">Next</x-primary-button>
                                 </div>
                             </div>
                         </div>
                         {{-- Shareholders and Key Management --}}
-                        <div class="content" id="shareholders-key-management">
+                        <div class="content md:min-h-[70vh]" id="shareholders-key-management">
                             <div class="grid grid-cols-5 gap-3">
                                 <span class="col-span-8 flex justify-between">
                                     <span class="font-bold text-xl">List Shareholders Names</span>
@@ -394,20 +394,20 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="flex justify-between my-2">
+                            <div class="flex justify-between my-2 sticky top-full">
                                 <a href="{{ route('orders.show', ['order' => $invoice->orders->first()->id]) }}">
-                                    <x-secondary-outline-button>
+                                    <x-secondary-outline-button class="border-gray-700">
                                         Cancel
                                     </x-secondary-outline-button>
                                 </a>
                                 <div class="flex gap-2">
-                                    <x-secondary-outline-button class="btn-prev"> <i class="fas fa-arrow-left mr-2 my-auto"></i> Back</x-secondary-outline-button>
+                                    <x-secondary-outline-button class="btn-prev border-gray-700"> <i class="fas fa-arrow-left mr-2 my-auto"></i> Back</x-secondary-outline-button>
                                     <x-primary-button class="px-4 py-2 text-lg btn-next">Next</x-primary-button>
                                 </div>
                             </div>
                         </div>
                         {{-- Current Bank Indebtness --}}
-                        <div class="content" id="current-bank-indebtness">
+                        <div class="content md:min-h-[70vh]" id="current-bank-indebtness">
                             <div class="grid grid-cols-9 gap-3">
                                 <span class="col-span-9 flex justify-between">
                                     <span class="font-bold text-xl">Details of Current Bank Indebtness</span>
@@ -432,20 +432,20 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="flex justify-between my-2">
+                            <div class="flex justify-between my-2 sticky top-full">
                                 <a href="{{ route('orders.show', ['order' => $invoice->orders->first()->id]) }}">
-                                    <x-secondary-outline-button>
+                                    <x-secondary-outline-button class="border-gray-700">
                                         Cancel
                                     </x-secondary-outline-button>
                                 </a>
                                 <div class="flex gap-2">
-                                    <x-secondary-outline-button class="btn-prev"> <i class="fas fa-arrow-left mr-2 my-auto"></i> Back</x-secondary-outline-button>
+                                    <x-secondary-outline-button class="btn-prev border-gray-700"> <i class="fas fa-arrow-left mr-2 my-auto"></i> Back</x-secondary-outline-button>
                                     <x-primary-button class="px-4 py-2 text-lg btn-next">Next</x-primary-button>
                                 </div>
                             </div>
                         </div>
                         {{-- Current Operating Indedbtness --}}
-                        <div class="content" id="current-operating-indebtness">
+                        <div class="content md:min-h-[70vh]" id="current-operating-indebtness">
                             <div class="grid grid-cols-9 gap-3">
                                 <span class="col-span-9 flex justify-between">
                                     <span class="font-bold text-xl">Details of Current Operating Indebtness (5 Largest Creditors)</span>
@@ -470,20 +470,20 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="flex justify-between my-2">
+                            <div class="flex justify-between my-2 sticky top-full">
                                 <a href="{{ route('orders.show', ['order' => $invoice->orders->first()->id]) }}">
-                                    <x-secondary-outline-button>
+                                    <x-secondary-outline-button class="border-gray-700">
                                         Cancel
                                     </x-secondary-outline-button>
                                 </a>
                                 <div class="flex gap-2">
-                                    <x-secondary-outline-button class="btn-prev"> <i class="fas fa-arrow-left mr-2 my-auto"></i> Back</x-secondary-outline-button>
+                                    <x-secondary-outline-button class="btn-prev border-gray-700"> <i class="fas fa-arrow-left mr-2 my-auto"></i> Back</x-secondary-outline-button>
                                     <x-primary-button class="px-4 py-2 text-lg btn-next">Next</x-primary-button>
                                 </div>
                             </div>
                         </div>
                         {{-- Anchor History --}}
-                        <div class="content" id="anchor-history">
+                        <div class="content md:min-h-[70vh]" id="anchor-history">
                             <div class="grid grid-cols-2 gap-3">
                                 <span class="col-span-2">
                                     <span class="font-bold text-xl">History With Anchor</span>
@@ -499,20 +499,20 @@
                                     <x-input-error :messages="$errors->get('anchor_terms_of_transaction')" class="mt-2" />
                                 </div>
                             </div>
-                            <div class="flex justify-between my-2">
+                            <div class="flex justify-between my-2 sticky top-full">
                                 <a href="{{ route('orders.show', ['order' => $invoice->orders->first()->id]) }}">
-                                    <x-secondary-outline-button>
+                                    <x-secondary-outline-button class="border-gray-700">
                                         Cancel
                                     </x-secondary-outline-button>
                                 </a>
                                 <div class="flex gap-2">
-                                    <x-secondary-outline-button class="btn-prev"> <i class="fas fa-arrow-left mr-2 my-auto"></i> Back</x-secondary-outline-button>
+                                    <x-secondary-outline-button class="btn-prev border-gray-700"> <i class="fas fa-arrow-left mr-2 my-auto"></i> Back</x-secondary-outline-button>
                                     <x-primary-button class="px-4 py-2 text-lg btn-next">Next</x-primary-button>
                                 </div>
                             </div>
                         </div>
                         {{-- Credit Terms and Confidentiality Statement --}}
-                        <div class="content" id="credit-terms-confidentiality-statement">
+                        <div class="content md:min-h-[70vh]" id="credit-terms-confidentiality-statement">
                             <div class="space-y-2">
                                 <span class="font-bold text-xl">Credit Terms and Conditions</span>
                                 <p class="text-gray-700">I/We understand that incomplete application forms or forms found to bear false information will not be processed.</p>
@@ -540,14 +540,14 @@
                                     <h2 class="font-semibold">Agree to Credit Terms and Conditions and Confidentiality Statement</h2>
                                 </div>
                             </div>
-                            <div class="flex justify-between my-2">
+                            <div class="flex justify-between my-2 sticky top-full">
                                 <a href="{{ route('orders.show', ['order' => $invoice->orders->first()->id]) }}">
-                                    <x-secondary-outline-button>
+                                    <x-secondary-outline-button class="border-gray-700">
                                         Cancel
                                     </x-secondary-outline-button>
                                 </a>
                                 <div class="flex gap-2">
-                                    <x-secondary-outline-button class="btn-prev"> <i class="fas fa-arrow-left mr-2 my-auto"></i> Back</x-secondary-outline-button>
+                                    <x-secondary-outline-button class="btn-prev border-gray-700"> <i class="fas fa-arrow-left mr-2 my-auto"></i> Back</x-secondary-outline-button>
                                     <x-primary-button class="px-4 py-2 text-lg">Submit</x-primary-button>
                                 </div>
                             </div>

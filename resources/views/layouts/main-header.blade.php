@@ -46,7 +46,9 @@
                     </li>
                 </ul>
             </div>
-            <livewire:notifications-list />
+            <span id="notifications">
+                <notifications-component email="{{ auth()->user()->email }}"></notifications-component>
+            </span>
             <a href="{{ route('cart') }}" class="text-gray-800 bg-gray-300 rounded-full w-7 h-7 my-auto lg:my-0 md:w-8 md:h-8 text-center pt-0.5 md:pt-1">
                 <i class="w-5 h-5 fas fa-shopping-bag"></i>
             </a>
