@@ -2,7 +2,7 @@
     <div class="lg:px-24">
         <div class="grid lg:grid-cols-5 gap-1">
             <div class="hidden lg:block col-span-1">
-                <div class="rounded-md mt-4">
+                <div class="mt-4">
                     <livewire:home-categories-view />
                 </div>
             </div>
@@ -18,7 +18,7 @@
                         </div>
                         @foreach ($marketing_posters as $poster)
                             <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                                <img src="{{ $poster->image }}" class="absolute block lg:object-cover -z-10 w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                                <img src="{{ $poster->image }}" class="absolute block lg:object-contain h-[360px] -z-10 w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
                                 @if ($poster->description)
                                     <div class="mx-auto py-8 px-1.5 z-50 space-y-3">
                                         <h5 class="text-{{ $poster->description_text_align }} px-2 text-white" style="font-size: {{ $poster->font_size }}px; color: {{ Str::lower($poster->description_text_color) }}">{{ $poster->description }}</h5>
@@ -41,7 +41,7 @@
                 </div>
             @else
                 <div class="col-span-3 mt-4 relative w-full">
-                    <img src="{{ asset('assets/img/banner.png') }}" alt="" class="absolute lg:h-[400px] lg:object-cover -z-10 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+                    <img src="{{ asset('assets/img/banner.png') }}" alt="" class="absolute md:h-[360px] lg:object-cover -z-10 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
                     <div class="flex flex-col mx-auto py-8 px-1.5 z-50 space-y-3">
                         <h1 class="text-2xl md:text-2xl lg:text-4xl font-[600] md:font-[800] lg:font-[900] text-center hero-main-text text-gray-900">Find The Best Products, From Top Notch Suppliers</h1>
                         <h5 class="text-center font-semibold px-2">Real African Sources is where to go to easily access raw materials and business opportunities from vetted suppliers across Africa.</h5>
@@ -49,9 +49,9 @@
                 </div>
             @endif
             <div class="hidden lg:block col-span-1 mt-4">
-                <div class="bg-primary-three rounded-md p-2">
+                <div class="bg-primary-three rounded-lg p-2">
                     <h3 class="font-bold text-xl text-slate-800">Your Buying Requests</h3>
-                    <form action="" class="space-y-2">
+                    <form action="#" method="POST" class="space-y-2.5">
                         @csrf
                         <!-- Email Address -->
                         <div>

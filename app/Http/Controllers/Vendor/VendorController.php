@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Vendor;
 
+use App\Events\NewNotification;
 use App\Http\Controllers\Controller;
 use App\Models\Business;
 use App\Models\BusinessDocument;
@@ -578,6 +579,7 @@ class VendorController extends Controller
         ]);
 
         $order->user->notify(new UpdatedOrder($order, 'pending'));
+        event(new NewNotification($order->user->email));
 
         toastr()->success('', 'Order updated successfully');
 
@@ -604,5 +606,15 @@ class VendorController extends Controller
         }
 
         return view('business.payments', compact('wallet_balance'));
+    }
+
+    public function createInsuranceReport(Order $order)
+    {
+        return view('business.insurance-report', compact('order'));
+    }
+
+    public function storeInsuranceReport(Request $request, OrderItem $orderItem)
+    {
+
     }
 }

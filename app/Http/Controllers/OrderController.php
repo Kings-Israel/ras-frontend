@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewNotification;
 use App\Models\Business;
 use App\Models\Country;
 use App\Models\FinancingInstitution;
@@ -144,7 +145,6 @@ class OrderController extends Controller
                     'direct_message' => true,
                 ]);
             }
-
 
             OrderConversation::create([
                 'order_id' => $order->id,
@@ -440,11 +440,8 @@ class OrderController extends Controller
             $business = Business::find($key);
             // $business->notify(new NewOrder($order));
             $business->user->notify(new NewOrder($order));
+            event(new NewNotification($business->user->email));
         }
-
-        // if ($request->has('request_financing')) {
-        //     $invoice->financingRequest()->create();
-        // }
 
         // Delete Cart
         auth()->user()->cart->delete();

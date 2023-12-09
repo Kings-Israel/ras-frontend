@@ -109,6 +109,23 @@ class User extends Authenticatable implements MustVerifyEmail
         return $pending_orders;
     }
 
+    public function earnings(): int
+    {
+        $revenue = 0;
+        if (auth()->check() && auth()->user()->hasRole('vendor')) {
+            $orders = auth()->user()->business->orders->where('status', '!=', 'quotation request');
+
+            foreach ($orders as $order) {
+                if ($order->invoice->payment_status == 'paid') {
+                    // Get Revenue
+                    $revenue += $order->getTotalAmount(false);
+                }
+            }
+        }
+
+        return $revenue;
+    }
+
     /**
      * Get the business associated with the User
      */

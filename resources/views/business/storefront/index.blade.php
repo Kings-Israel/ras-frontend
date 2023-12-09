@@ -1,5 +1,5 @@
 <x-vendor>
-    <x-storefront-header :business="$business"></x-storefront-header>
+    <x-storefront-header :business="$business" :categories="$product_categories"></x-storefront-header>
     <div>
         <img src="{{ $business->primary_cover_image }}" alt="" class="h-96 w-full object-cover">
     </div>

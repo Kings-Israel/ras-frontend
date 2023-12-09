@@ -207,8 +207,8 @@
                 </div>
             @endif
         </div>
-        @foreach ($order->orderItems as $key => $item)
-            @foreach ($order_requests as $key => $order_request)
+        @foreach ($order->orderItems as $key => $order_item)
+            {{-- @foreach ($order_requests as $key => $order_request)
                 @if ($key == 'App\\Models\\InspectingInstitution')
                     <div class="border border-gray-300 p-4 rounded-lg space-y-1">
                         <div class="flex justify-between">
@@ -437,6 +437,278 @@
                                     <h2 class="px-2 py-2 lg:px-4 font-bold text-xl">Logistics/Delivery Quotes</h2>
                                     <div class="space-y-2 p-2">
                                         @foreach ($order_request as $request)
+                                            <div class="px-2 py-2 lg:px-4 border border-gray-300 rounded-lg">
+                                                <div class="flex justify-between w-full">
+                                                    <h3 class="font-semibold text-gray-700">{{ $request->requesteable->name }}</h3>
+                                                    <h4 class="font-semibold text-gray-900">Status: <span class="underline">{{ Str::title($request->status) }}</span></h4>
+                                                    @if ($request->cost != null && $request->status != 'accepted')
+                                                        <div class="my-2">
+                                                            <a href="{{ route('order.request.update', ['order_request' => $request->id, 'status' => 'accepted']) }}" class="p-2 bg-primary-one text-white rounded-md font-semibold">Accept Quote</a>
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                                @if ($request->cost != null)
+                                                    <div class="flex gap-1">
+                                                        <h3 class="font-bold text-xl text-gray-600 my-auto">{{ Str::upper($request->orderItem->product->currency) }}</h3>
+                                                        <span class="font-bold text-xl text-gray-800" id="total_cart_amount">{{ number_format($request->cost) }}</span>
+                                                    </div>
+                                                @else
+                                                    <h4 class="font-semibold text-red-900 underline">Cost Details Not Entered</h4>
+                                                @endif
+                                                @if ($request->cost_description != null)
+                                                    <div class="flex flex-col">
+                                                        <span class="text-gray-500 font-bold underline underline-offset-1">Cost Description</span>
+                                                        <span class="text-gray-900 font-semibold">{{ $request->cost_description }}</span>
+                                                    </div>
+                                                @endif
+                                                @if ($request->hasCostDescriptionFile())
+                                                    <div class="my-2">
+                                                        <a href="{{ $request->cost_description_file }}" target="_blank" class="p-1 text-black font-semibold bg-secondary-five rounded-md">View Pro-forma</a>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </x-modal>
+                    </div>
+                @endif
+            @endforeach --}}
+            @foreach ($order_item->orderRequests->groupBy('requesteable_type') as $key => $order_requests)
+                @if ($key == 'App\\Models\\InspectingInstitution')
+                    <div class="border border-gray-300 p-4 rounded-lg space-y-1">
+                        <div class="flex justify-between">
+                            <h4 class="font-semibold text-gray-700">Inspection Quotes:</h4>
+                            <h5 class="font-bold text-gray-900">{{ count($order_requests) }}</h5>
+                        </div>
+                        @foreach ($order_requests as $order_request)
+                            @if ($order_request->status == 'accepted')
+                                <div class="flex justify-between">
+                                    <span>Accepted Quote:</span>
+                                    <span class="font-semibold truncate whitespace-nowrap">{{ $order_request->requesteable->name }}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Accepted Quote Cost:</span>
+                                    <span class="font-semibold">{{ $order_request->cost }}</span>
+                                </div>
+                            @endif
+                        @endforeach
+                        <button data-modal-target="view-quotes-inspection" data-modal-toggle="view-quotes-inspection" class="w-full bg-primary-two text-lg font-semibold text-white py-1 rounded-lg">View Inspection Quotes</button>
+                        <x-modal modal_id="view-quotes-inspection">
+                            <div class="relative w-full max-w-2xl max-h-full">
+                                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                    <button type="button" class="absolute top-1 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="view-quotes-inspection">
+                                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                        </svg>
+                                        <span class="sr-only">Close modal</span>
+                                    </button>
+                                    <h2 class="px-2 py-2 lg:px-4 font-bold text-xl">Inspection Quotes</h2>
+                                    <div class="space-y-2 p-2">
+                                        @foreach ($order_requests as $request)
+                                            <div class="px-2 py-2 lg:px-4 border border-gray-300 rounded-lg">
+                                                <div class="flex justify-between w-full">
+                                                    <h3 class="font-semibold text-gray-700">{{ $request->requesteable->name }}</h3>
+                                                    <h4 class="font-semibold text-gray-900">Status: <span class="underline">{{ Str::title($request->status) }}</span></h4>
+                                                    @if ($request->cost != null && $request->status != 'accepted')
+                                                        <div class="my-2">
+                                                            <a href="{{ route('order.request.update', ['order_request' => $request->id, 'status' => 'accepted']) }}" class="p-2 bg-primary-one text-white rounded-md font-semibold">Accept Quote</a>
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                                @if ($request->cost != null)
+                                                    <div class="flex gap-1">
+                                                        <h3 class="font-bold text-xl text-gray-600 my-auto">{{ Str::upper($request->orderItem->product->currency) }}</h3>
+                                                        <span class="font-bold text-xl text-gray-800" id="total_cart_amount">{{ number_format($request->cost) }}</span>
+                                                    </div>
+                                                @else
+                                                    <h4 class="font-semibold text-red-900 underline">Cost Details Not Entered</h4>
+                                                @endif
+                                                @if ($request->cost_description != null)
+                                                    <div class="flex flex-col">
+                                                        <span class="text-gray-500 font-bold underline underline-offset-1">Cost Description</span>
+                                                        <span class="text-gray-900 font-semibold">{{ $request->cost_description }}</span>
+                                                    </div>
+                                                @endif
+                                                @if ($request->hasCostDescriptionFile())
+                                                    <div class="my-2">
+                                                        <a href="{{ $request->cost_description_file }}" target="_blank" class="p-1 text-black font-semibold bg-secondary-five rounded-md">View Pro-forma</a>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </x-modal>
+                    </div>
+                @elseif ($key == 'App\\Models\\InsuranceCompany')
+                    <div class="border border-gray-300 p-4 rounded-lg">
+                        <div class="flex justify-between">
+                            <h4 class="font-semibold text-gray-700">Insurance Quotes:</h4>
+                            <h5 class="font-bold text-gray-900">{{ count($order_requests) }}</h5>
+                        </div>
+                        @foreach ($order_requests as $order_request)
+                            @if ($order_request->status == 'accepted')
+                                <div class="flex justify-between">
+                                    <span>Accepted Quote:</span>
+                                    <span class="font-semibold truncate whitespace-nowrap">{{ $order_request->requesteable->name }}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Accepted Quote Cost:</span>
+                                    <span class="font-semibold">{{ $order_request->cost }}</span>
+                                </div>
+                            @endif
+                        @endforeach
+                        <button data-modal-target="view-quotes-insurance" data-modal-toggle="view-quotes-insurance" class="w-full bg-primary-two text-lg font-semibold text-white py-1 rounded-lg">View Insurance Quotes</button>
+                        <x-modal modal_id="view-quotes-insurance">
+                            <div class="relative w-full max-w-2xl max-h-full">
+                                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                    <button type="button" class="absolute top-1 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="view-quotes-insurance">
+                                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                        </svg>
+                                        <span class="sr-only">Close modal</span>
+                                    </button>
+                                    <h2 class="px-2 py-2 lg:px-4 font-bold text-xl">Insurance Quotes</h2>
+                                    <div class="space-y-2 p-2">
+                                        @foreach ($order_requests as $request)
+                                            <div class="px-2 py-2 lg:px-4 border border-gray-300 rounded-lg">
+                                                <div class="flex justify-between w-full">
+                                                    <h3 class="font-semibold text-gray-700">{{ $request->requesteable->name }}</h3>
+                                                    <h4 class="font-semibold text-gray-900">Status: <span class="underline">{{ Str::title($request->status) }}</span></h4>
+                                                    @if ($request->cost != null && $request->status != 'accepted')
+                                                        <div class="my-2">
+                                                            <a href="{{ route('order.request.update', ['order_request' => $request->id, 'status' => 'accepted']) }}" class="p-2 bg-primary-one text-white rounded-md font-semibold">Accept Quote</a>
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                                @if ($request->cost != null)
+                                                    <div class="flex gap-1">
+                                                        <h3 class="font-bold text-xl text-gray-600 my-auto">{{ Str::upper($request->orderItem->product->currency) }}</h3>
+                                                        <span class="font-bold text-xl text-gray-800" id="total_cart_amount">{{ number_format($request->cost) }}</span>
+                                                    </div>
+                                                @else
+                                                    <h4 class="font-semibold text-red-900 underline">Cost Details Not Entered</h4>
+                                                @endif
+                                                @if ($request->cost_description != null)
+                                                    <div class="flex flex-col">
+                                                        <span class="text-gray-500 font-bold underline underline-offset-1">Cost Description</span>
+                                                        <span class="text-gray-900 font-semibold">{{ $request->cost_description }}</span>
+                                                    </div>
+                                                @endif
+                                                @if ($request->hasCostDescriptionFile())
+                                                    <div class="my-2">
+                                                        <a href="{{ $request->cost_description_file }}" target="_blank" class="p-1 text-black font-semibold bg-secondary-five rounded-md">View Pro-forma</a>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </x-modal>
+                    </div>
+                @elseif ($key == 'App\\Models\\Warehouse')
+                    @php($request_type_count = 0)
+                    <div class="border border-gray-300 p-4 rounded-lg">
+                        <div class="flex justify-between">
+                            <h4 class="font-semibold text-gray-700">Warehousing Quotes:</h4>
+                            <h5 class="font-bold text-gray-900">{{ count($order_requests) }}</h5>
+                        </div>
+                        @foreach ($order_requests as $order_request)
+                            @if ($order_request->status == 'accepted')
+                                <div class="flex justify-between">
+                                    <span>Accepted Quote:</span>
+                                    <span class="font-semibold truncate whitespace-nowrap">{{ $order_request->requesteable->name }}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Accepted Quote Cost:</span>
+                                    <span class="font-semibold">{{ $order_request->cost }}</span>
+                                </div>
+                            @endif
+                        @endforeach
+                        <button data-modal-target="view-quotes-warehousing" data-modal-toggle="view-quotes-warehousing" class="w-full bg-primary-two text-lg font-semibold text-white py-1 rounded-lg">View Warehousing Quotes</button>
+                        <x-modal modal_id="view-quotes-warehousing">
+                            <div class="relative w-full max-w-2xl max-h-full">
+                                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                    <button type="button" class="absolute top-1 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="view-quotes-warehousing">
+                                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                        </svg>
+                                        <span class="sr-only">Close modal</span>
+                                    </button>
+                                    <h2 class="px-2 py-2 lg:px-4 font-bold text-xl">Warehousing/Storage Quotes</h2>
+                                    <div class="space-y-2 p-2">
+                                        @foreach ($order_requests as $request)
+                                            <div class="px-2 py-2 lg:px-4 border border-gray-300 rounded-lg">
+                                                <div class="flex justify-between w-full">
+                                                    <h3 class="font-semibold text-gray-700">{{ $request->requesteable->name }}</h3>
+                                                    <h4 class="font-semibold text-gray-900">Status: <span class="underline">{{ Str::title($request->status) }}</span></h4>
+                                                    @if ($request->cost != null && $request->status != 'accepted')
+                                                        <div class="my-2">
+                                                            <a href="{{ route('order.request.update', ['order_request' => $request->id, 'status' => 'accepted']) }}" class="p-2 bg-primary-one text-white rounded-md font-semibold">Accept Quote</a>
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                                @if ($request->cost != null)
+                                                    <div class="flex gap-1">
+                                                        <h3 class="font-bold text-xl text-gray-600 my-auto">{{ Str::upper($request->orderItem->product->currency) }}</h3>
+                                                        <span class="font-bold text-xl text-gray-800" id="total_cart_amount">{{ number_format($request->cost) }}</span>
+                                                    </div>
+                                                @else
+                                                    <h4 class="font-semibold text-red-900 underline">Cost Details Not Entered</h4>
+                                                @endif
+                                                @if ($request->cost_description != null)
+                                                    <div class="flex flex-col">
+                                                        <span class="text-gray-500 font-bold underline underline-offset-1">Cost Description</span>
+                                                        <span class="text-gray-900 font-semibold">{{ $request->cost_description }}</span>
+                                                    </div>
+                                                @endif
+                                                @if ($request->hasCostDescriptionFile())
+                                                    <div class="my-2">
+                                                        <a href="{{ $request->cost_description_file }}" target="_blank" class="p-1 text-black font-semibold bg-secondary-five rounded-md">View Pro-forma</a>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </x-modal>
+                    </div>
+                @elseif ($key == 'App\\Models\\LogisticsCompany')
+                    <div class="border border-gray-300 p-4 rounded-lg">
+                        <div class="flex justify-between">
+                            <h4 class="font-semibold text-gray-700">Delivery Quotes:</h4>
+                            <h5 class="font-bold text-gray-900">{{ count($order_requests) }}</h5>
+                        </div>
+                        @foreach ($order_requests as $order_request)
+                            @if ($order_request->status == 'accepted')
+                                <div class="flex justify-between">
+                                    <span>Accepted Quote:</span>
+                                    <span class="font-semibold truncate whitespace-nowrap">{{ $order_request->requesteable->name }}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Accepted Quote Cost:</span>
+                                    <span class="font-semibold">{{ $order_request->cost }}</span>
+                                </div>
+                            @endif
+                        @endforeach
+                        <button data-modal-target="view-quotes-logistics" data-modal-toggle="view-quotes-logistics" class="w-full bg-primary-two text-lg font-semibold text-white py-1 rounded-lg">View Logistics Quotes</button>
+                        <x-modal modal_id="view-quotes-logistics">
+                            <div class="relative w-full max-w-2xl max-h-full">
+                                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                    <button type="button" class="absolute top-1 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="view-quotes-logistics">
+                                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                        </svg>
+                                        <span class="sr-only">Close modal</span>
+                                    </button>
+                                    <h2 class="px-2 py-2 lg:px-4 font-bold text-xl">Logistics/Delivery Quotes</h2>
+                                    <div class="space-y-2 p-2">
+                                        @foreach ($order_requests as $request)
                                             <div class="px-2 py-2 lg:px-4 border border-gray-300 rounded-lg">
                                                 <div class="flex justify-between w-full">
                                                     <h3 class="font-semibold text-gray-700">{{ $request->requesteable->name }}</h3>

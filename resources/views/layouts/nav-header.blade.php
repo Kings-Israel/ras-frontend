@@ -8,8 +8,8 @@
                 <i class="fas fa-power-off"></i>
             </span>
         </a>
-        <span class="inline-flex items-center justify-center ml-3 text-gray-700 bg-gray-300 rounded-full">
-            <livewire:notifications-list />
+        <span class="inline-flex items-center justify-center ml-3 text-gray-700 bg-gray-300 rounded-full" id="notifications">
+            <notifications-component email="{{ auth()->user()->email }}"></notifications-component>
         </span>
     </div>
     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

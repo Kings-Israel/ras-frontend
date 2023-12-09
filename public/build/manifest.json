@@ -8,16 +8,23 @@
     "src": "public/assets/img/user.png"
   },
   "resources/css/app.css": {
-    "file": "assets/app-4a9d9bb6.css",
+    "file": "assets/app-bb3df0b5.css",
     "isEntry": true,
     "src": "resources/css/app.css"
+  },
+  "resources/js/app.css": {
+    "file": "assets/app-b4174579.css",
+    "src": "resources/js/app.css"
   },
   "resources/js/app.js": {
     "assets": [
       "assets/user-bff92b7c.png",
       "assets/talking-921b8355.png"
     ],
-    "file": "assets/app-71e88161.js",
+    "css": [
+      "assets/app-b4174579.css"
+    ],
+    "file": "assets/app-68fd592f.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   }

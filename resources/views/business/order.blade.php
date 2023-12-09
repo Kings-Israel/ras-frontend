@@ -198,63 +198,63 @@
                                 <span class="col-span-5 flex justify-end">
                                     <button data-modal-target="quotation-responses-modal" data-modal-toggle="quotation-responses-modal" class="bg-primary-one rounded-md px-2 py-1 text-white hover:bg-orange-500 transition duration-200 ease-in-out">View Your Quotations</button>
                                 </span>
-                            @endif
-                            <x-modal modal_id="quotation-responses-modal">
-                                <div class="relative w-full max-w-4xl max-h-full p-4">
-                                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                        <button type="button" data-modal-hide="quotation-responses-modal" class="absolute top-1 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
-                                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                            </svg>
-                                            <span class="sr-only">Close modal</span>
-                                        </button>
-                                        <div class="px-2 py-2 lg:px-4">
-                                            <h3 class="mb-2 text-2xl font-bold text-gray-900 dark:text-white space-y-4">Suggested Quotations</h3>
-                                            <div class="border-2 border-gray-400 rounded-md p-1">
-                                                <div class="grid grid-cols-4">
-                                                    <span class="font-bold">Order Quantity</span>
-                                                    <span class="font-bold">Amount</span>
-                                                    <span class="font-bold">Added On</span>
-                                                    <span class="font-bold">Status</span>
-                                                </div>
-                                                <div class="space-y-2">
-                                                    @foreach ($item->quotationResponses as $response)
-                                                        @if ($response->user_id == auth()->id())
-                                                            <div class="grid grid-cols-4 gap-2 w-full bg-yellow-200 p-2 rounded-md">
-                                                                <span>{{ $response->quantity }} {{ explode(' ', $response->orderItem->product->min_order_quantity)[1] }}</span>
-                                                                <span class="">
-                                                                    {{ $response->orderItem->product->business->global_currency ? $response->orderItem->product->business->global_currency : 'USD'}}
-                                                                    {{ $response->amount }}
-                                                                </span>
-                                                                <span class="">
-                                                                    {{ $response->created_at->format('d M Y H:i a') }}
-                                                                </span>
-                                                                <span>
-                                                                    {{ Str::title($response->status) }}
-                                                                </span>
-                                                            </div>
-                                                        @else
-                                                            <div class="grid grid-cols-3 gap-2 w-full p-2 rounded-md">
-                                                                <span>{{ $response->quantity }} {{ explode(' ', $response->orderItem->product->min_order_quantity)[1] }}</span>
-                                                                <span class="">
-                                                                    {{ $response->orderItem->product->business->global_currency ? $response->orderItem->product->business->global_currency : 'USD'}}
-                                                                    {{ $response->amount }}
-                                                                </span>
-                                                                <span class="">
-                                                                    {{ $response->created_at->format('d M Y H:i a') }}
-                                                                </span>
-                                                                <span>
-                                                                    {{ Str::title($response->status) }}
-                                                                </span>
-                                                            </div>
-                                                        @endif
-                                                    @endforeach
+                                <x-modal modal_id="quotation-responses-modal">
+                                    <div class="relative w-full max-w-4xl max-h-full p-4">
+                                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                            <button type="button" data-modal-hide="quotation-responses-modal" class="absolute top-1 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                                </svg>
+                                                <span class="sr-only">Close modal</span>
+                                            </button>
+                                            <div class="px-2 py-2 lg:px-4">
+                                                <h3 class="mb-2 text-2xl font-bold text-gray-900 dark:text-white space-y-4">Suggested Quotations</h3>
+                                                <div class="border-2 border-gray-400 rounded-md p-1">
+                                                    <div class="grid grid-cols-4">
+                                                        <span class="font-bold">Order Quantity</span>
+                                                        <span class="font-bold">Amount</span>
+                                                        <span class="font-bold">Added On</span>
+                                                        <span class="font-bold">Status</span>
+                                                    </div>
+                                                    <div class="space-y-2">
+                                                        @foreach ($item->quotationResponses as $response)
+                                                            @if ($response->user_id == auth()->id())
+                                                                <div class="grid grid-cols-4 gap-2 w-full bg-yellow-200 p-2 rounded-md">
+                                                                    <span>{{ $response->quantity }} {{ explode(' ', $response->orderItem->product->min_order_quantity)[1] }}</span>
+                                                                    <span class="">
+                                                                        {{ $response->orderItem->product->business->global_currency ? $response->orderItem->product->business->global_currency : 'USD'}}
+                                                                        {{ $response->amount }}
+                                                                    </span>
+                                                                    <span class="">
+                                                                        {{ $response->created_at->format('d M Y H:i a') }}
+                                                                    </span>
+                                                                    <span>
+                                                                        {{ Str::title($response->status) }}
+                                                                    </span>
+                                                                </div>
+                                                            @else
+                                                                <div class="grid grid-cols-3 gap-2 w-full p-2 rounded-md">
+                                                                    <span>{{ $response->quantity }} {{ explode(' ', $response->orderItem->product->min_order_quantity)[1] }}</span>
+                                                                    <span class="">
+                                                                        {{ $response->orderItem->product->business->global_currency ? $response->orderItem->product->business->global_currency : 'USD'}}
+                                                                        {{ $response->amount }}
+                                                                    </span>
+                                                                    <span class="">
+                                                                        {{ $response->created_at->format('d M Y H:i a') }}
+                                                                    </span>
+                                                                    <span>
+                                                                        {{ Str::title($response->status) }}
+                                                                    </span>
+                                                                </div>
+                                                            @endif
+                                                        @endforeach
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </x-modal>
+                                </x-modal>
+                            @endif
                         </div>
                     @endforeach
                 </div>
@@ -272,6 +272,15 @@
                         </div>
                     </div>
                 @endif
+                @foreach ($order->orderItems as $orderItem)
+                    <div class="col-span-2 justify-end">
+                        @if ($orderItem->orderRequests()->where('requesteable_type', 'App\Models\InsuranceCompany')->exists() && !$orderItem->inspectionReport()->exists())
+                            <a href="{{ route('vendor.orders.insurance.report.create', ['order' => $order]) }}">
+                                <x-primary-button class="py-1">Upload Insurance Report</x-primary-button>
+                            </a>
+                        @endif
+                    </div>
+                @endforeach
                 {{-- <div class="col-span-2 border border-gray-300 rounded-lg py-2 bg-white px-4">
                     <div class="grid md:grid-cols-2">
                         <div class="flex flex-col pb-5 mr-1">

@@ -24,6 +24,7 @@
         "moment": "^2.29.4",
         "pusher-js": "^8.3.0",
         "vue": "^3.3.8",
-        "vue-template-compiler": "^2.7.15"
+        "vue-template-compiler": "^2.7.15",
+        "vue-toastification": "^2.0.0-rc.5"
     }
 }
