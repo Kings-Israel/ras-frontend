@@ -63,6 +63,11 @@
                                     <input type="text" name="material" value="{{ $product->material }}" id="product_material" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                                     <x-input-error :messages="$errors->get('material')" class="mt-2" />
                                 </div>
+                                <div class="form-group">
+                                    <x-input-label for="product_brand" :value="__('Product Brand')" class="text-black" />
+                                    <input type="text" name="brand" value="{{ $product->brand }}" id="product_brand" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+                                    <x-input-error :messages="$errors->get('brand')" class="mt-2" />
+                                </div>
                                 <div class="flex gap-1">
                                     <div class="basis-2/5 form-group">
                                         <div class="flex justify-between">
@@ -84,7 +89,7 @@
                                         </select>
                                     </div>
                                     <div class="basis-3/5 form-group">
-                                        <x-input-label for="product_price" :value="__('Price')" class="text-black" />
+                                        <x-input-label for="product_price" :value="__('Standard Price')" class="text-black" />
                                         <input type="number" name="price" value="{{ $product->price }}" id="product_price" min="0" placeholder="0.00" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                                         <x-input-error :messages="$errors->get('price')" class="mt-2" />
                                     </div>
@@ -101,15 +106,41 @@
                                         <x-input-error :messages="$errors->get('min_price')" class="mt-2" />
                                     </div>
                                 </div>
-                                <div class="flex gap-1">
-                                    <div class="basis-3/4 form-group">
+                                <div class="col-span-2 grid grid-cols-5">
+                                    <div class="col-span-2 form-group">
                                         @php($product_min_order_quantity = explode(" ", $product->min_order_quantity))
-                                        <x-input-label for="product_minimum_quantity_order" :value="__('Minimum Order Quantity')" class="text-black" />
+                                        <x-input-label for="product_minimum_quantity_order" :value="__('Min Order Quantity')" class="text-black" />
                                         <input type="number" name="min_order_quantity" value="{{ $product_min_order_quantity[0] }}" id="product_minimum_quantity_order" min="1" placeholder="0" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                                         <x-input-error :messages="$errors->get('min_order_quantity')" class="mt-2" />
                                         <x-input-error :messages="$errors->get('min_order_quantity_unit')" class="mt-2" />
                                     </div>
-                                    <div class="basis-1/4 form-group">
+                                    <div class="col-span-2 form-group">
+                                        @php($product_max_order_quantity = explode(" ", $product->max_order_quantity))
+                                        <x-input-label for="product_maximum_quantity_order" :value="__('Max Order Quantity')" class="text-black" />
+                                        <input type="number" name="max_order_quantity" value="{{ $product_max_order_quantity[0] }}" id="product_maximum_quantity_order" min="1" placeholder="0" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+                                        <x-input-error :messages="$errors->get('max_order_quantity')" class="mt-2" />
+                                        <x-input-error :messages="$errors->get('max_order_quantity_unit')" class="mt-2" />
+                                    </div>
+                                    <div class="col-span-1 form-group">
+                                        <div class="flex justify-between">
+                                            <x-input-label for="product_brand" :value="__('Unit')" class="text-black" />
+                                            <div class="flex gap-2">
+                                                <x-input-label :value="__('Custom')" class="text-sm text-gray-500 font-semibold" />
+                                                <input type="checkbox" name="enter_custom_quantity_order_unit" @if(count($product_max_order_quantity) > 1 && !in_array($product_max_order_quantity[1], $units->toArray())) checked @endif onchange="enterCustom(this, 'quantity_order_unit')" id="enter_custom_quantity_order_unit" class="my-auto w-4 h-4 text-primary-one bg-gray-400 border-gray-500 rounded focus:ring-primary-one dark:focus:ring-primary-two dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            </div>
+                                        </div>
+                                        <input name="order_quantity_unit" oninput="setInput('quantity_order_unit')" id="custom_quantity_order_unit" type="text" class="hidden bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+                                        <select name="order_quantity_unit" id="quantity_order_unit" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+                                            <option value="">Unit</option>
+                                            @foreach ($units as $unit)
+                                                <option value="{{ $unit->name }}" @if(count($product_max_order_quantity) > 1 && $product_max_order_quantity[1] == $unit->name) selected @endif>{{ $unit->name }} @if($unit->abbrev) - ({{ $unit->abbrev }}) @endif</option>
+                                            @endforeach
+                                            @if (count($product_max_order_quantity) > 1 && !collect($units)->contains($product_max_order_quantity[1]))
+                                                <option value="{{ $product_max_order_quantity[1] }}" selected>{{ $product_max_order_quantity[1] }}</option>
+                                            @endif
+                                        </select>
+                                    </div>
+                                    {{-- <div class="basis-1/4 form-group">
                                         <div class="flex justify-between">
                                             <x-input-label for="product_brand" :value="__('Unit')" class="text-black" />
                                             <div class="flex gap-2">
@@ -127,12 +158,12 @@
                                                 <option value="{{ $product_min_order_quantity[1] }}" selected>{{ $product_min_order_quantity[1] }}</option>
                                             @endif
                                         </select>
-                                    </div>
+                                    </div> --}}
                                 </div>
-                                <div class="flex gap-1">
+                                {{-- <div class="flex gap-1">
                                     <div class="basis-3/4 form-group">
                                         @php($product_max_order_quantity = explode(" ", $product->max_order_quantity))
-                                        <x-input-label for="product_maximum_quantity_order" :value="__('Maximum Order Quantity')" class="text-black" />
+                                        <x-input-label for="product_maximum_quantity_order" :value="__('Max Order Quantity')" class="text-black" />
                                         <input type="number" name="max_order_quantity" value="{{ $product_max_order_quantity[0] }}" id="product_maximum_quantity_order" min="1" placeholder="0" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                                         <x-input-error :messages="$errors->get('max_order_quantity')" class="mt-2" />
                                         <x-input-error :messages="$errors->get('max_order_quantity_unit')" class="mt-2" />
@@ -156,16 +187,15 @@
                                             @endif
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="form-group">
                                     <x-input-label for="product_place_of_origin" :value="__('Product Place of Origin')" class="text-black" />
                                     <input type="text" name="place_of_origin" value="{{ $product->place_of_origin }}" id="product_origin" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                                     <x-input-error :messages="$errors->get('place_of_origin')" class="mt-2" />
                                 </div>
                                 <div class="form-group">
-                                    <x-input-label for="product_brand" :value="__('Product Brand')" class="text-black" />
-                                    <input type="text" name="brand" value="{{ $product->brand }}" id="product_brand" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
-                                    <x-input-error :messages="$errors->get('brand')" class="mt-2" />
+                                    <x-input-label>Certificate of Origin</x-input-label>
+                                    <x-input-file accept=".pdf" class="" name="certificate_of_origin"></x-input-file>
                                 </div>
                                 <div class="form-group">
                                     <div class="flex justify-between">
@@ -235,13 +265,17 @@
                         <div class="content" id="product-media">
                             <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
                                 <div class="form-group lg:col-span-2">
-                                    <div class="flex gap-2">
+                                    <div class="flex justify-between gap-2">
                                         <x-input-label for="product_link_to_warehouse" :value="__('Warehouses')" class="text-black" />
                                         @if ($product->warehouses->count() > 0)
-                                            <span class="space-x-2">
+                                            <span class="text-gray-700">
                                                 <strong>Current Warehouses:</strong>
                                                 @foreach ($product->warehouses as $warehouse)
-                                                    <span>{{ $warehouse->name }}</span>
+                                                    @if ($loop->last)
+                                                        <span>{{ $warehouse->name }}</span>
+                                                    @else
+                                                        <span>{{ $warehouse->name.', ' }}</span>
+                                                    @endif
                                                 @endforeach
                                             </span>
                                         @endif
@@ -330,7 +364,7 @@
                                 </div>
                                 <div class="form-group lg:col-span-2">
                                     <x-input-label for="product_description" :value="__('Product Description')" class="text-black" />
-                                    <textarea type="text" name="description" rows="4" id="product_description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"></textarea>
+                                    <textarea type="text" name="description" rows="4" id="product_description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">{{ $product->description }}</textarea>
                                     <x-input-error :messages="$errors->get('description')" class="mt-2" />
                                 </div>
                                 {{-- <div class="form-group col-span-2 hidden" id="product_capacity">
