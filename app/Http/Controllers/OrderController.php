@@ -115,7 +115,17 @@ class OrderController extends Controller
             'delivery_location.required' => 'Please select delivery location'
         ]);
 
+
         $products = Product::whereIn('id', $request->items_ids)->get()->groupBy('business_id');
+
+        if (auth()-user()->hasRole('vendor')) {
+            foreach ($products as $key => $product) {
+                if ($key == auth()->user()->business->id) {
+                    toastr()->error('', 'You cannot make an order on your product');
+                    return redirect()->route('welcome');
+                }
+            }
+        }
 
         // Create invoice
         $invoice = auth()->user()->invoices()->create([
