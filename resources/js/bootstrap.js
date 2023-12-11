@@ -27,6 +27,10 @@ import {createApp} from "vue/dist/vue.esm-bundler"
 
 import ChatComponent from './components/ChatComponent.vue'
 import OrderChatComponent from './components/OrderChatComponent.vue'
+import NotificationsComponent from './components/Notifications.vue'
+import Toast from "vue-toastification";
+// Import the CSS or use your own!
+import "vue-toastification/dist/index.css";
 
 const EchoInstance = new Echo({
     broadcaster: 'pusher',
@@ -38,21 +42,31 @@ const EchoInstance = new Echo({
     cluster: 'eu',
 })
 
+const options = {
+    // You can set your default options here
+};
+
 const app = createApp({})
 // Show chat in confirmed order section
 const app_orders = createApp({})
 // Show Chat in paid order section
 const app_paid_orders = createApp({})
+// Notifications
+const notifications = createApp({})
 
 app.component('ChatComponent', ChatComponent)
 app.component('OrderChatComponent', OrderChatComponent)
 app_orders.component('OrderChatComponent', OrderChatComponent)
 app_paid_orders.component('OrderChatComponent', OrderChatComponent)
+notifications.component('NotificationsComponent', NotificationsComponent)
 
 app.provide('echo', EchoInstance)
 app_orders.provide('echo', EchoInstance)
 app_paid_orders.provide('echo', EchoInstance)
+notifications.provide('echo', EchoInstance)
+notifications.use(Toast, options);
 
 app.mount("#app");
 app_orders.mount("#app-orders");
 app_paid_orders.mount("#app-paid-orders");
+notifications.mount("#notifications");

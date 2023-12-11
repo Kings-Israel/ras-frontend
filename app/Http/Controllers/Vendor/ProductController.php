@@ -11,6 +11,7 @@ use App\Models\ProductMedia;
 use App\Models\Warehouse;
 use App\Models\WarehouseProduct;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -38,8 +39,7 @@ class ProductController extends Controller
             'min_price' => ['required_without:price'],
             'max_price' => ['required_without:price'],
             'currency' => ['required_with:price', 'required_with:min_price', 'required_with:max_price'],
-            'min_quantity_order_unit' => ['required_with:min_quantity_order'],
-            'max_quantity_order_unit' => ['required_with:max_quantity_order'],
+            'quantity_order_unit' => ['required_with:max_quantity_order', 'required_with:min_quantity_order'],
             'description' => ['required'],
             'model_number' => ['required'],
             'images' => ['required', 'array'],
@@ -56,8 +56,8 @@ class ProductController extends Controller
             'min_price' => $request->min_price,
             'max_price' => $request->max_price,
             'currency' => $request->has('currency') && $request->currency != NULL && $request->currency != '' && $request->currency ? $request->currency : 'USD',
-            'max_order_quantity' => $request->has('max_order_quantity') && $request->max_order_quantity != NULL ? $request->max_order_quantity.' '.$request->max_order_quantity_unit : NULL,
-            'min_order_quantity' => $request->has('min_order_quantity') && $request->min_order_quantity != NULL ? $request->min_order_quantity.' '.$request->min_order_quantity_unit : NULL,
+            'max_order_quantity' => $request->has('max_order_quantity') && $request->max_order_quantity != NULL ? $request->max_order_quantity.' '.$request->order_quantity_unit : NULL,
+            'min_order_quantity' => $request->has('min_order_quantity') && $request->min_order_quantity != NULL ? $request->min_order_quantity.' '.$request->order_quantity_unit : NULL,
             'color' => $request->color,
             'shape' => $request->shape,
             'usage' => $request->usage,
@@ -70,16 +70,21 @@ class ProductController extends Controller
             'is_available' => $request->has('product_availability') ? true : false,
             'regional_featre' => $request->regional_feature,
             'capacity_in_warehouse' => $request->product_capacity,
+            'certificate_of_origin' => $request->hasFile('certificate_of_origin') ? pathinfo($request->certificate_of_origin->store('certificate', 'product'), PATHINFO_BASENAME) : NULL,
         ]);
 
-        // if (count(explode(',', $request->warehouses)) > 0) {
-        //     foreach(explode(',', $request->warehouses) as $warehouse) {
-        //         WarehouseProduct::create([
-        //             'warehouse_id' => $warehouse,
-        //             'product_id' => $product->id
-        //         ]);
-        //     };
-        // }
+        $product->update([
+            'slug' => $product->name.'_'.$product->id,
+        ]);
+
+        if ($request->warehouses != null && count(explode(',', $request->warehouses)) > 0) {
+            foreach(explode(',', $request->warehouses) as $warehouse) {
+                WarehouseProduct::create([
+                    'warehouse_id' => $warehouse,
+                    'product_id' => $product->id
+                ]);
+            };
+        }
 
         foreach ($request->images as $image) {
             ProductMedia::create([
@@ -128,14 +133,14 @@ class ProductController extends Controller
             'min_price' => ['required_without:price'],
             'max_price' => ['required_without:price'],
             'currency' => ['required_with:price', 'required_with:min_price', 'required_with:max_price'],
-            'min_quantity_order_unit' => ['required_with:min_quantity_order'],
-            'max_quantity_order_unit' => ['required_with:max_quantity_order'],
+            'quantity_order_unit' => ['required_with:max_quantity_order', 'required_with:min_quantity_order'],
             'description' => ['required'],
             'model_number' => ['required'],
             'images' => ['nullable', 'array'],
             'images.*' => ['mimes:png,jpg,jpeg', 'max:4096'],
             'video' => ['nullable', 'mimes:mp4', 'max:10000'],
             'capacity_in_warehouse' => ['nullable', 'integer'],
+            'certificate_of_origin' => ['nullable', 'mimes:pdf'],
         ]);
 
         $product->update([
@@ -144,8 +149,8 @@ class ProductController extends Controller
             'price' => $request->price,
             'min_price' => $request->min_price,
             'max_price' => $request->max_price,
-            'max_order_quantity' => $request->has('max_order_quantity') && $request->max_order_quantity != NULL ? $request->max_order_quantity.' '.$request->max_order_quantity_unit : NULL,
-            'min_order_quantity' => $request->has('min_order_quantity') && $request->min_order_quantity != NULL ? $request->min_order_quantity.' '.$request->min_order_quantity_unit : NULL,
+            'max_order_quantity' => $request->has('max_order_quantity') && $request->max_order_quantity != NULL ? $request->max_order_quantity.' '.$request->order_quantity_unit : NULL,
+            'min_order_quantity' => $request->has('min_order_quantity') && $request->min_order_quantity != NULL ? $request->min_order_quantity.' '.$request->order_quantity_unit : NULL,
             'color' => $request->color,
             'shape' => $request->shape,
             'usage' => $request->usage,
@@ -160,6 +165,17 @@ class ProductController extends Controller
             'regional_featre' => $request->regional_feature,
             'capacity_in_warehouse' => $request->product_capacity,
         ]);
+
+        if ($request->hasFile('certificate_of_origin')) {
+            if ($product->certificate_of_origin) {
+                $current_cert = explode('/', $product->certificate_of_origin);
+                Storage::disk('product')->delete(end($current_cert));
+            }
+
+            $product->update([
+                'certificate_of_origin' => $request->hasFile('certificate_of_origin') ? pathinfo($request->certificate_of_origin->store('certificate', 'product'), PATHINFO_BASENAME) : NULL,
+            ]);
+        }
 
         if ($request->warehouses != null && count(explode(',', $request->warehouses)) > 0) {
             WarehouseProduct::where('product_id', $product->id)->delete();

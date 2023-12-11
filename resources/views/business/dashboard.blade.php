@@ -20,27 +20,27 @@
                                         type="button"
                                     >
                                         Last 7 days
-                                        <svg class="w-2.5 m-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                                        </svg>
                                     </button>
+                                    <svg data-dropdown-toggle="lastDaysdropdown" data-dropdown-placement="bottom" class="w-2.5 m-2.5 ml-1.5 hover:cursor-pointer" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                                    </svg>
                                     <!-- Dropdown menu -->
                                     <div id="lastDaysdropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                                         <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-                                            <li>
+                                            <li id="yesterday-chart">
                                                 <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Yesterday</a>
                                             </li>
-                                            <li>
+                                            <li id="today">
                                                 <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Today</a>
                                             </li>
-                                            <li>
+                                            <li id="seven_days">
                                                 <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 7 days</a>
                                             </li>
-                                            <li>
-                                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 30 days</a>
+                                            <li id="three_months">
+                                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 3 Months</a>
                                             </li>
-                                            <li>
-                                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 90 days</a>
+                                            <li id="six_months">
+                                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 6 Months</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -48,6 +48,10 @@
                             </div>
                             <!-- Line Chart -->
                             <div id="area-chart"></div>
+                            <div id="area-chart-yesterday" class="hidden"></div>
+                            <div id="area-chart-today" class="hidden"></div>
+                            <div id="area-chart-three-months" class="hidden"></div>
+                            <div id="area-chart-six-months" class="hidden"></div>
                             <a
                                 href="#"
                                 class="text-sm font-semibold inline-flex items-center rounded-lg text-gray-600 px-3 pt-6">
@@ -74,168 +78,6 @@
                     <span class="font-extrabold hover:cursor-pointer text-gray-500" id="view_cancelled_orders_btn" onclick="changeOrdersView('cancelled_orders')">Cancelled</span>
                     <span class="font-extrabold hover:cursor-pointer text-gray-500" id="view_in_progress_orders_btn" onclick="changeOrdersView('in_progress_orders')">In Progress</span>
                 </div>
-                {{-- <table class="w-full table-auto text-sm text-left text-gray-800 font-bold dark:text-gray-400 truncate">
-                    <thead class="text-xs text-gray-500 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-t-2 border-b-2">
-                        <tr>
-                            <th scope="col" class="px-2 py-3 text-gray-900">
-                                ID
-                            </th>
-                            <th scope="col" class="px-2 py-3 text-gray-900">
-                                Date
-                            </th>
-                            <th scope="col" class="px-2 py-3 text-gray-900">
-                                Product
-                            </th>
-                            <th scope="col" class="px-2 py-3 text-gray-900">
-                                Quantity
-                            </th>
-                            <th scope="col" class="px-2 py-3 text-gray-900">
-                                Country
-                            </th>
-                            <th scope="col" class="px-2 py-3 text-gray-900">
-                                Payment
-                            </th>
-                            <th scope="col" class="px-2 py-3 text-gray-900">
-                                Fulfilment
-                            </th>
-                            <th scope="col" class="px-2 py-3 text-gray-900">
-                                Amount
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
-                            <th scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                348758
-                            </th>
-                            <td class="px-2 py-2 text-gray-500">
-                                Mar 27, 2023
-                            </td>
-                            <td class="px-2 py-2 text-gray-500">
-                                Bag of Copper Wire
-                            </td>
-                            <td class="px-2 py-2 text-gray-500">
-                                23
-                            </td>
-                            <td class="px-2 py-2 text-gray-500">
-                                Senegal
-                            </td>
-                            <td class="px-2 py-2">
-                                <span class="bg-green-200 rounded-md px-3">Paid</span>
-                            </td>
-                            <td class="px-2 py-2 text-gray-500">
-                                Delivered
-                            </td>
-                            <td class="px-2 py-2 text-gray-500">
-                                Ksh.235,387
-                            </td>
-                        </tr>
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
-                            <th scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                349854
-                            </th>
-                            <td class="px-2 py-2 text-gray-500">
-                                Apr 30, 2023
-                            </td>
-                            <td class="px-2 py-2 text-gray-500">
-                                Gold Chains
-                            </td>
-                            <td class="px-2 py-2 text-gray-500">
-                                300
-                            </td>
-                            <td class="px-2 py-2 text-gray-500">
-                                Zambia
-                            </td>
-                            <td class="px-2 py-2">
-                                <span class="bg-gray-200 rounded-md px-3">Unpaid</span>
-                            </td>
-                            <td class="px-2 py-2 text-gray-500">
-                                Cancelled
-                            </td>
-                            <td class="px-2 py-2 text-gray-500">
-                                Ksh.452,453
-                            </td>
-                        </tr>
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
-                            <th scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                56858
-                            </th>
-                            <td class="px-2 py-2 text-gray-500">
-                                Jan 27, 2023
-                            </td>
-                            <td class="px-2 py-2 text-gray-500">
-                                Tanzanite
-                            </td>
-                            <td class="px-2 py-2 text-gray-500">
-                                180
-                            </td>
-                            <td class="px-2 py-2 text-gray-500">
-                                Kenya
-                            </td>
-                            <td class="px-2 py-2 text-gray-500">
-                                <span class="bg-green-200 rounded-md px-2">Paid</span>
-                            </td>
-                            <td class="px-2 py-2 text-gray-500">
-                                Delivered
-                            </td>
-                            <td class="px-2 py-2 text-gray-500">
-                                Ksh.235,387
-                            </td>
-                        </tr>
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
-                            <th scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                349854
-                            </th>
-                            <td class="px-2 py-2 text-gray-500">
-                                Apr 30, 2023
-                            </td>
-                            <td class="px-2 py-2 text-gray-500">
-                                Gold Chains
-                            </td>
-                            <td class="px-2 py-2 text-gray-500">
-                                300
-                            </td>
-                            <td class="px-2 py-2 text-gray-500">
-                                Zambia
-                            </td>
-                            <td class="px-2 py-2">
-                                <span class="bg-gray-200 rounded-md px-3">Unpaid</span>
-                            </td>
-                            <td class="px-2 py-2 text-gray-500">
-                                Cancelled
-                            </td>
-                            <td class="px-2 py-2 text-gray-500">
-                                Ksh.452,453
-                            </td>
-                        </tr>
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
-                            <th scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                565434
-                            </th>
-                            <td class="px-2 py-2 text-gray-500">
-                                Apr 26, 2023
-                            </td>
-                            <td class="px-2 py-2 text-gray-500">
-                                Diamond
-                            </td>
-                            <td class="px-2 py-2 text-gray-500">
-                                30
-                            </td>
-                            <td class="px-2 py-2 text-gray-500">
-                                South Africa
-                            </td>
-                            <td class="px-2 py-2">
-                                <span class="bg-gray-200 rounded-md px-3">Unpaid</span>
-                            </td>
-                            <td class="px-2 py-2 text-gray-500">
-                                Cancelled
-                            </td>
-                            <td class="px-2 py-2 text-gray-500">
-                                Ksh.1,452,453
-                            </td>
-                        </tr>
-                    </tbody>
-                </table> --}}
                 <div id="orders">
                     <livewire:vendor.dashboard-orders-list />
                 </div>
@@ -271,13 +113,28 @@
     @push('scripts')
         <script>
             let days = {!! json_encode($days) !!}
+            let hours = {!! json_encode($hours) !!}
+            let formatted_yesterday_hours = {!! json_encode($formatted_yesterday_hours) !!}
+            let formatted_past_three_months = {!! json_encode($formatted_past_three_months) !!}
+            let formatted_past_six_months = {!! json_encode($formatted_past_six_months) !!}
+
             let payments_in_last_seven_days = {!! json_encode($payments_in_last_seven_days) !!}
+            let payments_yesterday = {!! json_encode($payments_yesterday) !!}
+            let payments_today = {!! json_encode($payments_today) !!}
+            let payments_in_last_three_months = {!! json_encode($payments_in_last_three_months) !!}
+            let payments_in_last_six_months = {!! json_encode($payments_in_last_six_months) !!}
+
+            let wallet_balance = {!! json_encode($wallet_balance) !!}
+
+            let categories_names = {!! json_encode($top_categories_names) !!}
+            let categories_percentages = {!! json_encode($top_categories_percentages) !!}
+            let categories_colors = {!! json_encode($top_categories_colors) !!}
             // ApexCharts options and config
             window.addEventListener("load", function() {
                 const getChartOptions = () => {
                     return {
-                        series: [2938349, 874783, 84738, 34748],
-                        colors: ["#03A63C", "#D3D3D3", "#025939", "#F2C225"],
+                        series: categories_percentages,
+                        colors: categories_colors,
                         chart: {
                             height: 335,
                             width: "100%",
@@ -308,7 +165,7 @@
                                                 const sum = w.globals.seriesTotals.reduce((a, b) => {
                                                     return a + b
                                                 }, 0)
-                                                return `Ksh.${sum.toLocaleString()}`
+                                                return `Ksh.${wallet_balance.toLocaleString()}`
                                             },
                                         },
                                         value: {
@@ -317,7 +174,7 @@
                                             fontSize: '8px',
                                             offsetY: 0,
                                             formatter: function (value) {
-                                                return "Ksh."+value.toLocaleString()
+                                                return wallet_balance.toLocaleString()
                                             },
                                         },
                                     },
@@ -330,7 +187,7 @@
                                 top: 2,
                             },
                         },
-                        labels: ["Income", "Taxes", "Fees", "Email marketing"],
+                        labels: categories_names,
                         dataLabels: {
                             enabled: false,
                         },
@@ -341,14 +198,14 @@
                         yaxis: {
                             labels: {
                                 formatter: function (value) {
-                                    return "Ksh." + value.toLocaleString()
+                                    return value.toLocaleString() + "%"
                                 },
                             },
                         },
                         xaxis: {
                             labels: {
                                 formatter: function (value) {
-                                    return "Ksh." + value.toLocaleString()
+                                    return "Ksh. " + value.toLocaleString()
                                 },
                             },
                             axisTicks: {
@@ -464,10 +321,348 @@
                     },
                 }
 
+                let today_chart_options = {
+                    chart: {
+                        height: "120%",
+                        maxWidth: "120%",
+                        type: "area",
+                        fontFamily: "Century Gothic, sans-serif",
+                        dropShadow: {
+                            enabled: false,
+                        },
+                        toolbar: {
+                            show: false,
+                        },
+                    },
+                    tooltip: {
+                        enabled: true,
+                        x: {
+                            show: false,
+                        },
+                    },
+                    fill: {
+                        type: "gradient",
+                        gradient: {
+                            opacityFrom: 0.4,
+                            opacityTo: 0,
+                            shade: "#fb923c",
+                            gradientToColors: ["#EE5D32"],
+                        },
+                    },
+                    dataLabels: {
+                        enabled: false,
+                    },
+                    stroke: {
+                        width: 4,
+                    },
+                    grid: {
+                        show: true,
+                        strokeDashArray: 4,
+                        padding: {
+                            left: 4,
+                            right: 4,
+                            top: 0
+                        },
+                    },
+                    series: [
+                        {
+                            name: "Sales",
+                            data: payments_today,
+                            color: "#EE5D32",
+                        },
+                    ],
+                    xaxis: {
+                        categories: hours,
+                        labels: {
+                            show: true,
+                        },
+                        axisBorder: {
+                            show: true,
+                        },
+                        axisTicks: {
+                            show: true,
+                        },
+                    },
+                    yaxis: {
+                        show: true,
+                    },
+                }
+
+                let yesterday_chart_options = {
+                    chart: {
+                        height: "120%",
+                        maxWidth: "120%",
+                        type: "area",
+                        fontFamily: "Century Gothic, sans-serif",
+                        dropShadow: {
+                            enabled: false,
+                        },
+                        toolbar: {
+                            show: false,
+                        },
+                    },
+                    tooltip: {
+                        enabled: true,
+                        x: {
+                            show: false,
+                        },
+                    },
+                    fill: {
+                        type: "gradient",
+                        gradient: {
+                            opacityFrom: 0.4,
+                            opacityTo: 0,
+                            shade: "#fb923c",
+                            gradientToColors: ["#EE5D32"],
+                        },
+                    },
+                    dataLabels: {
+                        enabled: false,
+                    },
+                    stroke: {
+                        width: 4,
+                    },
+                    grid: {
+                        show: true,
+                        strokeDashArray: 4,
+                        padding: {
+                            left: 4,
+                            right: 4,
+                            top: 0
+                        },
+                    },
+                    series: [
+                        {
+                            name: "Sales",
+                            data: payments_yesterday,
+                            color: "#EE5D32",
+                        },
+                    ],
+                    xaxis: {
+                        categories: formatted_yesterday_hours,
+                        labels: {
+                            show: true,
+                        },
+                        axisBorder: {
+                            show: true,
+                        },
+                        axisTicks: {
+                            show: true,
+                        },
+                    },
+                    yaxis: {
+                        show: true,
+                    },
+                }
+
+                let three_months_chart_options = {
+                    chart: {
+                        height: "120%",
+                        maxWidth: "120%",
+                        type: "area",
+                        fontFamily: "Century Gothic, sans-serif",
+                        dropShadow: {
+                            enabled: false,
+                        },
+                        toolbar: {
+                            show: false,
+                        },
+                    },
+                    tooltip: {
+                        enabled: true,
+                        x: {
+                            show: false,
+                        },
+                    },
+                    fill: {
+                        type: "gradient",
+                        gradient: {
+                            opacityFrom: 0.4,
+                            opacityTo: 0,
+                            shade: "#fb923c",
+                            gradientToColors: ["#EE5D32"],
+                        },
+                    },
+                    dataLabels: {
+                        enabled: false,
+                    },
+                    stroke: {
+                        width: 4,
+                    },
+                    grid: {
+                        show: true,
+                        strokeDashArray: 4,
+                        padding: {
+                            left: 4,
+                            right: 4,
+                            top: 0
+                        },
+                    },
+                    series: [
+                        {
+                            name: "Sales",
+                            data: payments_in_last_three_months,
+                            color: "#EE5D32",
+                        },
+                    ],
+                    xaxis: {
+                        categories: formatted_past_three_months,
+                        labels: {
+                            show: true,
+                        },
+                        axisBorder: {
+                            show: true,
+                        },
+                        axisTicks: {
+                            show: true,
+                        },
+                    },
+                    yaxis: {
+                        show: true,
+                    },
+                }
+
+                let six_months_chart_options = {
+                    chart: {
+                        height: "120%",
+                        maxWidth: "120%",
+                        type: "area",
+                        fontFamily: "Century Gothic, sans-serif",
+                        dropShadow: {
+                            enabled: false,
+                        },
+                        toolbar: {
+                            show: false,
+                        },
+                    },
+                    tooltip: {
+                        enabled: true,
+                        x: {
+                            show: false,
+                        },
+                    },
+                    fill: {
+                        type: "gradient",
+                        gradient: {
+                            opacityFrom: 0.4,
+                            opacityTo: 0,
+                            shade: "#fb923c",
+                            gradientToColors: ["#EE5D32"],
+                        },
+                    },
+                    dataLabels: {
+                        enabled: false,
+                    },
+                    stroke: {
+                        width: 4,
+                    },
+                    grid: {
+                        show: true,
+                        strokeDashArray: 4,
+                        padding: {
+                            left: 4,
+                            right: 4,
+                            top: 0
+                        },
+                    },
+                    series: [
+                        {
+                            name: "Sales",
+                            data: payments_in_last_six_months,
+                            color: "#EE5D32",
+                        },
+                    ],
+                    xaxis: {
+                        categories: formatted_past_six_months,
+                        labels: {
+                            show: true,
+                        },
+                        axisBorder: {
+                            show: true,
+                        },
+                        axisTicks: {
+                            show: true,
+                        },
+                    },
+                    yaxis: {
+                        show: true,
+                    },
+                }
+
                 if (document.getElementById("area-chart") && typeof ApexCharts !== 'undefined') {
                     const chart = new ApexCharts(document.getElementById("area-chart"), options);
                     chart.render();
                 }
+
+                if (document.getElementById("area-chart-yesterday") && typeof ApexCharts !== 'undefined') {
+                    const chart = new ApexCharts(document.getElementById("area-chart-yesterday"), yesterday_chart_options);
+                    chart.render();
+                }
+
+                if (document.getElementById("area-chart-today") && typeof ApexCharts !== 'undefined') {
+                    const chart = new ApexCharts(document.getElementById("area-chart-today"), today_chart_options);
+                    chart.render();
+                }
+
+                if (document.getElementById("area-chart-three-months") && typeof ApexCharts !== 'undefined') {
+                    const chart = new ApexCharts(document.getElementById("area-chart-three-months"), three_months_chart_options);
+                    chart.render();
+                }
+
+                if (document.getElementById("area-chart-six-months") && typeof ApexCharts !== 'undefined') {
+                    const chart = new ApexCharts(document.getElementById("area-chart-six-months"), six_months_chart_options);
+                    chart.render();
+                }
+
+                // Show Yesterday chart
+                document.getElementById('yesterday-chart').addEventListener("click", function(e) {
+                    document.getElementById('area-chart').classList.add('hidden')
+                    document.getElementById('area-chart-today').classList.add('hidden')
+                    document.getElementById('area-chart-three-months').classList.add('hidden')
+                    document.getElementById('area-chart-six-months').classList.add('hidden')
+                    document.getElementById('area-chart-yesterday').classList.remove('hidden')
+                    document.getElementById('dropdownDefaultButton').innerHTML = 'Yesterday'
+                })
+
+                // Show Today Chart
+                document.getElementById('today').addEventListener("click", function(e) {
+                    document.getElementById('area-chart').classList.add('hidden')
+                    document.getElementById('area-chart-three-months').classList.add('hidden')
+                    document.getElementById('area-chart-six-months').classList.add('hidden')
+                    document.getElementById('area-chart-yesterday').classList.add('hidden')
+                    document.getElementById('area-chart-today').classList.remove('hidden')
+                    document.getElementById('dropdownDefaultButton').innerHTML = 'Today'
+                })
+
+                // Show Sevent days chart
+                document.getElementById('seven_days').addEventListener("click", function(e) {
+                    document.getElementById('area-chart-today').classList.add('hidden')
+                    document.getElementById('area-chart-three-months').classList.add('hidden')
+                    document.getElementById('area-chart-six-months').classList.add('hidden')
+                    document.getElementById('area-chart-yesterday').classList.add('hidden')
+                    document.getElementById('area-chart').classList.remove('hidden')
+                    document.getElementById('dropdownDefaultButton').innerHTML = 'Last 7 days'
+                })
+
+                // Show Three months chart
+                document.getElementById('three_months').addEventListener("click", function(e) {
+                    document.getElementById('area-chart').classList.add('hidden')
+                    document.getElementById('area-chart-today').classList.add('hidden')
+                    document.getElementById('area-chart-six-months').classList.add('hidden')
+                    document.getElementById('area-chart-yesterday').classList.add('hidden')
+                    document.getElementById('area-chart-three-months').classList.remove('hidden')
+                    document.getElementById('dropdownDefaultButton').innerHTML = 'Last 3 Months'
+                })
+
+                // Show Six months chart
+                document.getElementById('six_months').addEventListener("click", function(e) {
+                    document.getElementById('area-chart').classList.add('hidden')
+                    document.getElementById('area-chart-today').classList.add('hidden')
+                    document.getElementById('area-chart-three-months').classList.add('hidden')
+                    document.getElementById('area-chart-yesterday').classList.add('hidden')
+                    document.getElementById('area-chart-six-months').classList.remove('hidden')
+                    document.getElementById('dropdownDefaultButton').innerHTML = 'Last 6 Months'
+                })
             });
         </script>
         <script>

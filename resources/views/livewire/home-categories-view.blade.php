@@ -1,6 +1,6 @@
-<div class="bg-primary-three p-2">
+<div class="bg-primary-three p-1 rounded-lg">
     <div class="space-y-2">
-        <div class="rounded-md flex flex-col space-y-2 py-2 sticky top-32">
+        <div class="rounded-md flex flex-col space-y-2 py-2">
             <h2 class="font-bold text-gray-700 text-lg px-2">Product Categories</h2>
             @if (!$categories->isEmpty())
                 <div class="flex justify-between px-2 text-gray-500 hover:bg-white hover:cursor-pointer">

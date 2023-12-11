@@ -72,6 +72,7 @@ class ProductController extends Controller
     public function storefrontDocuments($slug)
     {
         $business = Business::findBySlug($slug);
+        $categories = $business->products->where('is_available', true)->map(fn ($product) => $product->category)->unique()->take(8);
 
         if (auth()->id() != $business->user->id) {
             VisitLog::save();
@@ -79,6 +80,7 @@ class ProductController extends Controller
 
         return view('business.storefront.compliance', [
             'business' => $business->load('documents'),
+            'categories' => $categories,
         ]);
     }
 }

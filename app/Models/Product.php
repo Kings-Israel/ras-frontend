@@ -51,7 +51,8 @@ class Product extends Model implements Searchable
         return SlugOptions::create()
             ->generateSlugsFrom(['name', 'id'])
             ->saveSlugsTo('slug')
-            ->usingSeparator('_');
+            ->usingSeparator('_')
+            ->doNotGenerateSlugsOnUpdate();
     }
 
     /**
@@ -73,6 +74,17 @@ class Product extends Model implements Searchable
     public function scopeAvailable($query)
     {
         return $query->where('is_available', true);
+    }
+
+    /**
+     * Get the certificate of origin
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getCertificateOfOriginAttribute($value)
+    {
+        return config('app.url').'/storage/product/certificate/'.$value;
     }
 
     public function isInCart(): bool

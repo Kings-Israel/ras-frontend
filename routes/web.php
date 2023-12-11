@@ -43,6 +43,10 @@ Route::middleware(['auth', 'web', 'phone_verified'])->group(function () {
 
     Route::post('/favorite/add/{vendor}', [FavoriteController::class, 'addFavorite'])->name('favorite.add');
         Route::get('/favorites', [FavoriteController::class, 'showFavorites'])->name('favorites.index');
+
+    Route::get('/notifications', [HomeController::class, 'notifications'])->name('notifications');
+    Route::get('/notification/{notification}', [HomeController::class, 'notification'])->name('notification');
+    Route::get('/notifications/read/all', [HomeController::class, 'notificationsReadAll'])->name('notifications.read.all');
 });
 
 Route::middleware(['auth', 'web', 'phone_verified'])->group(function () {
@@ -56,6 +60,7 @@ Route::middleware(['auth', 'web', 'phone_verified'])->group(function () {
     Route::post('/orders/{order}/update', [OrderController::class, 'update'])->name('orders.update');
     Route::get('/orders/{order}/delete', [OrderController::class, 'delete'])->name('orders.delete');
     Route::get('/invoices/{invoice}/financing/request', [OrderController::class, 'requestFinancing'])->name('invoice.financing.request');
+    Route::post('/invoices/{invoice}/financing/request/store', [OrderController::class, 'storeFinancingRequest'])->name('invoice.financing.request.store');
     Route::post('/order/create', [OrderController::class, 'store'])->name('order.store');
     Route::get('/order/quotation/{quotation}/update/{status}', [OrderController::class, 'updateQuotation'])->name('order.quotation.update');
     Route::get('/order/request/{order_request}/update/{status}', [OrderController::class, 'updateRequest'])->name('order.request.update');
@@ -92,12 +97,11 @@ Route::middleware(['auth', 'web', 'phone_verified', 'role:vendor', 'has_register
         Route::get('/orders/{order}/{status}/update', [VendorController::class, 'orderUpdate'])->name('orders.status.update');
         Route::post('/orders/{order}/quote/update', [VendorController::class, 'quoteUpdate'])->name('orders.quote.update');
         Route::get('/orders/{order}/quotes/accept', [VendorController::class, 'acceptQuotes'])->name('orders.quotes.accept');
+        Route::get('/orders/{order}/insurance/report', [VendorController::class, 'createInsuranceReport'])->name('orders.insurance.report.create');
         Route::get('/messages', [ChatController::class, 'index'])->name('messages');
         Route::get('/messages/chat', [ChatController::class, 'view'])->name('messages.chat');
         Route::get('/customers', [VendorController::class, 'customers'])->name('customers');
-        Route::get('/payments', function () {
-            return view('business.payments');
-        })->name('payments');
+        Route::get('/payments', [VendorController::class, 'payments'])->name('payments');
         Route::get('/warehouses', [VendorController::class, 'warehouses'])->name('warehouses');
         Route::post('/warehouses/{warehouse}/storage/request', [VendorController::class, 'requestWarehouseStorage'])->name('warehouses.storage.request');
         Route::get('/suppliers', [VendorController::class, 'suppliers'])->name('suppliers');

@@ -43,7 +43,7 @@
                         <span class="text-sm">
                             <strong>HQ:</strong> {{ $business->city ? $business->city->name : '' }}, {{ $business->country->name }}
                         </span>
-                        <span class="text-sm flex gap-2">
+                        <span class="text-sm gap-2">
                             <strong>Products:</strong>
                             @if ($business->products->count() > 0)
                                 @foreach ($business->products->take(3) as $product)
@@ -59,6 +59,7 @@
                 </div>
             </div>
             <div class="flex flex-col gap-3">
+{{-- --}}
                 @auth
                 <span>
                  @php
@@ -73,7 +74,7 @@
                    </span>
                    @else
                    <span>                
-                    <a href="{{ route('favorite.add', ['user' => $business->id]) }}" class="bookmark-icon" data-vendor-id="{{ $business->id }}"
+                    <a href="{{ route('favorite.add', ['vendor' => $business->id]) }}" class="bookmark-icon" data-vendor-id="{{ $business->id }}"
                     style="color:'lightgray'"
                     onclick="toggleBookmark({{ $business->id }})"
                     >
@@ -90,7 +91,22 @@
                             </x-secondary-outline-button>
                         </a>                        
                     @endif
-                @else
+                @endauth
+{{--  --}}
+                <div class="relative">
+                    @auth
+                        @if ($business->user->id != auth()->id())
+                            <div class="absolute top-2 right-2">
+                                <livewire:bookmark-vendor :business="$business" />
+                            </div>
+                        @endif
+                    @endauth
+                    <a href="{{ route('vendor.storefront', ['slug' => $business->slug]) }}">
+                        <img src="{{ $business->primary_cover_image }}" alt="" class="w-full h-44 object-cover rounded-md">
+                    </a>
+                </div>
+                @auth
+{{--  --}}
                     <a href="{{ route('messages', ['user' => $business->user]) }}">
                         <x-secondary-outline-button class="text-center text-primary-one w-full justify-center hover:bg-orange-300 hover:border-orange-400">
                             Message Vendor

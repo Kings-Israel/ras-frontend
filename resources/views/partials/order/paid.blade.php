@@ -124,14 +124,14 @@
                 <span class="font-semibold bg-secondary-six px-2 py-1 rounded-md">Paid</span>
             </div>
         </div>
-        @foreach ($order->orderItems as $key => $item)
-            @foreach ($order_requests as $key => $order_request)
+        @foreach ($order->orderItems as $key => $order_item)
+            @foreach ($order_item->orderRequests->groupBy('requesteable_type') as $key => $order_requests)
                 @if ($key == 'App\\Models\\InspectingInstitution')
                     <div class="border border-gray-300 p-4 rounded-lg space-y-1">
                         <div class="flex justify-between">
                             <h4 class="font-semibold text-gray-700">Inspection Report:</h4>
                         </div>
-                        @php($accepted_request = $order_request->where('status', 'accepted')->first())
+                        @php($accepted_request = $order_requests->where('status', 'accepted')->first())
                         @if ($accepted_request)
                             <div class="flex justify-between">
                                 <span>Accepted Quote:</span>
@@ -142,8 +142,8 @@
                                 <span class="font-semibold">{{ $accepted_request->cost }}</span>
                             </div>
                         @endif
-                        <button data-modal-target="view-inpection-report" data-modal-toggle="view-inpection-report" class="w-full bg-primary-one text-lg font-semibold text-white py-1 rounded-lg">View Inspection Report</button>
-                        <x-modal modal_id="view-inpection-report">
+                        <button data-modal-target="view-inspection-report" data-modal-toggle="view-inspection-report" class="w-full bg-primary-one text-lg font-semibold text-white py-1 rounded-lg">View Inspection Report</button>
+                        <x-modal modal_id="view-inspection-report">
                             <div class="relative w-full max-w-4xl max-h-full">
                                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                                     <button type="button" class="absolute top-1 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="view-inspection-report">
@@ -154,24 +154,24 @@
                                     </button>
                                     <h2 class="px-2 py-2 lg:px-4 font-bold text-xl">Inspection Report</h2>
                                     <div class="space-y-2 p-2">
-                                        @if ($item->inspectionReport)
+                                        @if ($order_item->inspectionReport)
                                             <h3 class="font-bold underline px-2">Applicant Company Details</h3>
                                             <div class="grid grid-cols-3 gap-2 px-2">
                                                 <div>
                                                     <x-input-label>Applicant Company Name</x-input-label>
-                                                    <span>{{ $item->inspectionReport->applicant_company_name ?? 'Not Entered' }}</span>
+                                                    <span>{{ $order_item->inspectionReport->applicant_company_name ?? 'Not Entered' }}</span>
                                                 </div>
                                                 <div>
                                                     <x-input-label>Applicant Company Address</x-input-label>
-                                                    <span>{{ $item->inspectionReport->applicant_company_address ?? 'Not Entered' }}</span>
+                                                    <span>{{ $order_item->inspectionReport->applicant_company_address ?? 'Not Entered' }}</span>
                                                 </div>
                                                 <div>
                                                     <x-input-label>Applicant Company Email</x-input-label>
-                                                    <span>{{ $item->inspectionReport->applicant_company_email ?? 'Not Entered' }}</span>
+                                                    <span>{{ $order_item->inspectionReport->applicant_company_email ?? 'Not Entered' }}</span>
                                                 </div>
                                                 <div>
                                                     <x-input-label>Applicant Company Phone Number</x-input-label>
-                                                    <span>{{ $item->inspectionReport->applicant_company_phone_number ?? 'Not Entered' }}</span>
+                                                    <span>{{ $order_item->inspectionReport->applicant_company_phone_number ?? 'Not Entered' }}</span>
                                                 </div>
                                             </div>
                                             <hr>
@@ -179,19 +179,19 @@
                                             <div class="grid grid-cols-3 gap-2 px-2">
                                                 <div>
                                                     <x-input-label>License Holder Company</x-input-label>
-                                                    <span>{{ $item->inspectionReport->license_holder_company_name ?? 'Not Entered' }}</span>
+                                                    <span>{{ $order_item->inspectionReport->license_holder_company_name ?? 'Not Entered' }}</span>
                                                 </div>
                                                 <div>
                                                     <x-input-label>License Holder Company Address</x-input-label>
-                                                    <span>{{ $item->inspectionReport->license_holder_company_address ?? 'Not Entered' }}</span>
+                                                    <span>{{ $order_item->inspectionReport->license_holder_company_address ?? 'Not Entered' }}</span>
                                                 </div>
                                                 <div>
                                                     <x-input-label>License Holder Company Email</x-input-label>
-                                                    <span>{{ $item->inspectionReport->license_holder_company_email ?? 'Not Entered' }}</span>
+                                                    <span>{{ $order_item->inspectionReport->license_holder_company_email ?? 'Not Entered' }}</span>
                                                 </div>
                                                 <div>
                                                     <x-input-label>License Holder Company Phone Number</x-input-label>
-                                                    <span>{{ $item->inspectionReport->license_holder_company_phone_number ?? 'Not Entered' }}</span>
+                                                    <span>{{ $order_item->inspectionReport->license_holder_company_phone_number ?? 'Not Entered' }}</span>
                                                 </div>
                                             </div>
                                             <hr>
@@ -199,19 +199,19 @@
                                             <div class="grid grid-cols-3 gap-2 px-2">
                                                 <div>
                                                     <x-input-label>Place of Manufacture Company</x-input-label>
-                                                    <span>{{ $item->inspectionReport->place_of_manufacture_company_name ?? 'Not Entered' }}</span>
+                                                    <span>{{ $order_item->inspectionReport->place_of_manufacture_company_name ?? 'Not Entered' }}</span>
                                                 </div>
                                                 <div>
                                                     <x-input-label>Place of Manufacture Company Address</x-input-label>
-                                                    <span>{{ $item->inspectionReport->place_of_manufacture_company_address ?? 'Not Entered' }}</span>
+                                                    <span>{{ $order_item->inspectionReport->place_of_manufacture_company_address ?? 'Not Entered' }}</span>
                                                 </div>
                                                 <div>
                                                     <x-input-label>Place of Manufacture Company Email</x-input-label>
-                                                    <span>{{ $item->inspectionReport->place_of_manufacture_company_email ?? 'Not Entered' }}</span>
+                                                    <span>{{ $order_item->inspectionReport->place_of_manufacture_company_email ?? 'Not Entered' }}</span>
                                                 </div>
                                                 <div>
                                                     <x-input-label>Place of Manufacture Company Phone Number</x-input-label>
-                                                    <span>{{ $item->inspectionReport->place_of_manufacture_company_phone_number ?? 'Not Entered' }}</span>
+                                                    <span>{{ $order_item->inspectionReport->place_of_manufacture_company_phone_number ?? 'Not Entered' }}</span>
                                                 </div>
                                             </div>
                                             <hr>
@@ -219,36 +219,36 @@
                                             <div class="grid grid-cols-3 gap-2 px-2">
                                                 <div>
                                                     <x-input-label>Product</x-input-label>
-                                                    <span>{{ $item->inspectionReport->product ?? 'Not Entered' }}</span>
+                                                    <span>{{ $order_item->inspectionReport->product ?? 'Not Entered' }}</span>
                                                 </div>
                                                 <div>
                                                     <x-input-label>Product Type Ref</x-input-label>
-                                                    <span>{{ $item->inspectionReport->product_type_ref ?? 'Not Entered' }}</span>
+                                                    <span>{{ $order_item->inspectionReport->product_type_ref ?? 'Not Entered' }}</span>
                                                 </div>
                                                 <div>
                                                     <x-input-label>License Holder Company Email</x-input-label>
-                                                    <span>{{ $item->inspectionReport->product_trade_mark ?? 'Not Entered' }}</span>
+                                                    <span>{{ $order_item->inspectionReport->product_trade_mark ?? 'Not Entered' }}</span>
                                                 </div>
                                             </div>
                                             <hr>
                                             <h3 class="font-bold underline px-2">Product Ratings and Principle Characteristics</h3>
                                             <div class="grid grid-cols-1 px-2">
                                                 <div>
-                                                    <span>{{ $item->inspectionReport->product_ratings_and_principle_characteristics ?? 'Not Entered' }}</span>
+                                                    <span>{{ $order_item->inspectionReport->product_ratings_and_principle_characteristics ?? 'Not Entered' }}</span>
                                                 </div>
                                             </div>
                                             <hr>
                                             <h3 class="font-bold underline px-2">Differences From Previously Certified Product</h3>
                                             <div class="grid grid-cols-1 px-2">
                                                 <div>
-                                                    <span>{{ $item->inspectionReport->differences_from_previously_certified_product ?? 'Not Entered' }}</span>
+                                                    <span>{{ $order_item->inspectionReport->differences_from_previously_certified_product ?? 'Not Entered' }}</span>
                                                 </div>
                                             </div>
                                             <hr>
                                             <div class="flex justify-end gap-2">
-                                                <a href="{{ $item->inspectionReport->report_file }}" target="_blank" class="bg-secondary-one px-2 py-2 rounded-lg text-black font-semibold">View Report File</a>
-                                                @if ($item->inspectionReport->applicant_signature && $item->inspectionReport->applicant_signature != config('app.admin_url').'/storage/reports/inspection/')
-                                                    <a href="{{ $item->inspectionReport->applicant_signature }}" target="_blank" class="bg-secondary-two text-black px-2 py-2 rounded-lg font-semibold">View Signature</a>
+                                                <a href="{{ $order_item->inspectionReport->report_file }}" target="_blank" class="bg-secondary-one px-2 py-2 rounded-lg text-black font-semibold">View Report File</a>
+                                                @if ($order_item->inspectionReport->applicant_signature && $order_item->inspectionReport->applicant_signature != config('app.admin_url').'/storage/reports/inspection/')
+                                                    <a href="{{ $order_item->inspectionReport->applicant_signature }}" target="_blank" class="bg-secondary-two text-black px-2 py-2 rounded-lg font-semibold">View Signature</a>
                                                 @endif
                                             </div>
                                         @else
@@ -266,7 +266,7 @@
                         <div class="flex justify-between">
                             <h4 class="font-semibold text-gray-700">Insurance Report:</h4>
                         </div>
-                        @php($accepted_request = $order_request->where('status', 'accepted')->first())
+                        @php($accepted_request = $order_requests->where('status', 'accepted')->first())
                         @if ($accepted_request)
                             <div class="flex justify-between">
                                 <span>Accepted Quote:</span>
@@ -289,7 +289,7 @@
                                     </button>
                                     <h2 class="px-2 py-2 lg:px-4 font-bold text-xl">Insurance Report</h2>
                                     <div class="space-y-2 p-2">
-                                        @if ($item->insuranceReport)
+                                        @if ($order_item->insuranceReport)
                                             <div>
                                                 <span>Insurance Report Here</span>
                                             </div>
@@ -308,7 +308,7 @@
                         <div class="flex justify-between">
                             <h4 class="font-semibold text-gray-700">Warehouse Report:</h4>
                         </div>
-                        @php($accepted_request = $order_request->where('status', 'accepted')->first())
+                        @php($accepted_request = $order_requests->where('status', 'accepted')->first())
                         @if ($accepted_request)
                             <div class="flex justify-between">
                                 <span>Accepted Quote:</span>
@@ -331,7 +331,7 @@
                                     </button>
                                     <h2 class="px-2 py-2 lg:px-4 font-bold text-xl">Warehousing/Storage Report</h2>
                                     <div class="space-y-2 p-2">
-                                        @if ($item->insuranceReport)
+                                        @if ($order_item->insuranceReport)
                                             <div>
                                                 <span>Warehouse Report Here</span>
                                             </div>
@@ -350,7 +350,7 @@
                         <div class="flex justify-between">
                             <h4 class="font-semibold text-gray-700">Delivery Report:</h4>
                         </div>
-                        @php($accepted_request = $order_request->where('status', 'accepted')->first())
+                        @php($accepted_request = $order_requests->where('status', 'accepted')->first())
                         @if ($accepted_request)
                             <div class="flex justify-between">
                                 <span class="whitespace-nowrap">Accepted Quote:</span>
@@ -373,7 +373,7 @@
                                     </button>
                                     <h2 class="px-2 py-2 lg:px-4 font-bold text-xl">Logistics/Delivery Quote</h2>
                                     <div class="space-y-2 p-2">
-                                        @if ($item->logisticsReport)
+                                        @if ($order_item->logisticsReport)
                                             <div>
                                                 <span>Logistics Report Here</span>
                                             </div>

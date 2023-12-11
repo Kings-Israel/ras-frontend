@@ -29,6 +29,9 @@ class HomeVendorsList extends Component
                                 ->when($this->countries && collect($this->countries)->count() > 0, function($query) {
                                     $query->whereIn('country_id', $this->countries);
                                 })
+                                ->when(auth()->check() && auth()->user()->hasRole('vendor'), function($query) {
+                                    $query->where('user_id', '!=', auth()->id());
+                                })
                                 ->get()
                                 ->take(8);
 

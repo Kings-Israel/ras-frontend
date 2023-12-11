@@ -17,10 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('vendor_id');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('vendor_id')->references('id')->on('business')->onDelete('cascade');
         });
     }
-
     /**
      * Reverse the migrations.
      */
