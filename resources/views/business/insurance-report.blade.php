@@ -770,7 +770,7 @@
                             </a>
                             <div class="flex gap-2">
                                 <x-secondary-outline-button class="btn-prev"> <i class="fas fa-arrow-left mr-2 my-auto"></i> Back</x-secondary-outline-button>
-                                <x-primary-button class="px-4 py-2 text-lg">Submit</x-primary-button>
+                                <x-primary-button type="button" class="px-4 py-2 text-lg">Submit</x-primary-button>
                             </div>
                         </div>
                     </div>
