@@ -39,7 +39,7 @@ class ConversationResource extends JsonResource
                 } elseif ($participant instanceof Warehouse) {
                     $warehouses_manager_warehouses = UserWarehouse::where('user_id', $participant->id)->get()->pluck('warehouse_id');
                     $warehouses = Warehouse::whereHas('users', function ($query) use ($warehouses_manager_warehouses) {
-                                                $query->whereIn('id', $warehouses_manager_warehouses);
+                                                $query->whereIn('users.id', $warehouses_manager_warehouses);
                                             })
                                             ->get()
                                             ->pluck('id');
