@@ -46,7 +46,7 @@ class Warehouse extends Model
      */
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class, 'warehouse_products', 'warehouse_id', 'product_id');
+        return $this->belongsToMany(Product::class, 'warehouse_products', 'warehouse_id', 'product_id')->withPivot('created_at', 'quantity', 'status', 'payment_status');
     }
 
     /**
@@ -65,5 +65,18 @@ class Warehouse extends Model
     public function wallet(): MorphOne
     {
         return $this->morphOne(Wallet::class, 'walleteable');
+    }
+
+    public function releaseProductRequests(): HasMany
+    {
+        return $this->hasMany(ReleaseProductRequest::class);
+    }
+
+    /**
+     * Get all of the vendorStorageRequests for the Warehouse
+     */
+    public function vendorStorageRequests(): HasMany
+    {
+        return $this->hasMany(VendorStorageRequest::class);
     }
 }

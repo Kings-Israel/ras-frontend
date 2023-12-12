@@ -99,12 +99,16 @@ Route::middleware(['auth', 'web', 'phone_verified', 'role:vendor', 'has_register
         Route::get('/customers', [VendorController::class, 'customers'])->name('customers');
         Route::get('/payments', [VendorController::class, 'payments'])->name('payments');
         Route::get('/warehouses', [VendorController::class, 'warehouses'])->name('warehouses');
+        Route::get('/warehouses/{warehouse}', [VendorController::class, 'warehouse'])->name('warehouse.show');
         Route::post('/warehouses/{warehouse}/storage/request', [VendorController::class, 'requestWarehouseStorage'])->name('warehouses.storage.request');
         Route::get('/suppliers', [VendorController::class, 'suppliers'])->name('suppliers');
         Route::get('/profile', [ProfileController::class, 'businessProfile'])->name('profile');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::post('/business/update', [VendorController::class, 'update'])->name('business.update');
         Route::patch('/business/image/update', [VendorController::class, 'updatePrimaryCoverImage'])->name('business.image.update');
+
+        Route::post('/order/{order_item}/warehouse/update', [VendorController::class, 'updateOrderWarehouse'])->name('warehouse.order.update');
+        Route::get('/order/{order_item}/product/release', [VendorController::class, 'requestProductRelease'])->name('warehouse.order.product.release');
     });
 });
 

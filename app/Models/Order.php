@@ -96,6 +96,14 @@ class Order extends Model
         return $this->hasMany(OrderConversation::class);
     }
 
+    /**
+     * Get the driver associated with the Order
+     */
+    public function driver(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'driver_id');
+    }
+
     public function getTotalAmount($with_services = true): int
     {
         $amount = 0;

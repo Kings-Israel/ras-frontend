@@ -27,6 +27,9 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Chat;
+use App\Models\WarehouseOrder;
+use App\Models\ReleaseProductRequest;
+use App\Models\VendorStorageRequest;
 
 class VendorController extends Controller
 {
@@ -455,13 +458,22 @@ class VendorController extends Controller
 
     public function order(Order $order)
     {
-        $order->load('orderItems.product', 'orderItems.warehouseOrder', 'user', 'orderItems.quotationResponses');
+        $order->load('orderItems.product.warehouses', 'orderItems.warehouseOrder', 'user', 'orderItems.quotationResponses');
 
         $total_amount = 0;
 
         foreach($order->orderItems as $order_item) {
             $quantity = explode(' ', $order_item->quantity)[0];
             $total_amount += $order_item->amount * $quantity;
+        }
+
+        $warehouses = [];
+        foreach ($order->orderItems as $order_item) {
+            if (count($order_item->product->warehouses) > 0) {
+                foreach ($order_item->product->warehouses as $warehouse) {
+                    array_push($warehouses, $warehouse);
+                }
+            }
         }
 
         $conversation = Chat::conversations()->between(auth()->user(), $order->user);
@@ -479,7 +491,51 @@ class VendorController extends Controller
             'conversation_id' => $conversation->id,
         ]);
 
-        return view('business.order', compact('order', 'total_amount', 'order_conversation'));
+        return view('business.order', compact('order', 'total_amount', 'order_conversation', 'warehouses'));
+    }
+
+    public function updateOrderWarehouse(Request $request, OrderItem $order_item)
+    {
+        $request->validate([
+            'warehouse_id' => ['required']
+        ]);
+
+        $warehouse_order = WarehouseOrder::where('order_item_id', $order_item->id)->first();
+
+        if (!$warehouse_order) {
+            WarehouseOrder::create([
+                'order_id' => $order_item->order->id,
+                'order_item_id' => $order_item->id,
+                'warehouse_id' => $request->warehouse_id
+            ]);
+        } else {
+            $warehouse_order->update([
+                'warehouse_id' => $request->warehouse_id
+            ]);
+        }
+
+        toastr()->success('', 'Delivery Warehouse updated successfully');
+
+        return back();
+    }
+
+    public function requestProductRelease(OrderItem $order_item)
+    {
+        $warehouse_order = WarehouseOrder::where('order_item_id', $order_item->id)->first();
+
+        if (!$warehouse_order) {
+            toastr()->error('', 'Order not placed to deliver from any warehouse');
+            return back();
+        }
+
+        ReleaseProductRequest::create([
+            'order_item_id' => $order_item->id,
+            'warehouse_id' => $warehouse_order->warehouse_id,
+        ]);
+
+        toastr()->success('', 'Request for release has been sent successfully');
+
+        return back();
     }
 
     public function orderUpdate(Order $order, $status)
@@ -516,17 +572,36 @@ class VendorController extends Controller
 
         $units = MeasurementUnit::all();
 
-        return view('business.warehouses', compact('warehouses', 'units'));
+        return view('business.warehouses.index', compact('warehouses', 'units'));
+    }
+
+    public function warehouse(Warehouse $warehouse)
+    {
+        $warehouse = Warehouse::with([
+                    'country',
+                    'city',
+                    'products' => function ($query) {
+                        $products_ids = auth()->user()->business->products->pluck('id');
+                        $query->whereIn('products.id', $products_ids);
+                    },
+                    'vendorStorageRequests' => function ($query) {
+                        $query->where('business_id', auth()->user()->business->id);
+                    }])
+                    ->where('id', $warehouse->id)
+                    ->first();
+
+        $units = MeasurementUnit::all();
+
+        return view('business.warehouses.show', compact('warehouse', 'units'));
     }
 
     public function requestWarehouseStorage(Request $request, Warehouse $warehouse)
     {
-        StorageRequest::create([
-            'request_code' => explode('-', Str::uuid())[0],
-            'customer_id' => auth()->id(),
+        VendorStorageRequest::create([
+            'code' => explode('-', Str::uuid())[0],
+            'business_id' => auth()->user()->business->id,
             'warehouse_id' => $warehouse->id,
             'quantity' => $request->quantity.' '.$request->storage_quantity_unit,
-            'requested_on' => now()
         ]);
 
         toastr()->success('', 'Request sent successfully');

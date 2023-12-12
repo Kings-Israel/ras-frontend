@@ -255,4 +255,12 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->morphOne(Wallet::class, 'walleteable');
     }
+
+    /**
+     * Get the driverProfile associated with the User
+     */
+    public function driverProfile(): HasOne
+    {
+        return $this->hasOne(DriverProfile::class);
+    }
 }

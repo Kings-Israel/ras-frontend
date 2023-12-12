@@ -169,6 +169,14 @@ class Business extends Model implements Searchable
         return $this->hasMany(Order::class);
     }
 
+    /**
+     * Get all of the warehouseStorageRequests for the Business
+     */
+    public function warehouseStorageRequests(): HasMany
+    {
+        return $this->hasMany(VendorStorageRequest::class);
+    }
+
     public function isBookmarked(?User $user): bool
     {
         if (!$user) {
