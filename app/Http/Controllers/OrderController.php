@@ -118,7 +118,7 @@ class OrderController extends Controller
 
         $products = Product::whereIn('id', $request->items_ids)->get()->groupBy('business_id');
 
-        if (auth()-user()->hasRole('vendor')) {
+        if (auth()->user()->hasRole('vendor')) {
             foreach ($products as $key => $product) {
                 if ($key == auth()->user()->business->id) {
                     toastr()->error('', 'You cannot make an order on your product');
