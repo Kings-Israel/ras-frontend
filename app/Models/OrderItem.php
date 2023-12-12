@@ -110,6 +110,11 @@ class OrderItem extends Model
         return $this->hasMany(OrderRequest::class);
     }
 
+    public function productReleaseRequest(): HasOne
+    {
+        return $this->hasOne(ReleaseProductRequest::class);
+    }
+
     public function hasAcceptedAllRequests(): bool
     {
         $order_requests = $this->orderRequests->groupBy('requesteable_type');

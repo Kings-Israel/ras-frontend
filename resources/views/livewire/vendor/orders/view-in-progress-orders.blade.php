@@ -168,40 +168,42 @@
                                     </div>
                                 </div> --}}
                             </div>
-                            <div class="basis-3/5 border border-gray-300 rounded-lg py-2 bg-white px-4">
-                                <div class="grid md:grid-cols-2">
-                                    <div class="flex flex-col pb-5 mr-1">
-                                        <h3 class="font-semibold text-lg">Driver</h3>
-                                        <img src="{{ asset('assets/img/skLbbi.jpg') }}" alt="" class="rounded-full w-16 h-16">
-                                        <h2 class="font-extrabold text-xl">Ian Driver</h2>
-                                        <div class="flex justify-between text-center pt-5">
-                                            <span class="text-gray-400">ID Number</span>
-                                            <span class="text-gray-600">0000000</span>
+                            @if ($order->driver)
+                                <div class="basis-3/5 border border-gray-300 rounded-lg py-2 bg-white px-4">
+                                    <div class="grid md:grid-cols-2">
+                                        <div class="flex flex-col pb-5 mr-1">
+                                            <h3 class="font-semibold text-lg">Driver</h3>
+                                            <img src="{{ asset('assets/img/skLbbi.jpg') }}" alt="" class="rounded-full w-16 h-16">
+                                            <h2 class="font-extrabold text-xl">{{ $order->driver->first_name }} {{ $order->driver->last_name }}</h2>
+                                            <div class="flex justify-between text-center pt-5">
+                                                <span class="text-gray-400">ID Number</span>
+                                                <span class="text-gray-600">{{ $order->driver->driverProfile->id_number }}</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="ml-1">
-                                        <h3 class="font-semibold text-lg">Vehicle</h3>
-                                        <div class="grid space-y-2">
-                                            <span class="text-gray-700 font-bold text-lg">Isuzu Truck (Black)</span>
-                                            <span class="text-gray-500 font-bold">Vehicle Registration</span>
-                                            <span class="text-gray-700 font-bold text-lg">KAG 404H</span>
-                                            <div class="flex justify-between">
-                                                <span class="text-gray-500 font-bold">Load Volume</span>
-                                                <span class="text-gray-500 font-bold">650,000m</span>
+                                        <div class="ml-1">
+                                            <h3 class="font-semibold text-lg">Vehicle</h3>
+                                            <div class="grid space-y-2">
+                                                <span class="text-gray-700 font-bold text-lg">{{ $order->driver->driverProfile->vehicle_type }}</span>
+                                                <span class="text-gray-500 font-bold">Vehicle Registration</span>
+                                                <span class="text-gray-700 font-bold text-lg">{{ $order->driver->driverProfile->vehicle_registration_number }}</span>
+                                                <div class="flex justify-between">
+                                                    <span class="text-gray-500 font-bold">Load Volume</span>
+                                                    <span class="text-gray-500 font-bold">{{ $order->driver->driverProfile->vehicle_load_capacity }}m3</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="flex justify-between py-2 gap-2">
+                                        <x-primary-outline-button class="w-full text-primary-one justify-center">
+                                            <i class="fas fa-phone"></i>
+                                            <span>Call</span>
+                                        </x-primary-outline-button>
+                                        <x-primary-button class="w-full text-center tracking-wide">
+                                            Message
+                                        </x-primary-button>
+                                    </div>
                                 </div>
-                                <div class="flex justify-between py-2 gap-2">
-                                    <x-primary-outline-button class="w-full text-primary-one justify-center">
-                                        <i class="fas fa-phone"></i>
-                                        <span>Call</span>
-                                    </x-primary-outline-button>
-                                    <x-primary-button class="w-full text-center tracking-wide">
-                                        Message
-                                    </x-primary-button>
-                                </div>
-                            </div>
+                            @endif
                         </div>
                     </td>
                 </tr>
