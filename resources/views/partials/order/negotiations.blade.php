@@ -289,6 +289,7 @@
                 </div>
             @endif
         </div>
+
         @foreach ($order->orderItems as $key => $order_item)
             {{-- @foreach ($order_requests as $key => $order_request)
                 @if ($key == 'App\\Models\\InspectingInstitution')
@@ -829,6 +830,10 @@
                     </div>
                 @endif
             @endforeach
+            @php($inspection_exists = array_key_exists('App\\Models\\InspectingInstitution', $order_item->orderRequests->groupBy('requesteable_type')->toArray()))
+            @if (!$inspection_exists && now()->lessThan(Carbon\Carbon::parse($order->orderItems->first()->delivery_date)))
+                <x-primary-button type="button" class="w-full py-2 truncate">Upload Inspection Report for {{ $order_item->product->name }}</x-primary-button>
+            @endif
         @endforeach
         @if (($order->status == 'quotation request' || $order->status == 'pending' || $order->status == 'accepted') && $order->invoice->payment_status != 'paid')
             <div class="flex justify-end">
