@@ -34,7 +34,11 @@ class Product extends Model implements Searchable
 
     public function getSearchResult(): SearchResult
     {
-        $url = route('product', $this->slug);
+        if (auth()->check() && auth()->user()->business && $this->business->id && auth()->user()->business->id) {
+            $url = route('vendor.products');
+        } else {
+            $url = route('product', $this->slug);
+        }
 
         return new \Spatie\Searchable\SearchResult(
             $this,
