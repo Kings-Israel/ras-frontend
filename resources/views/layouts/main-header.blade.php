@@ -44,12 +44,17 @@
                             @csrf
                         </form>
                     </li>
+                    @if (!auth()->user()->hasRole('vendor'))
+                        <li>
+                            <a href="{{ route('auth.business.create') }}" class="inline-flex w-full px-4 py-2 bg-primary-one hover:bg-orange-600 text-white">Become A Vendor</a>
+                        </li>
+                    @endif
                 </ul>
             </div>
-            <span id="notifications">
+            <span id="notifications" title="Notifications">
                 <notifications-component email="{{ auth()->user()->email }}"></notifications-component>
             </span>
-            <a href="{{ route('cart') }}" class="text-gray-800 bg-gray-300 rounded-full w-7 h-7 my-auto lg:my-0 md:w-8 md:h-8 text-center pt-0.5 md:pt-1">
+            <a href="{{ route('cart') }}" class="text-gray-800 bg-gray-300 rounded-full w-7 h-7 my-auto lg:my-0 md:w-8 md:h-8 text-center pt-0.5 md:pt-1" title="My Cart">
                 <i class="w-5 h-5 fas fa-shopping-bag"></i>
             </a>
         @else

@@ -64,6 +64,10 @@ class VendorController extends Controller
             'business_profile' => ['nullable', 'mimes:pdf', 'max:5192'],
         ]);
 
+        if (!auth()->user()->hasRole('vendor')) {
+            auth()->user()->assignRole('vendor');
+        }
+
         $business = Business::create([
             'user_id' => auth()->id(),
             'name' => $request->name,
