@@ -13,7 +13,7 @@ class AllOrders extends Component
                         ->where('business_id', auth()->user()->business->id)
                         ->orderBy('created_at', 'DESC')
                         ->get()
-                        ->take(5);
+                        ->take(10);
 
         return view('livewire.vendor.orders.all-orders', compact('orders'));
     }

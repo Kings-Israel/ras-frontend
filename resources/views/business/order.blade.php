@@ -340,9 +340,15 @@
                 @foreach ($order->orderItems as $orderItem)
                     <div class="col-span-2 justify-end">
                         @if ($orderItem->orderRequests()->where('requesteable_type', 'App\Models\InsuranceCompany')->exists() && !$orderItem->inspectionReport()->exists())
-                            <a href="{{ route('vendor.orders.insurance.report.create', ['order' => $order]) }}">
-                                <x-primary-button class="py-1">Upload Insurance Report</x-primary-button>
-                            </a>
+                            <div class="flex">
+                                <a href="{{ route('vendor.orders.insurance.report.create', ['order' => $order]) }}">
+                                    <x-primary-button class="py-1">Upload Insurance Report</x-primary-button>
+                                </a>
+                                <span class="relative flex h-2 w-2" title="Upload Insurance Report">
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-600 opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-2 w-2 bg-red-700"></span>
+                                </span>
+                            </div>
                         @endif
                     </div>
                 @endforeach
