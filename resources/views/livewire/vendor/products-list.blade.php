@@ -60,6 +60,9 @@
                         @if($product->price) {{ $product->currency ? $product->currency : 'USD' }}. {{ number_format($product->price) }} @else USD.{{ number_format($product->min_price) }} - USD.{{ number_format($product->max_price) }} @endif
                     </td>
                     <td class="px-2 py-2 flex gap-3 text-gray-600">
+                        <a href="{{ route('vendor.products.show', ['product' => $product]) }}">
+                            <i class="fas fa-eye"></i>
+                        </a>
                         <a href="{{ route('vendor.products.edit', ['product' => $product]) }}">
                             <i class="fas fa-edit"></i>
                         </a>

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
@@ -62,7 +63,16 @@ class Invoice extends Model
 
     public function getDeliveryCountry(): string
     {
-        $user_location = Http::withOptions(['verify' => false])->get('https://maps.googleapis.com/maps/api/geocode/json?latlng='.$this->delivery_location_lat.','.$this->delivery_location_lng.'&key=AIzaSyCisnVFSnc5QVfU2Jm2W3oRLqMDrKwOEoM');
+        try {
+            $user_location = Http::withOptions(['verify' => false])
+                                    ->get('https://maps.googleapis.com/maps/api/geocode/json?latlng='.$this->delivery_location_lat.','.$this->delivery_location_lng.'&key=AIzaSyCisnVFSnc5QVfU2Jm2W3oRLqMDrKwOEoM');
+        } catch (ConnectionException $e) {
+            return '';
+        }
+
+        if($user_location->failed() || $user_location->clientError() || $user_location->serverError()) {
+            return '';
+        }
 
         foreach ($user_location['results'][0]['address_components'] as $place) {
             if (collect($place['types'])->contains('country')) {

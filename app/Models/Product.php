@@ -35,7 +35,7 @@ class Product extends Model implements Searchable
     public function getSearchResult(): SearchResult
     {
         if (auth()->check() && auth()->user()->business && $this->business->id && auth()->user()->business->id) {
-            $url = route('vendor.products');
+            $url = route('vendor.products.show', $this->slug);
         } else {
             $url = route('product', $this->slug);
         }
@@ -145,5 +145,13 @@ class Product extends Model implements Searchable
     public function cartItems(): BelongsToMany
     {
         return $this->belongsToMany(CartItem::class);
+    }
+
+    /**
+     * Get all of the orderItems for the Product
+     */
+    public function orderItems(): HasMany
+    {
+        return $this->hasMany(OrderItem::class);
     }
 }
