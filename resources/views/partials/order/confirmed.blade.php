@@ -867,6 +867,11 @@
                     </div>
                 @endif
             @endforeach
+            {{-- Show Upload Inspection Report form if Inspection Request Does not Exist --}}
+            @php($inspection_exists = array_key_exists('App\\Models\\InspectingInstitution', $orderItem->orderRequests->groupBy('requesteable_type')->toArray()))
+            @if (!$inspection_exists && now()->lessThan(Carbon\Carbon::parse($order->orderItems->first()->delivery_date)))
+                <x-primary-button type="button" class="w-full py-2 truncate">Upload Inspection Report for {{ $orderItem->product->name }}</x-primary-button>
+            @endif
         @endforeach
         @if (($order->status == 'quotation request' || $order->status == 'pending' || $order->status == 'accepted') && $order->invoice->payment_status != 'paid')
             <div class="flex justify-end">
