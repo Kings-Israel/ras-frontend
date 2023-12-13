@@ -135,10 +135,10 @@
                         </ol>
                         <ol class="flex justify-between items-center ml-5 mr-5 w-[96%]">
                             <li>
-                                <span class="text-gray-400 font-bold">March 23</span>
+                                <span class="text-gray-400 font-bold">{{ $order->updated_at->format('M d') }}</span>
                             </li>
                             <li>
-                                <span class="text-gray-400 font-bold">April 01</span>
+                                <span class="text-gray-400 font-bold">{{ $order->checkInspectionIsComplete() ? Carbon\Carbon::parse($order->checkInspectionIsComplete())->format('M d') : '' }}</span>
                             </li>
                             <li>
                                 <span class="text-gray-400 font-bold">April 15</span>
