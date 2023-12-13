@@ -86,6 +86,7 @@ Route::middleware(['auth', 'web', 'phone_verified', 'role:vendor', 'has_register
         Route::get('/products', [VendorProductController::class, 'index'])->name('products');
         Route::post('/products/store', [VendorProductController::class, 'store'])->name('products.store');
         Route::get('/{product}/edit', [VendorProductController::class, 'edit'])->name('products.edit');
+        Route::get('/{product}/show', [VendorProductController::class, 'show'])->name('products.show');
         Route::patch('/{product}/update', [VendorProductController::class, 'update'])->name('products.update');
         Route::get('/orders', [VendorController::class, 'orders'])->name('orders');
         Route::get('/quotation-requests', [VendorController::class, 'quotationRequests'])->name('quotation.requests');

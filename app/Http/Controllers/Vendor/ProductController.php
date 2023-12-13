@@ -124,6 +124,13 @@ class ProductController extends Controller
         ]);
     }
 
+    public function show(Product $product)
+    {
+        $product->load('orderItems.order', 'warehouses', 'category', 'media');
+
+        return view('business.product', compact('product'));
+    }
+
     public function update(Request $request, Product $product)
     {
         $request->validate([
