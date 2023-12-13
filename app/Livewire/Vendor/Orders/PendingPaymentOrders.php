@@ -16,7 +16,7 @@ class PendingPaymentOrders extends Component
                                 })
                                 ->orderBy('created_at', 'DESC')
                                 ->get()
-                                ->take(5);
+                                ->take(10);
 
         return view('livewire.vendor.orders.pending-payment-orders', compact('pending_orders'));
     }
