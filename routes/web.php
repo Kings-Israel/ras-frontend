@@ -60,6 +60,7 @@ Route::middleware(['auth', 'web', 'phone_verified'])->group(function () {
     Route::post('/order/create', [OrderController::class, 'store'])->name('order.store');
     Route::get('/order/quotation/{quotation}/update/{status}', [OrderController::class, 'updateQuotation'])->name('order.quotation.update');
     Route::get('/order/request/{order_request}/update/{status}', [OrderController::class, 'updateRequest'])->name('order.request.update');
+    Route::get('/order/{order}/insurance/request', [OrderController::class, 'requestInsurance'])->name('order.insurance.request');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::group(['prefix' => 'wallet/', 'as' => 'wallet.'], function () {

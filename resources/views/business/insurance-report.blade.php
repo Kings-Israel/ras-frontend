@@ -732,10 +732,10 @@
                             <span class="font-bold text-xl">Consent and Declaration</span><br>
                             <span class="font-semibold text-lg">I/We consent to The Insurance Company to:</span>
                             <ul class="list-disc">
-                                <li class="text-gray-700">Collecting, using, disclosing and/or processing and/or storing my/our personal data for purposes that are
+                                <li class="text-gray-700">Collect, use, disclose and/or process and/or store my/our personal data for purposes that are
                                     relevant to my policy and as permitted by law;</li>
-                                <li class="text-gray-700">Collecting and sharing my personal data in accordance with its privacy statement;</li>
-                                <li class="text-gray-700">Transferring my/our personal data to their reinsurers and aliated companies for the purposes of insurance
+                                <li class="text-gray-700">Collect and share my personal data in accordance with its privacy statement;</li>
+                                <li class="text-gray-700">Transfer my/our personal data to their reinsurers and aliated companies for the purposes of insurance
                                     and as permitted by law;</li>
                                 <li class="text-gray-700">And/or its contracted Third parties contacting me via email/phone-call/SMS/post in regard to insurance
                                     products and/or services.</li>
