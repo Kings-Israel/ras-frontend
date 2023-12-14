@@ -535,6 +535,40 @@ class OrderController extends Controller
         return back();
     }
 
+    public function requestInsurance(Order $order)
+    {
+        $order->load('orderItems.orderRequests');
+
+        $genders = ['Male', 'Female'];
+        $marital_statuses = ['Married', 'Single'];
+        $identification_docs = [
+            'identity_card' => [
+                'name' => 'Identity Card',
+                'requires_expiry_date' => false
+            ],
+            'passport' => [
+                'name' => 'Passport',
+                'requires_expiry_date' => true
+            ],
+            'asylum' => [
+                'name' => 'Asylum',
+                'requires_expiry_date' => true
+            ]
+        ];
+        $sources_of_income = ['Salary', 'Business Proceeds', 'Pension', 'Rent', 'None Income Generating (dependant)'];
+        $sources_of_wealth = ['Legal Settlement', 'Royalties', 'Inheritance', 'Donations', 'Wnnings', 'Savings', 'Sale of Investment', 'Sale of Property', 'Rent', 'Employment', 'Pension', 'Business Proceeds'];
+        $business_sources_of_income = ['Business Proceeds', 'Rent', 'Donations', 'Government Funding'];
+        $business_sources_of_wealth = ['Court Order', 'Sale of Property', 'Sale of Investment', 'Government Funding', 'Shareholder Contribution'];
+        $vehicle_devices = ['Tracking Devices', 'Radio Communication', 'Engine Immobilizer'];
+
+        return view('buyer.insurance-report', compact('order', 'genders', 'marital_statuses', 'identification_docs', 'sources_of_income', 'sources_of_wealth', 'business_sources_of_income', 'business_sources_of_wealth', 'vehicle_devices'));
+    }
+
+    public function storeInsuranceRequest(Request $request, OrderItem $orderItem)
+    {
+
+    }
+
     public function requestFinancing(Invoice $invoice)
     {
         if($invoice->financingRequest()->exists()) {

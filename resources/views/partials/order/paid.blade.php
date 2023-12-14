@@ -360,6 +360,9 @@
                             </div>
                         @endif
                         <button data-modal-target="view-insurance-report" data-modal-toggle="view-insurance-report" class="w-full bg-primary-one text-lg font-semibold text-white py-1 rounded-lg">View Insurance Report</button>
+                        <a href="{{ route('order.insurance.request', ['order' => $order]) }}">
+                            <button class="w-full bg-primary-one text-lg font-semibold text-white py-1 rounded-lg mt-2">Complete Insurance Request</button>
+                        </a>
                         <x-modal modal_id="view-insurance-report">
                             <div class="relative w-full max-w-2xl max-h-full">
                                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
