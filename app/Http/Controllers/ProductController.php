@@ -17,7 +17,7 @@ class ProductController extends Controller
         $product = Product::findBySlug($slug);
 
         return view('product', [
-            'product' => $product->load('category', 'media', 'business.user'),
+            'product' => $product->load('category', 'media', 'business.user', 'discount'),
             'vendor_products' => Product::available()->where('business_id', $product->business->id)->where('id', '!=', $product->id)->get()->take(5),
             'similar_products' => Product::available()->where('category_id', $product->category->id)->where('id', '!=', $product->id)->get()->take(5),
             'categories' => Category::all()->take(6),
@@ -51,7 +51,7 @@ class ProductController extends Controller
 
         $categories = $business->products->where('is_available', true)->map(fn ($product) => $product->category)->unique()->take(8);
 
-        $products = Product::with('category', 'media')
+        $products = Product::with('category', 'media', 'discount')
                             ->available()
                             ->where('business_id', $business->id)
                             ->get()
@@ -63,7 +63,7 @@ class ProductController extends Controller
         }
 
         return view('business.storefront.products', [
-            'business' => $business->loadCount('products')->load('products'),
+            'business' => $business->loadCount('products')->load('products', 'discount'),
             'products' => $products,
             'categories' => $categories,
         ]);

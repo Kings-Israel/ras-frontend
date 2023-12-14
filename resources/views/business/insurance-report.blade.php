@@ -131,7 +131,7 @@
                             </div>
                             <div class="form-group col-span-2">
                                 <x-input-label>Town/City</x-input-label>
-                                <x-text-input name="company_city" class="w-full"></x-text-input>
+                                <x-text-input name="company_city" value="{{ auth()->user()->business->city ? auth()->user()->business->city->name : '' }}" class="w-full"></x-text-input>
                             </div>
                             <div class="form-group col-span-2">
                                 <x-input-label>Physical Address</x-input-label>
