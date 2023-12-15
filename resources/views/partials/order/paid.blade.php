@@ -360,7 +360,7 @@
                             </div>
                         @endif
                         <button data-modal-target="view-insurance-report" data-modal-toggle="view-insurance-report" class="w-full bg-primary-one text-lg font-semibold text-white py-1 rounded-lg">View Insurance Report</button>
-                        <a href="{{ route('order.insurance.request', ['order' => $order]) }}">
+                        <a href="{{ route('order.insurance.request', ['order_item' => $order_item]) }}">
                             <button class="w-full bg-primary-one text-lg font-semibold text-white py-1 rounded-lg mt-2">Complete Insurance Request</button>
                         </a>
                         <x-modal modal_id="view-insurance-report">

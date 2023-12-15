@@ -10,7 +10,7 @@
             <x-nav-categories></x-nav-categories>
         </div>
         <div class="px-2 md:px-4 lg:px-28 mt-2">
-            <h2 class="font-bold text-xl">Insurance Request for Order: {{ Str::upper($order->order_id) }}</h2>
+            <h2 class="font-bold text-xl">Insurance Request for Order: {{ Str::upper($order_item->order->order_id) }}</h2>
             <div class="bs-stepper wizard" id="buyer-insurance-report-wizard">
                 <div class="bs-stepper-header mb-4 w-full overflow-y-auto">
                     <div class="step pb-2" data-target="#customer-details">
@@ -67,7 +67,7 @@
                     </div>
                 </div>
                 <div class="bs-stepper-content">
-                    <form action="#" method="POST" id="buyer-insurance-report-wizard-form" class="space-y-4 my-4" enctype="multipart/form-data">
+                    <form action="{{ route('order.insurance.request.store', ['order_item' => $order_item]) }}" method="POST" id="buyer-insurance-report-wizard-form" class="space-y-4 my-4" enctype="multipart/form-data">
                         @csrf
                         {{-- Individual Customer Details --}}
                         <div class="content md:min-h-[70vh]" id="customer-details">
@@ -303,7 +303,7 @@
                                 </div>
                             </div>
                             <div class="flex justify-between my-3 sticky top-full">
-                                <a href="{{ route('orders.show', ['order' => $order]) }}">
+                                <a href="{{ route('orders.show', ['order' => $order_item->order]) }}">
                                     <x-secondary-outline-button class="border-gray-700">
                                         Cancel
                                     </x-secondary-outline-button>
@@ -341,11 +341,7 @@
                                 </span>
                                 <div class="form-group col-span-1">
                                     <x-input-label>Mobile</x-input-label>
-                                    <x-text-input name="business_mobile_number" placeholder="Enter Mobile Number" class="w-full" type="tel"></x-text-input>
-                                </div>
-                                <div class="form-group col-span-1">
-                                    <x-input-label>Telephone</x-input-label>
-                                    <x-text-input name="business_telephone" placeholder="Enter Telephone" class="w-full" type="tel"></x-text-input>
+                                    <x-text-input name="business_phone_number" placeholder="Enter Mobile Number" class="w-full" type="tel"></x-text-input>
                                 </div>
                                 <div class="form-group col-span-1">
                                     <x-input-label>Email</x-input-label>
@@ -421,7 +417,7 @@
                                 </div>
                             </div>
                             <div class="flex justify-between my-2 sticky top-full">
-                                <a href="{{ route('orders.show', ['order' => $order]) }}">
+                                <a href="{{ route('orders.show', ['order' => $order_item->order]) }}">
                                     <x-secondary-outline-button class="border-gray-700">
                                         Cancel
                                     </x-secondary-outline-button>
@@ -490,7 +486,7 @@
                                                     </div>
                                                     <div class="col-span-1 form-group">
                                                         <x-input-label class="text-sm">Sum Insured</x-input-label>
-                                                        <x-text-input class="w-full" name="vehicle_sum_insured[]"></x-text-input>
+                                                        <x-text-input class="w-full" name="vehicle_sum_insured[]" type="number"></x-text-input>
                                                     </div>
                                                 </div>
                                             </div>
@@ -516,7 +512,7 @@
                                                     </div>
                                                     <div class="col-span-1 form-group">
                                                         <x-input-label class="text-sm">Sum Insured</x-input-label>
-                                                        <x-text-input class="w-full" name="trailer_sum_insured[]"></x-text-input>
+                                                        <x-text-input class="w-full" name="trailer_sum_insured[]" type="number"></x-text-input>
                                                     </div>
                                                 </div>
                                             </div>
@@ -600,7 +596,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <x-input-label>If so give details?</x-input-label>
-                                                    <textarea type="text" name="product_packaging" rows="3" id="hired_vehicles_details" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"></textarea>
+                                                    <textarea type="text" name="hired_vehicles_details" rows="3" id="hired_vehicles_details" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -634,7 +630,7 @@
                                 </div>
                             </div>
                             <div class="flex justify-between my-3 sticky top-full">
-                                <a href="{{ route('orders.show', ['order' => $order]) }}">
+                                <a href="{{ route('orders.show', ['order' => $order_item->order]) }}">
                                     <x-secondary-outline-button class="border-gray-700">
                                         Cancel
                                     </x-secondary-outline-button>
@@ -657,7 +653,7 @@
                                 </div>
                                 <div class="col-span-1">
                                     <x-input-label>In Respect of any one period of insurance(Ksh)</x-input-label>
-                                    <x-text-input name="prev_insurer" class="w-full"></x-text-input>
+                                    <x-text-input name="limit_of_liability_period_of_insurance" class="w-full"></x-text-input>
                                 </div>
                                 <div class="col-span-1">
                                     <x-input-label>State your estimated annual carry(Ksh)</x-input-label>
@@ -698,12 +694,12 @@
                                         <x-input-label class="col-span-3">Have you ever suffered a loss in connection of the insurance now proposed?</x-input-label>
                                         <div class="co-span-2 flex justify-between w-40">
                                             <div class="flex">
-                                                <input id="checkbox-table-search-1" type="radio" name="have_been_insured" value="Yes" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                                                <input id="checkbox-table-search-1" type="radio" name="has_suffered_loss" value="Yes" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
                                                 <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
                                                 <h2 class="font-semibold text-sm ml-1 truncate">Yes</h2>
                                             </div>
                                             <div class="flex">
-                                                <input id="checkbox-table-search-1" type="radio" name="have_been_insured" value="No" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                                                <input id="checkbox-table-search-1" type="radio" name="has_suffered_loss" value="No" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
                                                 <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
                                                 <h2 class="font-semibold text-sm ml-1 truncate">No</h2>
                                             </div>
@@ -829,13 +825,13 @@
                                         </div>
                                         <div class="form-group col-span-3">
                                             <x-input-label>If the answer for any of the reasons is ‘YES’, Please give detail:</x-input-label>
-                                            <textarea type="text" name="goods_safety" rows="4" id="goods_safety" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"></textarea>
+                                            <textarea type="text" name="prev_insurance_details" rows="4" id="prev_insurance_details" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"></textarea>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="flex justify-between my-3 sticky top-full">
-                                <a href="{{ route('orders.show', ['order' => $order]) }}">
+                                <a href="{{ route('orders.show', ['order' => $order_item->order]) }}">
                                     <x-secondary-outline-button class="border-gray-700">
                                         Cancel
                                     </x-secondary-outline-button>
@@ -883,7 +879,7 @@
                                 </div>
                             </div>
                             <div class="flex justify-between my-3 sticky top-full">
-                                <a href="{{ route('orders.show', ['order' => $order]) }}">
+                                <a href="{{ route('orders.show', ['order' => $order_item->order]) }}">
                                     <x-secondary-outline-button class="border-gray-700">
                                         Cancel
                                     </x-secondary-outline-button>

@@ -96,6 +96,13 @@ return [
             'throw' => false,
         ],
 
+        'insurance' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/insurance'),
+            'url' => env('APP_URL').'/storage/insurance',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
     ],
 
     /*
