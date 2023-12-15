@@ -75,7 +75,15 @@ class OrderController extends Controller
 
     public function order(Order $order)
     {
-        $order->load('orderItems.product.media', 'orderItems.product.business', 'orderItems.orderRequests', 'orderItems.quotationResponses', 'invoice');
+        $order->load('orderItems.product.media',
+            'orderItems.product.business',
+            'orderItems.orderRequests.insuranceRequestBuyerDetails',
+            'orderItems.orderRequests.insuranceRequestBuyerCompanyDetails',
+            'orderItems.orderRequests.insuranceRequestBuyerInuranceLossHistories',
+            'orderItems.orderRequests.insuranceRequestProposalDetails',
+            'orderItems.orderRequests.insuranceRequestProposalVehicleDetails',
+            'orderItems.quotationResponses',
+            'invoice');
 
         $order_total = 0;
         $order_requests = null;
@@ -591,6 +599,10 @@ class OrderController extends Controller
                     'postal_code' => $request->postal_code,
                     'city' => $request->city,
                     'residential_address' => $request->residential_address,
+                    'next_of_kin_name' => $request->next_of_kin_name,
+                    'next_of_kin_email' => $request->next_of_kin_email,
+                    'next_of_kin_phone_number' => $request->next_of_kin_phone_number,
+                    'next_of_kin_relationship' => $request->next_of_kin_relationship,
                 ]);
             }
 
@@ -633,7 +645,8 @@ class OrderController extends Controller
                     InsReqBuyerCompanyDetails::create([
                         'order_request_id' => $order_request->id,
                         'trade_name' => $request->business_trade_name,
-                        'registered_name' => $request->business_registered_name,
+                        'registered_name' => $request->business_legal_name,
+                        'registration_number' => $request->business_registration_number,
                         'country_of_incorporation' => $request->business_country_of_incorporation,
                         'country_of_parent_company' => $request->business_country_of_parent_company,
                         'email' => $request->business_email,
@@ -706,7 +719,7 @@ class OrderController extends Controller
                         'liability_limit_estimated_annual_carry' => $request->limit_of_liability_one_consignment,
                         'had_previous_insurance' => $request->have_been_insured == 'Yes' ? true : false,
                         'current_precautions' => $request->precautions_engaged,
-                        'previous_insurer' => 'Insurer: '.$request->prev_insurer.', Policy Number: '.$request->prev_insurance_policy_number,
+                        'previous_insurer' => json_encode(['Insurer' => $request->prev_insurer, 'Policy Number' => $request->prev_insurance_policy_number]),
                         'previous_insurance_data' => json_encode($prev_insurance_data),
                         'previous_insurance_details' => $request->prev_insurance_details,
                     ]);
