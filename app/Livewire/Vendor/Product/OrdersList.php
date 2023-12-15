@@ -6,9 +6,12 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class OrdersList extends Component
 {
+    use WithPagination;
+    
     public $product;
 
     public function  mount(Product $product)
