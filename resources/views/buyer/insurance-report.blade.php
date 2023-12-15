@@ -286,7 +286,7 @@
                                     <span class="flex justify-between col-span-3">
                                         <span class="font-bold text-xl">Next of Kin</span>
                                     </span>
-                                    <div class="grid grid-cols-3 gap-3">
+                                    <div class="grid grid-cols-4 gap-3">
                                         <div class="form-group col-span-1">
                                             <x-input-label>Name</x-input-label>
                                             <x-text-input name="next_of_kin_name" placeholder="Enter Name" class="w-full"></x-text-input>
@@ -294,6 +294,10 @@
                                         <div class="form-group col-span-1">
                                             <x-input-label>Relationship</x-input-label>
                                             <x-text-input name="next_of_kin_relationship" placeholder="Enter Relationship" class="w-full"></x-text-input>
+                                        </div>
+                                        <div class="form-group col-span-1">
+                                            <x-input-label>Email</x-input-label>
+                                            <x-text-input name="next_of_kin_email" placeholder="Enter Email" class="w-full"></x-text-input>
                                         </div>
                                         <div class="form-group col-span-1">
                                             <x-input-label>Phone Number</x-input-label>
