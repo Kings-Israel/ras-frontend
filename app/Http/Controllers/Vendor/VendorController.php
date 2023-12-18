@@ -19,6 +19,8 @@ use App\Models\RequiredDocumentPerCountry;
 use App\Models\StorageRequest;
 use App\Models\Wallet;
 use App\Models\Warehouse;
+use App\Models\BusinessMetaData;
+use App\Models\OrderRequest;
 use App\Notifications\FinancingRequested;
 use App\Notifications\QuotationAdded;
 use App\Notifications\UpdatedOrder;
@@ -30,6 +32,16 @@ use Chat;
 use App\Models\WarehouseOrder;
 use App\Models\ReleaseProductRequest;
 use App\Models\VendorStorageRequest;
+use App\Models\InsReqBusinessSubsidiary;
+use App\Models\InsReqBusinessInformation;
+use App\Models\InsReqBusinessSalesInformation;
+use App\Models\InsReqBusinessSales;
+use App\Models\InsReqBusinessSalesBadDebts;
+use App\Models\InsReqBusinessSalesLargeBadDebts;
+use App\Models\InsReqBusinessSecurity;
+use App\Models\InsReqBusinessCreditManagement;
+use App\Models\InsReqBusinessCreditLimit;
+use Illuminate\Support\Facades\DB;
 
 class VendorController extends Controller
 {
@@ -462,7 +474,22 @@ class VendorController extends Controller
 
     public function order(Order $order)
     {
-        $order->load('orderItems.product.warehouses', 'orderItems.warehouseOrder', 'user', 'orderItems.quotationResponses');
+        $order->load(
+            'user',
+            'orderItems.product.warehouses',
+            'orderItems.product.business',
+            'orderItems.warehouseOrder',
+            'orderItems.quotationResponses',
+            'orderItems.orderRequests.businessSubsidiaries',
+            'orderItems.orderRequests.businessInformation',
+            'orderItems.orderRequests.businessSalesInformation',
+            'orderItems.orderRequests.businessSales',
+            'orderItems.orderRequests.businessSalesBadDebts',
+            'orderItems.orderRequests.businessSalesLargeBadDebts',
+            'orderItems.orderRequests.businessSecurity',
+            'orderItems.orderRequests.businessCreditManagement',
+            'orderItems.orderRequests.businessCreditLimits'
+        );
 
         $total_amount = 0;
 
@@ -687,13 +714,162 @@ class VendorController extends Controller
         return view('business.payments', compact('wallet_balance'));
     }
 
-    public function createInsuranceReport(Order $order)
+    public function createInsuranceReport(OrderItem $order_item)
     {
-        return view('business.insurance-report', compact('order'));
+        return view('business.insurance-report', compact('order_item'));
     }
 
-    public function storeInsuranceReport(Request $request, OrderItem $orderItem)
+    public function storeInsuranceReport(Request $request, OrderItem $order_item)
     {
+        try {
+            DB::beginTransaction();
 
+            $business_meta_data = BusinessMetaData::where('business_id', auth()->user()->business->id)->first();
+
+            if (!$business_meta_data) {
+                $business_meta_data = BusinessMetaData::create([
+                    'business_id' => auth()->user()->business->id,
+                    'registration_number' => $request->company_registration_number,
+                    'pin_number' => $request->company_pin_number,
+                    'postal_address' => $request->company_postal_address,
+                    'postal_code' => $request->company_postal_code,
+                    'physical_location' => $request->company_physical_address
+                ]);
+            }
+
+            $order_requests = OrderRequest::where('requesteable_type', 'App\Models\InsuranceCompany')->where('order_item_id', $order_item->id)->get();
+
+            if ($order_requests->count() > 0) {
+                foreach ($order_requests as $order_request) {
+                    if (count($request->subsidiaries_name) > 0) {
+                        foreach ($request->subsidiaries_name as $key => $subsidiary_name) {
+                            InsReqBusinessSubsidiary::create([
+                                'order_request_id' => $order_request->id,
+                                'name' => $subsidiary_name,
+                                'address' => array_key_exists($key, $request->subsidiaries_address) ? $request->subsidiaries_address[$key] : NULL,
+                            ]);
+                        }
+                    }
+
+                    InsReqBusinessInformation::create([
+                        'order_request_id' => $order_request->id,
+                        'period_from' => Carbon::parse($request->period_of_insurance_start)->format('Y-m-d'),
+                        'period_to' => Carbon::parse($request->period_of_insurance_end)->format('Y-m-d'),
+                        'general_information' => $request->general_business_information,
+                        'number_of_employees' => $request->business_employee_number,
+                        'goods_to_insure' => $request->goods_to_insure,
+                        'manufactures_goods' => $request->business_is_manufacturer == 'Yes' ? true : false,
+                        'manufacturing_details' => $request->manufacturer_details,
+                        'normal_payment_terms' => $request->normal_payment_terms,
+                        'maximum_payment_terms' => $request->maximum_payment_terms,
+                        'requires_pre_delivery_cover' => $request->requires_pre_delivery_cover == 'Yes' ? true : false,
+                        'pre_credit_risk_details' => $request->pre_credit_risk_details,
+                        'in_place_security_details' => $request->security_and_guarantee_details,
+                    ]);
+
+                    InsReqBusinessSales::create([
+                        'order_request_id' => $order_request->id,
+                        'estimated_year_sales' => $request->business_estimated_year_sales,
+                        'seasonal_sales' => $request->seasonal_sales == 'Yes' ? true : false,
+                        'seasonal_sales_details' => $request->seasonal_sales_details
+                    ]);
+
+                    if (count($request->debt_period) > 0) {
+                        foreach ($request->debt_period as $key => $period) {
+                            InsReqBusinessSalesBadDebts::create([
+                                'order_request_id' => $order_request->id,
+                                'period' => Carbon::parse($period)->format('Y-m-d'),
+                                'sales' => array_key_exists($key, $request->debt_sales) ? $request->debt_sales[$key] : NULL,
+                                'total_bad_debts' => array_key_exists($key, $request->debt_total) ? $request->debt_total[$key] : NULL,
+                                'largest_bad_debt' => array_key_exists($key, $request->debt_largest) ? $request->debt_largest[$key] : NULL,
+                                'bad_debts_number' => array_key_exists($key, $request->debt_number) ? $request->debt_number[$key] : NULL,
+                            ]);
+                        }
+                    }
+
+                    if (count($request->large_debt_period) > 0) {
+                        foreach ($request->large_debt_period as $key => $period) {
+                            InsReqBusinessSalesLargeBadDebts::create([
+                                'order_request_id' => $order_request->id,
+                                'year' => $period,
+                                'buyer_name' => array_key_exists($key, $request->large_debt_buyer_name) ? $request->large_debt_buyer_name[$key] : NULL,
+                                'country' => array_key_exists($key, $request->large_debt_country) ? $request->large_debt_country[$key] : NULL,
+                                'registration_number' => array_key_exists($key, $request->large_debt_registration_number) ? $request->large_debt_registration_number[$key] : NULL,
+                                'loss_amount' => array_key_exists($key, $request->large_debt_loss_amount) ? $request->large_debt_loss_amount[$key] : NULL,
+                            ]);
+                        }
+                    }
+
+                    InsReqBusinessSecurity::create([
+                        'order_request_id' => $order_request->id,
+                        'contracts_allow_recovery_action' => $request->allow_customers_to_tak_recovery_action == 'Yes' ? true : false,
+                        'recovery_action_details' => $request->recovery_action_details,
+                        'terms_contain_monies_retention_clause' => $request->money_retention_in_terms_and_conditions == 'Yes' ? true : false,
+                        'retention_clause_details' => $request->money_retention_details
+                    ]);
+
+                    $assessment_methods_used = [];
+                    foreach ($request->customer_credit_wothiness_method_used as $method => $status) {
+                        if ($status == 'Yes') {
+                            array_push($assessment_methods_used, $method);
+                        }
+                    }
+
+                    InsReqBusinessCreditManagement::create([
+                        'order_request_id' => $order_request->id,
+                        'separate_credit_manangement_dept' => $request->separate_credit_management_department == 'Yes' ? true : false,
+                        'person_responsible_name' => $request->credit_manager_name,
+                        'person_responsible_position' => $request->credit_manager_position,
+                        'asses_customer_creditworthiness' => $request->asses_customer_credit_worthiness == 'Yes' ? true : false,
+                        'methods_of_assessment' => json_encode($assessment_methods_used),
+                        'assessing_agencies' => $request->credit_agency_report_agencies,
+                        'credit_score_buyers' => $request->risk_score_buyers == 'Yes' ? true : false,
+                        'credit_information_update_frequency' => $request->credit_report_update_frequency,
+                        'has_credit_insurance_policy' => $request->has_credit_insurance_policy == 'Yes' ? true : false,
+                        'credit_insurance_policy_details' => $request->credit_insurance_policy_details,
+                        'has_credit_insurance_policy_voided' => $request->has_been_denied_credit_insurance == 'Yes' ? true : false,
+                        'voided_insurance_policy_details' => $request->denied_credit_insurance_details,
+                        'credit_management_procedure' => $request->hasFile('credit_management_procedures') ? pathinfo($request->credit_management_procedures->store('doc', 'insurance'), PATHINFO_BASENAME) : NULL,
+                    ]);
+
+                    if (count($request->sales_info_country) > 0) {
+                        foreach ($request->sales_info_country as $key => $country) {
+                            InsReqBusinessSalesInformation::create([
+                                'order_request_id' => $order_request->id,
+                                'country' => $country,
+                                'sales_in_twelve_months' => array_key_exists($key, $request->sales_info_past_twelve_months) ? $request->sales_info_past_twelve_months[$key] : NULL,
+                                'projected_sales_in_twelve_months' => array_key_exists($key, $request->sales_info_projected_twelve_months) ? $request->sales_info_projected_twelve_months[$key] : NULL,
+                                'terms_of_payment' => array_key_exists($key, $request->sales_info_terms_of_payment) ? $request->sales_info_terms_of_payment[$key] : NULL,
+                                'country_limit_required' => array_key_exists($key, $request->sales_info_country_limit_required) ? $request->sales_info_country_limit_required[$key] : NULL,
+                            ]);
+                        }
+                    }
+
+                    if (count($request->credit_limit_buyer_details) > 0) {
+                        foreach ($request->credit_limit_buyer_details as $key => $buyer) {
+                            InsReqBusinessCreditLimit::create([
+                                'order_request_id' => $order_request->id,
+                                'buyer_details' => $buyer,
+                                'annual_sales' => array_key_exists($key, $request->credit_limit_annual_sales) ? $request->credit_limit_annual_sales[$key] : NULL,
+                                'credit_limit_requirement' => array_key_exists($key, $request->credit_limit_requirements) ? $request->credit_limit_requirements[$key] : NULL,
+                                'terms_of_payment' => array_key_exists($key, $request->credit_limit_terms_of_payment) ? $request->credit_limit_terms_of_payment[$key] : NULL,
+                                'length_of_relationship' => array_key_exists($key, $request->credit_limit_relationship_length) ? $request->credit_limit_relationship_length[$key] : NULL,
+                            ]);
+                        }
+                    }
+                }
+            }
+
+            DB::commit();
+
+            toastr()->success('', 'Insurance Details submitted successfully');
+
+            return redirect()->route('vendor.orders.show', ['order' => $order_item->order]);
+        } catch (\Exception $e) {
+            info($e);
+            DB::rollBack();
+            toastr()->error('', 'An error occurred.');
+            return back();
+        }
     }
 }

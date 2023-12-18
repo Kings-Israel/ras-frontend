@@ -35,7 +35,7 @@
                     <th scope="row" class="px-2 py-2 font-extrabold text-gray-700 whitespace-nowrap dark:text-white hover:text-gray-800 flex">
                         <span>{{ $order->order_id }}</span>
                         @foreach ($order->orderItems as $orderItem)
-                            @if ($orderItem->orderRequests()->where('requesteable_type', 'App\Models\InsuranceCompany')->exists() && !$orderItem->inspectionReport()->exists())
+                        @if ($orderItem->orderRequests()->where('requesteable_type', 'App\Models\InsuranceCompany')->exists() && !$orderItem->vendorHasCompletedInsuranceReport())
                                 <span class="relative flex h-2 w-2" title="Upload Insurance Report">
                                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-600 opacity-75"></span>
                                     <span class="relative inline-flex rounded-full h-2 w-2 bg-red-700"></span>

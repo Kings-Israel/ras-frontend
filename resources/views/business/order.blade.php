@@ -319,6 +319,17 @@
                                         </div>
                                     </x-modal>
                                 @endif
+                                @if ($item->orderRequests()->where('requesteable_type', 'App\Models\InsuranceCompany')->exists() && !$item->vendorHasCompletedInsuranceReport())
+                                    <div class="flex">
+                                        <a href="{{ route('vendor.orders.insurance.report.create', ['order_item' => $item]) }}">
+                                            <x-primary-button class="py-1">Upload Insurance Report</x-primary-button>
+                                        </a>
+                                        <span class="relative flex h-2 w-2" title="Upload Insurance Report">
+                                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-600 opacity-75"></span>
+                                            <span class="relative inline-flex rounded-full h-2 w-2 bg-red-700"></span>
+                                        </span>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     @endforeach
@@ -337,11 +348,11 @@
                         </div>
                     </div>
                 @endif
-                @foreach ($order->orderItems as $orderItem)
+                {{-- @foreach ($order->orderItems as $orderItem)
                     <div class="col-span-2 justify-end">
                         @if ($orderItem->orderRequests()->where('requesteable_type', 'App\Models\InsuranceCompany')->exists() && !$orderItem->inspectionReport()->exists())
                             <div class="flex">
-                                <a href="{{ route('vendor.orders.insurance.report.create', ['order' => $order]) }}">
+                                <a href="{{ route('vendor.orders.insurance.report.create', ['order_item' => $orderItem]) }}">
                                     <x-primary-button class="py-1">Upload Insurance Report</x-primary-button>
                                 </a>
                                 <span class="relative flex h-2 w-2" title="Upload Insurance Report">
@@ -351,7 +362,7 @@
                             </div>
                         @endif
                     </div>
-                @endforeach
+                @endforeach --}}
                 {{-- <div class="col-span-2 border border-gray-300 rounded-lg py-2 bg-white px-4">
                     <div class="grid md:grid-cols-2">
                         <div class="flex flex-col pb-5 mr-1">

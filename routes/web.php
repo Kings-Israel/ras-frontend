@@ -97,7 +97,8 @@ Route::middleware(['auth', 'web', 'phone_verified', 'role:vendor', 'has_register
         Route::get('/orders/{order}/{status}/update', [VendorController::class, 'orderUpdate'])->name('orders.status.update');
         Route::post('/orders/{order}/quote/update', [VendorController::class, 'quoteUpdate'])->name('orders.quote.update');
         Route::get('/orders/{order}/quotes/accept', [VendorController::class, 'acceptQuotes'])->name('orders.quotes.accept');
-        Route::get('/orders/{order}/insurance/report', [VendorController::class, 'createInsuranceReport'])->name('orders.insurance.report.create');
+        Route::get('/orders/{order_item}/insurance/report/create', [VendorController::class, 'createInsuranceReport'])->name('orders.insurance.report.create');
+        Route::post('/orders/{order_item}/insurance/report/store', [VendorController::class, 'storeInsuranceReport'])->name('orders.insurance.report.store');
         Route::get('/messages', [ChatController::class, 'index'])->name('messages');
         Route::get('/messages/chat', [ChatController::class, 'view'])->name('messages.chat');
         Route::get('/customers', [VendorController::class, 'customers'])->name('customers');
