@@ -83,7 +83,19 @@ class OrderController extends Controller
             'orderItems.orderRequests.insuranceRequestProposalDetails',
             'orderItems.orderRequests.insuranceRequestProposalVehicleDetails',
             'orderItems.quotationResponses',
-            'invoice');
+            'orderItems.orderRequests.businessSubsidiaries',
+            'orderItems.orderRequests.businessInformation',
+            'orderItems.orderRequests.businessSalesInformation',
+            'orderItems.orderRequests.businessSales',
+            'orderItems.orderRequests.businessSalesBadDebts',
+            'orderItems.orderRequests.businessSalesLargeBadDebts',
+            'orderItems.orderRequests.businessSecurity',
+            'orderItems.orderRequests.businessCreditManagement',
+            'orderItems.orderRequests.businessCreditLimits',
+            'orderItems.orderRequests.importInstruction',
+            'orderItems.orderRequests.exportInstruction',
+            'invoice'
+        );
 
         $order_total = 0;
         $order_requests = null;
@@ -581,7 +593,6 @@ class OrderController extends Controller
 
     public function storeInsuranceRequest(Request $request, OrderItem $order_item)
     {
-        // dd($request->all());
         try {
             DB::beginTransaction();
 

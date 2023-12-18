@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/flatpickr/flatpickr.css') }}" />
     <link rel="stylesheet" href="{{asset('assets/vendor/libs/formvalidation/dist/css/formValidation.min.css')}}" />
     <!-- Page Heading -->
-    <x-page-nav-header main-title="Insurance Details" sub-title="" :show_search=false />
+    <x-page-nav-header main-title="Insurance Details for {{ $order_item->product->name }}" sub-title="" :show_search=false />
     <div class="p-3 sm:ml-64">
         <div class="bs-stepper wizard ml-2" id="insurance-report-wizard">
             <div class="bs-stepper-header mb-4 w-full overflow-y-auto">
@@ -96,7 +96,7 @@
                 </div>
             </div>
             <div class="bs-stepper-content">
-                <form action="#" method="POST" id="insurance-report-wizard-form" class="space-y-4 my-4" enctype="multipart/form-data">
+                <form action="{{ route('vendor.orders.insurance.report.store', ['order_item' => $order_item]) }}" method="POST" id="insurance-report-wizard-form" class="space-y-4 my-4" enctype="multipart/form-data">
                     @csrf
                     {{-- Business Details --}}
                     <div class="content md:min-h-[74vh]" id="business-details">
@@ -139,7 +139,7 @@
                             </div>
                         </div>
                         <div class="flex justify-between my-2 sticky top-full">
-                            <a href="{{ route('vendor.orders.show', ['order' => $order]) }}">
+                            <a href="{{ route('vendor.orders.show', ['order' => $order_item->order]) }}">
                                 <x-secondary-outline-button>
                                     Cancel
                                 </x-secondary-outline-button>
@@ -191,7 +191,7 @@
                             </div>
                         </div>
                         <div class="flex justify-between my-2 sticky top-full">
-                            <a href="{{ route('vendor.orders.show', ['order' => $order]) }}">
+                            <a href="{{ route('vendor.orders.show', ['order' => $order_item->order]) }}">
                                 <x-secondary-outline-button>
                                     Cancel
                                 </x-secondary-outline-button>
@@ -215,7 +215,7 @@
                             </div>
                             <div class="form-group col-span-1">
                                 <x-input-label>Goods being Insured</x-input-label>
-                                <x-text-input name="goods_to_insurer" value="{{ $order->orderItems->first()->product->name }}" class="w-full"></x-text-input>
+                                <x-text-input name="goods_to_insure" value="{{ $order_item->product->name }}" class="w-full"></x-text-input>
                             </div>
                             <div class="form-group col-span-1">
                                 <x-input-label>Do you manufacture the product that you are selling?</x-input-label>
@@ -245,6 +245,26 @@
                                 <x-input-label>What are your maximum terms of payment?</x-input-label>
                                 <x-text-input name="maximum_payment_terms" class="w-full"></x-text-input>
                             </div>
+                            <div class="form-group col-span-1">
+                                <x-input-label>Do you require pre-delivery cover?</x-input-label>
+                                <div class="flex justify-between w-24">
+                                    <div class="flex">
+                                        <input id="checkbox-table-search-1" type="radio" name="requires_pre_delivery_cover" value="Yes" class="w-4 h-4 text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                                        <h2 class="font-semibold text-sm ml-2 truncate">Yes</h2>
+                                    </div>
+                                    <div class="flex">
+                                        <input id="checkbox-table-search-1" type="radio" name="requires_pre_delivery_cover" value="No" class="w-4 h-4 text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                                        <h2 class="font-semibold text-sm ml-2 truncate">No</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-span-1">
+                                <x-input-label for="pre_credit_risk_details" :value="__('If yes, please provide more details on the pre-credit risk:')" class="text-black" />
+                                <textarea type="text" name="pre_credit_risk_details" rows="2" id="pre_credit_risk_details" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"></textarea>
+                                <x-input-error :messages="$errors->get('pre_credit_risk_details')" class="mt-2" />
+                            </div>
                             <div class="form-group col-span-2">
                                 <x-input-label for="security_and_guarantee_details" :value="__('Details of any security, guarantees, non-recourse financing and credit insurance on place in respect of buyers insured')" class="text-black" />
                                 <textarea type="text" name="security_and_guarantee_details" rows="4" id="security_and_guarantee_details" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"></textarea>
@@ -252,7 +272,7 @@
                             </div>
                         </div>
                         <div class="flex justify-between my-2 sticky top-full">
-                            <a href="{{ route('vendor.orders.show', ['order' => $order]) }}">
+                            <a href="{{ route('vendor.orders.show', ['order' => $order_item->order]) }}">
                                 <x-secondary-outline-button>
                                     Cancel
                                 </x-secondary-outline-button>
@@ -343,26 +363,26 @@
                                         <x-text-input name="large_debt_period[]" type="number" class="w-full"></x-text-input>
                                     </div>
                                     <div class="form-group col-span-1">
-                                        <x-input-label>Sales</x-input-label>
-                                        <x-text-input name="large_debt_sales[]" class="w-full"></x-text-input>
+                                        <x-input-label>Name of Buyer</x-input-label>
+                                        <x-text-input name="large_debt_buyer_name[]" class="w-full"></x-text-input>
                                     </div>
                                     <div class="form-group col-span-1">
-                                        <x-input-label>Total Bad Debts</x-input-label>
-                                        <x-text-input name="large_debt_total[]" class="w-full"></x-text-input>
+                                        <x-input-label>Country</x-input-label>
+                                        <x-text-input name="large_debt_country[]" class="w-full"></x-text-input>
                                     </div>
                                     <div class="form-group col-span-1">
-                                        <x-input-label>Largest bad debts</x-input-label>
-                                        <x-text-input name="large_debt_largest[]" class="w-full"></x-text-input>
+                                        <x-input-label>Registration Number</x-input-label>
+                                        <x-text-input name="large_debt_registration_number[]" class="w-full"></x-text-input>
                                     </div>
                                     <div class="form-group col-span-1">
-                                        <x-input-label>No. of Bad Debts</x-input-label>
-                                        <x-text-input name="large_debt_number[]" class="w-full"></x-text-input>
+                                        <x-input-label>Amount of Loss</x-input-label>
+                                        <x-text-input name="large_debt_loss_amount[]" class="w-full"></x-text-input>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="flex justify-between my-2 sticky top-full">
-                            <a href="{{ route('vendor.orders.show', ['order' => $order]) }}">
+                            <a href="{{ route('vendor.orders.show', ['order' => $order_item->order]) }}">
                                 <x-secondary-outline-button>
                                     Cancel
                                 </x-secondary-outline-button>
@@ -415,13 +435,13 @@
                                 </div>
                             </div>
                             <div class="form-group col-span-2">
-                                <x-input-label for="company_clients_information" :value="__('If No, Please give details')" class="text-black" />
-                                <textarea type="text" name="company_clients_information" rows="2" id="money_retention_details" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"></textarea>
-                                <x-input-error :messages="$errors->get('company_clients_information')" class="mt-2" />
+                                <x-input-label for="money_retention_details" :value="__('If No, Please give details')" class="text-black" />
+                                <textarea type="text" name="money_retention_details" rows="2" id="money_retention_details" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"></textarea>
+                                <x-input-error :messages="$errors->get('money_retention_details')" class="mt-2" />
                             </div>
                         </div>
                         <div class="flex justify-between my-2 sticky top-full">
-                            <a href="{{ route('vendor.orders.show', ['order' => $order]) }}">
+                            <a href="{{ route('vendor.orders.show', ['order' => $order_item->order]) }}">
                                 <x-secondary-outline-button>
                                     Cancel
                                 </x-secondary-outline-button>
@@ -593,12 +613,12 @@
                                         <x-input-label>Do you currently have a credit insurance policy?</x-input-label>
                                         <div class="flex justify-between w-32">
                                             <div class="flex">
-                                                <input id="checkbox-table-search-1" type="radio" name="have_credit_insurance_policy" value="Yes" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                                                <input id="checkbox-table-search-1" type="radio" name="has_credit_insurance_policy" value="Yes" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
                                                 <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
                                                 <h2 class="font-semibold text-sm ml-2 truncate">Yes</h2>
                                             </div>
                                             <div class="flex">
-                                                <input id="checkbox-table-search-1" type="radio" name="have_credit_insurance_policy" value="No" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                                                <input id="checkbox-table-search-1" type="radio" name="has_credit_insurance_policy" value="No" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
                                                 <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
                                                 <h2 class="font-semibold text-sm ml-2 truncate">No</h2>
                                             </div>
@@ -615,12 +635,12 @@
                                         <x-input-label>Have you ever been refused credit insurance policy or had a policy avoided?</x-input-label>
                                         <div class="flex justify-between w-32">
                                             <div class="flex">
-                                                <input id="checkbox-table-search-1" type="radio" name="have_been_denied_credit_insurance" value="Yes" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                                                <input id="checkbox-table-search-1" type="radio" name="has_been_denied_credit_insurance" value="Yes" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
                                                 <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
                                                 <h2 class="font-semibold text-sm ml-2 truncate">Yes</h2>
                                             </div>
                                             <div class="flex">
-                                                <input id="checkbox-table-search-1" type="radio" name="have_been_denied_credit_insurance" value="No" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                                                <input id="checkbox-table-search-1" type="radio" name="has_been_denied_credit_insurance" value="No" class="w-4 h-4 my-auto text-orange-600 bg-gray-100 border-gray-400 rounded-full focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
                                                 <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
                                                 <h2 class="font-semibold text-sm ml-2 truncate">No</h2>
                                             </div>
@@ -635,7 +655,7 @@
                             </div>
                         </div>
                         <div class="flex justify-between my-2 sticky top-full">
-                            <a href="{{ route('vendor.orders.show', ['order' => $order]) }}">
+                            <a href="{{ route('vendor.orders.show', ['order' => $order_item->order]) }}">
                                 <x-secondary-outline-button>
                                     Cancel
                                 </x-secondary-outline-button>
@@ -715,7 +735,7 @@
                             </div>
                         </div>
                         <div class="flex justify-between my-2 sticky top-full">
-                            <a href="{{ route('vendor.orders.show', ['order' => $order]) }}">
+                            <a href="{{ route('vendor.orders.show', ['order' => $order_item->order]) }}">
                                 <x-secondary-outline-button>
                                     Cancel
                                 </x-secondary-outline-button>
@@ -763,14 +783,14 @@
                             </div>
                         </div>
                         <div class="flex justify-between my-2 sticky top-full">
-                            <a href="{{ route('vendor.orders.show', ['order' => $order]) }}">
+                            <a href="{{ route('vendor.orders.show', ['order' => $order_item->order]) }}">
                                 <x-secondary-outline-button>
                                     Cancel
                                 </x-secondary-outline-button>
                             </a>
                             <div class="flex gap-2">
                                 <x-secondary-outline-button class="btn-prev"> <i class="fas fa-arrow-left mr-2 my-auto"></i> Back</x-secondary-outline-button>
-                                <x-primary-button type="button" class="px-4 py-2 text-lg">Submit</x-primary-button>
+                                <x-primary-button class="px-4 py-2 text-lg">Submit</x-primary-button>
                             </div>
                         </div>
                     </div>
@@ -836,11 +856,11 @@
                 e.preventDefault();
                 let html = '<div class="form-group col-span-1">'
                     html += '<label class="block font-bold text-dark">Name</label>'
-                    html += '<input name="bank_names['+subsidiaries_count+']" class="w-full border-2 border-gray-300 dark:border-gray-300 dark:text-dark bg-slate-200 focus:border-gray-400 dark:focus:border-gray-400 focus:ring-gray-400 dark:focus:ring-gray-400 rounded-md shadow-sm h-10"></input>'
+                    html += '<input name="subsidiaries_name['+subsidiaries_count+']" class="w-full border-2 border-gray-300 dark:border-gray-300 dark:text-dark bg-slate-200 focus:border-gray-400 dark:focus:border-gray-400 focus:ring-gray-400 dark:focus:ring-gray-400 rounded-md shadow-sm h-10"></input>'
                     html += '</div>'
                     html += '<div class="form-group col-span-1">'
                     html += '<label class="block font-bold text-dark">Address</label>'
-                    html += '<input name="bank_names['+subsidiaries_count+']" class="w-full border-2 border-gray-300 dark:border-gray-300 dark:text-dark bg-slate-200 focus:border-gray-400 dark:focus:border-gray-400 focus:ring-gray-400 dark:focus:ring-gray-400 rounded-md shadow-sm h-10"></input>'
+                    html += '<input name="subsidiaries_address['+subsidiaries_count+']" class="w-full border-2 border-gray-300 dark:border-gray-300 dark:text-dark bg-slate-200 focus:border-gray-400 dark:focus:border-gray-400 focus:ring-gray-400 dark:focus:ring-gray-400 rounded-md shadow-sm h-10"></input>'
                     html += '</div>'
 
                 $(html).appendTo(subsidiaries)
@@ -888,23 +908,23 @@
                 e.preventDefault()
                 let html = '<div class="form-group col-span-1">'
                     html += '<label class="block font-bold text-dark">Year</label>'
-                    html += '<input name="large_debt_period['+large_debts_count+']" class="w-full border-2 border-gray-300 dark:border-gray-300 dark:text-dark bg-slate-200 focus:border-gray-400 dark:focus:border-gray-400 focus:ring-gray-400 dark:focus:ring-gray-400 rounded-md shadow-sm h-10"></input>'
+                    html += '<input name="large_debt_period['+large_debts_count+']" type="number" class="w-full border-2 border-gray-300 dark:border-gray-300 dark:text-dark bg-slate-200 focus:border-gray-400 dark:focus:border-gray-400 focus:ring-gray-400 dark:focus:ring-gray-400 rounded-md shadow-sm h-10"></input>'
                     html += '</div>'
                     html += '<div class="form-group col-span-1">'
-                    html += '<label class="block font-bold text-dark">Sales</label>'
-                    html += '<input name="large_debt_sales['+large_debts_count+']" class="w-full border-2 border-gray-300 dark:border-gray-300 dark:text-dark bg-slate-200 focus:border-gray-400 dark:focus:border-gray-400 focus:ring-gray-400 dark:focus:ring-gray-400 rounded-md shadow-sm h-10"></input>'
+                    html += '<label class="block font-bold text-dark">Name of Buyer</label>'
+                    html += '<input name="large_debt_buyer_name['+large_debts_count+']" class="w-full border-2 border-gray-300 dark:border-gray-300 dark:text-dark bg-slate-200 focus:border-gray-400 dark:focus:border-gray-400 focus:ring-gray-400 dark:focus:ring-gray-400 rounded-md shadow-sm h-10"></input>'
                     html += '</div>'
                     html += '<div class="form-group col-span-1">'
-                    html += '<label class="block font-bold text-dark">Total Bad Debts</label>'
-                    html += '<input name="large_debt_total['+large_debts_count+']" class="w-full border-2 border-gray-300 dark:border-gray-300 dark:text-dark bg-slate-200 focus:border-gray-400 dark:focus:border-gray-400 focus:ring-gray-400 dark:focus:ring-gray-400 rounded-md shadow-sm h-10"></input>'
+                    html += '<label class="block font-bold text-dark">Country</label>'
+                    html += '<input name="large_debt_country['+large_debts_count+']" class="w-full border-2 border-gray-300 dark:border-gray-300 dark:text-dark bg-slate-200 focus:border-gray-400 dark:focus:border-gray-400 focus:ring-gray-400 dark:focus:ring-gray-400 rounded-md shadow-sm h-10"></input>'
                     html += '</div>'
                     html += '<div class="form-group col-span-1">'
-                    html += '<label class="block font-bold text-dark">Largest Bad Debts</label>'
-                    html += '<input name="large_debt_largest['+large_debts_count+']" class="w-full border-2 border-gray-300 dark:border-gray-300 dark:text-dark bg-slate-200 focus:border-gray-400 dark:focus:border-gray-400 focus:ring-gray-400 dark:focus:ring-gray-400 rounded-md shadow-sm h-10"></input>'
+                    html += '<label class="block font-bold text-dark">Registration Number</label>'
+                    html += '<input name="large_debt_registration_number['+large_debts_count+']" class="w-full border-2 border-gray-300 dark:border-gray-300 dark:text-dark bg-slate-200 focus:border-gray-400 dark:focus:border-gray-400 focus:ring-gray-400 dark:focus:ring-gray-400 rounded-md shadow-sm h-10"></input>'
                     html += '</div>'
                     html += '<div class="form-group col-span-1">'
-                    html += '<label class="block font-bold text-dark">No. of Bad Debts</label>'
-                    html += '<input name="large_debt_number['+large_debts_count+']" class="w-full border-2 border-gray-300 dark:border-gray-300 dark:text-dark bg-slate-200 focus:border-gray-400 dark:focus:border-gray-400 focus:ring-gray-400 dark:focus:ring-gray-400 rounded-md shadow-sm h-10"></input>'
+                    html += '<label class="block font-bold text-dark">Amount of Loss</label>'
+                    html += '<input name="large_debt_loss_amount['+large_debts_count+']" class="w-full border-2 border-gray-300 dark:border-gray-300 dark:text-dark bg-slate-200 focus:border-gray-400 dark:focus:border-gray-400 focus:ring-gray-400 dark:focus:ring-gray-400 rounded-md shadow-sm h-10"></input>'
                     html += '</div>'
                 $(html).appendTo(large_debts)
                 large_debts_count += 1;
