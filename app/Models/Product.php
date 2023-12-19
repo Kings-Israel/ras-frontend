@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\ProductScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -32,6 +33,11 @@ class Product extends Model implements Searchable
     protected $casts = [
         'is_available' => 'bool',
     ];
+
+    protected static function booted(): void
+    {
+        static::addGlobalScope(new ProductScope);
+    }
 
     public function getSearchResult(): SearchResult
     {
@@ -80,6 +86,7 @@ class Product extends Model implements Searchable
     {
         return $query->where('is_available', true);
     }
+
 
     /**
      * Get the certificate of origin
