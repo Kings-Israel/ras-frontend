@@ -14,7 +14,7 @@ class CancelledOrders extends Component
                                 ->where('status', 'cancelled')
                                 ->orderBy('created_at', 'DESC')
                                 ->get()
-                                ->take(5);
+                                ->take(10);
 
         return view('livewire.vendor.orders.cancelled-orders', compact('cancelled_orders'));
     }

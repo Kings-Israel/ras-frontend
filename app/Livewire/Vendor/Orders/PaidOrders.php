@@ -16,7 +16,7 @@ class PaidOrders extends Component
                             })
                             ->orderBy('created_at', 'DESC')
                             ->get()
-                            ->take(5);
+                            ->take(10);
 
         return view('livewire.vendor.orders.paid-orders', compact('paid_orders'));
     }

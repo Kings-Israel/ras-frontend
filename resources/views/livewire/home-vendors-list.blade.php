@@ -61,7 +61,7 @@
             <div class="flex flex-col gap-3">
 {{-- --}}
                 @auth
-                <span>
+                <span class="flex align-end ">
                  @php
                         $isBookmarked = auth()->user()->vendors->contains($business->id);
                     @endphp
@@ -96,7 +96,7 @@
                 <div class="relative">
                     @auth
                         @if ($business->user->id != auth()->id())
-                            <div class="absolute top-2 right-2">
+                            <div class="absolute right-2">
                                 <livewire:bookmark-vendor :business="$business" />
                             </div>
                         @endif

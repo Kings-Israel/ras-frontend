@@ -10,9 +10,9 @@
                     </div>
                 </div>
             </div>
-            <div class="flex md:grid md:grid-cols-2 lg:flex gap-2 flex-wrap">
+            <div class="flex md:grid md:grid-cols-2 lg:flex gap-1 flex-wrap">
                 @foreach ($warehouses as $warehouse)
-                    <x-card class="bg-rose-200 py-3 px-3 flex flex-col justify-between w-[240px] h-[150px] md:w-[220px] md:h-[120px] lg:w-[240px] lg:h-[150px] z-10">
+                    <x-card class="bg-rose-200 py-3 px-3 flex flex-col justify-between w-[240px] h-[150px] md:w-[220px] md:h-[120px] lg:w-[220px] lg:h-[140px] z-10">
                         <div class="flex justify-between w-full">
                             <h2 class="font-bold uppercase">{{ $warehouse->name }}</h2>
                             <i class="fas fa-ellipsis-v text-center hover:cursor-pointer" data-dropdown-toggle="warehouse-options-dropdown-{{ $warehouse->id }}" data-dropdown-placement="left"></i>
@@ -20,11 +20,13 @@
                                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-button">
                                     @if ($warehouse->products->count() > 0)
                                         <li>
-                                            <button type="button" class="inline-flex font-semibold text-lg w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">View Warehouse</button>
+                                            <a href="{{ route('vendor.warehouse.show', ['warehouse' => $warehouse]) }}">
+                                                <button type="button" class="inline-flex font-semibold w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">View Warehouse</button>
+                                            </a>
                                         </li>
                                     @endif
                                     <li>
-                                        <button type="button" class="inline-flex font-semibold text-lg w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" data-modal-target="request-storage-modal-{{ $warehouse->id }}" data-modal-toggle="request-storage-modal-{{ $warehouse->id }}">Request Storage</button>
+                                        <button type="button" class="inline-flex font-semibold w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" data-modal-target="request-storage-modal-{{ $warehouse->id }}" data-modal-toggle="request-storage-modal-{{ $warehouse->id }}">Request Storage</button>
                                     </li>
                                 </ul>
                             </div>

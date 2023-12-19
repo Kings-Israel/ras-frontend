@@ -14,7 +14,7 @@ class InProgressOrders extends Component
                                     ->where('status', 'in progress')
                                     ->orderBy('created_at', 'DESC')
                                     ->get()
-                                    ->take(5);
+                                    ->take(10);
 
         return view('livewire.vendor.orders.in-progress-orders', compact('in_progress_orders'));
     }
