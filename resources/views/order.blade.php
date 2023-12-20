@@ -40,7 +40,7 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4"/>
                     </svg>
                 </li>
-                <li class="flex items-center" id="shipped">
+                <li class="flex items-center @if($order->delivery_status == 'delivered') text-primary-one hover:cursor-pointer @endif" @if($order->delivery_status == 'delivered') id="order-shipped" @endif>
                     Shipped
                     <svg class="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4"/>
@@ -59,6 +59,9 @@
         </section>
         <section class="hidden" id="order-paid-section">
             @include('partials.order.paid')
+        </section>
+        <section class="hidden" id="order-shipped-section">
+            @include('partials.order.shipped')
         </section>
     </div>
     <!-- Scripts -->
@@ -83,6 +86,10 @@
         const order_confirmed_section = document.querySelector('#order-confirmed-section')
         const order_paid = document.querySelector('#order-paid')
         const order_paid_section = document.querySelector('#order-paid-section')
+        const order_shipped = document.querySelector('#order-shipped')
+        const order_shipped_section = document.querySelector('#order-shipped-section')
+
+        console.log(order_delivery_status)
 
         switch (order_status) {
             case 'quotation request':
@@ -94,8 +101,13 @@
                 order_confirmed.classList.add('underline')
                 break;
             case 'in progress':
-                order_paid_section.classList.remove('hidden')
-                order_paid.classList.add('underline')
+                if (order_delivery_status == 'delivered') {
+                    order_shipped_section.classList.remove('hidden')
+                    order_shipped.classList.add('underline')
+                } else {
+                    order_paid_section.classList.remove('hidden')
+                    order_paid.classList.add('underline')
+                }
                 break;
             default:
                 negotiations_section.classList.remove('hidden')
@@ -110,6 +122,8 @@
             order_confirmed.classList.remove('underline')
             order_paid_section.classList.add('hidden')
             order_paid.classList.remove('underline')
+            order_shipped_section.classList.add('hidden')
+            order_shipped.classList.remove('underline')
         })
 
         if (order_confirmed) {
@@ -120,6 +134,8 @@
                 negotiations.classList.remove('underline')
                 order_paid_section.classList.add('hidden')
                 order_paid.classList.remove('underline')
+                order_shipped_section.classList.add('hidden')
+                order_shipped.classList.remove('underline')
             })
         }
 
@@ -127,6 +143,21 @@
             order_paid.addEventListener('click', function () {
                 order_paid_section.classList.remove('hidden')
                 order_paid.classList.add('underline')
+                order_confirmed_section.classList.add('hidden')
+                order_confirmed.classList.remove('underline')
+                negotiations_section.classList.add('hidden')
+                negotiations.classList.remove('underline')
+                order_shipped_section.classList.add('hidden')
+                order_shipped.classList.remove('underline')
+            })
+        }
+
+        if (order_shipped) {
+            order_shipped.addEventListener('click', function () {
+                order_shipped_section.classList.remove('hidden')
+                order_shipped.classList.add('underline')
+                order_paid_section.classList.add('hidden')
+                order_paid.classList.remove('underline')
                 order_confirmed_section.classList.add('hidden')
                 order_confirmed.classList.remove('underline')
                 negotiations_section.classList.add('hidden')
