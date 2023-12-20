@@ -51,6 +51,8 @@ const app = createApp({})
 const app_orders = createApp({})
 // Show Chat in paid order section
 const app_paid_orders = createApp({})
+// Show Chat in shipped order section
+const app_shipped_orders = createApp({})
 // Notifications
 const notifications = createApp({})
 
@@ -58,6 +60,7 @@ app.component('ChatComponent', ChatComponent)
 app.component('OrderChatComponent', OrderChatComponent)
 app_orders.component('OrderChatComponent', OrderChatComponent)
 app_paid_orders.component('OrderChatComponent', OrderChatComponent)
+app_shipped_orders.component('OrderChatComponent', OrderChatComponent)
 notifications.component('NotificationsComponent', NotificationsComponent)
 
 app.provide('echo', EchoInstance)
@@ -69,4 +72,5 @@ notifications.use(Toast, options);
 app.mount("#app");
 app_orders.mount("#app-orders");
 app_paid_orders.mount("#app-paid-orders");
+app_shipped_orders.mount("#app-shipped-orders");
 notifications.mount("#notifications");

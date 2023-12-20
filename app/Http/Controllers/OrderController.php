@@ -1007,4 +1007,15 @@ class OrderController extends Controller
 
         return back();
     }
+
+    public function confirmDelivery(Order $order)
+    {
+        $order->update([
+            'status' => 'delivered'
+        ]);
+
+        toastr()->success('', 'Order updated successfully');
+
+        return back();
+    }
 }

@@ -18,6 +18,15 @@ class ImportClearingForwardingInstruction extends Model
     protected $guarded = [];
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'documents_attached' => 'array',
+    ];
+
+    /**
      * Get the orderRequest that owns the ImportClearingForwardingInstruction
      */
     public function orderRequest(): BelongsTo

@@ -168,7 +168,7 @@
                 </tbody>
             </table>
         @endif
-        <div id="app-paid-orders" class="mt-2">
+        <div id="app-shipped-orders" class="mt-2">
             <h3 class="text-lg text-black p-2 font-bold">Order Messages</h3>
             <div class="bg-gray-50 border-2 border-gray-300 rounded-lg">
                 <order-chat-component email="{!! auth()->user()->email !!}" order="{!! $order->id !!}"></order-chat-component>
@@ -205,6 +205,11 @@
                 <span class="text-xl font-semibold">Order Status:</span>
                 <span class="font-semibold bg-secondary-six px-2 py-1 rounded-md">Paid</span>
             </div>
+            @if ($order->delivery_status == 'delivered' && $order->status != 'delivered')
+                <div class="w-full flex">
+                    <a href="{{ route('orders.delivery.update', ['order' => $order]) }}" class="bg-primary-one rounded-lg w-full p-2 text-white text-center font-semibold">Confirm Delivery</a>
+                </div>
+            @endif
         </div>
         @foreach ($order->orderItems as $key => $order_item)
             @foreach ($order_item->orderRequests->groupBy('requesteable_type') as $key => $order_requests)
