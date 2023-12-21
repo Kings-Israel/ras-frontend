@@ -39,6 +39,13 @@ use App\Models\FinancingRequestBankDebt;
 use App\Models\FinancingRequestOperatingDebt;
 use App\Models\FinancingRequestAnchorHistory;
 use Illuminate\Support\Facades\DB;
+use App\Models\UserMetaData;
+use App\Models\UserIdentificationDoc;
+use App\Models\InsReqBuyerCompanyDetails;
+use App\Models\InsReqBuyerDetails;
+use App\Models\InsReqBuyerProposalDetails;
+use App\Models\InsReqBuyerInsuranceLossHistory;
+use App\Models\InsReqBuyerProposalVehicleDetails;
 
 class OrderController extends Controller
 {
@@ -68,7 +75,31 @@ class OrderController extends Controller
 
     public function order(Order $order)
     {
-        $order->load('orderItems.product.media', 'orderItems.product.business', 'orderItems.orderRequests', 'orderItems.quotationResponses', 'invoice');
+
+        // $order->load('orderItems.product.media', 'orderItems.product.business', 'orderItems.orderRequests', 'orderItems.quotationResponses', 'invoice');
+
+        $order->load('orderItems.product.media',
+            'orderItems.product.business',
+            'orderItems.orderRequests.insuranceRequestBuyerDetails',
+            'orderItems.orderRequests.insuranceRequestBuyerCompanyDetails',
+            'orderItems.orderRequests.insuranceRequestBuyerInuranceLossHistories',
+            'orderItems.orderRequests.insuranceRequestProposalDetails',
+            'orderItems.orderRequests.insuranceRequestProposalVehicleDetails',
+            'orderItems.quotationResponses',
+            'orderItems.orderRequests.businessSubsidiaries',
+            'orderItems.orderRequests.businessInformation',
+            'orderItems.orderRequests.businessSalesInformation',
+            'orderItems.orderRequests.businessSales',
+            'orderItems.orderRequests.businessSalesBadDebts',
+            'orderItems.orderRequests.businessSalesLargeBadDebts',
+            'orderItems.orderRequests.businessSecurity',
+            'orderItems.orderRequests.businessCreditManagement',
+            'orderItems.orderRequests.businessCreditLimits',
+            'orderItems.orderRequests.importInstruction',
+            'orderItems.orderRequests.exportInstruction',
+            'invoice'
+        );
+
         $order_total = 0;
         $order_requests = null;
         foreach ($order->orderItems as $order_item) {
@@ -533,6 +564,232 @@ class OrderController extends Controller
         toastr()->success('', 'Quotation updated successfully');
 
         return back();
+    }
+
+    public function requestInsurance(OrderItem $order_item)
+    {
+        $order_item->load('orderRequests');
+
+        $genders = ['Male', 'Female'];
+        $marital_statuses = ['Married', 'Single'];
+        $identification_docs = [
+            'identity_card' => [
+                'name' => 'Identity Card',
+                'requires_expiry_date' => false
+            ],
+            'passport' => [
+                'name' => 'Passport',
+                'requires_expiry_date' => true
+            ],
+            'asylum' => [
+                'name' => 'Asylum',
+                'requires_expiry_date' => true
+            ]
+        ];
+        $sources_of_income = ['Salary', 'Business Proceeds', 'Pension', 'Rent', 'None Income Generating (dependant)'];
+        $sources_of_wealth = ['Legal Settlement', 'Royalties', 'Inheritance', 'Donations', 'Wnnings', 'Savings', 'Sale of Investment', 'Sale of Property', 'Rent', 'Employment', 'Pension', 'Business Proceeds'];
+        $business_sources_of_income = ['Business Proceeds', 'Rent', 'Donations', 'Government Funding'];
+        $business_sources_of_wealth = ['Court Order', 'Sale of Property', 'Sale of Investment', 'Government Funding', 'Shareholder Contribution'];
+        $vehicle_devices = ['Tracking Devices', 'Radio Communication', 'Engine Immobilizer'];
+
+        return view('buyer.insurance-report', compact('order_item', 'genders', 'marital_statuses', 'identification_docs', 'sources_of_income', 'sources_of_wealth', 'business_sources_of_income', 'business_sources_of_wealth', 'vehicle_devices'));
+    }
+
+    public function storeInsuranceRequest(Request $request, OrderItem $order_item)
+    {
+        try {
+            DB::beginTransaction();
+
+            // Fill user metadata
+            $user_data = UserMetaData::where('user_id', auth()->id())->first();
+            if (!$user_data) {
+                $user_data = UserMetaData::create([
+                    'user_id' => auth()->id(),
+                    'date_of_birth' => Carbon::parse($request->date_of_birth)->format('Y-m-d'),
+                    'gender' => $request->gender,
+                    'marital_status' => $request->marital_status,
+                    'nationality' => $request->nationality,
+                    'citizenship' => $request->citizenship,
+                    'postal_address' => $request->postal_address,
+                    'postal_code' => $request->postal_code,
+                    'city' => $request->city,
+                    'residential_address' => $request->residential_address,
+                    'next_of_kin_name' => $request->next_of_kin_name,
+                    'next_of_kin_email' => $request->next_of_kin_email,
+                    'next_of_kin_phone_number' => $request->next_of_kin_phone_number,
+                    'next_of_kin_relationship' => $request->next_of_kin_relationship,
+                ]);
+            }
+
+            if (count($request->identification_document) > 0) {
+                UserIdentificationDoc::where('user_id', auth()->id())->delete();
+                foreach ($request->identification_document as $key => $identification_document) {
+                    UserIdentificationDoc::create([
+                        'user_id' => auth()->id(),
+                        'document_name' => $key,
+                        'document_number' => array_key_exists($key, $request->identification_number) ? $request->identification_number[$key] : NULL,
+                        'document_file' => pathinfo($identification_document->store('id', 'user'), PATHINFO_BASENAME),
+                        'expiry_date' => array_key_exists($key, $request->identification_document_expiry) ? Carbon::parse($request->identification_document_expiry[$key])->format('Y-m-d') : NULL,
+                    ]);
+                }
+            }
+
+            $order_requests = OrderRequest::where('requesteable_type', 'App\Models\InsuranceCompany')->where('order_item_id', $order_item->id)->get();
+
+            if ($order_requests->count() > 0) {
+                foreach ($order_requests as $order_request) {
+                    InsReqBuyerDetails::create([
+                        'order_request_id' => $order_request->id,
+                        'marital_status' => $request->marital_status,
+                        'nationality' => $request->nationality,
+                        'citizenship' => $request->citizenship,
+                        'postal_address' => $request->postal_address,
+                        'postal_code' => $request->postal_code,
+                        'city' => $request->city,
+                        'residential_address' => $request->residential_address,
+                        'income_tax_pin_number' => $request->income_tax_pin,
+                        'income_tax_pin_file' => $request->hasFile('income_tax_pin_certificate') ? pathinfo($request->income_tax_pin_certificate->store('doc', 'insurance'), PATHINFO_BASENAME) : NULL,
+                        'is_employed' => $request->is_employed == 'No' ? false : true,
+                        'is_self_employed' => $request->is_self_employed == 'No' ? false : true,
+                        'occupation' => $request->occupation,
+                        'occupation_sector' => $request->occupation_sector,
+                        'income_sources' => json_encode($request->source_of_income),
+                        'wealth_sources' => json_encode($request->source_of_wealth),
+                    ]);
+
+                    InsReqBuyerCompanyDetails::create([
+                        'order_request_id' => $order_request->id,
+                        'trade_name' => $request->business_trade_name,
+                        'registered_name' => $request->business_legal_name,
+                        'registration_number' => $request->business_registration_number,
+                        'country_of_incorporation' => $request->business_country_of_incorporation,
+                        'country_of_parent_company' => $request->business_country_of_parent_company,
+                        'email' => $request->business_email,
+                        'phone_number' => $request->business_phone_number,
+                        'postal_address' => $request->business_postal_address,
+                        'postal_code' => $request->business_postal_code,
+                        'city' => $request->business_city,
+                        'physical_location' => $request->business_residential_address,
+                        'nature_of_business' => $request->business_nature,
+                        'sector' => $request->business_sector,
+                        'income_tax_pin' => $request->business_income_tax_pin,
+                        'income_tax_document' => $request->hasFile('business_income_tax_pin_certificate') ? pathinfo($request->business_income_tax_pin_certificate->store('doc', 'insurance'), PATHINFO_BASENAME) : NULL,
+                        'sources_of_income' => json_encode($request->business_source_of_income),
+                        'sources_of_wealth' => json_encode($request->business_source_of_wealth),
+                    ]);
+
+                    $transported_products = [];
+                    if ($request->wines_and_spirits == 'Yes') {
+                        array_push($transported_products, 'Wines and Spirits');
+                    }
+                    if ($request->fragile_goods == 'Yes') {
+                        array_push($transported_products, 'Fragile Goods');
+                    }
+                    if ($request->explosive_goods == 'Yes') {
+                        array_push($transported_products, 'Explosive and Hazardous Goods');
+                    }
+
+                    $vehicle_features = [];
+                    if (count($request->vehicle_devices) > 0) {
+                        foreach ($request->vehicle_devices as $vehicle_device) {
+                            array_push($vehicle_features, $vehicle_device);
+                        }
+                    }
+
+                    if ($request->has('other_vehicle_devices')) {
+                        array_push($vehicle_features, $request->other_vehicle_devices);
+                    }
+
+                    $prev_insurance_data = [];
+                    if ($request->has('had_cancelled_policy') && $request->had_cancelled_policy == 'Yes') {
+                        array_push($prev_insurance_data, 'Cancelled Policy');
+                    }
+                    if ($request->has('had_insurance_declined') && $request->had_insurance_declined == 'Yes') {
+                        array_push($prev_insurance_data, 'Insurance Declined');
+                    }
+                    if ($request->has('had_declined_policy_renewal') && $request->had_declined_policy_renewal == 'Yes') {
+                        array_push($prev_insurance_data, 'Declined Policy Renewal');
+                    }
+                    if ($request->has('had_special_terms_imposed') && $request->had_special_terms_imposed == 'Yes') {
+                        array_push($prev_insurance_data, 'Special Terms Imposed');
+                    }
+                    if ($request->has('had_claim_denied') && $request->had_claim_denied == 'Yes') {
+                        array_push($prev_insurance_data, 'Denied Claim');
+                    }
+
+                    InsReqBuyerProposalDetails::create([
+                        'order_request_id' => $order_request->id,
+                        'period_from' => Carbon::parse($request->period_of_insurance_start)->format('Y-m-d'),
+                        'period_to' => Carbon::parse($request->period_of_insurance_end)->format('Y-m-d'),
+                        'mode_of_conveyance' => $request->conveyance_mode,
+                        'territorial_limits' => $request->territory_limits,
+                        'packaging' => $request->product_packaging,
+                        'transported_products' => count($transported_products) > 0 ? json_encode($transported_products) : NULL,
+                        'use_hired_vehicles' => $request->will_use_hired_vehicles == 'Yes' ? true : false,
+                        'hired_vehicles_details' => $request->hired_vehicles_details,
+                        'goods_safety_details' => $request->goods_safety,
+                        'vehicle_features' => count ($vehicle_features) > 0 ? json_encode($vehicle_features) : NULL,
+                        'liability_limit_one_consignment' => $request->limit_of_liability_one_consignment,
+                        'liability_limit_period_of_insurance' => $request->limit_of_liability_period_of_insurance,
+                        'liability_limit_estimated_annual_carry' => $request->limit_of_liability_one_consignment,
+                        'had_previous_insurance' => $request->have_been_insured == 'Yes' ? true : false,
+                        'current_precautions' => $request->precautions_engaged,
+                        'previous_insurer' => json_encode(['Insurer' => $request->prev_insurer, 'Policy Number' => $request->prev_insurance_policy_number]),
+                        'previous_insurance_data' => json_encode($prev_insurance_data),
+                        'previous_insurance_details' => $request->prev_insurance_details,
+                    ]);
+
+                    if (count($request->vehicle_description) > 0) {
+                        foreach ($request->vehicle_description as $key => $vehicle) {
+                            InsReqBuyerProposalVehicleDetails::create([
+                                'order_request_id' => $order_request->id,
+                                'type' => 'Vehicle',
+                                'description' => $vehicle,
+                                'registration_number' => array_key_exists($key, $request->vehicle_reg_number) ? $request->vehicle_reg_number[$key] : NULL,
+                                'carrying_capacity' => array_key_exists($key, $request->vehicle_carrying_capacity) ? $request->vehicle_carrying_capacity[$key] : NULL,
+                                'sum_insured' => array_key_exists($key, $request->vehicle_sum_insured) ? $request->vehicle_sum_insured[$key] : NULL,
+                            ]);
+                        }
+                    }
+
+                    if (count($request->trailer_description) > 0) {
+                        foreach ($request->trailer_description as $key => $trailer) {
+                            InsReqBuyerProposalVehicleDetails::create([
+                                'order_request_id' => $order_request->id,
+                                'type' => 'Trailer',
+                                'description' => $trailer,
+                                'registration_number' => array_key_exists($key, $request->trailer_reg_number) ? $request->trailer_reg_number[$key] : NULL,
+                                'carrying_capacity' => array_key_exists($key, $request->trailer_carrying_capacity) ? $request->trailer_carrying_capacity[$key] : NULL,
+                                'sum_insured' => array_key_exists($key, $request->trailer_sum_insured) ? $request->trailer_sum_insured[$key] : NULL,
+                            ]);
+                        }
+                    }
+
+                    if (count($request->prev_loss_description) > 0) {
+                        foreach ($request->prev_loss_description as $key => $prev_loss) {
+                            InsReqBuyerInsuranceLossHistory::create([
+                                'order_request_id' => $order_request->id,
+                                'year' => array_key_exists($key, $request->prev_loss_year) ? $request->prev_loss_year[$key] : NULL,
+                                'cause_of_loss' => array_key_exists($key, $request->prev_loss_cause) ? $request->prev_loss_cause[$key] : NULL,
+                                'description' => $prev_loss,
+                                'amount' => array_key_exists($key, $request->prev_loss_amount) ? $request->prev_loss_amount[$key] : NULL,
+                            ]);
+                        }
+                    }
+                }
+            }
+
+            DB::commit();
+
+            toastr()->success('', 'Insurance Report submitted successfully');
+
+            return redirect()->route('orders.show', ['order' => $order_item->order]);
+        } catch (\Exception $e) {
+            info($e);
+            DB::rollBack();
+            toastr()->error('', 'Error while adding insurance details');
+            return back();
+        }
     }
 
     public function requestFinancing(Invoice $invoice)

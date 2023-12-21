@@ -360,6 +360,11 @@
                             </div>
                         @endif
                         <button data-modal-target="view-insurance-report" data-modal-toggle="view-insurance-report" class="w-full bg-primary-one text-lg font-semibold text-white py-1 rounded-lg">View Insurance Report</button>
+                        @if (!$order_requests->first()->insuranceRequestBuyerDetails || !$order_requests->first()->insuranceRequestBuyerCompanyDetails || !$order_requests->first()->insuranceRequestProposalDetails || !$order_requests->first()->insuranceRequestProposalVehicleDetails)
+                            <a href="{{ route('order.insurance.request', ['order_item' => $order_item]) }}">
+                                <button class="w-full bg-primary-one text-lg font-semibold text-white py-1 rounded-lg mt-2">Complete Insurance Request</button>
+                            </a>
+                        @endif
                         <x-modal modal_id="view-insurance-report">
                             <div class="relative w-full max-w-2xl max-h-full">
                                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -443,31 +448,299 @@
                                 <span class="font-semibold">{{ $accepted_request->cost }}</span>
                             </div>
                         @endif
-                        <button data-modal-target="view-logistics-report" data-modal-toggle="view-logistics-report" class="w-full bg-primary-one text-lg font-semibold text-white py-1 rounded-lg">View Logistics Report</button>
-                        <x-modal modal_id="view-logistics-report">
-                            <div class="relative w-full max-w-2xl max-h-full">
-                                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                    <button type="button" class="absolute top-1 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="view-logistics-report">
-                                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                        </svg>
-                                        <span class="sr-only">Close modal</span>
-                                    </button>
-                                    <h2 class="px-2 py-2 lg:px-4 font-bold text-xl">Logistics/Delivery Quote</h2>
-                                    <div class="space-y-2 p-2">
-                                        @if ($order_item->logisticsReport)
-                                            <div>
-                                                <span>Logistics Report Here</span>
-                                            </div>
-                                        @else
-                                            <div class="px-2">
-                                                <span class="font-semibold text-red-600">Logistics Report Not Uploaded Yet</span>
-                                            </div>
-                                        @endif
+                        @if ($accepted_request && $accepted_request->importInstruction)
+                            <button data-modal-target="view-import-logistics-report" data-modal-toggle="view-import-logistics-report" class="w-full bg-primary-one text-lg font-semibold text-white py-1 rounded-lg">View Import Logistics Report</button>
+                            <x-modal modal_id="view-import-logistics-report">
+                                <div class="relative w-full max-w-4xl max-h-full">
+                                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                        <button type="button" class="absolute top-1 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="view-import-logistics-report">
+                                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                            </svg>
+                                            <span class="sr-only">Close modal</span>
+                                        </button>
+                                        <h2 class="px-2 py-2 lg:px-4 font-bold text-xl">Logistics/Delivery Import Report</h2>
+                                        <div class="space-y-2 p-2 lg:px-4">
+                                            @if ($accepted_request->importInstruction)
+                                                <div class="grid grid-cols-2">
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Importer:</span>
+                                                        <span class="font-bold">{{ $accepted_request->importInstruction->importer }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Reference:</span>
+                                                        <span class="font-bold">{{ $accepted_request->importInstruction->reference }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Customs Code</span>
+                                                        <span class="font-bold">{{ $accepted_request->importInstruction->customs_code }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">VAT Number</span>
+                                                        <span class="font-bold">{{ $accepted_request->importInstruction->vat_number }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Supplier</span>
+                                                        <span class="font-bold">{{ $accepted_request->importInstruction->supplier }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Transport Mode</span>
+                                                        <span class="font-bold">{{ $accepted_request->importInstruction->transport_mode }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Name of Vessel</span>
+                                                        <span class="font-bold">{{ $accepted_request->importInstruction->name_of_vessel }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">E.T.A</span>
+                                                        <span class="font-bold">{{ $accepted_request->importInstruction->eta }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Transport Document Number</span>
+                                                        <span class="font-bold">{{ $accepted_request->importInstruction->transport_document_number }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Transport Document Date</span>
+                                                        <span class="font-bold">{{ $accepted_request->importInstruction->transport_document_date }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Shipment Reference Number</span>
+                                                        <span class="font-bold">{{ $accepted_request->importInstruction->shipment_reference_number }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Invoice Number</span>
+                                                        <span class="font-bold">{{ $accepted_request->importInstruction->invoice_number }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Invoice Date</span>
+                                                        <span class="font-bold">{{ $accepted_request->importInstruction->invoice_date }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Port of Entry</span>
+                                                        <span class="font-bold">{{ $accepted_request->importInstruction->port_of_entry }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Customs Purpose Code</span>
+                                                        <span class="font-bold">{{ $accepted_request->importInstruction->customs_purpose_code }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Destination Code</span>
+                                                        <span class="font-bold">{{ $accepted_request->importInstruction->destination_code }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Tariff Determination</span>
+                                                        <span class="font-bold">{{ $accepted_request->importInstruction->tariff_determination }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Customs Valuation Code</span>
+                                                        <span class="font-bold">{{ $accepted_request->importInstruction->customs_valuation_code }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Customs Valuation Method</span>
+                                                        <span class="font-bold">{{ $accepted_request->importInstruction->customs_valuation_method }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Customs Valuation Date</span>
+                                                        <span class="font-bold">{{ $accepted_request->importInstruction->customs_value_date }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Number of Packages</span>
+                                                        <span class="font-bold">{{ $accepted_request->importInstruction->number_of_packages }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Special goods / hazardous, perishable or taint</span>
+                                                        <span class="font-bold">{{ $accepted_request->importInstruction->special_goods }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Gross Mass</span>
+                                                        <span class="font-bold">{{ $accepted_request->importInstruction->gross_mass }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Measurement</span>
+                                                        <span class="font-bold">{{ $accepted_request->importInstruction->measurement }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Import Permit Number</span>
+                                                        <span class="font-bold">{{ $accepted_request->importInstruction->import_permit_number }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Incoterms</span>
+                                                        <span class="font-bold">{{ $accepted_request->importInstruction->incoterms }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Delivery instructions mode of transport</span>
+                                                        <span class="font-bold">{{ $accepted_request->importInstruction->mode_of_transport }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Delivery Address</span>
+                                                        <span class="font-bold">{{ $accepted_request->importInstruction->delivery_address }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Split Delivery Address</span>
+                                                        <span class="font-bold">{{ $accepted_request->importInstruction->split_delivery_address }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Special Instructions</span>
+                                                        <span class="font-bold">{{ $accepted_request->importInstruction->special_instructions }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Other</span>
+                                                        <span class="font-bold">{{ $accepted_request->importInstruction->other }}</span>
+                                                    </div>
+                                                </div>
+                                            @else
+                                                <div class="px-2">
+                                                    <span class="font-semibold text-red-600">Logistics Import Report Not Uploaded Yet</span>
+                                                </div>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </x-modal>
+                            </x-modal>
+                        @endif
+                        @if ($accepted_request && $accepted_request->exportInstruction)
+                            <button data-modal-target="view-export-logistics-report" data-modal-toggle="view-export-logistics-report" class="w-full my-2 bg-primary-one text-lg font-semibold text-white py-1 rounded-lg">View Export Logistics Report</button>
+                            <x-modal modal_id="view-export-logistics-report">
+                                <div class="relative w-full max-w-4xl max-h-full">
+                                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                        <button type="button" class="absolute top-1 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="view-export-logistics-report">
+                                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                            </svg>
+                                            <span class="sr-only">Close modal</span>
+                                        </button>
+                                        <h2 class="px-2 py-2 lg:px-4 font-bold text-xl">Logistics/Delivery Export Report</h2>
+                                        <div class="space-y-2 p-2 lg:px-4">
+                                            @if ($accepted_request->exportInstruction)
+                                                <div class="grid grid-cols-2">
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Shipper/Exporter:</span>
+                                                        <span class="font-bold">{{ $accepted_request->exportInstruction->exporter }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Reference:</span>
+                                                        <span class="font-bold">{{ $accepted_request->exportInstruction->reference }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">VAT Number</span>
+                                                        <span class="font-bold">{{ $accepted_request->exportInstruction->vat_number }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Consignee</span>
+                                                        <span class="font-bold">{{ $accepted_request->exportInstruction->consignee }}</span>
+                                                    </div>
+
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Notify Party</span>
+                                                        <span class="font-bold">{{ $accepted_request->exportInstruction->notify_party }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Place of Collection</span>
+                                                        <span class="font-bold">{{ $accepted_request->exportInstruction->place_of_collection }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Port of Loading</span>
+                                                        <span class="font-bold">{{ $accepted_request->exportInstruction->port_of_loading }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Port of discharge</span>
+                                                        <span class="font-bold">{{ $accepted_request->exportInstruction->port_of_discharge }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Final Destination</span>
+                                                        <span class="font-bold">{{ $accepted_request->exportInstruction->final_destination }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Destination Country</span>
+                                                        <span class="font-bold">{{ $accepted_request->exportInstruction->destination_country }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Methods of Payment</span>
+                                                        <span class="font-bold">{{ $accepted_request->exportInstruction->method_of_payment }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Mode of Transport</span>
+                                                        <span class="font-bold">{{ $accepted_request->exportInstruction->mode_of_transport }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Type of Freight</span>
+                                                        <span class="font-bold">{{ $accepted_request->exportInstruction->type_of_freight }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Number of Packages</span>
+                                                        <span class="font-bold">{{ $accepted_request->exportInstruction->number_of_packages }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Type of Packages</span>
+                                                        <span class="font-bold">{{ $accepted_request->exportInstruction->type_of_packages }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Marks and Numbers</span>
+                                                        <span class="font-bold">{{ $accepted_request->exportInstruction->marks_and_numbers }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Description of goods</span>
+                                                        <span class="font-bold">{{ $accepted_request->exportInstruction->description_of_goods }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Special goods/hazardous, perishable or taint</span>
+                                                        <span class="font-bold">{{ $accepted_request->exportInstruction->special_goods }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Gross Mass in kgs</span>
+                                                        <span class="font-bold">{{ $accepted_request->exportInstruction->gross_mass }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Measurement</span>
+                                                        <span class="font-bold">{{ $accepted_request->exportInstruction->measurement }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Cargo Insurance</span>
+                                                        <span class="font-bold">{{ $accepted_request->exportInstruction->cargo_insurance }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Cargo Value</span>
+                                                        <span class="font-bold">{{ $accepted_request->exportInstruction->cargo_value }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Incoterms</span>
+                                                        <span class="font-bold">{{ $accepted_request->exportInstruction->incoterms }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">C.I Value</span>
+                                                        <span class="font-bold">{{ $accepted_request->exportInstruction->ci_value }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Customs Export Purpose Code</span>
+                                                        <span class="font-bold">{{ $accepted_request->exportInstruction->customs_export_purpose_code }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Customs Export Number</span>
+                                                        <span class="font-bold">{{ $accepted_request->exportInstruction->customs_export_number }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Tariff heading</span>
+                                                        <span class="font-bold">{{ $accepted_request->exportInstruction->tariff_heading }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Special Instructions</span>
+                                                        <span class="font-bold">{{ $accepted_request->exportInstruction->special_instructions }}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold">Other</span>
+                                                        <span class="font-bold">{{ $accepted_request->exportInstruction->other }}</span>
+                                                    </div>
+                                                </div>
+                                            @else
+                                                <div class="px-2">
+                                                    <span class="font-semibold text-red-600">Logistics Export Report Not Uploaded Yet</span>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </x-modal>
+                        @endif
                     </div>
                 @endif
             @endforeach

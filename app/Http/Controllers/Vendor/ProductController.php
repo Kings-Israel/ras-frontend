@@ -124,6 +124,13 @@ class ProductController extends Controller
         ]);
     }
 
+    public function show(Product $product)
+    {
+        $product->load('orderItems.order', 'warehouses', 'category', 'media', 'discount');
+
+        return view('business.product', compact('product'));
+    }
+
     public function update(Request $request, Product $product)
     {
         $request->validate([
@@ -227,5 +234,32 @@ class ProductController extends Controller
         toastr()->success('', 'Product updated successfully');
 
         return redirect()->route('vendor.products');
+    }
+
+    public function addDiscount(Request $request, Product $product)
+    {
+        $request->validate([
+            'value' => ['required']
+        ]);
+        
+        $product_discount = $product->discount;
+
+        if (!$product_discount) {
+            $product->discount()->create([
+                'value' => $request->value,
+            ]);
+
+            toastr()->success('', 'Discount successfully created.');
+
+            return back();
+        }
+
+        $product_discount->update([
+            'value' => $request->value,
+        ]);
+
+        toastr()->success('', 'Discount successfully updated.');
+
+        return back();
     }
 }

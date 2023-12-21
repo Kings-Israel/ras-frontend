@@ -64,6 +64,8 @@ Route::middleware(['auth', 'web', 'phone_verified'])->group(function () {
     Route::post('/order/create', [OrderController::class, 'store'])->name('order.store');
     Route::get('/order/quotation/{quotation}/update/{status}', [OrderController::class, 'updateQuotation'])->name('order.quotation.update');
     Route::get('/order/request/{order_request}/update/{status}', [OrderController::class, 'updateRequest'])->name('order.request.update');
+    Route::get('/order/{order_item}/insurance/request', [OrderController::class, 'requestInsurance'])->name('order.insurance.request');
+    Route::post('/order/{order_item}/insurance/request/store', [OrderController::class, 'storeInsuranceRequest'])->name('order.insurance.request.store');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::group(['prefix' => 'wallet/', 'as' => 'wallet.'], function () {
@@ -90,6 +92,8 @@ Route::middleware(['auth', 'web', 'phone_verified', 'role:vendor', 'has_register
         Route::get('/products', [VendorProductController::class, 'index'])->name('products');
         Route::post('/products/store', [VendorProductController::class, 'store'])->name('products.store');
         Route::get('/{product}/edit', [VendorProductController::class, 'edit'])->name('products.edit');
+        Route::get('/{product}/show', [VendorProductController::class, 'show'])->name('products.show');
+        Route::post('/{product}/discount/add', [VendorProductController::class, 'addDiscount'])->name('products.discount.add');
         Route::patch('/{product}/update', [VendorProductController::class, 'update'])->name('products.update');
         Route::get('/orders', [VendorController::class, 'orders'])->name('orders');
         Route::get('/quotation-requests', [VendorController::class, 'quotationRequests'])->name('quotation.requests');
@@ -97,7 +101,8 @@ Route::middleware(['auth', 'web', 'phone_verified', 'role:vendor', 'has_register
         Route::get('/orders/{order}/{status}/update', [VendorController::class, 'orderUpdate'])->name('orders.status.update');
         Route::post('/orders/{order}/quote/update', [VendorController::class, 'quoteUpdate'])->name('orders.quote.update');
         Route::get('/orders/{order}/quotes/accept', [VendorController::class, 'acceptQuotes'])->name('orders.quotes.accept');
-        Route::get('/orders/{order}/insurance/report', [VendorController::class, 'createInsuranceReport'])->name('orders.insurance.report.create');
+        Route::get('/orders/{order_item}/insurance/report/create', [VendorController::class, 'createInsuranceReport'])->name('orders.insurance.report.create');
+        Route::post('/orders/{order_item}/insurance/report/store', [VendorController::class, 'storeInsuranceReport'])->name('orders.insurance.report.store');
         Route::get('/messages', [ChatController::class, 'index'])->name('messages');
         Route::get('/messages/chat', [ChatController::class, 'view'])->name('messages.chat');
         Route::get('/customers', [VendorController::class, 'customers'])->name('customers');

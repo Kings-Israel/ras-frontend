@@ -10,6 +10,7 @@
         "africastalking/africastalking": "^3.0",
         "beyondcode/laravel-websockets": "^1.14",
         "davcpas1234/laravelpdfviewer": "^1.0",
+        "doctrine/dbal": "^3.7",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.2",

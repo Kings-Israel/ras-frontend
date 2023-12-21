@@ -11,8 +11,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
-class Order extends Model
+class Order extends Model implements Searchable
 {
     use HasFactory;
 
@@ -46,6 +48,21 @@ class Order extends Model
     public function getOrderIdAttribute($value)
     {
         return Str::upper(explode('-', $value)[0]);
+    }
+
+    public function getSearchResult(): SearchResult
+    {
+        if (auth()->check() && auth()->user()->business && $this->business->id && auth()->user()->business->id) {
+            $url = route('vendor.orders.show', $this->id);
+        } else {
+            $url = route('orders.show', $this->id);
+        }
+
+        return new \Spatie\Searchable\SearchResult(
+            $this,
+            Str::lower($this->order_id),
+            $url
+        );
     }
 
     /**

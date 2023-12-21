@@ -11,11 +11,27 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Notifications\Notifiable;
 use Musonza\Chat\Traits\Messageable;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
-class Warehouse extends Model
+class Warehouse extends Model implements Searchable
 {
     use HasFactory, Notifiable, Messageable;
 
+    public function getSearchResult(): SearchResult
+    {
+        if (auth()->check() && auth()->user()->hasRole('vendor')) {
+            $url = route('vendor.warehouse.show', $this->id);
+        } else {
+            $url = '';
+        }
+
+        return new \Spatie\Searchable\SearchResult(
+            $this,
+            $this->name,
+            $url
+        );
+    }
 
     /**
      * The users that belong to the UserWarehouse
