@@ -77,6 +77,8 @@ Route::middleware(['auth', 'web', 'phone_verified'])->group(function () {
             Route::post('/pay', [PaymentController::class, 'pay'])->name('pay');
             Route::post('/pay/confirm', [PaymentController::class, 'completeTransaction'])->name('pay.confirm');
             Route::get('/balance', [WalletController::class, 'balance'])->name('balance');
+            Route::get('/transactions', [WalletController::class, 'transactions'])->name('transactions');
+            Route::post('/top-up', [WalletController::class, 'topUp'])->name('top-up');
         });
     });
 });

@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\JambopayToken;
+use App\Helpers\NumberGenerator;
+use App\Models\Payment;
 use App\Models\User;
 use App\Models\Wallet;
+use App\Models\WalletTransaction;
 use Carbon\Carbon;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\Rule;
@@ -145,5 +149,96 @@ class WalletController extends Controller
         toastr()->error('', 'Error fetching wallet');
 
         return back();
+    }
+
+    public function transactions()
+    {
+        $balance = Wallet::where('walleteable_id', auth()->id())->where('walleteable_type', User::class)->first()->balance;
+
+        return view('wallet.transactions', compact('balance'));
+    }
+
+    public function topUp(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'amount' => ['required', 'integer', 'min:1']
+        ], [
+            'amount.required' => 'Please enter an amount',
+            'amount.integer' => 'Please enter a valid amount',
+            'amount.min' => 'Please enter an amount greater than or equal to Ksh.5'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->messages(), 422);
+        }
+
+        $token = $this->token();
+
+        $wallet = Wallet::where('walleteable_id', auth()->id())->where('walleteable_type', User::class)->first();
+
+        $order_id = NumberGenerator::generateUniqueNumber(WalletTransaction::class, 'order_id', 10000000, 99999999);
+
+        $response = Http::withHeaders([
+            'Authorization' => $token->token_type.' '.$token->access_token
+        ])->post(config('services.jambopay.wallet_url').'/checkout/express', [
+            "orderId" => $order_id,
+            "amount" => $request->amount,
+            "callbackUrl" => route('jambopay.topup.callback'),
+            "accountTo" => $wallet->account_number,
+            "modeOfPayment" => "MOBILE_MONEY",
+            "description" => "Wallet Top Up",
+            "provider" => "MPESA",
+            "data" => [
+                "phoneNumber" => auth()->user()->phone_number,
+                "serviceType" => "TOPUP"
+            ]
+        ]);
+
+        if (collect(json_decode($response))->has('statusCode')) {
+            return $this->respondError('An error occurred while procesing the request');
+        }
+
+        $wallet_transaction = WalletTransaction::create([
+            'user_id' => auth()->id(),
+            'amount' => $request->amount,
+            'order_id' => $order_id,
+            'description' => json_decode($response)->description,
+            'transaction_ref' => json_decode($response)->ref,
+            'checksum' => json_decode($response)->checksum
+        ]);
+
+        Payment::create([
+            'user_id' => auth()->id(),
+            'jambopay_checkout_id' => json_decode($response)->ref,
+            'amount' => $request->amount,
+            'payable_type' => WalletTransaction::class,
+            'payable_id' => $wallet_transaction->id
+        ]);
+
+        // activity()->causedBy(auth()->user())->log('deposited '.$request->amount.' to wallet');
+
+        return $this->respondWithSuccess([
+            'message' => 'Transaction is being processed. Please enter MPESA PIN when prompted.',
+            'data' => [
+                'ref' => json_decode($response)->ref
+            ]
+        ]);
+    }
+
+    public function topUpCallback(Request $request)
+    {
+        info($request->all());
+
+        $wallet_transaction = WalletTransaction::where('transaction_ref', $request->ref)->first();
+
+        if ($wallet_transaction) {
+            $payment = Payment::where('jambopay_checkout_id', $request->ref)->first();
+
+            if ($payment) {
+                $payment->update([
+                    'transaction_ref' => $request->ref,
+                ]);
+            }
+        }
     }
 }
