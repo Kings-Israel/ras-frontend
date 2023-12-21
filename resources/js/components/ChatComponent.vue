@@ -182,7 +182,7 @@
             </div>
         </div>
         <div v-else class="hidden lg:block w-full my-auto mx-auto">
-            <img src="../../../public/assets/img/talking.png" alt="" class="ml-40">
+            <img src="/rsa/assets/img/talking.png" alt="" class="ml-40">
         </div>
         <!-- End Chat Messages -->
     </div>
@@ -300,7 +300,7 @@ export default {
 
         const getConversation = async (id) => {
             active_conversation.value = id
-            const response = await axios.get('/messages/chat/'+id)
+            const response = await axios.get('/rsa/messages/chat/'+id)
             conversation_log.value = response.data.conversations.messages
             receiver.value = response.data.conversations.receiver
             nextTick(() => {
@@ -334,7 +334,7 @@ export default {
             Array.from(files.value).forEach((file, index) => {
                 formData.append('files['+index+']', file)
             })
-            const response = await axios.post('/messages/send', formData)
+            const response = await axios.post('/rsa/messages/send', formData)
             conversation_log.value.push(response.data.data)
             refMessageText.value = ''
             files.value = []

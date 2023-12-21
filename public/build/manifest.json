@@ -1,41 +1,30 @@
 {
-  "public/assets/img/auth-alt-five.jpg": {
-    "file": "assets/auth-alt-five-af4ac493.jpg",
-    "src": "public/assets/img/auth-alt-five.jpg"
+  "public/assets/img/talking.png": {
+    "file": "assets/talking-921b8355.png",
+    "src": "public/assets/img/talking.png"
   },
-  "public/assets/img/auth-alt-four.jpg": {
-    "file": "assets/auth-alt-four-e4023992.jpg",
-    "src": "public/assets/img/auth-alt-four.jpg"
-  },
-  "public/assets/img/auth-alt-six.jpg": {
-    "file": "assets/auth-alt-six-05ab1cfd.jpg",
-    "src": "public/assets/img/auth-alt-six.jpg"
-  },
-  "public/assets/img/auth-bg-1.png": {
-    "file": "assets/auth-bg-1-4161d694.png",
-    "src": "public/assets/img/auth-bg-1.png"
-<<<<<<< HEAD
-  },
-  "public/assets/img/banner.png": {
-    "file": "assets/banner-3f8aa010.png",
-    "src": "public/assets/img/banner.png"
+  "public/assets/img/user.png": {
+    "file": "assets/user-bff92b7c.png",
+    "src": "public/assets/img/user.png"
   },
   "resources/css/app.css": {
-    "file": "assets/app-f96db848.css",
-=======
-  },
-  "resources/css/app.css": {
-    "file": "assets/app-5ae20960.css",
->>>>>>> kings
+    "file": "assets/app-ddaacb6a.css",
     "isEntry": true,
     "src": "resources/css/app.css"
   },
+  "resources/js/app.css": {
+    "file": "assets/app-b4174579.css",
+    "src": "resources/js/app.css"
+  },
   "resources/js/app.js": {
-<<<<<<< HEAD
-    "file": "assets/app-ed770095.js",
-=======
-    "file": "assets/app-98d598f5.js",
->>>>>>> kings
+    "assets": [
+      "assets/user-bff92b7c.png",
+      "assets/talking-921b8355.png"
+    ],
+    "css": [
+      "assets/app-b4174579.css"
+    ],
+    "file": "assets/app-68fd592f.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   }

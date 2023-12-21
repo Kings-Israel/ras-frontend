@@ -16,13 +16,13 @@ export default {
                 sans: ['CenturyGothic', ...defaultTheme.fontFamily.sans],
             },
             backgroundImage: {
-                'auth': "url('/public/assets/img/6CeuCO.jpg')",
-                'auth-alt': "url('/public/assets/img/auth-bg-1.png')",
-                'auth-alt-two': "url('/public/assets/img/auth-alt-three.jpg')",
-                'auth-alt-three': "url('/public/assets/img/auth-alt-four.jpg')",
-                'auth-alt-four': "url('/public/assets/img/auth-alt-five.jpg')",
-                'auth-alt-five': "url('/public/assets/img/auth-alt-six.jpg')",
-                'hero': "url('/public/assets/img/banner.png')",
+                'auth': "url('/assets/img/6CeuCO.jpg')",
+                'auth-alt': "url('/assets/img/auth-bg-1.png')",
+                'auth-alt-two': "url('/assets/img/auth-alt-three.jpg')",
+                'auth-alt-three': "url('/assets/img/auth-alt-four.jpg')",
+                'auth-alt-four': "url('/assets/img/auth-alt-five.jpg')",
+                'auth-alt-five': "url('/assets/img/auth-alt-six.jpg')",
+                'hero': "url('/assets/img/banner.png')",
             },
             screens: {
                 '4xl': '1900px'
