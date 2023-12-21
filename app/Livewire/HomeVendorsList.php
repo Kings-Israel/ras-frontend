@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Business;
+use App\Models\User;
 use Livewire\Component;
 use Livewire\Attributes\On;
 
@@ -23,6 +24,7 @@ class HomeVendorsList extends Component
 
     public function render()
     {
+        $user = User::with('vendors')->find(auth()->id());
         $businesses = Business::with('country', 'city', 'products')
                                 ->when($this->countries && collect($this->countries)->count() > 0, function($query) {
                                     $query->whereIn('country_id', $this->countries);
@@ -33,6 +35,6 @@ class HomeVendorsList extends Component
                                 ->get()
                                 ->take(8);
 
-        return view('livewire.home-vendors-list', compact('businesses'));
+        return view('livewire.home-vendors-list', compact('businesses', 'user'));
     }
 }

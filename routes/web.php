@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OtpController;
@@ -40,6 +41,9 @@ Route::middleware(['auth', 'web', 'phone_verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 
+    Route::post('/favorite/add/{vendor}', [FavoriteController::class, 'addFavorite'])->name('favorite.add');
+        Route::get('/favorites', [FavoriteController::class, 'showFavorites'])->name('favorites.index');
+
     Route::get('/notifications', [HomeController::class, 'notifications'])->name('notifications');
     Route::get('/notification/{notification}', [HomeController::class, 'notification'])->name('notification');
     Route::get('/notifications/read/all', [HomeController::class, 'notificationsReadAll'])->name('notifications.read.all');
@@ -52,7 +56,7 @@ Route::middleware(['auth', 'web', 'phone_verified'])->group(function () {
     Route::get('/invoices', [OrderController::class, 'index'])->name('invoices.index');
     // Route::get('/invoices/{invoice}/orders', [OrderController::class, 'orders'])->name('invoice.orders');
     Route::get('/orders', [OrderController::class, 'orders'])->name('orders');
-    Route::get('/orders/{order}', [OrderController::class, 'order'])->name('orders.show');
+    Route::post('/orders/{order}', [OrderController::class, 'order'])->name('orders.show');
     Route::post('/orders/{order}/update', [OrderController::class, 'update'])->name('orders.update');
     Route::get('/orders/{order}/delivery/update', [OrderController::class, 'update'])->name('orders.delivery.update');
     Route::get('/orders/{order}/delete', [OrderController::class, 'delete'])->name('orders.delete');
@@ -112,6 +116,7 @@ Route::middleware(['auth', 'web', 'phone_verified', 'role:vendor', 'has_register
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::post('/business/update', [VendorController::class, 'update'])->name('business.update');
         Route::patch('/business/image/update', [VendorController::class, 'updatePrimaryCoverImage'])->name('business.image.update');
+
 
         Route::post('/order/{order_item}/warehouse/update', [VendorController::class, 'updateOrderWarehouse'])->name('warehouse.order.update');
         Route::get('/order/{order_item}/product/release', [VendorController::class, 'requestProductRelease'])->name('warehouse.order.product.release');

@@ -59,10 +59,44 @@
                 </div>
             </div>
             <div class="flex flex-col gap-3">
+{{-- --}}
+                @auth
+                <span class="flex align-end ">
+                 @php
+                        $isBookmarked = auth()->user()->vendors->contains($business->id);
+                    @endphp
+                       <form method="POST" action="{{ route('favorite.add', ['vendor' => $business->id]) }}">
+                           @csrf
+                           <button type="submit" class="bookmark-icon" style="color: {{ $isBookmarked ? 'pink' : 'lightgray' }}">
+                               <i class="fas fa-heart"></i>
+                           </button>
+                       </form>
+                   </span>
+                   @else
+                   <span>                
+                    <a href="{{ route('favorite.add', ['vendor' => $business->id]) }}" class="bookmark-icon" data-vendor-id="{{ $business->id }}"
+                    style="color:'lightgray'"
+                    onclick="toggleBookmark({{ $business->id }})"
+                    >
+                        <i class="fas fa-heart"></i>
+                    </a>
+                    </span>
+                   @endauth
+                <img src="{{ $business->primary_cover_image }}" alt="" class="w-full h-44 object-cover rounded-md">
+                @auth
+                    @if (auth()->user()->hasRole('buyer') && (auth()->id() != $business->user->id))
+                        <a href="{{ route('messages', ['user' => $business->user]) }}">
+                            <x-secondary-outline-button class="text-center tracking-tighter border-2 border-orange-200 text-primary-one w-full justify-center hover:bg-orange-300 hover:border-orange-400">
+                                Message Vendor
+                            </x-secondary-outline-button>
+                        </a>                        
+                    @endif
+                @endauth
+{{--  --}}
                 <div class="relative">
                     @auth
                         @if ($business->user->id != auth()->id())
-                            <div class="absolute top-2 right-2">
+                            <div class="absolute right-2">
                                 <livewire:bookmark-vendor :business="$business" />
                             </div>
                         @endif
@@ -72,6 +106,7 @@
                     </a>
                 </div>
                 @auth
+{{--  --}}
                     <a href="{{ route('messages', ['user' => $business->user]) }}">
                         <x-secondary-outline-button class="text-center text-primary-one w-full justify-center hover:bg-orange-300 hover:border-orange-400">
                             Message Vendor

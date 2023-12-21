@@ -256,11 +256,20 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->morphOne(Wallet::class, 'walleteable');
     }
 
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
+    public function vendors()
+    {
+        return $this->belongsToMany(Business::class, 'favorites', 'user_id', 'vendor_id');
     /**
      * Get the driverProfile associated with the User
      */
     public function driverProfile(): HasOne
     {
         return $this->hasOne(DriverProfile::class);
+
     }
 }
