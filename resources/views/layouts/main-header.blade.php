@@ -32,6 +32,9 @@
                     <li class="flex justify-between px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                         <a href="{{ route('profile.edit') }}" class="inline-flex w-full">My Profile</a>
                     </li>
+                    <li class="flex justify-between px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                        <a href="{{ route('wallet.transactions') }}" class="inline-flex w-full">My Wallet</a>
+                    </li>
                     <li>
                         <a href="#" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Change Currency</a>
                     </li>
