@@ -63,7 +63,7 @@ class ProductController extends Controller
         }
 
         return view('business.storefront.products', [
-            'business' => $business->loadCount('products')->load('products', 'discount'),
+            'business' => $business->loadCount('products')->load('products.discount'),
             'products' => $products,
             'categories' => $categories,
         ]);
