@@ -260,7 +260,10 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsToMany(Business::class, 'favorites', 'user_id', 'vendor_id');
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> ae6c2d463425d299af3afae7886766f9a278c575
     /**
      * Get the driverProfile associated with the User
      */

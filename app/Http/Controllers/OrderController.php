@@ -75,6 +75,12 @@ class OrderController extends Controller
 
     public function order(Order $order)
     {
+<<<<<<< HEAD
+=======
+
+        // $order->load('orderItems.product.media', 'orderItems.product.business', 'orderItems.orderRequests', 'orderItems.quotationResponses', 'invoice');
+
+>>>>>>> ae6c2d463425d299af3afae7886766f9a278c575
         $order->load('orderItems.product.media',
             'orderItems.product.business',
             'orderItems.orderRequests.insuranceRequestBuyerDetails',
