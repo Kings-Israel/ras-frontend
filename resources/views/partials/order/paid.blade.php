@@ -151,10 +151,10 @@
                                     <span class="text-gray-400 font-bold">{{ $order->updated_at->format('M d') }}</span>
                                 </li>
                                 <li>
-                                    <span class="text-gray-400 font-bold">{{ $order->checkInspectionIsComplete() ? Carbon\Carbon::parse($order->checkInspectionIsComplete())->format('M d') : '' }}</span>
+                                    <span class="text-gray-400 font-bold -ml-4">{{ $order->checkInspectionIsComplete() ? Carbon\Carbon::parse($order->checkInspectionIsComplete())->format('M d') : '' }}</span>
                                 </li>
                                 <li>
-                                    <span class="text-gray-400 font-bold"></span>
+                                    <span class="text-gray-400 font-bold ml-2"></span>
                                 </li>
                                 <li>
                                     <span class="text-gray-400 font-bold"></span>
