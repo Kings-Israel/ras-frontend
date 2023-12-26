@@ -141,10 +141,10 @@
                 @endif
             </div>
         </div>
-        @if ($order->status == 'in progress')
+        @if ($order->status == 'in progress' || $order->status == 'delivered')
             <table class="w-full table table-auto text-sm text-left text-gray-800 font-bold dark:text-gray-400 rounded-tl-lg rounded-tr-lg mt-2">
                 <tbody>
-                    <tr class="bg-gray-100 border-b-2 border-r-2 border-l-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
+                    <tr class="bg-gray-100 border-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
                         <td colspan="10">
                             <ol class="flex justify-between items-center ml-5 mr-5 w-[96%]">
                                 <li>
@@ -223,12 +223,7 @@
                 </tbody>
             </table>
         @endif
-        <div id="app-orders" class="mt-2">
-            <h3 class="text-lg text-black p-2 font-bold">Order Messages</h3>
-            <div class="bg-gray-50 border-2 border-gray-300 rounded-lg">
-                <order-chat-component email="{!! auth()->user()->email !!}" order="{!! $order->id !!}"></order-chat-component>
-            </div>
-        </div>
+        <x-order-chat id="app-confirmed-orders" order="{{ $order->id }}"></x-order-chat>
     </div>
     <div class="basis-2/5 space-y-2">
         <div class="border border-gray-300 p-4 space-y-4 rounded-lg">
@@ -319,9 +314,15 @@
                     @endif
                 @endif
             @else
-                <div class="bg-red-200 p-2 text-center rounded-lg">
-                    <span class="text-lg text-red-700 w-full">Delivery Date For this order has passed the current date</span>
-                </div>
+                @if ($order->status != 'delivered')
+                    <div class="bg-red-200 p-2 text-center rounded-lg">
+                        <span class="text-lg text-red-700 w-full">Delivery Date For this order has passed the current date</span>
+                    </div>
+                @else
+                    <div class="bg-teal-200 p-1 text-center rounded-lg">
+                        <span class="text-lg font-semibold text-gray-800 w-full">Order Delivered</span>
+                    </div>
+                @endif
             @endif
         </div>
         @foreach ($order->orderItems as $key => $orderItem)

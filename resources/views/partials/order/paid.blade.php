@@ -86,7 +86,7 @@
                 @endif
             </div>
         </div>
-        @if ($order->status == 'in progress')
+        @if ($order->status == 'in progress' || $order->status == 'delivered')
             <table class="w-full table table-auto text-sm text-left text-gray-800 font-bold dark:text-gray-400 mt-2">
                 <tbody>
                     <tr class="bg-gray-100 border-2 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
@@ -168,12 +168,7 @@
                 </tbody>
             </table>
         @endif
-        <div id="app-paid-orders" class="mt-2">
-            <h3 class="text-lg text-black p-2 font-bold">Order Messages</h3>
-            <div class="bg-gray-50 border-2 border-gray-300 rounded-lg">
-                <order-chat-component email="{!! auth()->user()->email !!}" order="{!! $order->id !!}"></order-chat-component>
-            </div>
-        </div>
+        <x-order-chat id="app-paid-orders" order="{{ $order->id }}"></x-order-chat>
     </div>
     <div class="basis-2/5 space-y-2">
         <div class="border border-gray-300 p-4 space-y-4 rounded-lg">
@@ -202,9 +197,18 @@
                 <span class="font-semibold text-gray-900 underline underline-offset-1">{{ $item->order->invoice->delivery_location_address }}</span>
             </div>
             <div class="flex justify-between">
-                <span class="text-xl font-semibold">Order Status:</span>
+                <span class="text-xl font-semibold">Payment Status:</span>
                 <span class="font-semibold bg-secondary-six px-2 py-1 rounded-md">Paid</span>
             </div>
+            @if ($order->status != 'delivered')
+                <div class="bg-red-200 p-2 text-center rounded-lg">
+                    <span class="text-lg text-red-700 w-full">Delivery Date For this order has passed the current date</span>
+                </div>
+            @else
+                <div class="bg-teal-200 p-1 text-center rounded-lg">
+                    <span class="text-lg font-semibold text-gray-800 w-full">Order Delivered</span>
+                </div>
+            @endif
         </div>
         @foreach ($order->orderItems as $key => $order_item)
             @foreach ($order_item->orderRequests->groupBy('requesteable_type') as $key => $order_requests)

@@ -192,7 +192,7 @@ import { onMounted, ref, watch, nextTick, inject } from 'vue';
 import moment from 'moment';
 import axios from 'axios';
 export default {
-    name: "ChatComponent",
+    name: "OrderChatComponent",
     props: ['email', 'order', 'order_conversation'],
     setup(props) {
         const conversations = ref([])

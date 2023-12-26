@@ -46,7 +46,7 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4"/>
                     </svg>
                 </li>
-                <li class="flex items-center" id="order-complete">
+                <li class="flex items-center @if($order->status == 'delivered' && $order->delivery_status == 'delivered') text-primary-one hover:cursor-pointer @endif" @if($order->status == 'delivered' && $order->delivery_status == 'delivered') id="order-delivered" @endif>
                     Order <span class="hidden sm:inline-flex sm:ms-2"> Complete </span>
                 </li>
             </ol>
@@ -63,9 +63,11 @@
         <section class="hidden" id="order-shipped-section">
             @include('partials.order.shipped')
         </section>
+        <section class="hidden" id="order-delivered-section">
+            @include('partials.order.delivered')
+        </section>
     </div>
     <!-- Scripts -->
-    {{-- <script src="{{ asset('assets/js/jquery-1.12.4.js') }}"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="{{ asset('assets/vendor/libs/cleavejs/cleave.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/cleavejs/cleave-phone.js') }}"></script>
@@ -88,8 +90,8 @@
         const order_paid_section = document.querySelector('#order-paid-section')
         const order_shipped = document.querySelector('#order-shipped')
         const order_shipped_section = document.querySelector('#order-shipped-section')
-
-        console.log(order_delivery_status)
+        const order_delivered = document.querySelector('#order-delivered')
+        const order_delivered_section = document.querySelector('#order-delivered-section')
 
         switch (order_status) {
             case 'quotation request':
@@ -109,6 +111,10 @@
                     order_paid.classList.add('underline')
                 }
                 break;
+            case 'delivered':
+                order_delivered_section.classList.remove('hidden')
+                order_delivered.classList.add('underline')
+                break;
             default:
                 negotiations_section.classList.remove('hidden')
                 negotiations.classList.add('underline')
@@ -124,6 +130,8 @@
             order_paid.classList.remove('underline')
             order_shipped_section.classList.add('hidden')
             order_shipped.classList.remove('underline')
+            order_delivered_section.classList.add('hidden')
+            order_delivered.classList.remove('underline')
         })
 
         if (order_confirmed) {
@@ -136,6 +144,8 @@
                 order_paid.classList.remove('underline')
                 order_shipped_section.classList.add('hidden')
                 order_shipped.classList.remove('underline')
+                order_delivered_section.classList.add('hidden')
+                order_delivered.classList.remove('underline')
             })
         }
 
@@ -149,6 +159,8 @@
                 negotiations.classList.remove('underline')
                 order_shipped_section.classList.add('hidden')
                 order_shipped.classList.remove('underline')
+                order_delivered_section.classList.add('hidden')
+                order_delivered.classList.remove('underline')
             })
         }
 
@@ -156,6 +168,23 @@
             order_shipped.addEventListener('click', function () {
                 order_shipped_section.classList.remove('hidden')
                 order_shipped.classList.add('underline')
+                order_delivered_section.classList.add('hidden')
+                order_delivered.classList.remove('underline')
+                order_paid_section.classList.add('hidden')
+                order_paid.classList.remove('underline')
+                order_confirmed_section.classList.add('hidden')
+                order_confirmed.classList.remove('underline')
+                negotiations_section.classList.add('hidden')
+                negotiations.classList.remove('underline')
+            })
+        }
+
+        if (order_delivered) {
+            order_delivered.addEventListener('click', function () {
+                order_delivered_section.classList.remove('hidden')
+                order_delivered.classList.add('underline')
+                order_shipped_section.classList.add('hidden')
+                order_shipped.classList.remove('underline')
                 order_paid_section.classList.add('hidden')
                 order_paid.classList.remove('underline')
                 order_confirmed_section.classList.add('hidden')
