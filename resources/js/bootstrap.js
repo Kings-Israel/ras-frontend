@@ -47,30 +47,40 @@ const options = {
 };
 
 const app = createApp({})
+// Show chat in negotiations order section
+const app_negotiations_orders = createApp({})
 // Show chat in confirmed order section
-const app_orders = createApp({})
+const app_confirmed_orders = createApp({})
 // Show Chat in paid order section
 const app_paid_orders = createApp({})
 // Show Chat in shipped order section
 const app_shipped_orders = createApp({})
+// Show Chat in delivered order section
+const app_delivered_orders = createApp({})
 // Notifications
 const notifications = createApp({})
 
 app.component('ChatComponent', ChatComponent)
-app.component('OrderChatComponent', OrderChatComponent)
-app_orders.component('OrderChatComponent', OrderChatComponent)
+app_negotiations_orders.component('OrderChatComponent', OrderChatComponent)
+app_confirmed_orders.component('OrderChatComponent', OrderChatComponent)
 app_paid_orders.component('OrderChatComponent', OrderChatComponent)
 app_shipped_orders.component('OrderChatComponent', OrderChatComponent)
+app_delivered_orders.component('OrderChatComponent', OrderChatComponent)
 notifications.component('NotificationsComponent', NotificationsComponent)
 
 app.provide('echo', EchoInstance)
-app_orders.provide('echo', EchoInstance)
+app_negotiations_orders.provide('echo', EchoInstance)
+app_confirmed_orders.provide('echo', EchoInstance)
 app_paid_orders.provide('echo', EchoInstance)
+app_shipped_orders.provide('echo', EchoInstance)
+app_delivered_orders.provide('echo', EchoInstance)
 notifications.provide('echo', EchoInstance)
 notifications.use(Toast, options);
 
 app.mount("#app");
-app_orders.mount("#app-orders");
+app_negotiations_orders.mount("#app-negotiation-orders");
+app_confirmed_orders.mount("#app-confirmed-orders");
 app_paid_orders.mount("#app-paid-orders");
 app_shipped_orders.mount("#app-shipped-orders");
+app_delivered_orders.mount("#app-delivered-orders");
 notifications.mount("#notifications");

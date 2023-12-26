@@ -56,7 +56,7 @@ Route::middleware(['auth', 'web', 'phone_verified'])->group(function () {
     Route::get('/invoices', [OrderController::class, 'index'])->name('invoices.index');
     // Route::get('/invoices/{invoice}/orders', [OrderController::class, 'orders'])->name('invoice.orders');
     Route::get('/orders', [OrderController::class, 'orders'])->name('orders');
-    Route::post('/orders/{order}', [OrderController::class, 'order'])->name('orders.show');
+    Route::get('/orders/{order}', [OrderController::class, 'order'])->name('orders.show');
     Route::post('/orders/{order}/update', [OrderController::class, 'update'])->name('orders.update');
     Route::get('/orders/{order}/delivery/update', [OrderController::class, 'update'])->name('orders.delivery.update');
     Route::get('/orders/{order}/delete', [OrderController::class, 'delete'])->name('orders.delete');

@@ -154,7 +154,7 @@
                                     <span class="text-gray-400 font-bold">{{ $order->checkInspectionIsComplete() ? Carbon\Carbon::parse($order->checkInspectionIsComplete())->format('M d') : '' }}</span>
                                 </li>
                                 <li>
-                                    <span class="text-gray-400 font-bold pl-8"></span>
+                                    <span class="text-gray-400 font-bold"></span>
                                 </li>
                                 <li>
                                     <span class="text-gray-400 font-bold"></span>
@@ -168,7 +168,7 @@
                 </tbody>
             </table>
         @endif
-        <x-order-chat id="app-shipped-orders" order="{{ $order->id }}"></x-order-chat>
+        <x-order-chat id="app-delivered-orders" order="{{ $order->id }}"></x-order-chat>
     </div>
     <div class="basis-2/5 space-y-2">
         <div class="border border-gray-300 p-4 space-y-4 rounded-lg">
@@ -208,13 +208,6 @@
                 <div class="bg-teal-200 p-1 text-center rounded-lg">
                     <span class="text-lg font-semibold text-gray-800 w-full">Order Delivered</span>
                 </div>
-            @endif
-            @if ($order->delivery_status == 'delivered' && $order->status != 'delivered')
-                <form action="{{ route('orders.update', ['order' => $order]) }}" method="post" class="w-full">
-                    @csrf
-                    <input type="hidden" name="status" value="delivered">
-                    <x-primary-button class="w-full py-1">Confirm Delivery</x-primary-button>
-                </form>
             @endif
         </div>
         @foreach ($order->orderItems as $key => $order_item)
