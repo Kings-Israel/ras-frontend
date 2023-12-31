@@ -46,6 +46,7 @@ use App\Models\InsReqBuyerDetails;
 use App\Models\InsReqBuyerProposalDetails;
 use App\Models\InsReqBuyerInsuranceLossHistory;
 use App\Models\InsReqBuyerProposalVehicleDetails;
+use App\Models\InspectionReport;
 
 class OrderController extends Controller
 {
@@ -120,7 +121,14 @@ class OrderController extends Controller
             '90 Days',
         ];
 
-        return view('order', compact('order', 'order_total', 'order_requests', 'available_facilities', 'durations'));
+        $inspectors = InspectingInstitution::with('country')->get();
+        $insurers = InsuranceCompany::with('country')->get();
+        $warehouses = Warehouse::with('country')->get();
+        $logistics = LogisticsCompany::with('country')->get();
+
+        $transportation_methods = ['Air', 'Road', 'Water', 'Rail'];
+
+        return view('order', compact('order', 'order_total', 'order_requests', 'available_facilities', 'durations', 'inspectors', 'insurers', 'logistics', 'warehouses', 'transportation_methods'));
     }
 
     public function store(Request $request)
@@ -987,9 +995,6 @@ class OrderController extends Controller
             return back();
         }
 
-        // foreach($financiers as $financier) {
-        // }
-
         toastr()->success('', 'Financing Request sent successfully');
     }
 
@@ -1017,5 +1022,31 @@ class OrderController extends Controller
         toastr()->success('', 'Order updated successfully');
 
         return back();
+    }
+
+    public function createInspectionReport(OrderItem $order_item)
+    {
+        return view('partials.order.inspection-report', compact('order_item'));
+    }
+
+    public function storeInspectionReport(Request $request, OrderItem $order_item)
+    {
+        $request->merge([
+            'order_item_id' => $order_item->id,
+            'user_id' => auth()->id(),
+            'applicant_signature' => $request->hasFile('applicant_sign') ? pathinfo($request->applicant_sign->store('signature', 'reports'), PATHINFO_BASENAME) : NULL,
+            'report_file' => pathinfo($request->report->store('inspections', 'reports'), PATHINFO_BASENAME),
+        ]);
+
+        InspectionReport::create(collect($request->all())->except('applicant_sign', 'report')->toArray());
+
+        $order = Order::find($order_item->order_id);
+        $order->update([
+            'delivery_status' => 'inspection'
+        ]);
+
+        toastr()->success('', 'Report added successfully');
+
+        return redirect()->route('orders.show', ['order' => $order_item->order]);
     }
 }

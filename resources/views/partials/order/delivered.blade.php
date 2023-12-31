@@ -767,6 +767,128 @@
                     </div>
                 @endif
             @endforeach
+            @if (!$order_item->hasRequest('inspection') && now()->lessThan(Carbon\Carbon::parse($order_item->delivery_date)))
+                @if ($order_item->hasReport('inspection'))
+                    <button type="button" data-modal-target="view-inspection-report" data-modal-toggle="view-inspection-report" class="w-full py-2 truncate bg-primary-one font-semibold text-white rounded-lg">View Inspection Report for {{ $order_item->product->name }}</button>
+                    <x-modal modal_id="view-inspection-report">
+                        <div class="relative w-full max-w-4xl max-h-full">
+                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                <button type="button" class="absolute top-1 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="view-inspection-report">
+                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                    </svg>
+                                    <span class="sr-only">Close modal</span>
+                                </button>
+                                <h2 class="px-2 py-2 lg:px-4 font-bold text-xl">Inspection Report</h2>
+                                <div class="space-y-2 p-2">
+                                    @if ($order_item->inspectionReport)
+                                        <h3 class="font-bold underline px-2">Applicant Company Details</h3>
+                                        <div class="grid grid-cols-3 gap-2 px-2">
+                                            <div>
+                                                <x-input-label>Applicant Company Name</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->applicant_company_name ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>Applicant Company Address</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->applicant_company_address ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>Applicant Company Email</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->applicant_company_email ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>Applicant Company Phone Number</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->applicant_company_phone_number ?? 'Not Entered' }}</span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <h3 class="font-bold underline px-2">License Holder Details</h3>
+                                        <div class="grid grid-cols-3 gap-2 px-2">
+                                            <div>
+                                                <x-input-label>License Holder Company</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->license_holder_company_name ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>License Holder Company Address</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->license_holder_company_address ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>License Holder Company Email</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->license_holder_company_email ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>License Holder Company Phone Number</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->license_holder_company_phone_number ?? 'Not Entered' }}</span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <h3 class="font-bold underline px-2">Place of Manufacture Company Details</h3>
+                                        <div class="grid grid-cols-3 gap-2 px-2">
+                                            <div>
+                                                <x-input-label>Place of Manufacture Company</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->place_of_manufacture_company_name ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>Place of Manufacture Company Address</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->place_of_manufacture_company_address ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>Place of Manufacture Company Email</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->place_of_manufacture_company_email ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>Place of Manufacture Company Phone Number</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->place_of_manufacture_company_phone_number ?? 'Not Entered' }}</span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <h3 class="font-bold underline px-2">Product Details</h3>
+                                        <div class="grid grid-cols-3 gap-2 px-2">
+                                            <div>
+                                                <x-input-label>Product</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->product ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>Product Type Ref</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->product_type_ref ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>License Holder Company Email</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->product_trade_mark ?? 'Not Entered' }}</span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <h3 class="font-bold underline px-2">Product Ratings and Principle Characteristics</h3>
+                                        <div class="grid grid-cols-1 px-2">
+                                            <div>
+                                                <span>{{ $order_item->inspectionReport->product_ratings_and_principle_characteristics ?? 'Not Entered' }}</span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <h3 class="font-bold underline px-2">Differences From Previously Certified Product</h3>
+                                        <div class="grid grid-cols-1 px-2">
+                                            <div>
+                                                <span>{{ $order_item->inspectionReport->differences_from_previously_certified_product ?? 'Not Entered' }}</span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="flex justify-end gap-2">
+                                            <a href="{{ $order_item->inspectionReport->report_file }}" target="_blank" class="bg-secondary-one px-2 py-2 rounded-lg text-black font-semibold">View Certificate</a>
+                                            @if ($order_item->inspectionReport->applicant_signature && $order_item->inspectionReport->applicant_signature != config('app.admin_url').'/storage/reports/inspection/')
+                                                <a href="{{ $order_item->inspectionReport->applicant_signature }}" target="_blank" class="bg-secondary-two text-black px-2 py-2 rounded-lg font-semibold">View Signature</a>
+                                            @endif
+                                        </div>
+                                    @else
+                                        <div class="px-2">
+                                            <span class="font-semibold text-red-600">Report not yet uploaded</span>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </x-modal>
+                @endif
+            @endif
         @endforeach
     </div>
 </div>

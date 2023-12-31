@@ -326,277 +326,6 @@
             @endif
         </div>
         @foreach ($order->orderItems as $key => $orderItem)
-            {{-- @foreach ($order_requests as $key => $order_request)
-                @if ($key == 'App\\Models\\InspectingInstitution')
-                    <div class="border border-gray-300 p-4 rounded-lg space-y-1">
-                        <div class="flex justify-between">
-                            <h4 class="font-semibold text-gray-700">Inspection Quote:</h4>
-                        </div>
-                        @php($accepted_request = $order_request->where('status', 'accepted')->first())
-                        @if ($accepted_request)
-                            <div class="flex justify-between">
-                                <span>Accepted Quote:</span>
-                                <span class="font-semibold truncate whitespace-nowrap">{{ $accepted_request->requesteable->name }}</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Accepted Quote Cost:</span>
-                                <span class="font-semibold">{{ $accepted_request->cost }}</span>
-                            </div>
-                        @endif
-                        <button data-modal-target="view-pending-order-inspection-quotes" data-modal-toggle="view-pending-order-inspection-quotes" class="w-full bg-secondary-four text-lg font-semibold py-1 rounded-lg">View Inspection Quote</button>
-                        <x-modal modal_id="view-pending-order-inspection-quotes">
-                            <div class="relative w-full max-w-2xl max-h-full">
-                                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                    <button type="button" class="absolute top-1 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="view-pending-order-inspection-quotes">
-                                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                        </svg>
-                                        <span class="sr-only">Close modal</span>
-                                    </button>
-                                    <h2 class="px-2 py-2 lg:px-4 font-bold text-xl">Inspection Quote</h2>
-                                    <div class="space-y-2 p-2">
-                                        @foreach ($order_request as $request)
-                                            @if ($request->status == 'accepted')
-                                                <div class="px-2 py-2 lg:px-4 border border-gray-300 rounded-lg">
-                                                    <div class="flex justify-between w-full">
-                                                        <h3 class="font-semibold text-gray-700">{{ $request->requesteable->name }}</h3>
-                                                        <h4 class="font-semibold text-gray-900">Status: <span class="underline">{{ Str::title($request->status) }}</span></h4>
-                                                        @if ($request->cost != null && $request->status != 'accepted')
-                                                            <div class="my-2">
-                                                                <a href="{{ route('order.request.update', ['order_request' => $request->id, 'status' => 'accepted']) }}" class="p-2 bg-primary-one text-white rounded-md font-semibold">Accept Quote</a>
-                                                            </div>
-                                                        @endif
-                                                    </div>
-                                                    @if ($request->cost != null)
-                                                        <div class="flex gap-1">
-                                                            <h3 class="font-bold text-xl text-gray-600 my-auto">{{ Str::upper($request->orderItem->product->currency) }}</h3>
-                                                            <span class="font-bold text-xl text-gray-800" id="total_cart_amount">{{ number_format($request->cost) }}</span>
-                                                        </div>
-                                                    @else
-                                                        <h4 class="font-semibold text-red-900 underline">Cost Details Not Entered</h4>
-                                                    @endif
-                                                    @if ($request->cost_description != null)
-                                                        <div class="flex flex-col">
-                                                            <span class="text-gray-500 font-bold underline underline-offset-1">Cost Description</span>
-                                                            <span class="text-gray-900 font-semibold">{{ $request->cost_description }}</span>
-                                                        </div>
-                                                    @endif
-                                                    @if ($request->hasCostDescriptionFile())
-                                                        <div class="my-2">
-                                                            <a href="{{ $request->cost_description_file }}" target="_blank" class="p-1 text-black font-semibold bg-secondary-five rounded-md">View Pro-forma</a>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
-                        </x-modal>
-                    </div>
-                @elseif ($key == 'App\\Models\\InsuranceCompany')
-                    <div class="border border-gray-300 p-4 rounded-lg">
-                        <div class="flex justify-between">
-                            <h4 class="font-semibold text-gray-700">Insurance Quote:</h4>
-                        </div>
-                        @php($accepted_request = $order_request->where('status', 'accepted')->first())
-                        @if ($accepted_request)
-                            <div class="flex justify-between">
-                                <span>Accepted Quote:</span>
-                                <span class="font-semibold truncate whitespace-nowrap">{{ $accepted_request->requesteable->name }}</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Accepted Quote Cost:</span>
-                                <span class="font-semibold">{{ $accepted_request->cost }}</span>
-                            </div>
-                        @endif
-                        <button data-modal-target="view-pending-order-insurance-quotes" data-modal-toggle="view-pending-order-insurance-quotes" class="w-full bg-secondary-four text-lg font-semibold py-1 rounded-lg">View Insurance Quote</button>
-                        <x-modal modal_id="view-pending-order-insurance-quotes">
-                            <div class="relative w-full max-w-2xl max-h-full">
-                                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                    <button type="button" class="absolute top-1 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="view-pending-order-insurance-quotes">
-                                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                        </svg>
-                                        <span class="sr-only">Close modal</span>
-                                    </button>
-                                    <h2 class="px-2 py-2 lg:px-4 font-bold text-xl">Insurance Quote</h2>
-                                    <div class="space-y-2 p-2">
-                                        @foreach ($order_request as $request)
-                                            @if ($request->status == 'accepted')
-                                                <div class="px-2 py-2 lg:px-4 border border-gray-300 rounded-lg">
-                                                    <div class="flex justify-between w-full">
-                                                        <h3 class="font-semibold text-gray-700">{{ $request->requesteable->name }}</h3>
-                                                        <h4 class="font-semibold text-gray-900">Status: <span class="underline">{{ Str::title($request->status) }}</span></h4>
-                                                        @if ($request->cost != null && $request->status != 'accepted')
-                                                            <div class="my-2">
-                                                                <a href="{{ route('order.request.update', ['order_request' => $request->id, 'status' => 'accepted']) }}" class="p-2 bg-primary-one text-white rounded-md font-semibold">Accept Quote</a>
-                                                            </div>
-                                                        @endif
-                                                    </div>
-                                                    @if ($request->cost != null)
-                                                        <div class="flex gap-1">
-                                                            <h3 class="font-bold text-xl text-gray-600 my-auto">{{ Str::upper($request->orderItem->product->currency) }}</h3>
-                                                            <span class="font-bold text-xl text-gray-800" id="total_cart_amount">{{ number_format($request->cost) }}</span>
-                                                        </div>
-                                                    @else
-                                                        <h4 class="font-semibold text-red-900 underline">Cost Details Not Entered</h4>
-                                                    @endif
-                                                    @if ($request->cost_description != null)
-                                                        <div class="flex flex-col">
-                                                            <span class="text-gray-500 font-bold underline underline-offset-1">Cost Description</span>
-                                                            <span class="text-gray-900 font-semibold">{{ $request->cost_description }}</span>
-                                                        </div>
-                                                    @endif
-                                                    @if ($request->hasCostDescriptionFile())
-                                                        <div class="my-2">
-                                                            <a href="{{ $request->cost_description_file }}" target="_blank" class="p-1 text-black font-semibold bg-secondary-five rounded-md">View Pro-forma</a>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
-                        </x-modal>
-                    </div>
-                @elseif ($key == 'App\\Models\\Warehouse')
-                    <div class="border border-gray-300 p-4 rounded-lg">
-                        <div class="flex justify-between">
-                            <h4 class="font-semibold text-gray-700">Warehouse Quote:</h4>
-                        </div>
-                        @php($accepted_request = $order_request->where('status', 'accepted')->first())
-                        @if ($accepted_request)
-                            <div class="flex justify-between">
-                                <span>Accepted Quote:</span>
-                                <span class="font-semibold">{{ $accepted_request->requesteable->name }}</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Accepted Quote Cost:</span>
-                                <span class="font-semibold">{{ $accepted_request->cost }}</span>
-                            </div>
-                        @endif
-                        <button data-modal-target="view-pending-order-warehousing-quotes" data-modal-toggle="view-pending-order-warehousing-quotes" class="w-full bg-secondary-four text-lg font-semibold py-1 rounded-lg">View Warehouse Quote</button>
-                        <x-modal modal_id="view-pending-order-warehousing-quotes">
-                            <div class="relative w-full max-w-2xl max-h-full">
-                                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                    <button type="button" class="absolute top-1 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="view-pending-order-warehousing-quotes">
-                                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                        </svg>
-                                        <span class="sr-only">Close modal</span>
-                                    </button>
-                                    <h2 class="px-2 py-2 lg:px-4 font-bold text-xl">Warehousing/Storage Quote</h2>
-                                    <div class="space-y-2 p-2">
-                                        @foreach ($order_request as $request)
-                                            @if ($request->status == 'accepted')
-                                                <div class="px-2 py-2 lg:px-4 border border-gray-300 rounded-lg">
-                                                    <div class="flex justify-between w-full">
-                                                        <h3 class="font-semibold text-gray-700">{{ $request->requesteable->name }}</h3>
-                                                        <h4 class="font-semibold text-gray-900">Status: <span class="underline">{{ Str::title($request->status) }}</span></h4>
-                                                        @if ($request->cost != null && $request->status != 'accepted')
-                                                            <div class="my-2">
-                                                                <a href="{{ route('order.request.update', ['order_request' => $request->id, 'status' => 'accepted']) }}" class="p-2 bg-primary-one text-white rounded-md font-semibold">Accept Quote</a>
-                                                            </div>
-                                                        @endif
-                                                    </div>
-                                                    @if ($request->cost != null)
-                                                        <div class="flex gap-1">
-                                                            <h3 class="font-bold text-xl text-gray-600 my-auto">{{ Str::upper($request->orderItem->product->currency) }}</h3>
-                                                            <span class="font-bold text-xl text-gray-800" id="total_cart_amount">{{ number_format($request->cost) }}</span>
-                                                        </div>
-                                                    @else
-                                                        <h4 class="font-semibold text-red-900 underline">Cost Details Not Entered</h4>
-                                                    @endif
-                                                    @if ($request->cost_description != null)
-                                                        <div class="flex flex-col">
-                                                            <span class="text-gray-500 font-bold underline underline-offset-1">Cost Description</span>
-                                                            <span class="text-gray-900 font-semibold">{{ $request->cost_description }}</span>
-                                                        </div>
-                                                    @endif
-                                                    @if ($request->hasCostDescriptionFile())
-                                                        <div class="my-2">
-                                                            <a href="{{ $request->cost_description_file }}" target="_blank" class="p-1 text-black font-semibold bg-secondary-five rounded-md">View Pro-forma</a>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
-                        </x-modal>
-                    </div>
-                @elseif ($key == 'App\\Models\\LogisticsCompany')
-                    <div class="border border-gray-300 p-4 rounded-lg">
-                        <div class="flex justify-between">
-                            <h4 class="font-semibold text-gray-700">Delivery Quote:</h4>
-                        </div>
-                        @php($accepted_request = $order_request->where('status', 'accepted')->first())
-                        @if ($accepted_request)
-                            <div class="flex justify-between">
-                                <span class="whitespace-nowrap">Accepted Quote:</span>
-                                <span class="font-semibold truncate whitespace-nowrap">{{ $accepted_request->requesteable->name }}</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Accepted Quote Cost:</span>
-                                <span class="font-semibold">{{ $accepted_request->cost }}</span>
-                            </div>
-                        @endif
-                        <button data-modal-target="view-pending-order-logistics-quotes" data-modal-toggle="view-pending-order-logistics-quotes" class="w-full bg-secondary-four text-lg font-semibold py-1 rounded-lg">View Logistics Quote</button>
-                        <x-modal modal_id="view-pending-order-logistics-quotes">
-                            <div class="relative w-full max-w-2xl max-h-full">
-                                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                    <button type="button" class="absolute top-1 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="view-pending-order-logistics-quotes">
-                                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                        </svg>
-                                        <span class="sr-only">Close modal</span>
-                                    </button>
-                                    <h2 class="px-2 py-2 lg:px-4 font-bold text-xl">Logistics/Delivery Quote</h2>
-                                    <div class="space-y-2 p-2">
-                                        @foreach ($order_request as $request)
-                                            @if ($request->status == 'accepted')
-                                                <div class="px-2 py-2 lg:px-4 border border-gray-300 rounded-lg">
-                                                    <div class="flex justify-between w-full">
-                                                        <h3 class="font-semibold text-gray-700">{{ $request->requesteable->name }}</h3>
-                                                        <h4 class="font-semibold text-gray-900">Status: <span class="underline">{{ Str::title($request->status) }}</span></h4>
-                                                        @if ($request->cost != null && $request->status != 'accepted')
-                                                            <div class="my-2">
-                                                                <a href="{{ route('order.request.update', ['order_request' => $request->id, 'status' => 'accepted']) }}" class="p-2 bg-primary-one text-white rounded-md font-semibold">Accept Quote</a>
-                                                            </div>
-                                                        @endif
-                                                    </div>
-                                                    @if ($request->cost != null)
-                                                        <div class="flex gap-1">
-                                                            <h3 class="font-bold text-xl text-gray-600 my-auto">{{ Str::upper($request->orderItem->product->currency) }}</h3>
-                                                            <span class="font-bold text-xl text-gray-800" id="total_cart_amount">{{ number_format($request->cost) }}</span>
-                                                        </div>
-                                                    @else
-                                                        <h4 class="font-semibold text-red-900 underline">Cost Details Not Entered</h4>
-                                                    @endif
-                                                    @if ($request->cost_description != null)
-                                                        <div class="flex flex-col">
-                                                            <span class="text-gray-500 font-bold underline underline-offset-1">Cost Description</span>
-                                                            <span class="text-gray-900 font-semibold">{{ $request->cost_description }}</span>
-                                                        </div>
-                                                    @endif
-                                                    @if ($request->hasCostDescriptionFile())
-                                                        <div class="my-2">
-                                                            <a href="{{ $request->cost_description_file }}" target="_blank" class="p-1 text-black font-semibold bg-secondary-five rounded-md">View Pro-forma</a>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
-                        </x-modal>
-                    </div>
-                @endif
-            @endforeach --}}
             @foreach ($orderItem->orderRequests->groupBy('requesteable_type') as $key => $order_request)
                 @if ($key == 'App\\Models\\InspectingInstitution')
                     <div class="border border-gray-300 p-4 rounded-lg space-y-1">
@@ -869,9 +598,135 @@
                 @endif
             @endforeach
             {{-- Show Upload Inspection Report form if Inspection Request Does not Exist --}}
-            @php($inspection_exists = array_key_exists('App\\Models\\InspectingInstitution', $orderItem->orderRequests->groupBy('requesteable_type')->toArray()))
-            @if (!$inspection_exists && now()->lessThan(Carbon\Carbon::parse($order->orderItems->first()->delivery_date)))
-                <x-primary-button type="button" class="w-full py-2 truncate">Upload Inspection Report for {{ $orderItem->product->name }}</x-primary-button>
+            @if (!$orderItem->hasRequest('inspection') && now()->lessThan(Carbon\Carbon::parse($orderItem->delivery_date)))
+                @if ($orderItem->hasReport('inspection'))
+                    <button type="button" data-modal-target="view-inspection-report" data-modal-toggle="view-inspection-report" class="w-full py-2 truncate bg-primary-one font-semibold text-white rounded-lg">View Inspection Report for {{ $orderItem->product->name }}</button>
+                    <x-modal modal_id="view-inspection-report">
+                        <div class="relative w-full max-w-4xl max-h-full">
+                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                <button type="button" class="absolute top-1 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="view-inspection-report">
+                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                    </svg>
+                                    <span class="sr-only">Close modal</span>
+                                </button>
+                                <h2 class="px-2 py-2 lg:px-4 font-bold text-xl">Inspection Report</h2>
+                                <div class="space-y-2 p-2">
+                                    @if ($orderItem->inspectionReport)
+                                        <h3 class="font-bold underline px-2">Applicant Company Details</h3>
+                                        <div class="grid grid-cols-3 gap-2 px-2">
+                                            <div>
+                                                <x-input-label>Applicant Company Name</x-input-label>
+                                                <span>{{ $orderItem->inspectionReport->applicant_company_name ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>Applicant Company Address</x-input-label>
+                                                <span>{{ $orderItem->inspectionReport->applicant_company_address ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>Applicant Company Email</x-input-label>
+                                                <span>{{ $orderItem->inspectionReport->applicant_company_email ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>Applicant Company Phone Number</x-input-label>
+                                                <span>{{ $orderItem->inspectionReport->applicant_company_phone_number ?? 'Not Entered' }}</span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <h3 class="font-bold underline px-2">License Holder Details</h3>
+                                        <div class="grid grid-cols-3 gap-2 px-2">
+                                            <div>
+                                                <x-input-label>License Holder Company</x-input-label>
+                                                <span>{{ $orderItem->inspectionReport->license_holder_company_name ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>License Holder Company Address</x-input-label>
+                                                <span>{{ $orderItem->inspectionReport->license_holder_company_address ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>License Holder Company Email</x-input-label>
+                                                <span>{{ $orderItem->inspectionReport->license_holder_company_email ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>License Holder Company Phone Number</x-input-label>
+                                                <span>{{ $orderItem->inspectionReport->license_holder_company_phone_number ?? 'Not Entered' }}</span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <h3 class="font-bold underline px-2">Place of Manufacture Company Details</h3>
+                                        <div class="grid grid-cols-3 gap-2 px-2">
+                                            <div>
+                                                <x-input-label>Place of Manufacture Company</x-input-label>
+                                                <span>{{ $orderItem->inspectionReport->place_of_manufacture_company_name ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>Place of Manufacture Company Address</x-input-label>
+                                                <span>{{ $orderItem->inspectionReport->place_of_manufacture_company_address ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>Place of Manufacture Company Email</x-input-label>
+                                                <span>{{ $orderItem->inspectionReport->place_of_manufacture_company_email ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>Place of Manufacture Company Phone Number</x-input-label>
+                                                <span>{{ $orderItem->inspectionReport->place_of_manufacture_company_phone_number ?? 'Not Entered' }}</span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <h3 class="font-bold underline px-2">Product Details</h3>
+                                        <div class="grid grid-cols-3 gap-2 px-2">
+                                            <div>
+                                                <x-input-label>Product</x-input-label>
+                                                <span>{{ $orderItem->inspectionReport->product ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>Product Type Ref</x-input-label>
+                                                <span>{{ $orderItem->inspectionReport->product_type_ref ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>License Holder Company Email</x-input-label>
+                                                <span>{{ $orderItem->inspectionReport->product_trade_mark ?? 'Not Entered' }}</span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <h3 class="font-bold underline px-2">Product Ratings and Principle Characteristics</h3>
+                                        <div class="grid grid-cols-1 px-2">
+                                            <div>
+                                                <span>{{ $orderItem->inspectionReport->product_ratings_and_principle_characteristics ?? 'Not Entered' }}</span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <h3 class="font-bold underline px-2">Differences From Previously Certified Product</h3>
+                                        <div class="grid grid-cols-1 px-2">
+                                            <div>
+                                                <span>{{ $orderItem->inspectionReport->differences_from_previously_certified_product ?? 'Not Entered' }}</span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="flex justify-end gap-2">
+                                            <a href="{{ $orderItem->inspectionReport->report_file }}" target="_blank" class="bg-secondary-one px-2 py-2 rounded-lg text-black font-semibold">View Certificate</a>
+                                            @if ($orderItem->inspectionReport->applicant_signature && $orderItem->inspectionReport->applicant_signature != config('app.admin_url').'/storage/reports/inspection/')
+                                                <a href="{{ $orderItem->inspectionReport->applicant_signature }}" target="_blank" class="bg-secondary-two text-black px-2 py-2 rounded-lg font-semibold">View Signature</a>
+                                            @endif
+                                        </div>
+                                    @else
+                                        <div class="px-2">
+                                            <span class="font-semibold text-red-600">Report not yet uploaded</span>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </x-modal>
+                @else
+                    <a href="{{ route('order.inspection.report', ['order_item' => $orderItem]) }}">
+                        <x-primary-button type="button" class="w-full py-2 truncate">Upload Inspection Report for {{ $orderItem->product->name }}</x-primary-button>
+                    </a>
+                @endif
+            @endif
+            {{-- Show Upload Insurance Report form if Inspection Request Does not Exist --}}
+            @if (!$orderItem->hasReport('insurance') && now()->lessThan(Carbon\Carbon::parse($orderItem->delivery_date)))
+                <x-primary-button type="button" class="w-full py-2 truncate">Upload Insurance Report for {{ $orderItem->product->name }}</x-primary-button>
             @endif
         @endforeach
         @if (($order->status == 'quotation request' || $order->status == 'pending' || $order->status == 'accepted') && $order->invoice->payment_status != 'paid')

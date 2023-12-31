@@ -200,14 +200,16 @@
                 <span class="text-xl font-semibold">Payment Status:</span>
                 <span class="font-semibold bg-secondary-six px-2 py-1 rounded-md">Paid</span>
             </div>
-            @if ($order->status != 'delivered')
-                <div class="bg-red-200 p-2 text-center rounded-lg">
-                    <span class="text-lg text-red-700 w-full">Delivery Date For this order has passed the current date</span>
-                </div>
-            @else
-                <div class="bg-teal-200 p-1 text-center rounded-lg">
-                    <span class="text-lg font-semibold text-gray-800 w-full">Order Delivered</span>
-                </div>
+            @if (!now()->lessThan(Carbon\Carbon::parse($order->orderItems->first()->delivery_date)))
+                @if ($order->status != 'delivered')
+                    <div class="bg-red-200 p-2 text-center rounded-lg">
+                        <span class="text-lg text-red-700 w-full">Delivery Date For this order has passed the current date</span>
+                    </div>
+                @else
+                    <div class="bg-teal-200 p-1 text-center rounded-lg">
+                        <span class="text-lg font-semibold text-gray-800 w-full">Order Delivered</span>
+                    </div>
+                @endif
             @endif
         </div>
         @foreach ($order->orderItems as $key => $order_item)
@@ -364,7 +366,8 @@
                             </div>
                         @endif
                         <button data-modal-target="view-insurance-report" data-modal-toggle="view-insurance-report" class="w-full bg-primary-one text-lg font-semibold text-white py-1 rounded-lg">View Insurance Report</button>
-                        @if (!$order_requests->first()->insuranceRequestBuyerDetails || !$order_requests->first()->insuranceRequestBuyerCompanyDetails || !$order_requests->first()->insuranceRequestProposalDetails || !$order_requests->first()->insuranceRequestProposalVehicleDetails)
+                        {{-- @if (!$order_requests->first()->insuranceRequestBuyerDetails || !$order_requests->first()->insuranceRequestBuyerCompanyDetails || !$order_requests->first()->insuranceRequestProposalDetails || !$order_requests->first()->insuranceRequestProposalVehicleDetails) --}}
+                        @if (!$order_item->hasReport('insurance'))
                             <a href="{{ route('order.insurance.request', ['order_item' => $order_item]) }}">
                                 <button class="w-full bg-primary-one text-lg font-semibold text-white py-1 rounded-lg mt-2">Complete Insurance Request</button>
                             </a>
@@ -467,127 +470,127 @@
                                         <div class="space-y-2 p-2 lg:px-4">
                                             @if ($accepted_request->importInstruction)
                                                 <div class="grid grid-cols-2 space-y-2">
-                                                    <div class="flex flex-wrap">
+                                                    <div class="flex flex-wrap gap-2">
                                                         <span class="">Importer:</span>
                                                         <span class="font-semibold">{{ $accepted_request->importInstruction->importer }}</span>
                                                     </div>
-                                                    <div class="flex flex-wrap">
+                                                    <div class="flex flex-wrap gap-2">
                                                         <span class="">Reference:</span>
                                                         <span class="font-semibold">{{ $accepted_request->importInstruction->reference }}</span>
                                                     </div>
-                                                    <div class="flex flex-wrap">
+                                                    <div class="flex flex-wrap gap-2">
                                                         <span class="">Customs Code:</span>
                                                         <span class="font-semibold">{{ $accepted_request->importInstruction->customs_code }}</span>
                                                     </div>
-                                                    <div class="flex flex-wrap">
+                                                    <div class="flex flex-wrap gap-2">
                                                         <span class="">VAT Number:</span>
                                                         <span class="font-semibold">{{ $accepted_request->importInstruction->vat_number }}</span>
                                                     </div>
-                                                    <div class="flex flex-wrap">
+                                                    <div class="flex flex-wrap gap-2">
                                                         <span class="">Supplier:</span>
                                                         <span class="font-semibold">{{ $accepted_request->importInstruction->supplier }}</span>
                                                     </div>
-                                                    <div class="flex flex-wrap">
+                                                    <div class="flex flex-wrap gap-2">
                                                         <span class="">Transport Mode:</span>
                                                         <span class="font-semibold">{{ $accepted_request->importInstruction->transport_mode }}</span>
                                                     </div>
-                                                    <div class="flex flex-wrap">
+                                                    <div class="flex flex-wrap gap-2">
                                                         <span class="">Name of Vessel:</span>
                                                         <span class="font-semibold">{{ $accepted_request->importInstruction->name_of_vessel }}</span>
                                                     </div>
-                                                    <div class="flex flex-wrap">
+                                                    <div class="flex flex-wrap gap-2">
                                                         <span class="">E.T.A:</span>
                                                         <span class="font-semibold">{{ $accepted_request->importInstruction->eta }}</span>
                                                     </div>
-                                                    <div class="flex flex-wrap">
+                                                    <div class="flex flex-wrap gap-2">
                                                         <span class="">Transport Document Number:</span>
                                                         <span class="font-semibold">{{ $accepted_request->importInstruction->transport_document_number }}</span>
                                                     </div>
-                                                    <div class="flex flex-wrap">
+                                                    <div class="flex flex-wrap gap-2">
                                                         <span class="">Transport Document Date:</span>
                                                         <span class="font-semibold">{{ $accepted_request->importInstruction->transport_document_date }}</span>
                                                     </div>
-                                                    <div class="flex flex-wrap">
+                                                    <div class="flex flex-wrap gap-2">
                                                         <span class="">Shipment Reference Number:</span>
                                                         <span class="font-semibold">{{ $accepted_request->importInstruction->shipment_reference_number }}</span>
                                                     </div>
-                                                    <div class="flex flex-wrap">
+                                                    <div class="flex flex-wrap gap-2">
                                                         <span class="">Invoice Number:</span>
                                                         <span class="font-semibold">{{ $accepted_request->importInstruction->invoice_number }}</span>
                                                     </div>
-                                                    <div class="flex flex-wrap">
+                                                    <div class="flex flex-wrap gap-2">
                                                         <span class="">Invoice Date:</span>
                                                         <span class="font-semibold">{{ $accepted_request->importInstruction->invoice_date }}</span>
                                                     </div>
-                                                    <div class="flex flex-wrap">
+                                                    <div class="flex flex-wrap gap-2">
                                                         <span class="">Port of Entry:</span>
                                                         <span class="font-semibold">{{ $accepted_request->importInstruction->port_of_entry }}</span>
                                                     </div>
-                                                    <div class="flex flex-wrap">
+                                                    <div class="flex flex-wrap gap-2">
                                                         <span class="">Customs Purpose Code:</span>
                                                         <span class="font-semibold">{{ $accepted_request->importInstruction->customs_purpose_code }}</span>
                                                     </div>
-                                                    <div class="flex flex-wrap">
+                                                    <div class="flex flex-wrap gap-2">
                                                         <span class="">Destination Code:</span>
                                                         <span class="font-semibold">{{ $accepted_request->importInstruction->destination_code }}</span>
                                                     </div>
-                                                    <div class="flex flex-wrap">
+                                                    <div class="flex flex-wrap gap-2">
                                                         <span class="">Tariff Determination:</span>
                                                         <span class="font-semibold">{{ $accepted_request->importInstruction->tariff_determination }}</span>
                                                     </div>
-                                                    <div class="flex flex-wrap">
+                                                    <div class="flex flex-wrap gap-2">
                                                         <span class="">Customs Valuation Code:</span>
                                                         <span class="font-semibold">{{ $accepted_request->importInstruction->customs_valuation_code }}</span>
                                                     </div>
-                                                    <div class="flex flex-wrap">
+                                                    <div class="flex flex-wrap gap-2">
                                                         <span class="">Customs Valuation Method:</span>
                                                         <span class="font-semibold">{{ $accepted_request->importInstruction->customs_valuation_method }}</span>
                                                     </div>
-                                                    <div class="flex flex-wrap">
+                                                    <div class="flex flex-wrap gap-2">
                                                         <span class="">Customs Valuation Date:</span>
                                                         <span class="font-semibold">{{ $accepted_request->importInstruction->customs_value_date }}</span>
                                                     </div>
-                                                    <div class="flex flex-wrap">
+                                                    <div class="flex flex-wrap gap-2">
                                                         <span class="">Number of Packages:</span>
                                                         <span class="font-semibold">{{ $accepted_request->importInstruction->number_of_packages }}</span>
                                                     </div>
-                                                    <div class="flex flex-wrap col-span-2">
+                                                    <div class="flex flex-wrap gap-2 col-span-2">
                                                         <span class="">Special goods / hazardous, perishable or taint:</span>
                                                         <span class="font-semibold">{{ $accepted_request->importInstruction->special_goods }}</span>
                                                     </div>
-                                                    <div class="flex flex-wrap">
+                                                    <div class="flex flex-wrap gap-2">
                                                         <span class="">Gross Mass:</span>
                                                         <span class="font-semibold">{{ $accepted_request->importInstruction->gross_mass }}</span>
                                                     </div>
-                                                    <div class="flex flex-wrap">
+                                                    <div class="flex flex-wrap gap-2">
                                                         <span class="">Measurement:</span>
                                                         <span class="font-semibold">{{ $accepted_request->importInstruction->measurement }}</span>
                                                     </div>
-                                                    <div class="flex flex-wrap">
+                                                    <div class="flex flex-wrap gap-2">
                                                         <span class="">Import Permit Number:</span>
                                                         <span class="font-semibold">{{ $accepted_request->importInstruction->import_permit_number }}</span>
                                                     </div>
-                                                    <div class="flex flex-wrap">
+                                                    <div class="flex flex-wrap gap-2">
                                                         <span class="">Incoterms:</span>
                                                         <span class="font-semibold">{{ $accepted_request->importInstruction->incoterms }}</span>
                                                     </div>
-                                                    <div class="flex flex-wrap col-span-2">
+                                                    <div class="flex flex-wrap gap-2 col-span-2">
                                                         <span class="">Delivery instructions mode of transport:</span>
                                                         <span class="font-semibold">{{ $accepted_request->importInstruction->mode_of_transport }}</span>
                                                     </div>
-                                                    <div class="flex flex-wrap">
+                                                    <div class="flex flex-wrap gap-2">
                                                         <span class="">Delivery Address:</span>
                                                         <span class="font-semibold">{{ $accepted_request->importInstruction->delivery_address }}</span>
                                                     </div>
-                                                    <div class="flex flex-wrap">
+                                                    <div class="flex flex-wrap gap-2">
                                                         <span class="">Split Delivery Address:</span>
                                                         <span class="font-semibold">{{ $accepted_request->importInstruction->split_delivery_address }}</span>
                                                     </div>
-                                                    <div class="flex flex-wrap">
+                                                    <div class="flex flex-wrap gap-2">
                                                         <span class="">Special Instructions:</span>
                                                         <span class="font-semibold">{{ $accepted_request->importInstruction->special_instructions }}</span>
                                                     </div>
-                                                    <div class="flex flex-wrap">
+                                                    <div class="flex flex-wrap gap-2">
                                                         <span class="">Other:</span>
                                                         <span class="font-semibold">{{ $accepted_request->importInstruction->other }}</span>
                                                     </div>
@@ -767,6 +770,139 @@
                     </div>
                 @endif
             @endforeach
+            {{-- Show Upload Inspection Report form if Inspection Request Does not Exist --}}
+            @if (!$order_item->hasRequest('inspection') && now()->lessThan(Carbon\Carbon::parse($order_item->delivery_date)))
+                @if ($order_item->hasReport('inspection'))
+                    <button type="button" data-modal-target="view-inspection-report" data-modal-toggle="view-inspection-report" class="w-full py-2 truncate bg-primary-one font-semibold text-white rounded-lg">View Inspection Report for {{ $order_item->product->name }}</button>
+                    <x-modal modal_id="view-inspection-report">
+                        <div class="relative w-full max-w-4xl max-h-full">
+                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                <button type="button" class="absolute top-1 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="view-inspection-report">
+                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                    </svg>
+                                    <span class="sr-only">Close modal</span>
+                                </button>
+                                <h2 class="px-2 py-2 lg:px-4 font-bold text-xl">Inspection Report</h2>
+                                <div class="space-y-2 p-2">
+                                    @if ($order_item->inspectionReport)
+                                        <h3 class="font-bold underline px-2">Applicant Company Details</h3>
+                                        <div class="grid grid-cols-3 gap-2 px-2">
+                                            <div>
+                                                <x-input-label>Applicant Company Name</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->applicant_company_name ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>Applicant Company Address</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->applicant_company_address ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>Applicant Company Email</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->applicant_company_email ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>Applicant Company Phone Number</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->applicant_company_phone_number ?? 'Not Entered' }}</span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <h3 class="font-bold underline px-2">License Holder Details</h3>
+                                        <div class="grid grid-cols-3 gap-2 px-2">
+                                            <div>
+                                                <x-input-label>License Holder Company</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->license_holder_company_name ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>License Holder Company Address</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->license_holder_company_address ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>License Holder Company Email</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->license_holder_company_email ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>License Holder Company Phone Number</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->license_holder_company_phone_number ?? 'Not Entered' }}</span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <h3 class="font-bold underline px-2">Place of Manufacture Company Details</h3>
+                                        <div class="grid grid-cols-3 gap-2 px-2">
+                                            <div>
+                                                <x-input-label>Place of Manufacture Company</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->place_of_manufacture_company_name ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>Place of Manufacture Company Address</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->place_of_manufacture_company_address ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>Place of Manufacture Company Email</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->place_of_manufacture_company_email ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>Place of Manufacture Company Phone Number</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->place_of_manufacture_company_phone_number ?? 'Not Entered' }}</span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <h3 class="font-bold underline px-2">Product Details</h3>
+                                        <div class="grid grid-cols-3 gap-2 px-2">
+                                            <div>
+                                                <x-input-label>Product</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->product ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>Product Type Ref</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->product_type_ref ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>License Holder Company Email</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->product_trade_mark ?? 'Not Entered' }}</span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <h3 class="font-bold underline px-2">Product Ratings and Principle Characteristics</h3>
+                                        <div class="grid grid-cols-1 px-2">
+                                            <div>
+                                                <span>{{ $order_item->inspectionReport->product_ratings_and_principle_characteristics ?? 'Not Entered' }}</span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <h3 class="font-bold underline px-2">Differences From Previously Certified Product</h3>
+                                        <div class="grid grid-cols-1 px-2">
+                                            <div>
+                                                <span>{{ $order_item->inspectionReport->differences_from_previously_certified_product ?? 'Not Entered' }}</span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="flex justify-end gap-2">
+                                            <a href="{{ $order_item->inspectionReport->report_file }}" target="_blank" class="bg-secondary-one px-2 py-2 rounded-lg text-black font-semibold">View Certificate</a>
+                                            @if ($order_item->inspectionReport->applicant_signature && $order_item->inspectionReport->applicant_signature != config('app.admin_url').'/storage/reports/inspection/')
+                                                <a href="{{ $order_item->inspectionReport->applicant_signature }}" target="_blank" class="bg-secondary-two text-black px-2 py-2 rounded-lg font-semibold">View Signature</a>
+                                            @endif
+                                        </div>
+                                    @else
+                                        <div class="px-2">
+                                            <span class="font-semibold text-red-600">Report not yet uploaded</span>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </x-modal>
+                @else
+                    <a href="{{ route('order.inspection.report', ['order_item' => $order_item]) }}">
+                        <x-primary-button type="button" class="w-full py-2 truncate">Upload Inspection Report for {{ $order_item->product->name }}</x-primary-button>
+                    </a>
+                @endif
+            @endif
+            {{-- Show Upload Insurance Report form if Inspection Request Does not Exist --}}
+            @if (!$order_item->hasReport('logistics') && now()->lessThan(Carbon\Carbon::parse($order_item->delivery_date)))
+                <a href="{{ route('order.inspection.report', ['order_item' => $order_item]) }}">
+                    <x-primary-button type="button" class="w-full py-2 truncate">Upload Logistics Report for {{ $order_item->product->name }}</x-primary-button>
+                </a>
+            @endif
         @endforeach
     </div>
 </div>
