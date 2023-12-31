@@ -25,7 +25,11 @@ class InspectionReport extends Model
      */
     public function getReportFileAttribute($value)
     {
-        return config('app.admin_url').'/storage/reports/inspection/'.$value;
+        if (!$this->user_id == auth()->id()) {
+            return config('app.admin_url').'/storage/reports/inspections/'.$value;
+        }
+
+        return config('app.url').'/storage/reports/inspections/'.$value;
     }
 
     /**
@@ -36,7 +40,11 @@ class InspectionReport extends Model
      */
     public function getApplicantSignatureAttribute($value)
     {
-        return config('app.admin_url').'/storage/reports/signature/'.$value;
+        if (!$this->user_id == auth()->id()) {
+            return config('app.admin_url').'/storage/reports/signature/'.$value;
+        }
+
+        return config('app.url').'/storage/reports/signature/'.$value;
     }
 
     /**

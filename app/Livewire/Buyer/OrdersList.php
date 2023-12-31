@@ -12,10 +12,29 @@ class OrdersList extends Component
     use WithPagination;
 
     public $status = 'all';
+    public $order_field = 'Date Created';
+    public $order_by = 'created_at';
+    public $order_asc = true;
 
     public function updateStatus($status)
     {
         $this->status = $status;
+    }
+
+    public function updateOrderField($field)
+    {
+        if ($field == 'created_at') {
+            $this->order_field = 'Date Created';
+            $this->order_by = 'created_at';
+        } elseif ($field == 'delivery_date') {
+            $this->order_field = 'Delivery Date';
+            $this->order_by = 'delivery_date';
+        }
+    }
+
+    public function updateOrderDirection($direction)
+    {
+        $this->order_asc = $direction ? true : false;
     }
 
     public function render()
@@ -25,8 +44,17 @@ class OrdersList extends Component
                             ->when($this->status && $this->status != 'all', function ($query) {
                                 $query->where('status', $this->status);
                             })
-                            ->orderBy('created_at', 'DESC')
+                            ->when($this->order_field && $this->order_field != '', function ($query) {
+                                if ($this->order_field == 'Delivery Date') {
+                                    $query->withAggregate('orderItems', 'delivery_date');
+                                    $query->orderBy('order_items_delivery_date', $this->order_asc ? 'ASC' : 'DESC');
+                                } else {
+                                    $query->orderBy($this->order_by, $this->order_asc ? 'ASC' : 'DESC');
+                                }
+                            })
                             ->paginate(12);
+
+                            // dd($orders);
 
         $inspection_cost = 0;
 

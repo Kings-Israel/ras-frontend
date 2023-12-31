@@ -564,9 +564,171 @@
                     </div>
                 @endif
             @endforeach
-            @php($inspection_exists = array_key_exists('App\\Models\\InspectingInstitution', $order_item->orderRequests->groupBy('requesteable_type')->toArray()))
-            @if (!$inspection_exists && now()->lessThan(Carbon\Carbon::parse($order->orderItems->first()->delivery_date)))
-                <x-primary-button type="button" class="w-full py-2 truncate">Upload Inspection Report for {{ $order_item->product->name }}</x-primary-button>
+            @if (!$order_item->hasRequest('inspection') && now()->lessThan(Carbon\Carbon::parse($order_item->delivery_date)))
+                @if ($order_item->hasReport('inspection'))
+                    <button type="button" data-modal-target="view-inspection-report" data-modal-toggle="view-inspection-report" class="w-full py-2 truncate bg-primary-one font-semibold text-white rounded-lg">View Inspection Report for {{ $order_item->product->name }}</button>
+                    <x-modal modal_id="view-inspection-report">
+                        <div class="relative w-full max-w-4xl max-h-full">
+                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                <button type="button" class="absolute top-1 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="view-inspection-report">
+                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                    </svg>
+                                    <span class="sr-only">Close modal</span>
+                                </button>
+                                <h2 class="px-2 py-2 lg:px-4 font-bold text-xl">Inspection Report</h2>
+                                <div class="space-y-2 p-2">
+                                    @if ($order_item->inspectionReport)
+                                        <h3 class="font-bold underline px-2">Applicant Company Details</h3>
+                                        <div class="grid grid-cols-3 gap-2 px-2">
+                                            <div>
+                                                <x-input-label>Applicant Company Name</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->applicant_company_name ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>Applicant Company Address</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->applicant_company_address ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>Applicant Company Email</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->applicant_company_email ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>Applicant Company Phone Number</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->applicant_company_phone_number ?? 'Not Entered' }}</span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <h3 class="font-bold underline px-2">License Holder Details</h3>
+                                        <div class="grid grid-cols-3 gap-2 px-2">
+                                            <div>
+                                                <x-input-label>License Holder Company</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->license_holder_company_name ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>License Holder Company Address</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->license_holder_company_address ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>License Holder Company Email</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->license_holder_company_email ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>License Holder Company Phone Number</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->license_holder_company_phone_number ?? 'Not Entered' }}</span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <h3 class="font-bold underline px-2">Place of Manufacture Company Details</h3>
+                                        <div class="grid grid-cols-3 gap-2 px-2">
+                                            <div>
+                                                <x-input-label>Place of Manufacture Company</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->place_of_manufacture_company_name ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>Place of Manufacture Company Address</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->place_of_manufacture_company_address ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>Place of Manufacture Company Email</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->place_of_manufacture_company_email ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>Place of Manufacture Company Phone Number</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->place_of_manufacture_company_phone_number ?? 'Not Entered' }}</span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <h3 class="font-bold underline px-2">Product Details</h3>
+                                        <div class="grid grid-cols-3 gap-2 px-2">
+                                            <div>
+                                                <x-input-label>Product</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->product ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>Product Type Ref</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->product_type_ref ?? 'Not Entered' }}</span>
+                                            </div>
+                                            <div>
+                                                <x-input-label>License Holder Company Email</x-input-label>
+                                                <span>{{ $order_item->inspectionReport->product_trade_mark ?? 'Not Entered' }}</span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <h3 class="font-bold underline px-2">Product Ratings and Principle Characteristics</h3>
+                                        <div class="grid grid-cols-1 px-2">
+                                            <div>
+                                                <span>{{ $order_item->inspectionReport->product_ratings_and_principle_characteristics ?? 'Not Entered' }}</span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <h3 class="font-bold underline px-2">Differences From Previously Certified Product</h3>
+                                        <div class="grid grid-cols-1 px-2">
+                                            <div>
+                                                <span>{{ $order_item->inspectionReport->differences_from_previously_certified_product ?? 'Not Entered' }}</span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="flex justify-end gap-2">
+                                            <a href="{{ $order_item->inspectionReport->report_file }}" target="_blank" class="bg-secondary-one px-2 py-2 rounded-lg text-black font-semibold">View Certificate</a>
+                                            @if ($order_item->inspectionReport->applicant_signature && $order_item->inspectionReport->applicant_signature != config('app.admin_url').'/storage/reports/inspection/')
+                                                <a href="{{ $order_item->inspectionReport->applicant_signature }}" target="_blank" class="bg-secondary-two text-black px-2 py-2 rounded-lg font-semibold">View Signature</a>
+                                            @endif
+                                        </div>
+                                    @else
+                                        <div class="px-2">
+                                            <span class="font-semibold text-red-600">Report not yet uploaded</span>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </x-modal>
+                @else
+                    <a href="{{ route('order.inspection.report', ['order_item' => $order_item]) }}">
+                        <x-primary-button type="button" class="w-full py-2 truncate">Upload Inspection Report for {{ $order_item->product->name }}</x-primary-button>
+                    </a>
+                    <button data-modal-target="request-inspection" data-modal-toggle="request-inspection" class="w-full bg-primary-two text-lg font-semibold text-white py-1 rounded-lg">Request Inspection</button>
+                    <x-modal modal_id="request-inspection">
+                        <div class="relative w-full max-w-2xl max-h-full">
+                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                <button type="button" class="absolute top-1 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="request-inspection">
+                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                    </svg>
+                                    <span class="sr-only">Close modal</span>
+                                </button>
+                                <h2 class="px-2 py-2 lg:px-4 font-bold text-xl">Request Inspection</h2>
+                                <form action="#" method="post">
+                                    @csrf
+                                    <div class="space-y-2 p-2">
+                                        @if (count($inspectors) > 0)
+                                            <div>
+                                                <div class="grid md:flex justify-between border border-gray-200 rounded-lg p-2">
+                                                    <div class="md:basis-1/5 flex gap-2 px-1 md:px-2 text-gray-500">
+                                                        <input id="checkbox-table-search-1" type="checkbox" onchange="selectedService('select-inspector')" name="request_inspection[{{ $item->product->id }}]" class="select-inspectors w-4 h-4 mt-1 text-orange-600 bg-gray-100 border-gray-400 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600">
+                                                        <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                                                        <h2 class="font-semibold">Request Inspection</h2>
+                                                    </div>
+                                                    <div class="md:basis-4/5 hidden" id="select-inspector-box">
+                                                        <x-input-label class="font-semibold">Select Inspector</x-input-label>
+                                                        <select name="inspector[]" multiple size="3" class="form-control py-1 rounded-lg border-gray-600 w-96 selected-inspectors">
+                                                            @foreach ($inspectors as $inspector)
+                                                                <option value="{{ $inspector->id }}">{{ $inspector->name }} - {{ $inspector->country->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <span class="text-red-600 font-semibold transition duration-150 ease-in-out" id="selected_inspectors_warning"><span class="underline">N/B</span>: You'll be required to upload an inspection report if no inspector is selected.</span>
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <x-primary-button class="py-1">Submit</x-primary-button>
+                                </div>
+                                </form>
+                        </div>
+                    </x-modal>
+                @endif
             @endif
         @endforeach
         @if (($order->status == 'quotation request' || $order->status == 'pending' || $order->status == 'accepted') && $order->invoice->payment_status != 'paid')

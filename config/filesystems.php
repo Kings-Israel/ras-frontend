@@ -103,6 +103,14 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
+
+        'reports' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/reports'),
+            'url' => env('APP_URL').'/storage/reports',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
     ],
 
     /*

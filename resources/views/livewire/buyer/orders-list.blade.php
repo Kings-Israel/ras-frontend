@@ -257,7 +257,7 @@
 <div class="min-h-screen">
     <div class="bg-gray-200 mx-auto px-1 md:px-8 lg:px-24 py-1 sticky top-16 z-30">
         <form class="md:w-2/5 md:my-auto">
-            <div class="flex">
+            <div class="flex gap-2">
                 <button id="dropdown-button" data-dropdown-toggle="invoice-status-dropdown" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-800 space-x-3" type="button">
                     <i class="fas fa-bars"></i>
                     <span class="">
@@ -289,6 +289,42 @@
                         </li>
                         <li>
                             <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" wire:click.prevent="updateStatus('rejected')">Rejected</button>
+                        </li>
+                    </ul>
+                </div>
+                <button id="dropdown-button" data-dropdown-toggle="orders-order-dropdown" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-800 space-x-3" type="button">
+                    <span class="">
+                        Order By {{ $order_field }}
+                    </span>
+                    <svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                    </svg>
+                </button>
+                <div id="orders-order-dropdown" class="z-40 hidden bg-gray-200 divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-button">
+                        <li>
+                            <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" wire:click.prevent="updateOrderField('created_at')">Date Created</button>
+                        </li>
+                        <li>
+                            <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" wire:click.prevent="updateOrderField('delivery_date')">Delivery Date</button>
+                        </li>
+                    </ul>
+                </div>
+                <button id="dropdown-button" data-dropdown-toggle="order-direction-dropdown" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-800 space-x-3" type="button">
+                    <span class="">
+                        Order Direction
+                    </span>
+                    <svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                    </svg>
+                </button>
+                <div id="order-direction-dropdown" class="z-40 hidden bg-gray-200 divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-button">
+                        <li>
+                            <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" wire:click.prevent="updateOrderDirection(true)">Ascending</button>
+                        </li>
+                        <li>
+                            <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" wire:click.prevent="updateOrderDirection(false)">Descending</button>
                         </li>
                     </ul>
                 </div>
@@ -324,6 +360,9 @@
                                 Date
                             </th>
                             <th scope="col" class="px-2 py-3 text-gray-900">
+                                Delivery Date
+                            </th>
+                            <th scope="col" class="px-2 py-3 text-gray-900">
                                 Status
                             </th>
                             <th scope="col" class="px-2 py-3 text-gray-900">
@@ -331,9 +370,6 @@
                             </th>
                             <th scope="col" class="px-2 py-3 text-gray-900">
                                 Amount
-                            </th>
-                            <th scope="col" class="px-2 py-3 text-gray-900">
-                                Delivery Date
                             </th>
                             <th></th>
                         </tr>
@@ -350,6 +386,9 @@
                                     {{ $order->created_at->format('M d, Y') }}
                                 </td>
                                 <td class="px-2 py-2 text-gray-600">
+                                    {{ Carbon\Carbon::parse($order->orderItems->first()->delivery_date)->format('d M Y') }}
+                                </td>
+                                <td class="px-2 py-2 text-gray-600">
                                     {{ Str::title($order->status) }}
                                 </td>
                                 <td class="px-2 py-2">
@@ -357,9 +396,6 @@
                                 </td>
                                 <td class="px-2 py-2 text-gray-600">
                                     {{ number_format($order->getTotalAmount()) }}
-                                </td>
-                                <td class="px-2 py-2 text-gray-600">
-                                    {{ Carbon\Carbon::parse($order->orderItems->first()->delivery_date)->format('d M Y') }}
                                 </td>
                                 <td class="my-2">
                                     <a href="{{ route('orders.show', ['order' => $order]) }}" class="bg-primary-one font-bold text-white rounded-md px-4 py-1">View Details</a>

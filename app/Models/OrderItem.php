@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Str;
 
 class OrderItem extends Model
 {
@@ -113,6 +114,87 @@ class OrderItem extends Model
     public function productReleaseRequest(): HasOne
     {
         return $this->hasOne(ReleaseProductRequest::class);
+    }
+
+    public function hasReport(string $report)
+    {
+        $report = Str::lower($report);
+
+        switch ($report) {
+            case 'inspection':
+                $request = $this->inspectionReport()->exists();
+                if ($request) {
+                    return true;
+                }
+                break;
+            case 'insurance':
+                $order_request = $this->orderRequests()->where('requesteable_type', 'App\Models\InsuranceCompany')->first();
+                if ($order_request) {
+                    if (
+                        $this->orderRequests()->where('requesteable_type', 'App\Models\InsuranceCompany')->first()->insuranceRequestBuyerDetails()->exists()
+                        && $this->orderRequests()->where('requesteable_type', 'App\Models\InsuranceCompany')->first()->insuranceRequestBuyerCompanyDetails()->exists()
+                        && $this->orderRequests()->where('requesteable_type', 'App\Models\InsuranceCompany')->first()->insuranceRequestBuyerInuranceLossHistories()->exists()
+                        && $this->orderRequests()->where('requesteable_type', 'App\Models\InsuranceCompany')->first()->insuranceRequestProposalDetails()->exists()
+                        && $this->orderRequests()->where('requesteable_type', 'App\Models\InsuranceCompany')->first()->insuranceRequestProposalVehicleDetails()->exists()
+                    ) {
+                        return true;
+                    }
+                }
+                break;
+            case 'logistics':
+                $order_request = $this->orderRequests()->where('requesteable_type', LogisticsCompany::class)->first();
+                if ($order_request) {
+                    if (
+                        $this->orderRequests()->where('requesteable_type', LogisticsCompany::class)->first()->importInstruction()->exists()
+                        && $this->orderRequests()->where('requesteable_type', LogisticsCompany::class)->first()->exportInstruction()->exists()
+                    ) {
+                        return true;
+                    }
+                }
+                break;
+            default:
+                return false;
+                break;
+        }
+
+        return false;
+    }
+
+    public function hasRequest(string $request)
+    {
+        $request = Str::lower($request);
+
+        switch ($request) {
+            case 'inspection':
+                $request = $this->orderRequests()->where('requesteable_type', InspectingInstitution::class)->exists();
+                if ($request) {
+                    return true;
+                }
+                break;
+            case 'insurance':
+                $request = $this->orderRequests()->where('requesteable_type', InsuranceCompany::class)->exists();
+                if ($request) {
+                    return true;
+                }
+                break;
+            case 'logistics':
+                $request = $this->orderRequests()->where('requesteable_type', LogisticsCompany::class)->exists();
+                if ($request) {
+                    return true;
+                }
+                break;
+            case 'warehousing':
+                $request = $this->orderRequests()->where('requesteable_type', Warehouse::class)->exists();
+                if ($request) {
+                    return true;
+                }
+                break;
+            default:
+                return false;
+                break;
+        }
+
+        return false;
     }
 
     public function hasAcceptedAllRequests(): bool
