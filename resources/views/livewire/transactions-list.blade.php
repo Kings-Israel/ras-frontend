@@ -75,6 +75,46 @@
                     </form>
                 </div>
             </div>
+            <div class="border border-gray-300 p-4 space-y-4 rounded-lg">
+                <div>
+                    <h4 class="text-sm font-semibold text-gray-500">Withdraw:</h4>
+                    <form action="{{ route('wallet.withdraw') }}" method="post" class="space-y-2" id="withdraw-form">
+                        @csrf
+                        <x-input-label :value="__('Amount')" />
+                        <x-text-input name="amount" class="w-full my-1" type="number" id="amount" required></x-text-input>
+                        <x-primary-button class="w-full py-1" id="withdraw-btn">Withdraw</x-primary-button>
+                    </form>
+                </div>
+            </div>
+            <button type="button" class="hidden" id="confirm-withdraw-btn" data-modal-target="confirm-withdraw-modal" data-modal-toggle="confirm-withdraw-modal"></button>
+            <x-modal modal_id="confirm-withdraw-modal">
+                <div class="relative w-full max-w-lg max-h-full">
+                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                        <button type="button" class="absolute top-1 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="confirm-withdraw-modal">
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                            </svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                        <h2 class="px-4 py-2 lg:px-4 font-bold text-xl">Confirm Withdrawal</h2>
+                        <div class="space-y-2 p-2">
+                            <form action="{{ route('wallet.withdraw.authorize') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="ref" id="transaction_ref">
+
+                                <div class="form-group mt-2">
+                                    <x-input-label for="Enter Code" :value="__('Enter Code to Confirm Withdrawal')" />
+                                    <x-text-input id="otp" class="block mt-1 w-full" type="text" name="otp" autocomplete="off" />
+                                    <x-input-error :messages="$errors->get('otp')" class="mt-1" />
+                                </div>
+                                <div class="w-full flex mt-2">
+                                    <button type="submit" class="bg-primary-one rounded-lg w-full p-2 text-white text-center font-semibold">Confirm</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </x-modal>
         </div>
     </form>
 </div>
@@ -103,6 +143,52 @@
             },
             error: (response) => {
                 $('#update-wallet-btn').html('Update');
+                toastr.options =
+                {
+                    "closeButton" : true,
+                    "progressBar" : true,
+                    "positionClass" : "toast-top-right"
+                }
+                toastr.error("An error occurred. Please try again.");
+            }
+        })
+    })
+
+    $('#withdraw-btn').on('click', function(e) {
+        e.preventDefault();
+        let amount = $('#amount').val()
+        if (amount <= 0) {
+            $('#amount').addClass('border-red-400')
+
+            return
+        }
+
+        $('#withdraw-btn').attr('disabled', 'disabled');
+        $('#withdraw-btn').addClass('bg-orange-400');
+        $('#withdraw-btn').removeClass('bg-primary-one');
+        $('#withdraw-btn').html('Processing...');
+        let formData = $('#withdraw-form').serializeArray()
+        $.ajax({
+            method: "POST",
+            dataType: 'json',
+            headers: {
+                Accept: 'application/json'
+            },
+            url: "{{ route('wallet.withdraw') }}",
+            data: formData,
+            success: (response) => {
+                $('#transaction_ref').val(response.ref)
+                $('#confirm-withdraw-btn').click()
+                $('#withdraw-btn').removeAttr('disabled');
+                $('#withdraw-btn').removeClass('bg-orange-400');
+                $('#withdraw-btn').addClass('bg-primary-one');
+                $('#withdraw-btn').html('Withdraw');
+            },
+            error: (response) => {
+                $('#withdraw-btn').removeAttr('disabled');
+                $('#withdraw-btn').removeClass('bg-orange-400');
+                $('#withdraw-btn').addClass('bg-primary-one');
+                $('#withdraw-btn').html('Withdraw');
                 toastr.options =
                 {
                     "closeButton" : true,

@@ -14,7 +14,7 @@ class OrdersList extends Component
     public $status = 'all';
     public $order_field = 'Date Created';
     public $order_by = 'created_at';
-    public $order_asc = true;
+    public $order_asc = false;
 
     public function updateStatus($status)
     {
