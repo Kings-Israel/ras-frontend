@@ -81,6 +81,8 @@ Route::middleware(['auth', 'web', 'phone_verified'])->group(function () {
             Route::get('/balance', [WalletController::class, 'balance'])->name('balance');
             Route::get('/transactions', [WalletController::class, 'transactions'])->name('transactions');
             Route::post('/top-up', [WalletController::class, 'topUp'])->name('top-up');
+            Route::post('/withdraw', [WalletController::class, 'withdraw'])->name('withdraw');
+            Route::post('/withdraw/authorize', [WalletController::class, 'withdrawalAuthorize'])->name('withdraw.authorize');
         });
     });
 });

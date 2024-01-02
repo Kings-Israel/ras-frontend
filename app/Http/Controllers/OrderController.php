@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Events\NewNotification;
+use App\Helpers\JambopayToken;
+use App\Helpers\NumberGenerator;
 use App\Models\Business;
 use App\Models\Country;
 use App\Models\FinancingInstitution;
@@ -47,6 +49,10 @@ use App\Models\InsReqBuyerProposalDetails;
 use App\Models\InsReqBuyerInsuranceLossHistory;
 use App\Models\InsReqBuyerProposalVehicleDetails;
 use App\Models\InspectionReport;
+use App\Models\Payment;
+use App\Models\Wallet;
+use App\Models\EscrowPayment;
+use App\Models\ServiceCharge;
 
 class OrderController extends Controller
 {
@@ -1018,6 +1024,46 @@ class OrderController extends Controller
         $order->update([
             'status' => 'delivered'
         ]);
+
+        // Transfer escrow money to service providers wallet accounts
+        // Get all requested and accepted services for the order
+        // $order_items = $order->orderItems->load(['orderRequests' => function ($query) {
+        //     $query->where('status', 'accepted');
+        // }]);
+
+        // $token = JambopayToken::walletAccessToken();
+
+        // foreach($order_items as $order_item) {
+        //     foreach($order_item->order_requests as $order_request) {
+        //         // Get Wallet of service provider
+        //         $wallet = Wallet::where('walleteable_id', $order_request->requesteable_id)->where('walleteable_type', $order_request->requesteable_type)->first();
+        //         if ($wallet) {
+        //             $order_id = NumberGenerator::generateUniqueNumber(Payment::class, 'jambopay_checkout_id', 10000000, 99999999);
+
+        //             // Get Service charge for service provider
+        //             $service_charge = ServiceCharge::where('chargeable_type', $order_request->requesteable_type)->where('chargeable_id', $order_request->requesteable_id)->first();
+        //             $service_charge_amount = $service_charge->type == 'percentage' ? ($service_charge->value / 100) * $order_request->cost : $service_charge->value - $order_request->cost;
+        //             $amount = (double) $order_request->cost - (double) $service_charge_amount;
+
+        //             // Transfer amount to service provider wallet
+        //             $response = Http::withHeaders([
+        //                 'Authorization' => $token->token_type.' '.$token->access_token
+        //             ])->post(config('services.jambopay.wallet_url').'/wallet/transaction/transfer', [
+        //                 'amount' => $amount,
+        //                 'accountFrom' => (string) config('services.jambopay.wallet_commission_account_number'),
+        //                 'accountTo' => (string) $wallet->account_number,
+        //                 'orderId' => $order_id,
+        //                 'callbackUrl' => route('jambopay.payment.callback'),
+        //             ]);
+        //         }
+        //     }
+        // }
+
+        // $escrow_payment = EscrowPayment::where('invoice_id', $order->invoice_id)->first();
+
+        // $escrow_payment->update([
+        //     'status' => 'approved'
+        // ]);
 
         toastr()->success('', 'Order updated successfully');
 

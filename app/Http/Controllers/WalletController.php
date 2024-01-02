@@ -215,14 +215,15 @@ class WalletController extends Controller
             'payable_id' => $wallet_transaction->id
         ]);
 
-        // activity()->causedBy(auth()->user())->log('deposited '.$request->amount.' to wallet');
+        if ($request->wantsJson()) {
+            return response()->json([
+                'data' => [
+                    'ref' => json_decode($response)->ref
+                ]
+            ], 200);
+        }
 
-        return $this->respondWithSuccess([
-            'message' => 'Transaction is being processed. Please enter MPESA PIN when prompted.',
-            'data' => [
-                'ref' => json_decode($response)->ref
-            ]
-        ]);
+        return back()->with(['ref' => json_decode($response)->ref]);
     }
 
     public function topUpCallback(Request $request)
@@ -240,5 +241,118 @@ class WalletController extends Controller
                 ]);
             }
         }
+    }
+
+    public function withdraw(Request $request)
+    {
+        $request->validate([
+            'amount' => ['required']
+        ]);
+
+        $wallet = Wallet::where('walleteable_id', auth()->id())->where('walleteable_type', User::class)->first();
+
+        // if ($wallet->balance < $request->amount) {
+        //     if ($request->wantsJson()) {
+        //         return response()->json(['error' => 'Wallet balance is less than requested amount'], 400);
+        //     }
+        //     toastr()->error('', 'Wallet balance is less than the requested amount');
+
+        //     return back();
+        // }
+
+        $token = $this->token();
+
+        $phone_number = strlen(auth()->user()->phone_number) == 9 ? '0'.auth()->user()->phone_number : '0'.substr(auth()->user()->phone_number, -9);
+
+        $order_id = NumberGenerator::generateUniqueNumber(WalletTransaction::class, 'order_id', 10000000, 99999999);
+
+        $response = Http::withHeaders([
+                            'Authorization' => $token->token_type.' '.$token->access_token
+                        ])
+                        ->post(config('services.jambopay.wallet_url').'/payout', [
+                            'amount' => $request->amount,
+                            'accountFrom' => $wallet->account_number,
+                            'orderId' => $order_id,
+                            'provider' => 'MOMO_B2C',
+                            'payTo' => [
+                                'accountRef' => auth()->user()->first_name.' '.auth()->user()->last_name,
+                                'accountNumber' => $phone_number,
+                            ],
+                            'callBackUrl' => route('jambopay.topup.callback'),
+                            'narration' => 'Wallet amount withdrawal'
+                        ]);
+
+        if (collect(json_decode($response))->has('statusCode')) {
+            if ($request->wantsJson()) {
+                return response()->json(['error' => 'An error occured while processing the request'], 400);
+            }
+
+            toastr()->error('', 'An error occured while processing the request');
+
+            return back();
+        }
+
+        $wallet_transaction = WalletTransaction::create([
+            'user_id' => auth()->id(),
+            'amount' => $request->amount,
+            'order_id' => $order_id,
+            'description' => 'Wallet withdrawal',
+            'transaction_ref' => json_decode($response)->ref
+        ]);
+
+        Payment::create([
+            'user_id' => auth()->id(),
+            'jambopay_checkout_id' => json_decode($response)->ref,
+            'amount' => $request->amount,
+            'payable_type' => WalletTransaction::class,
+            'payable_id' => $wallet_transaction->id
+        ]);
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'data' => [
+                    'ref' => json_decode($response)->ref
+                ]
+            ], 200);
+        }
+
+        return back()->with(['ref' => json_decode($response)->ref]);
+    }
+
+    public function withdrawalAuthorize(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'otp' => ['required'],
+            'ref' => ['required', 'string'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->messages(), 422);
+        }
+
+        $response = Http::withHeaders([
+            'Authorization' => $this->token()->token_type.' '.$this->token()->access_token
+        ])->post(config('services.jambopay.wallet_url').'/payout/authorize', [
+            'otp' => $request->otp,
+            'ref' => $request->ref
+        ]);
+
+        if (collect(json_decode($response))->has('statusCode')) {
+            info($response);
+            return $this->respondError(json_decode($response)->message[0]);
+        }
+
+        $payment = Payment::where('jambopay_checkout_id', json_decode($response)->ref)->first();
+
+        $payment->update([
+            'transaction_ref' => json_decode($response)->ref,
+        ]);
+
+        activity()->causedBy(auth()->user())->log('withdrew '.$payment->amount.' from wallet');
+
+        return $this->respondWithSuccess([
+            'message' => 'The transaction was successful',
+            'data' => json_decode($response)
+        ]);
     }
 }
