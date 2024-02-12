@@ -1,5 +1,5 @@
 <x-vendor>
-    <x-storefront-header :business="$business"></x-storefront-header>
+    <x-storefront-header :business="$business" :categories="$product_categories"></x-storefront-header>
     <div>
         <img src="{{ $business->primary_cover_image }}" alt="" class="h-96 w-full object-cover">
     </div>
@@ -24,7 +24,9 @@
                 <span class="text-sm">Avg Response Time: <span class="text-green-400">&#60;24Hrs</span></span>
                 <div class="flex justify-center lg:justify-start space-x-3">
                     <button class="font-semibold px-10 py-0.5 bg-primary-one border border-primary-one text-white rounded-full hover:bg-orange-800 hover:border-orange-800">Make Inquiry</button>
-                    <button class="font-semibold px-10 py-0.5 border border-primary-one text-primary-one rounded-full hover:bg-orange-200">Chat</button>
+                    <a href="{{ route('messages', ['user' => $business->user]) }}">
+                        <button class="font-semibold px-10 py-0.5 border border-primary-one text-primary-one rounded-full hover:bg-orange-200">Chat</button>
+                    </a>
                 </div>
             </div>
             @if ($business->about)

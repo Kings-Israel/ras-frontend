@@ -8,6 +8,7 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
@@ -23,10 +24,10 @@ class SendMessage implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public function __construct($email, User $user, $message, $conversation)
+    public function __construct($email, $receiver, $message, $conversation)
     {
         $this->email = $email;
-        $this->receiver = $user;
+        $this->receiver = $receiver;
         $this->message = $message;
         $this->conversation = $conversation;
     }
@@ -38,7 +39,9 @@ class SendMessage implements ShouldBroadcast
     */
     public function broadcastOn()
     {
-        return new Channel(''.$this->email.'');
+        return [
+            new Channel(''.$this->email.'')
+        ];
     }
 
     public function broadcastAs()

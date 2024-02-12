@@ -3,7 +3,9 @@
         <div class="grid md:flex md:justify-between">
             <div>
                 @guest
-                    <h3 class="text-lg font-thin text-slate-50 text-center md:text-start">Join Us</h3>
+                    <div class="text-center md:text-start">
+                        <a href="route('register')" class="text-lg font-thin text-slate-50">Join Us</a>
+                    </div>
                     <h5 class="text-sm text-slate-100 text-center md:text-start mb-4 md:mb-0">We'll send you daily special offers</h5>
                 @endguest
             </div>
@@ -24,7 +26,6 @@
 
         <div class="grid md:flex md:justify-between">
             <a href="{{ url('/') }}" class="mx-auto md:mx-0 md:py-0">
-                {{-- <x-application-logo class="w-12 h-12 object-cover" /> --}}
                 <img src="{{ asset('assets/img/logo-alt.png') }}" class="w-[10rem] h-[10rem] object-contain -my-6" alt="">
             </a>
             <ul class="md:list-none flex flex-wrap justify-center md:justify-end space-x-2 md:space-x-4 lg:space-x-6 my-auto">

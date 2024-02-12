@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Helpers\JambopayToken;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,6 +20,8 @@ use Chat;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Support\Facades\Http;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -69,6 +72,60 @@ class User extends Authenticatable implements MustVerifyEmail
         return config('app.url').'/assets/img/user.png';
     }
 
+    public function unreadMessagesCount(): int
+    {
+        $unread_messages_count = 0;
+
+        if (auth()->check()) {
+            $unread_messages_count = Chat::messages()->setParticipant(auth()->user())->unreadCount();
+        }
+
+        return $unread_messages_count;
+    }
+
+    public function pendingOrders(): int
+    {
+        $pending_orders = 0;
+
+        if (auth()->check() && auth()->user()->hasRole('vendor')) {
+            if (auth()->user()->business) {
+                $pending_orders = auth()->user()->business->orders->where('status', 'pending')->count();
+            }
+        }
+
+        return $pending_orders;
+    }
+
+    public function quotationRequests(): int
+    {
+        $pending_orders = 0;
+
+        if (auth()->check() && auth()->user()->hasRole('vendor')) {
+            if (auth()->user()->business) {
+                $pending_orders = auth()->user()->business->orders->where('status', 'quotation request')->count();
+            }
+        }
+
+        return $pending_orders;
+    }
+
+    public function earnings(): int
+    {
+        $revenue = 0;
+        if (auth()->check() && auth()->user()->hasRole('vendor')) {
+            $orders = auth()->user()->business->orders->where('status', '!=', 'quotation request');
+
+            foreach ($orders as $order) {
+                if ($order->invoice->payment_status == 'paid') {
+                    // Get Revenue
+                    $revenue += $order->getTotalAmount(false);
+                }
+            }
+        }
+
+        return $revenue;
+    }
+
     /**
      * Get the business associated with the User
      */
@@ -86,6 +143,14 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Get all of the orders for the User
+     */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    /**
      * Get all of the cartItems for the User
      */
     public function cartItems(): HasManyThrough
@@ -94,22 +159,19 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Get all of the invoices for the User
+     */
+    public function invoices(): HasMany
+    {
+        return $this->hasMany(Invoice::class);
+    }
+
+    /**
      * The warehouses that belong to the User
      */
     public function warehouses(): BelongsToMany
     {
         return $this->belongsToMany(Warehouse::class, 'user_warehouses', 'warehouse_id', 'user_id');
-    }
-
-    public function unreadMessagesCount(): int
-    {
-        $unread_messages_count = 0;
-
-        if (auth()->check()) {
-            $unread_messages_count = Chat::messages()->setParticipant(auth()->user())->unreadCount();
-        }
-
-        return $unread_messages_count;
     }
 
     /**
@@ -125,6 +187,86 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function inspectors(): BelongsToMany
     {
-        return $this->belongsToMany(Inspector::class, 'inspector_users', 'user_id', 'inspector_id');
+        return $this->belongsToMany(InspectingInstitution::class, 'inspector_users', 'user_id', 'inspector_id');
+    }
+
+    /**
+     * The logisticsCompanies that belong to the User
+     */
+    public function logisticsCompanies(): BelongsToMany
+    {
+        return $this->belongsToMany(LogisticsCompany::class, 'logistics_company_user', 'user_id', 'logistics_company_id');
+    }
+
+    /**
+     * Get all of the inspectionReports for the User
+     */
+    public function inspectionReports(): HasMany
+    {
+        return $this->hasMany(InspectionReport::class);
+    }
+
+    /**
+     * Get all of the quotationResponses for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function quotationResponses(): HasMany
+    {
+        return $this->hasMany(QuotationRequestResponse::class);
+    }
+
+    /**
+     * Get all of the escrowPayments for the User
+     */
+    public function escrowPayments(): HasMany
+    {
+        return $this->hasMany(EscrowPayment::class);
+    }
+
+    public function hasWallet($token = NULL): bool
+    {
+        // if (!$token) {
+        //     $token = JambopayToken::walletAccessToken();
+        // }
+
+        // $phone_number = strlen($this->phone_number) == 9 ? '0'.$this->phone_number : '0'.substr($this->phone_number, -9);
+
+        // $response = Http::withHeaders([
+        //                 'Authorization' => $token->token_type.' '.$token->access_token
+        //             ])->get(config('services.jambopay.wallet_url').'/wallet/account', [
+        //                 'accountNo' => config('services.jambopay.wallet_account_number'),
+        //                 'phoneNumber' => $phone_number
+        //             ]);
+
+        // if (collect(json_decode($response))->has('statusCode') || count(json_decode($response)->data) <= 0) {
+        //     return false;
+        // }
+
+        // return true;
+        if (!$this->wallet()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function wallet(): MorphOne
+    {
+        return $this->morphOne(Wallet::class, 'walleteable');
+    }
+
+    public function vendors()
+    {
+        return $this->belongsToMany(Business::class, 'favorites', 'user_id', 'vendor_id');
+    }
+    
+    /**
+     * Get the driverProfile associated with the User
+     */
+    public function driverProfile(): HasOne
+    {
+        return $this->hasOne(DriverProfile::class);
+
     }
 }

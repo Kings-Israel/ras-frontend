@@ -1,576 +1,302 @@
 <x-main>
-    <div class="bg-hero bg-[length:400px_400px] md:bg-[length:800px_600px] lg:bg-cover bg-no-repeat lg:h-[500px] -mt-24 pt-24">
-        <div class="flex flex-col mx-auto py-8 sm:px-20 md:px-24 lg:px-32 z-50 space-y-3">
-            <h1 class="text-2xl md:text-2xl lg:text-4xl font-[600] md:font-[800] lg:font-[1100] text-center hero-main-text text-gray-900">Find The Best Products, From Top Notch Suppliers</h1>
-            <h5 class="text-center font-semibold px-8 md:px-12 lg:px-52">Real African Sources is where to go to easily access raw materials and business opportunities from vetted suppliers across Africa.</h5>
-            <label for="themeSwitcherThree" class="themeSwitcherThree relative inline-flex cursor-pointer select-none items-center justify-center my-2">
-                <input type="checkbox" name="themeSwitcherThree" id="themeSwitcherThree" class="sr-only">
-
-                <div class="shadow-card flex h-[40px] w-[192px] items-center justify-between rounded-full bg-white border border-primary-one p-1" id="switch-toggle" onclick="toggleTheme()">
-                    <h4 id="products-toggle" class="bg-primary-one px-4 py-1 rounded-full text-white ml-3 transition duration-200 ease-out font-semibold">Products</h4>
-                    <h4 id="vendors-toggle" class="transition duration-200 ease-out mr-4">Vendors</h4>
+    <div class="lg:px-24">
+        <div class="grid lg:grid-cols-5 gap-1">
+            <div class="hidden lg:block col-span-1">
+                <div class="mt-4">
+                    <livewire:home-categories-view />
                 </div>
-            </label>
-            <div class="lg:w-3/5 mx-2 lg:mx-auto relative">
-                <livewire:home-main-search />
-                {{-- <form class="">
-                    <div class="flex">
-                        <button id="dropdown-button" data-dropdown-toggle="store-dropdown" data-dropdown-placement="bottom" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-semibold text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-2 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600" type="button">
-                            All Items
-                            <svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                            </svg>
-                        </button>
-                        <div id="store-dropdown" class="z-40 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-button">
-                                <li>
-                                    <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Diamonds</button>
-                                </li>
-                                <li>
-                                    <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Tanzanite</button>
-                                </li>
-                                <li>
-                                    <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Gold</button>
-                                </li>
-                                <li>
-                                    <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Uranium</button>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="relative w-full">
-                            <i class="fas fa-search absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none text-xl"></i>
-                            <input type="search" id="search-dropdown" class="pl-10 block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-200 placeholder:font-semibold focus:ring-primary-one focus:border-primary-one dark:bg-orange-700 dark:border-l-orange-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-primary-one transition duration-250" placeholder="What Are You Looking For..." required>
-                        </div>
-                    </div>
-                </form> --}}
             </div>
-            <div class="lg:w-3/5 mx-2 lg:mx-auto">
-            {{-- <div class="lg:w-3/5 mx-2 lg:mx-auto hidden md:block absolute top-[22rem] left-0 lg:top-[17rem] lg:left-[26rem] lg:max-w-[50%]"> --}}
-                <div class="flex flex-wrap justify-center lg:justify-start gap-1 lg:gap-2 mt-2">
-                    @foreach ($categories as $category)
-                        <x-badge class="bg-violet-100 font-semibold" text="{{ $category->name }}"></x-badge>
-                    @endforeach
-                    <x-badge class="bg-primary-one text-white font-semibold" text="All Categories"></x-badge>
+            @if ($marketing_posters->count() > 0)
+                <div id="default-carousel" class="col-span-3 mt-4 relative w-full" data-carousel="slide">
+                    <div class="relative h-56 overflow-hidden rounded-lg md:h-[360px]">
+                        <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                            <img src="{{ asset('assets/img/banner.png') }}" alt="" class="absolute lg:object-cover h-[360px] -z-10 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+                            <div class="flex flex-col mx-auto py-8 px-1.5 z-50 space-y-3">
+                                <h1 class="text-2xl md:text-2xl lg:text-4xl font-[600] md:font-[800] lg:font-[900] text-center hero-main-text text-gray-900">Find The Best Products, From Top Notch Suppliers</h1>
+                                <h5 class="text-center font-semibold px-2">Real African Sources is where to go to easily access raw materials and business opportunities from vetted suppliers across Africa.</h5>
+                            </div>
+                        </div>
+                        @foreach ($marketing_posters as $poster)
+                            <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                                <img src="{{ $poster->image }}" class="absolute block lg:object-contain h-[360px] -z-10 w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                                @if ($poster->description)
+                                    <div class="mx-auto py-8 px-1.5 z-50 space-y-3">
+                                        <h5 class="text-{{ $poster->description_text_align }} px-2 text-white" style="font-size: {{ $poster->font_size }}px; color: {{ Str::lower($poster->description_text_color) }}">{{ $poster->description }}</h5>
+                                    </div>
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
+                    <!-- Slider indicators -->
+                    <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
+                        <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
+                        @foreach ($marketing_posters as $key => $poster)
+                            <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide {{ $key + 1 }}" data-carousel-slide-to="{{ $key + 1 }}"></button>
+                        @endforeach
+                        {{-- <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
+                        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 4" data-carousel-slide-to="3"></button>
+                        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 5" data-carousel-slide-to="4"></button>
+                        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 6" data-carousel-slide-to="5"></button> --}}
+                    </div>
+                </div>
+            @else
+                <div class="col-span-3 mt-4 relative w-full">
+                    <img src="{{ asset('assets/img/banner.png') }}" alt="" class="absolute md:h-[360px] lg:object-cover -z-10 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+                    <div class="flex flex-col mx-auto py-8 px-1.5 z-50 space-y-3">
+                        <h1 class="text-2xl md:text-2xl lg:text-4xl font-[600] md:font-[800] lg:font-[900] text-center hero-main-text text-gray-900">Find The Best Products, From Top Notch Suppliers</h1>
+                        <h5 class="text-center font-semibold px-2">Real African Sources is where to go to easily access raw materials and business opportunities from vetted suppliers across Africa.</h5>
+                    </div>
+                </div>
+            @endif
+            <div class="hidden lg:block col-span-1 mt-4">
+                <div class="bg-primary-three rounded-lg p-2">
+                    <h3 class="font-bold text-xl text-slate-800">Your Buying Requests</h3>
+                    <form action="#" method="POST" class="space-y-2.5">
+                        @csrf
+                        <!-- Email Address -->
+                        <div>
+                            <x-text-input id="email" class="block w-full bg-white h-12 border-none focus:border-2 placeholder-gray-400" type="text" name="email" placeholder="Your Email Address" required autocomplete="off" />
+                        </div>
+                        <div>
+                            <x-text-input id="product_name" class="block w-full bg-white h-12 border-none focus:border-2 placeholder-gray-400" type="text" name="product_name" placeholder="Product Name" autocomplete="off" />
+                        </div>
+                        <textarea name="message" rows="5" class="w-full border border-gray-300 rounded-lg placeholder-gray-400" placeholder="Your Message Here, can include product description, size, etc..."></textarea>
+                        <x-primary-button class="w-full py-2">Submit</x-primary-button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    <div class="px-2 md:px-8 lg:px-24 lg:flex gap-10 mt-5">
-        <div class="basis-1/6">
-            <div class="border border-gray-300 rounded-md flex flex-col space-y-2 py-2 sticky top-24">
-                <div class="flex text-sm px-2">
-                    <i class="fas fa-map-marker-alt my-auto text-red-600 mr-1"></i>
-                    <h2 class="font-extrabold text-gray-500 truncate">Show products/suppliers available in</h2>
+    <div class="px-4 lg:px-24 mt-14 lg:mt-5 w-full">
+        <div class="hidden md:grid md:grid-cols-2 lg:grid-cols-2">
+            <div class="">
+                <div class="md:flex gap-1">
+                    <h3 class="font-bold text-lg text-gray-600">New Buying Leads</h3>
+                    <h4 class="text-lg">(12)</h4>
                 </div>
-                <livewire:home-countries-view />
-            </div>
-        </div>
-        <div class="basis-5/6 space-y-2">
-            <div class="hidden md:grid md:grid-cols-1 lg:grid-cols-2 4xl:flex">
-                <div class="4xl:basis-1/2">
-                    <div class="md:flex gap-1">
-                        <h3 class="font-bold text-lg text-gray-600">New Buying Leads</h3>
-                        <h4 class="font-thin text-lg">(12)</h4>
-                    </div>
-                    <div class="relative" id="default-carousel" data-carousel="static">
-                        <div class="relative overflow-hidden rounded-lg h-40">
-                            <div class="hidden" data-carousel-item>
-                                <div class="grid grid-cols-3 space-x-1 ml-2 mr-2 pl-10 border border-gray-300 rounded-md p-5 h-40 min-h-[128px]">
-                                    <div class="space-y-6 w-32 my-auto">
-                                        <div class="flex gap-2">
-                                            <img src="https://flagcdn.com/w40/ug.png" srcset="https://flagcdn.com/w40/ug.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
-                                            <div class="my-auto">
-                                                <h5 class="text-sm my-auto">Uganda</h5>
-                                                <p class="text-xs text-gray-400">31-07-2023</p>
-                                            </div>
+                <div class="relative" id="default-carousel" data-carousel="static">
+                    <div class="relative overflow-hidden rounded-lg h-40">
+                        <div class="hidden" data-carousel-item>
+                            <div class="grid grid-cols-2 lg:grid-cols-3 space-x-1 ml-2 mr-2 pl-10 border border-gray-300 rounded-md p-5 h-40 min-h-[128px]">
+                                <div class="space-y-6 w-40 my-auto">
+                                    <div class="flex gap-2">
+                                        <img src="https://flagcdn.com/w40/ug.png" srcset="https://flagcdn.com/w40/ug.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
+                                        <div class="my-auto">
+                                            <h5 class="text-sm my-auto">Uganda</h5>
+                                            <p class="text-xs text-gray-400">31-07-2023</p>
                                         </div>
-                                        <h4 class="text-sm text-gray-500">We Buy Crude Oil</h4>
                                     </div>
-                                    <div class="space-y-6 w-32 my-auto">
-                                        <div class="flex gap-2">
-                                            <img src="https://flagcdn.com/w40/ng.png" srcset="https://flagcdn.com/w40/ng.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
-                                            <div class="my-auto">
-                                                <h5 class="text-sm my-auto">Nigeria</h5>
-                                                <p class="text-xs text-gray-400">31-07-2023</p>
-                                            </div>
-                                        </div>
-                                        <h4 class="text-sm text-gray-500 whitespace-normal">We Buy Refined Coconut Oil</h4>
-                                    </div>
-                                    <div class="space-y-6 w-32 my-auto">
-                                        <div class="flex gap-2">
-                                            <img src="https://flagcdn.com/w40/ke.png" srcset="https://flagcdn.com/w40/ke.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
-                                            <div class="my-auto">
-                                                <h5 class="text-sm my-auto">Kenya</h5>
-                                                <p class="text-xs text-gray-400">31-07-2023</p>
-                                            </div>
-                                        </div>
-                                        <h4 class="text-sm text-gray-500">We Buy Palm Oil</h4>
-                                    </div>
+                                    <h4 class="text-sm text-gray-500">We Buy Crude Oil</h4>
                                 </div>
-                            </div>
-                            <div class="hidden" data-carousel-item>
-                                <div class="grid grid-cols-3 space-x-1 ml-2 mr-2 pl-10 border border-gray-300 rounded-md p-5 h-40 min-h-[128px]">
-                                    <div class="space-y-6 pr-2 w-32 my-auto">
-                                        <div class="flex gap-2">
-                                            <img src="https://flagcdn.com/w40/tz.png" srcset="https://flagcdn.com/w40/tz.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
-                                            <div class="my-auto">
-                                                <h5 class="text-sm my-auto">Tanzania</h5>
-                                                <p class="text-xs text-gray-400">31-07-2023</p>
-                                            </div>
+                                <div class="space-y-6 w-40 my-auto">
+                                    <div class="flex gap-2">
+                                        <img src="https://flagcdn.com/w40/ng.png" srcset="https://flagcdn.com/w40/ng.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
+                                        <div class="my-auto">
+                                            <h5 class="text-sm my-auto">Nigeria</h5>
+                                            <p class="text-xs text-gray-400">31-07-2023</p>
                                         </div>
-                                        <h4 class="text-sm text-gray-500">We Buy Crude Oil</h4>
                                     </div>
-                                    <div class="space-y-6 pr-2 w-32 my-auto">
-                                        <div class="flex gap-2">
-                                            <img src="https://flagcdn.com/w40/za.png" srcset="https://flagcdn.com/w40/za.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
-                                            <div class="my-auto">
-                                                <h5 class="text-sm my-auto">South Africa</h5>
-                                                <p class="text-xs text-gray-400">31-07-2023</p>
-                                            </div>
+                                    <h4 class="text-sm text-gray-500 whitespace-normal">We Buy Refined Coconut Oil</h4>
+                                </div>
+                                <div class="hidden lg:block space-y-6 pr-2 w-40 my-auto">
+                                    <div class="flex gap-2">
+                                        <img src="https://flagcdn.com/w40/ke.png" srcset="https://flagcdn.com/w40/ke.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
+                                        <div class="my-auto">
+                                            <h5 class="text-sm my-auto">Kenya</h5>
+                                            <p class="text-xs text-gray-400">31-07-2023</p>
                                         </div>
-                                        <h4 class="text-sm text-gray-500 whitespace-normal">We Buy Refined Coconut Oil</h4>
                                     </div>
-                                    <div class="space-y-6 w-32 my-auto">
-                                        <div class="flex gap-2">
-                                            <img src="https://flagcdn.com/w40/et.png" srcset="https://flagcdn.com/w40/et.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
-                                            <div class="my-auto">
-                                                <h5 class="text-sm my-auto">Ethiopia</h5>
-                                                <p class="text-xs text-gray-400">31-07-2023</p>
-                                            </div>
-                                        </div>
-                                        <h4 class="text-sm text-gray-500">We Buy Palm Oil</h4>
-                                    </div>
+                                    <h4 class="text-sm text-gray-500">We Buy Palm Oil</h4>
                                 </div>
                             </div>
                         </div>
-                        <!-- Slider controls -->
-                        <button type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full cursor-pointer group focus:outline-none" data-carousel-prev>
-                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                                <i class="fas fa-chevron-left"></i>
-                                <span class="sr-only">Previous</span>
-                            </span>
-                        </button>
-                        <button type="button" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full cursor-pointer group focus:outline-none" data-carousel-next>
-                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                                <i class="fas fa-chevron-right"></i>
-                                <span class="sr-only">Next</span>
-                            </span>
-                        </button>
-                    </div>
-                </div>
-                <div class="4xl:basis-1/2">
-                    <div class="flex gap-1">
-                        <h3 class="font-bold text-lg text-gray-600">New Selling Leads</h3>
-                        <h4 class="font-thin text-lg">(387)</h4>
-                    </div>
-                    <div class="relative" id="default-carousel" data-carousel="static">
-                        <div class="relative overflow-hidden rounded-lg h-40">
-                            <div class="hidden" data-carousel-item>
-                                <div class="grid grid-cols-3 space-x-1 ml-2 mr-2 pl-10 border border-gray-300 h-40 min-h-[128px] rounded-md p-5">
-                                    <div class="space-y-6 w-32 my-auto">
-                                        <div class="flex gap-2">
-                                            <img src="https://flagcdn.com/w40/gh.png" srcset="https://flagcdn.com/w40/gh.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
-                                            <div class="my-auto">
-                                                <h5 class="text-sm my-auto">Ghana</h5>
-                                                <p class="text-xs text-gray-400">31-07-2023</p>
-                                            </div>
+                        <div class="hidden" data-carousel-item>
+                            <div class="grid grid-cols-3 space-x-1 ml-2 mr-2 pl-10 border border-gray-300 rounded-md p-5 h-40 min-h-[128px]">
+                                <div class="space-y-6 pr-2 w-40 my-auto">
+                                    <div class="flex gap-2">
+                                        <img src="https://flagcdn.com/w40/tz.png" srcset="https://flagcdn.com/w40/tz.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
+                                        <div class="my-auto">
+                                            <h5 class="text-sm my-auto">Tanzania</h5>
+                                            <p class="text-xs text-gray-400">31-07-2023</p>
                                         </div>
-                                        <h4 class="text-sm text-gray-500">We Sell Oil</h4>
                                     </div>
-                                    <div class="space-y-6 w-32 my-auto">
-                                        <div class="flex gap-2">
-                                            <img src="https://flagcdn.com/w40/cd.png" srcset="https://flagcdn.com/w40/cd.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
-                                            <div class="my-auto">
-                                                <h5 class="text-sm my-auto">DRC</h5>
-                                                <p class="text-xs text-gray-400">31-07-2023</p>
-                                            </div>
-                                        </div>
-                                        <h4 class="text-sm text-gray-500 whitespace-normal">We Sell Diamonds</h4>
-                                    </div>
-                                    <div class="space-y-6 w-32 my-auto">
-                                        <div class="flex gap-2">
-                                            <img src="https://flagcdn.com/w40/na.png" srcset="https://flagcdn.com/w40/na.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
-                                            <div class="my-auto">
-                                                <h5 class="text-sm my-auto">Namibia</h5>
-                                                <p class="text-xs text-gray-400">31-07-2023</p>
-                                            </div>
-                                        </div>
-                                        <h4 class="text-sm text-gray-500">We Sell Palm Oil</h4>
-                                    </div>
+                                    <h4 class="text-sm text-gray-500">We Buy Crude Oil</h4>
                                 </div>
-                            </div>
-                            <div class="hidden" data-carousel-item>
-                                <div class="grid grid-cols-3 space-x-1 ml-2 mr-2 pl-10 border border-gray-300 rounded-md p-5 h-40 min-h-[128px]">
-                                    <div class="space-y-6 pr-2 w-32 my-auto">
-                                        <div class="flex gap-2">
-                                            <img src="https://flagcdn.com/w40/rw.png" srcset="https://flagcdn.com/w40/rw.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
-                                            <div class="my-auto">
-                                                <h5 class="text-sm my-auto">Rwanda</h5>
-                                                <p class="text-xs text-gray-400">31-07-2023</p>
-                                            </div>
+                                <div class="space-y-6 pr-2 w-40 my-auto">
+                                    <div class="flex gap-2">
+                                        <img src="https://flagcdn.com/w40/za.png" srcset="https://flagcdn.com/w40/za.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
+                                        <div class="my-auto">
+                                            <h5 class="text-sm my-auto">South Africa</h5>
+                                            <p class="text-xs text-gray-400">31-07-2023</p>
                                         </div>
-                                        <h4 class="text-sm text-gray-500">We Sell Gold</h4>
                                     </div>
-                                    <div class="space-y-6 pr-2 w-32 my-auto">
-                                        <div class="flex gap-2">
-                                            <img src="https://flagcdn.com/w40/za.png" srcset="https://flagcdn.com/w40/za.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
-                                            <div class="my-auto">
-                                                <h5 class="text-sm my-auto">South Africa</h5>
-                                                <p class="text-xs text-gray-400">31-07-2023</p>
-                                            </div>
+                                    <h4 class="text-sm text-gray-500 whitespace-normal">We Buy Refined Coconut Oil</h4>
+                                </div>
+                                <div class="hidden lg:block space-y-6 pr-2 w-40 my-auto">
+                                    <div class="flex gap-2">
+                                        <img src="https://flagcdn.com/w40/et.png" srcset="https://flagcdn.com/w40/et.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
+                                        <div class="my-auto">
+                                            <h5 class="text-sm my-auto">Ethiopia</h5>
+                                            <p class="text-xs text-gray-400">31-07-2023</p>
                                         </div>
-                                        <h4 class="text-sm text-gray-500 whitespace-normal">We Sell Bananas</h4>
                                     </div>
-                                    <div class="space-y-6 w-32 my-auto">
-                                        <div class="flex gap-2">
-                                            <img src="https://flagcdn.com/w40/et.png" srcset="https://flagcdn.com/w40/et.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
-                                            <div class="my-auto">
-                                                <h5 class="text-sm my-auto">Ethiopia</h5>
-                                                <p class="text-xs text-gray-400">31-07-2023</p>
-                                            </div>
-                                        </div>
-                                        <h4 class="text-sm text-gray-500">We Sell Palm Oil</h4>
-                                    </div>
+                                    <h4 class="text-sm text-gray-500">We Buy Palm Oil</h4>
                                 </div>
                             </div>
                         </div>
-                        <!-- Slider controls -->
-                        <button type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full cursor-pointer group focus:outline-none" data-carousel-prev>
-                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                                <i class="fas fa-chevron-left"></i>
-                                <span class="sr-only">Previous</span>
-                            </span>
-                        </button>
-                        <button type="button" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full cursor-pointer group focus:outline-none" data-carousel-next>
-                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                                <i class="fas fa-chevron-right"></i>
-                                <span class="sr-only">Next</span>
-                            </span>
-                        </button>
                     </div>
-                </div>
-                @auth
-                    <div class="hidden 4xl:block 4xl:basis-1/3">
-                        <div class="flex gap-1">
-                            <h3 class="font-semibold text-lg">Your Buying Requests</h3>
-                        </div>
-                        <div class="bg-gray-200 rounded-md p-2">
-                            <div class="flex gap-2 w-full justify-end">
-                                <h6 class="text-sm">Email:</h6>
-                                <h6 class="text-sm font-bold">oolooaloo@dist.co.ke</h6>
-                                <i class="fas fa-chevron-down text-sm"></i>
-                            </div>
-                            <textarea name="" rows="3" class="w-full border border-gray-300 rounded-lg placeholder-gray-400" placeholder="Enter Your Message Here..."></textarea>
-                            <x-primary-button class="w-full">Submit</x-primary-button>
-                        </div>
-                    </div>
-                @endauth
-            </div>
-
-            <div class="products">
-                <div class="flex justify-between">
-                    <h3 class="font-bold tracking-wide text-lg text-gray-600">Top Product Picks For You</h3>
-                    <h4 class="font-semibold text-sm">See All <i class="fas fa-arrow-circle-right"></i></h4>
-                </div>
-                <div class="space-y-2 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-4 4xl:grid-cols-5 gap-2 py-4">
-                    @foreach ($products as $product)
-                        <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
-                            <a href="{{ route('product', ['slug' => $product->slug]) }}">
-                                <img src="{{ $product->media->where('type', 'image')->first()->file }}" class="rounded border-gray-200 w-full h-52 object-cover" alt="">
-                                <div class="">
-                                    <h4 class="font-extrabold text-gray-500">{{ $product->name }}</h4>
-                                    @if ($product->price)
-                                        <h4 class="font-extrabold uppercase text-gray-700">{{ $product->currency ? $product->currency : 'USD' }} {{ number_format($product->price) }}</h4>
-                                    @else
-                                        <h4 class="font-extrabold uppercase text-gray-700">{{ $product->currency ? $product->currency : 'USD' }} {{ number_format($product->min_price) }} - {{ $product->currency ? $product->currency : 'USD' }} {{ number_format($product->max_price) }}</h4>
-                                    @endif
-                                    @if ($product->min_order_quantity)
-                                        <h5 class="text-sm text-gray-500 font-semibold">Minimum Order: {{ $product->min_order_quantity }}</h5>
-                                    @endif
-                                </div>
-                            </a>
-                        </div>
-                    @endforeach
-                    {{-- <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
-                        <a href="{{ route('product') }}">
-                            <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="rounded border border-gray-200 w-full h-52 object-cover" alt="">
-                            <div class="">
-                                <h4 class="font-extrabold text-gray-500">Diamond</h4>
-                                <h4 class="font-extrabold uppercase text-gray-700">US $ 10.20 - US $ 400.37</h4>
-                                <h5 class="text-sm text-gray-500 font-semibold">Minimum Order: 100 Pieces</h5>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
-                        <a href="{{ route('product') }}">
-                            <img src="{{ asset('assets/img/skLbbi.jpg') }}" class="rounded border border-gray-200 w-full h-52 object-cover" alt="">
-                            <div class="">
-                                <h4 class="font-extrabold text-gray-500">Platinum</h4>
-                                <h4 class="font-extrabold uppercase text-gray-700">US $ 100 - US $ 2000</h4>
-                                <h5 class="text-sm text-gray-500 font-semibold">Minimum Order: 50 Pieces</h5>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
-                        <a href="{{ route('product') }}">
-                            <img src="{{ asset('assets/img/W8ZUrJ.jpg') }}" class="rounded border border-gray-200 w-full h-52 object-cover" alt="">
-                            <div class="">
-                                <h4 class="font-extrabold text-gray-500">Iron Ore</h4>
-                                <h4 class="font-extrabold uppercase text-gray-700">US $ 2.20 - US $ 3.37</h4>
-                                <h5 class="text-sm text-gray-500 font-semibold">Minimum Order: 10 Pieces</h5>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="bg-gray-200 p-3 rounded-md hover:cursor-pointer">
-                        <a href="{{ route('product') }}">
-                            <img src="{{ asset('assets/img/6CeuCO.jpg') }}" class="rounded border border-gray-200 w-full h-52 object-cover" alt="">
-                            <div class="">
-                                <h4 class="font-extrabold text-gray-500">Blue Tanzanite</h4>
-                                <h4 class="font-extrabold uppercase text-gray-700">US $ 3.80 - US $ 6.00</h4>
-                                <h5 class="text-sm text-gray-500 font-semibold">Minimum Order: 50 Pieces</h5>
-                            </div>
-                        </a>
-                    </div> --}}
+                    <!-- Slider controls -->
+                    <button type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full cursor-pointer group focus:outline-none" data-carousel-prev>
+                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                            <i class="fas fa-chevron-left"></i>
+                            <span class="sr-only">Previous</span>
+                        </span>
+                    </button>
+                    <button type="button" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full cursor-pointer group focus:outline-none" data-carousel-next>
+                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                            <i class="fas fa-chevron-right"></i>
+                            <span class="sr-only">Next</span>
+                        </span>
+                    </button>
                 </div>
             </div>
-
-            <div class="vendors hidden">
-                <div class="flex justify-between">
-                    <h3 class="font-bold tracking-wide text-lg text-gray-600">Top Vendors Picks For You</h3>
-                    <h4 class="font-semibold text-sm">See All <i class="fas fa-arrow-circle-right"></i></h4>
+            <div class="">
+                <div class="flex gap-1">
+                    <h3 class="font-bold text-lg text-gray-600">New Selling Leads</h3>
+                    <h4 class="text-lg">(387)</h4>
                 </div>
-                <div class="grid md:grid-cols-1 lg:grid-cols-2 4xl:grid-cols-3 gap-4 py-4">
-                    @foreach ($businesses as $business)
-                        <x-card class="border-2 border-gray-400 grid md:grid-cols-2 gap-1">
-                            <div>
-                                <a href="{{ route('vendor.storefront', ['slug' => $business->slug]) }}">
-                                    <div class="flex gap-1">
-                                        {{-- <span class="w-12 h-12 bg-gray-300 rounded-full text-center pt-3 font-bold text-white">E</span> --}}
-                                        <img src="https://ui-avatars.com/api/?name={!! $business->name !!}&rounded=true&size=60" alt="" />
-                                        <div class="">
-                                            <h1 class="font-bold text-sm">{{ $business->name }}</h1>
-                                            <div class="flex gap-2">
-                                                <h4 class="text-xs text-gray-500">Verified</h4>
-                                                <i class="fas fa-shield-alt text-sm text-red-800"></i>
-                                            </div>
-                                            <h5 class="text-xs text-gray-400">{{ $business->created_at->diffForHumans() }}</h5>
+                <div class="relative" id="default-carousel" data-carousel="static">
+                    <div class="relative overflow-hidden rounded-lg h-40">
+                        <div class="hidden" data-carousel-item>
+                            <div class="grid md:grid-cols-2 lg:grid-cols-3 space-x-1 ml-2 mr-2 pl-10 border border-gray-300 h-40 min-h-[128px] rounded-md p-5">
+                                <div class="space-y-6 w-32 my-auto">
+                                    <div class="flex gap-2">
+                                        <img src="https://flagcdn.com/w40/gh.png" srcset="https://flagcdn.com/w40/gh.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
+                                        <div class="my-auto">
+                                            <h5 class="text-sm my-auto">Ghana</h5>
+                                            <p class="text-xs text-gray-400">31-07-2023</p>
                                         </div>
                                     </div>
-                                </a>
-                                <div class="flex gap-2">
-                                    <h4 class="text-sm font-bold text-gray-600">Rating:</h4>
-                                    <div class="review__info">
-                                        <div class="review__star">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <span style="width: 40%">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            </span>
+                                    <h4 class="text-sm text-gray-500">We Sell Oil</h4>
+                                </div>
+                                <div class="space-y-6 w-40 my-auto">
+                                    <div class="flex gap-2">
+                                        <img src="https://flagcdn.com/w40/cd.png" srcset="https://flagcdn.com/w40/cd.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
+                                        <div class="my-auto">
+                                            <h5 class="text-sm my-auto">DRC</h5>
+                                            <p class="text-xs text-gray-400">31-07-2023</p>
                                         </div>
                                     </div>
+                                    <h4 class="text-sm text-gray-500 whitespace-normal">We Sell Diamonds</h4>
                                 </div>
-                                <div class="">
-                                    <h4 class="text-sm font-bold text-gray-600">Vendor Info:</h4>
-                                    <div class="flex flex-col gap-1">
-                                        <span class="text-sm">
-                                            <strong>HQ:</strong> {{ $business->city ? $business->city->name : '' }}, {{ $business->country->name }}
-                                        </span>
-                                        <span class="text-sm">
-                                            <strong>Products:</strong> Gold, Diamond, Platinum
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex flex-col gap-3">
-                                <img src="{{ $business->primary_cover_image }}" alt="" class="w-full h-44 object-cover rounded-md">
-                                @auth
-                                    @if (auth()->user()->hasRole('buyer') && (auth()->id() != $business->user->id))
-                                        <a href="{{ route('messages', ['user' => $business->user]) }}">
-                                            <x-secondary-outline-button class="text-center text-primary-one w-full font-semibold justify-center hover:bg-orange-300 hover:border-orange-400">
-                                                Message Vendor
-                                            </x-secondary-outline-button>
-                                        </a>
-                                    @endif
-                                @else
-                                    <a href="{{ route('messages', ['user' => $business->user]) }}">
-                                        <x-secondary-outline-button class="text-center text-primary-one w-full font-semibold justify-center hover:bg-orange-300 hover:border-orange-400">
-                                            Message Vendor
-                                        </x-secondary-outline-button>
-                                    </a>
-                                @endauth
-                            </div>
-                        </x-card>
-                    @endforeach
-                    {{-- <x-card class="border-2 border-gray-400 grid md:grid-cols-2">
-                        <div>
-                            <a href="{{ route('vendor.storefront') }}">
-                                <div class="flex gap-1">
-                                    <span class="w-12 h-12 bg-gray-300 rounded-full text-center pt-3 font-bold text-white">N</span>
-                                    <div class="">
-                                        <h1 class="font-bold text-sm">Neptune Traders.</h1>
-                                        <div class="flex gap-2">
-                                            <h4 class="text-xs text-gray-500">Verified</h4>
-                                            <i class="fas fa-shield-alt text-sm text-red-800"></i>
+                                <div class="hidden lg:block space-y-6 pr-2 w-40 my-auto">
+                                    <div class="flex gap-2">
+                                        <img src="https://flagcdn.com/w40/na.png" srcset="https://flagcdn.com/w40/na.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
+                                        <div class="my-auto">
+                                            <h5 class="text-sm my-auto">Namibia</h5>
+                                            <p class="text-xs text-gray-400">31-07-2023</p>
                                         </div>
-                                        <h5 class="text-xs text-gray-500">3 Years</h5>
                                     </div>
-                                </div>
-                            </a>
-                            <div class="flex gap-2">
-                                <h4 class="text-sm font-bold text-gray-600">Rating:</h4>
-                                <div class="review__info">
-                                    <div class="review__star">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <span style="width: 60%">
-                                           <i class="fas fa-star"></i>
-                                           <i class="fas fa-star"></i>
-                                           <i class="fas fa-star"></i>
-                                           <i class="fas fa-star"></i>
-                                           <i class="fas fa-star"></i>
-                                        </span>
-                                     </div>
-                                </div>
-                            </div>
-                            <div class="">
-                                <h4 class="text-sm font-bold text-gray-600">Vendor Info:</h4>
-                                <div class="flex flex-col gap-2">
-                                    <span class="text-sm">
-                                        <strong>HQ:</strong> Nairobi Industrial Area
-                                    </span>
-                                    <span class="text-sm">
-                                        <strong>Products:</strong> Minerals
-                                    </span>
+                                    <h4 class="text-sm text-gray-500">We Sell Palm Oil</h4>
                                 </div>
                             </div>
                         </div>
-                        <div class="flex flex-col gap-3">
-                            <img src="{{ asset('assets/img/6CeuCO.jpg') }}" alt="" class="w-full h-44 object-cover rounded-md">
-                            <x-secondary-outline-button class="text-center bg-orange-500 text-orange-600 tracking-tighter font-thin justify-center hover:bg-orange-300 hover:border-orange-400">
-                                Message Vendor
-                            </x-secondary-outline-button>
-                        </div>
-                    </x-card>
-                    <x-card class="border-2 border-gray-400 grid md:grid-cols-2">
-                        <div>
-                            <a href="{{ route('vendor.storefront') }}">
-                                <div class="flex gap-1">
-                                    <span class="w-12 h-12 bg-gray-300 rounded-full text-center pt-3 font-bold text-white">E</span>
-                                    <div class="">
-                                        <h1 class="font-bold text-sm">Imani Fluid Co.</h1>
-                                        <div class="flex gap-2">
-                                            <h4 class="text-xs text-gray-500">Verified</h4>
-                                            <i class="text-sm fas fa-shield-alt text-red-800"></i>
+                        <div class="hidden" data-carousel-item>
+                            <div class="grid grid-cols-3 space-x-1 ml-2 mr-2 pl-10 border border-gray-300 rounded-md p-5 h-40 min-h-[128px]">
+                                <div class="space-y-6 pr-2 w-40 my-auto">
+                                    <div class="flex gap-2">
+                                        <img src="https://flagcdn.com/w40/rw.png" srcset="https://flagcdn.com/w40/rw.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
+                                        <div class="my-auto">
+                                            <h5 class="text-sm my-auto">Rwanda</h5>
+                                            <p class="text-xs text-gray-400">31-07-2023</p>
                                         </div>
-                                        <h5 class="text-xs text-gray-500">1 Years</h5>
                                     </div>
+                                    <h4 class="text-sm text-gray-500">We Sell Gold</h4>
                                 </div>
-                            </a>
-                            <div class="flex gap-2">
-                                <h4 class="text-sm font-bold text-gray-600">Rating:</h4>
-                                <div class="review__info">
-                                    <div class="review__star">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <span style="width: 30%">
-                                           <i class="fas fa-star"></i>
-                                           <i class="fas fa-star"></i>
-                                           <i class="fas fa-star"></i>
-                                           <i class="fas fa-star"></i>
-                                           <i class="fas fa-star"></i>
-                                        </span>
-                                     </div>
-                                </div>
-                            </div>
-                            <div class="">
-                                <h4 class="text-sm font-bold text-gray-600">Vendor Info:</h4>
-                                <div class="flex flex-col gap-2">
-                                    <span class="text-sm">
-                                        <strong>HQ:</strong> Nairobi Industrial Area
-                                    </span>
-                                    <span class="text-sm">
-                                        <strong>Products:</strong> Gold, Mercury
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex flex-col gap-3">
-                            <img src="{{ asset('assets/img/W8ZUrJ.jpg') }}" alt="" class="w-full h-44 object-cover rounded-md">
-                            <x-secondary-outline-button class="text-center bg-orange-500 text-orange-600 tracking-tighter font-thin justify-center hover:bg-orange-300 hover:border-orange-400">
-                                Message Vendor
-                            </x-secondary-outline-button>
-                        </div>
-                    </x-card>
-                    <x-card class="border-2 border-gray-400 grid md:grid-cols-2">
-                        <div>
-                            <a href="{{ route('vendor.storefront') }}">
-                                <div class="flex gap-1">
-                                    <span class="w-12 h-12 bg-gray-300 rounded-full text-center pt-3 font-bold text-white">E</span>
-                                    <div class="">
-                                        <h1 class="font-bold text-sm">Kraken Traders</h1>
-                                        <div class="flex gap-2">
-                                            <h4 class="text-xs text-gray-500">Verified</h4>
-                                            <i class="fas fa-shield-alt text-red-800 text-sm"></i>
+                                <div class="space-y-6 pr-2 w-40 my-auto">
+                                    <div class="flex gap-2">
+                                        <img src="https://flagcdn.com/w40/za.png" srcset="https://flagcdn.com/w40/za.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
+                                        <div class="my-auto">
+                                            <h5 class="text-sm my-auto">South Africa</h5>
+                                            <p class="text-xs text-gray-400">31-07-2023</p>
                                         </div>
-                                        <h5 class="text-xs text-gray-500">1.2 Years</h5>
                                     </div>
+                                    <h4 class="text-sm text-gray-500 whitespace-normal">We Sell Bananas</h4>
                                 </div>
-                            </a>
-                            <div class="flex gap-2">
-                                <h4 class="text-sm font-bold text-gray-600">Rating:</h4>
-                                <div class="review__info">
-                                    <div class="review__star">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <span style="width: 50%">
-                                           <i class="fas fa-star"></i>
-                                           <i class="fas fa-star"></i>
-                                           <i class="fas fa-star"></i>
-                                           <i class="fas fa-star"></i>
-                                           <i class="fas fa-star"></i>
-                                        </span>
-                                     </div>
-                                </div>
-                            </div>
-                            <div class="">
-                                <h4 class="text-sm font-bold text-gray-600">Vendor Info:</h4>
-                                <div class="flex flex-col gap-2">
-                                    <span class="text-sm">
-                                        <strong>HQ:</strong> Nairobi Industrial Area
-                                    </span>
-                                    <span class="text-sm">
-                                        <strong>Products:</strong> Gold, Diamond, Platinum
-                                    </span>
+                                <div class="hidden lg:block space-y-6 pr-2 w-40 my-auto">
+                                    <div class="flex gap-2">
+                                        <img src="https://flagcdn.com/w40/et.png" srcset="https://flagcdn.com/w40/et.png 2x" alt="" class="w-8 h-8 rounded-full object-cover">
+                                        <div class="my-auto">
+                                            <h5 class="text-sm my-auto">Ethiopia</h5>
+                                            <p class="text-xs text-gray-400">31-07-2023</p>
+                                        </div>
+                                    </div>
+                                    <h4 class="text-sm text-gray-500">We Sell Palm Oil</h4>
                                 </div>
                             </div>
                         </div>
-                        <div class="flex flex-col gap-3">
-                            <img src="{{ asset('assets/img/skLbbi.jpg') }}" alt="" class="w-full h-44 object-cover rounded-md">
-                            <x-secondary-outline-button class="text-center bg-orange-500 text-orange-600 tracking-tighter font-thin justify-center hover:bg-orange-300 hover:border-orange-400">
-                                Message Vendor
-                            </x-secondary-outline-button>
-                        </div>
-                    </x-card> --}}
+                    </div>
+                    <!-- Slider controls -->
+                    <button type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full cursor-pointer group focus:outline-none" data-carousel-prev>
+                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                            <i class="fas fa-chevron-left"></i>
+                            <span class="sr-only">Previous</span>
+                        </span>
+                    </button>
+                    <button type="button" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full cursor-pointer group focus:outline-none" data-carousel-next>
+                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                            <i class="fas fa-chevron-right"></i>
+                            <span class="sr-only">Next</span>
+                        </span>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+    <div class="px-4 lg:px-24 lg:flex gap-10 mt-5 w-full">
+        <div class="space-y-2 py-2">
+            <div class="flex text-sm px-2">
+                <i class="fas fa-map-marker-alt my-auto text-red-600 mr-1"></i>
+                <h2 class="font-extrabold text-gray-500 truncate">Show products/suppliers available in</h2>
+            </div>
+            <livewire:home-countries-view />
+        </div>
+    </div>
+    <div class="px-4 lg:px-24">
+        <label for="themeSwitcherThree" class="themeSwitcherThree relative inline-flex cursor-pointer select-none items-center justify-center my-2">
+            <input type="checkbox" name="themeSwitcherThree" id="themeSwitcherThree" class="sr-only">
+            <div class="shadow-card flex h-[40px] w-[192px] items-center justify-between gap-2" id="switch-toggle" onclick="toggleTheme()">
+                <h4 id="products-toggle" class="bg-orange-200 border-2 border-primary-one px-4 py-1 rounded-full text-primary-one ml-3 transition duration-200 ease-out font-semibold">Products</h4>
+                <h4 id="vendors-toggle" class="border-2 border-gray-400 px-4 py-1 rounded-full transition duration-200 ease-out mr-4">Vendors</h4>
+            </div>
+        </label>
+
+        <div class="flex justify-between">
+            <h3 class="font-bold tracking-wide text-lg text-gray-600">Top Picks For You</h3>
+            <h4 class="font-semibold text-sm">See All <i class="fas fa-arrow-circle-right"></i></h4>
+        </div>
+    </div>
+    <div class="px-4 lg:px-24 mt-5">
+        <div class="products">
+            <livewire:home-products-list />
+        </div>
+
+        <div class="vendors hidden">
+            <livewire:home-vendors-list />
+        </div>
+    </div>
+
+    <div class="px-2 md:px-8 lg:px-24 my-5">
+        <div class="bg-black rounded-lg w-full md:h-[30%] md:flex">
+            <div class="basis-1/2 flex flex-col space-y-4 p-12">
+                <h3 class="text-white font-[900] text-4xl text-center md:text-left">Popular Suppliers</h3>
+                <span class="text-white text-xl font-bold text-center md:text-left">Discover the best Products</span>
+                <button class="bg-white rounded-full w-full lg:w-[50%] py-2 font-semibold">View More</button>
+            </div>
+            <img src="{{ asset('assets/img/3skZmX.jpg') }}" class="basis-1/2 w-full md:h-[310px] lg:h-[280px] object-cover rounded-tr-lg rounded-br-lg" alt="">
+        </div>
+    </div>
+
     <script>
         const switchToggle = document.querySelector('#switch-toggle');
         const productsToggle = document.querySelector('#products-toggle');
@@ -587,18 +313,17 @@
 
         function switchTheme (){
             if (isProductmode) {
-                productsToggle.classList.add('bg-primary-one', 'px-4', 'py-1', 'rounded-full', 'text-white', 'ml-3', 'font-semibold');
-                productsToggle.classList.remove('text-black', 'ml-3')
-                vendorsToggle.classList.remove('bg-primary-one', 'px-4', 'py-1', 'rounded-full', 'text-white', 'font-semibold')
-                vendorsToggle.classList.add('text-black', 'mr-4')
-                productsList.classList.remove('hidden')
+                productsToggle.classList.add('bg-orange-200', 'border-primary-one', 'text-primary-one');
+                productsList.classList.remove('hidden', 'border-gray-400')
+                productsToggle.classList.remove('text-black')
+                vendorsToggle.classList.remove('bg-orange-200', 'border-primary-one', 'text-primary-one')
+                vendorsToggle.classList.add('text-black', 'border-gray-400')
                 vendorsList.classList.add('hidden')
             } else {
-                productsToggle.classList.remove('bg-primary-one', 'px-4', 'py-1', 'rounded-full', 'ml-3', 'text-white', 'font-semibold')
-                productsToggle.classList.add('text-black', 'ml-3')
+                productsToggle.classList.remove('bg-orange-200', 'border-primary-one', 'text-primary-one')
+                productsToggle.classList.add('text-black', 'border-gray-400')
                 productsList.classList.add('hidden')
-                vendorsToggle.classList.add('bg-primary-one', 'px-4', 'py-1', 'rounded-full', 'text-white', 'font-semibold', 'mr-4')
-                vendorsToggle.classList.remove('mr-4')
+                vendorsToggle.classList.add('bg-orange-200', 'border-primary-one', 'text-primary-one')
                 vendorsList.classList.remove('hidden')
             }
         }

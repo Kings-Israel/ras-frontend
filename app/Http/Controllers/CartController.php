@@ -29,17 +29,19 @@ class CartController extends Controller
             'amount' => ['required', 'integer'],
         ]);
 
+        if (auth()->user()->hasRole('vendor')) {
+            if (auth()->user()->business && auth()->user()->business->id == $request->business->id) {
+                toastr()->error('', 'Cannot add own product to cart');
+                return back();
+            }
+        }
+
         $cart = auth()->user()->cart;
         if (!$cart) {
             $cart = auth()->user()->cart()->create();
         }
 
-        $item_exists = CartItem::where('cart_id', $cart->id)->where('product_id', $request->product_id)->first();
-
-        if ($item_exists) {
-            toastr()->error('', 'Item already exists in cart');
-            return back();
-        }
+        CartItem::where('cart_id', $cart->id)->delete();
 
         CartItem::create([
             'cart_id' => $cart->id,
@@ -48,7 +50,7 @@ class CartController extends Controller
             'amount' => $request->amount,
         ]);
 
-        toastr()->success('', 'Item added to cart successfully');
+        // toastr()->success('', 'Item added to cart successfully');
 
         if (request()->wantsJson()) {
             return response()->json(['cart' => $cart->load('cartItems.product.media')], 200);

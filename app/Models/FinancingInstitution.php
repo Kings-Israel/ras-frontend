@@ -6,10 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Notifications\Notification;
+use Musonza\Chat\Traits\Messageable;
 
 class FinancingInstitution extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable, Messageable;
 
     /**
      * The attributes that aren't mass assignable.
@@ -23,6 +28,27 @@ class FinancingInstitution extends Model
      */
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'financing_institution_users', 'role_id', 'user_id');
+        return $this->belongsToMany(User::class, 'financing_institution_users', 'financing_institution_id', 'user_id');
+    }
+
+    /**
+     * Get all of the financingRequests for the FinancingInstitution
+     */
+    public function financingRequests(): HasMany
+    {
+        return $this->hasMany(FinancingRequest::class);
+    }
+
+    /**
+     * Get all of the orderFinancings for the FinancingInstitution
+     */
+    public function orderFinancings(): HasMany
+    {
+        return $this->hasMany(OrderFinancing::class);
+    }
+
+    public function wallet(): MorphOne
+    {
+        return $this->morphOne(Wallet::class, 'walleteable');
     }
 }

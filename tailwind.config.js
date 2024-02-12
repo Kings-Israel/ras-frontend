@@ -16,13 +16,13 @@ export default {
                 sans: ['CenturyGothic', ...defaultTheme.fontFamily.sans],
             },
             backgroundImage: {
-                'auth': "url('/ras/assets/img/6CeuCO.jpg')",
-                'auth-alt': "url('/ras/assets/img/auth-bg-1.png')",
-                'auth-alt-two': "url('/ras/assets/img/auth-alt-three.jpg')",
-                'auth-alt-three': "url('/ras/assets/img/auth-alt-four.jpg')",
-                'auth-alt-four': "url('/ras/assets/img/auth-alt-five.jpg')",
-                'auth-alt-five': "url('/ras/assets/img/auth-alt-six.jpg')",
-                'hero': "url('/ras/assets/img/banner.png')",
+                'auth': "url('/assets/img/6CeuCO.jpg')",
+                'auth-alt': "url('/assets/img/auth-bg-1.png')",
+                'auth-alt-two': "url('/assets/img/auth-alt-three.jpg')",
+                'auth-alt-three': "url('/assets/img/auth-alt-four.jpg')",
+                'auth-alt-four': "url('/assets/img/auth-alt-five.jpg')",
+                'auth-alt-five': "url('/assets/img/auth-alt-six.jpg')",
+                'hero': "url('/assets/img/banner.png')",
             },
             screens: {
                 '4xl': '1900px'
@@ -36,6 +36,7 @@ export default {
                 'secondary-four': '#F9CB0B',
                 'secondary-five': '#30D1D1',
                 'secondary-six': '#00D666',
+                'primary-three': '#F8F7F0'
             },
         },
     },

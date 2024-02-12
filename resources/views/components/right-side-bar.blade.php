@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <div class="px-2">
     <div class="flex justify-between">
         <h2 class="font-bold text-lg my-auto">Statistics</h2>
@@ -14,66 +15,94 @@
     </div>
     <div class="mt-10 space-y-4">
         <div class="bg-lime-100 dark:bg-lime-100 p-3 rounded-md flex gap-2 mx-2">
-            <span class="inline-flex items-center justify-center px-4 py-2 ml-2 text-yellow-500 text-xl bg-white rounded-full">
+            <span class="inline-flex items-center justify-center px-4 py-2 ml-2 text-yellow-500 text-md bg-white rounded-full">
                 <i class="fas fa-shopping-bag"></i>
             </span>
             <div class="ml-2 overflow-x-auto">
                 <span class="text-sm">Orders</span>
-                <h1 class="text-xl font-bold">368</h1>
+                <h1 class="text-md font-bold">{{ $orders_count }}</h1>
             </div>
         </div>
         <div class="bg-rose-200 dark:bg-pink-100 p-3 rounded-md flex gap-2 mx-2">
-            <span class="inline-flex items-center justify-center px-4 py-2 ml-2 text-pink-600 text-xl bg-white rounded-full">
+            <span class="inline-flex items-center justify-center px-4 py-2 ml-2 text-pink-600 text-md bg-white rounded-full">
                 <i class="fas fa-wallet"></i>
             </span>
             <div class="ml-2 overflow-x-auto">
                 <span class="text-sm">Revenue</span>
-                <h1 class="text-xl font-bold">Ksh.30,685,338</h1>
+                <h1 class="text-md font-bold">USD.{{ number_format($revenue) }}</h1>
             </div>
         </div>
-        <div class="bg-gray-200 dark:bg-gray-200 p-3 rounded-md flex gap-2 mx-2">
-            <span class="inline-flex items-center justify-center px-4 py-2 ml-2 text-green-600 text-xl bg-white rounded-full">
-                <i class="fas fa-money-bill-alt"></i>
-            </span>
-            <div class="ml-2 overflow-x-auto">
-                <span class="text-sm">Wallet Balance</span>
-                <h1 class="text-xl font-bold">Ksh.3,685,338</h1>
+        <div class="bg-gray-200 dark:bg-gray-200 p-3 rounded-md">
+            <div class="flex gap-2 mx-2">
+                <span class="inline-flex items-center justify-center px-4 py-2 ml-2 text-green-600 text-md bg-white rounded-full">
+                    <i class="fas fa-money-bill-alt"></i>
+                </span>
+                <div class="ml-2 overflow-x-auto w-full">
+                    <div class="flex justify-between">
+                        <span class="text-sm">Wallet Balance</span>
+                        <span class="text-sm text-end font-bold hover:cursor-pointer" id="update-wallet-btn">Update</span>
+                    </div>
+                    <h1 class="text-md font-bold">USD. <span id="wallet-balance">{{ number_format($wallet_balance) }}</span></h1>
+                </div>
             </div>
         </div>
     </div>
-    <div class="mt-10">
-        <h2 class="font-bold text-sm">Top Countries</h2>
-        <ul class="grid grid-cols-2 list-disc">
-            <li class="flex gap-2">
-                <i class="fas fa-circle mt-1 text-secondary-six text-xs"></i>
-                <div class="flex flex-col">
-                    <span class="text-sm font-semibold text-gray-500">
-                        Namibia
-                    </span>
-                    <span class="font-bold">65%</span>
-                </div>
-            </li>
-            <li class="flex gap-2">
-                <i class="fas fa-circle mt-1 text-green-800 text-xs"></i>
-                <div class="flex flex-col">
-                    <span class="text-sm font-semibold text-gray-500">Tanzania</span>
-                    <span class="font-bold">18%</span>
-                </div>
-            </li>
-            <li class="flex gap-2">
-                <i class="fas fa-circle text-primary-two text-xs mt-1"></i>
-                <div class="flex flex-col">
-                    <span class="text-sm font-semibold text-gray-500">Zimbabwe</span>
-                    <span class="font-bold">12%</span>
-                </div>
-            </li>
-            <li class="flex gap-2">
-                <i class="fas fa-circle mt-1 text-secondary-five text-xs"></i>
-                <div class="flex flex-col">
-                    <span class="text-sm font-semibold text-gray-500">Rwanda</span>
-                    <span class="font-bold">2%%</span>
-                </div>
-            </li>
-        </ul>
-    </div>
+    @if (count($top_countries) > 0)
+        <div class="mt-10">
+            <h2 class="font-bold text-sm">Top Countries</h2>
+            <ul class="grid grid-cols-2 list-disc">
+                @foreach ($top_countries as $country => $quantity)
+                    <li class="flex gap-2">
+                        @if ($quantity['country_details'])
+                            <img src="https://flagcdn.com/w20/{!! Str::lower($quantity['country_details']->iso) !!}.png" srcset="https://flagcdn.com/w20/{!! Str::lower($quantity['country_details']->iso) !!}.png" alt="" class="w-4 h-4 rounded-full object-cover">
+                        @else
+                            <i class="fas fa-circle mt-1 text-secondary-six text-xs"></i>
+                        @endif
+                        <div class="flex flex-col">
+                            <span class="text-sm font-semibold text-gray-500">
+                                {{ $country }}
+                            </span>
+                            <span class="font-bold">{{ $quantity['percentage'] }}%</span>
+                        </div>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 </div>
+<script src="{{ asset('assets/js/jquery-1.12.4.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    $('#update-wallet-btn').on('click', function() {
+        $('#update-wallet-btn').html('Updating...');
+        $.ajax({
+            method: "GET",
+            dataType: 'json',
+            headers: {
+                Accept: 'application/json'
+            },
+            url: "{{ route('wallet.balance') }}",
+            success: (response) => {
+                $('#update-wallet-btn').html('Update');
+                $('#wallet-balance').html(new Intl.NumberFormat().format(Number(response.balance)))
+                toastr.options =
+                {
+                    "closeButton" : true,
+                    "progressBar" : true,
+                    "positionClass" : "toast-top-right"
+                }
+                toastr.success("Wallet Balance Updated");
+            },
+            error: (response) => {
+                $('#update-wallet-btn').html('Update');
+                toastr.options =
+                {
+                    "closeButton" : true,
+                    "progressBar" : true,
+                    "positionClass" : "toast-top-right"
+                }
+                toastr.error("An error occurred. Please try again.");
+            }
+        })
+    })
+</script>

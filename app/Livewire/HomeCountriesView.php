@@ -4,10 +4,27 @@ namespace App\Livewire;
 
 use App\Models\Country;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class HomeCountriesView extends Component
 {
+    use WithPagination;
+
     public $search = '';
+
+    public $per_page = 8;
+
+    public $selected_countries = [];
+
+    public function updatedSelectedCountries()
+    {
+        info($this->selected_countries);
+    }
+
+    public function updatePagination()
+    {
+        $this->per_page += 5;
+    }
 
     public function render()
     {
@@ -16,8 +33,7 @@ class HomeCountriesView extends Component
                                         return $query->where('name', 'LIKE', '%'.$this->search.'%');
                                     })
                                     ->inRandomOrder()
-                                    ->get()
-                                    ->take(5)
+                                    ->paginate($this->per_page)
         ]);
     }
 }

@@ -72,6 +72,14 @@ return [
             'throw' => false,
         ],
 
+        'product' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/product'),
+            'url' => env('APP_URL').'/storage/product',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
         'chat' => [
             'driver' => 'local',
             'root' => storage_path('app/public/chat'),
@@ -80,6 +88,29 @@ return [
             'throw' => false,
         ],
 
+        'financing_request' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/financing_request'),
+            'url' => env('APP_URL').'/storage/financing_request',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
+        'insurance' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/insurance'),
+            'url' => env('APP_URL').'/storage/insurance',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
+        'reports' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/reports'),
+            'url' => env('APP_URL').'/storage/reports',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
     ],
 
     /*

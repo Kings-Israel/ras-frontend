@@ -77,11 +77,41 @@ class RolesSeeder extends Seeder
             'update inspection report',
             'delete inspection report',
 
+            // Inspection
+            'view inspection request',
+            'update inspection request',
+
+            // Insurance
+            'create insurance company',
+            'update insurance company',
+            'delete insurance company',
+            'view insurance company',
+
+            'view insurance request',
+            'update insurance request',
+
+            'view insurance report',
+            'create insurance report',
+            'update insurance report',
+            'delete insurance report',
+
             // Stocklift
             'create stocklift request',
             'view stocklift request',
             'update stocklift request',
             'delete stocklift request',
+
+            // Logistics Companies
+            'create logistics company',
+            'view logistics company',
+            'update logistics company',
+            'delete logistics company',
+
+            // Logistics
+            'create driver',
+            'update driver',
+            'delete driver',
+            'view driver',
 
             // Drivers
             'create delivery',
@@ -89,12 +119,17 @@ class RolesSeeder extends Seeder
             'update delivery',
             'delete delivery',
 
+<<<<<<< HEAD
             //vendor
             'view vendor',
             'manage vendor',
 
             //buyer
             'view buyer',
+=======
+            'view delivery request',
+            'update delivery request',
+>>>>>>> 36114d49060e971098fe654632b7d1f271d87e90
 
             // Settings
             'view settings',
@@ -164,10 +199,21 @@ class RolesSeeder extends Seeder
             'view inspection report',
             'update inspection report',
             'delete inspection report',
+            'view inspection request',
+            'update inspection request',
             'view delivery',
             'update delivery',
             'view vendor',
             'view buyer'
+        ];
+
+        $insurance_permissions = [
+            'view insurance request',
+            'update insurance request',
+            'view insurance report',
+            'create insurance report',
+            'update insurance report',
+            'delete insurance report',
         ];
 
         $driver_permissions = [
@@ -209,6 +255,7 @@ class RolesSeeder extends Seeder
             'view stocklift request',
             'update stocklift request',
             'delete stocklift request',
+<<<<<<< HEAD
             'view vendor',
             'view buyer',
             'view logistics request',
@@ -221,13 +268,32 @@ class RolesSeeder extends Seeder
             'setting units',
             'setting country',
             'view storage requests'
+=======
+            'create logistics company',
+            'view logistics company',
+            'update logistics company',
+            'delete logistics company',
+>>>>>>> 36114d49060e971098fe654632b7d1f271d87e90
         ];
 
-        $roles = ['admin', 'buyer', 'vendor', 'warehouse manager', 'financier', 'inspector', 'driver', 'deveint'];
+        $logistics_permissions = [
+            'create driver',
+            'update driver',
+            'delete driver',
+            'view driver',
+            'create stocklift request',
+            'view stocklift request',
+            'update stocklift request',
+            'delete stocklift request',
+            'view delivery request',
+            'update delivery request',
+        ];
+
+        $roles = ['admin', 'buyer', 'vendor', 'warehouse manager', 'financier', 'inspector', 'driver', 'deveint', 'insurer', 'logistics'];
 
         collect($all_permissions)->each(fn ($permission) => Permission::firstOrCreate(['name' => $permission]));
 
-        collect($roles)->each(function ($role) use ($warehouse_permissions, $transaction_permissions, $inspector_permissions, $deveint_permissions, $driver_permissions) {
+        collect($roles)->each(function ($role) use ($warehouse_permissions, $transaction_permissions, $inspector_permissions, $deveint_permissions, $driver_permissions, $insurance_permissions, $logistics_permissions) {
             $role = Role::firstOrCreate(['name' => $role]);
             // if ($role->name === 'vendor') {
             //     collect($vendor_permissions)->each(function ($permission) use ($role) {
@@ -265,6 +331,18 @@ class RolesSeeder extends Seeder
 
             if ($role->name === 'deveint') {
                 collect($deveint_permissions)->each(function($permission) use ($role) {
+                    $role->givePermissionTo($permission);
+                });
+            }
+
+            if ($role->name === 'insurer') {
+                collect($insurance_permissions)->each(function($permission) use ($role) {
+                    $role->givePermissionTo($permission);
+                });
+            }
+
+            if ($role->name === 'logistics') {
+                collect($logistics_permissions)->each(function($permission) use ($role) {
                     $role->givePermissionTo($permission);
                 });
             }

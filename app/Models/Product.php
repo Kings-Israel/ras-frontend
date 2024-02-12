@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\ProductScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Searchable\Searchable;
@@ -32,9 +34,18 @@ class Product extends Model implements Searchable
         'is_available' => 'bool',
     ];
 
+    protected static function booted(): void
+    {
+        static::addGlobalScope(new ProductScope);
+    }
+
     public function getSearchResult(): SearchResult
     {
-        $url = route('product', $this->slug);
+        if (auth()->check() && auth()->user()->business && $this->business->id && auth()->user()->business->id) {
+            $url = route('vendor.products.show', $this->slug);
+        } else {
+            $url = route('product', $this->slug);
+        }
 
         return new \Spatie\Searchable\SearchResult(
             $this,
@@ -51,7 +62,8 @@ class Product extends Model implements Searchable
         return SlugOptions::create()
             ->generateSlugsFrom(['name', 'id'])
             ->saveSlugsTo('slug')
-            ->usingSeparator('_');
+            ->usingSeparator('_')
+            ->doNotGenerateSlugsOnUpdate();
     }
 
     /**
@@ -73,6 +85,18 @@ class Product extends Model implements Searchable
     public function scopeAvailable($query)
     {
         return $query->where('is_available', true);
+    }
+
+
+    /**
+     * Get the certificate of origin
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getCertificateOfOriginAttribute($value)
+    {
+        return config('app.url').'/storage/product/certificate/'.$value;
     }
 
     public function isInCart(): bool
@@ -116,11 +140,11 @@ class Product extends Model implements Searchable
     }
 
     /**
-     * Get the warehouse that owns the Product
+     * The warehouses that belong to the Product
      */
-    public function warehouse(): BelongsTo
+    public function warehouses(): BelongsToMany
     {
-        return $this->belongsTo(Warehouse::class);
+        return $this->belongsToMany(Warehouse::class, 'warehouse_products', 'product_id', 'warehouse_id');
     }
 
     /**
@@ -129,5 +153,21 @@ class Product extends Model implements Searchable
     public function cartItems(): BelongsToMany
     {
         return $this->belongsToMany(CartItem::class);
+    }
+
+    /**
+     * Get all of the orderItems for the Product
+     */
+    public function orderItems(): HasMany
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
+    /**
+     * Get the discount associated with the Product
+     */
+    public function discount(): HasOne
+    {
+        return $this->hasOne(ProductDiscount::class);
     }
 }

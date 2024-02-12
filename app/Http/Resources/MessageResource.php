@@ -29,13 +29,13 @@ class MessageResource extends JsonResource
             'participation_id' => $this->participation_id,
             'type' => $this->type,
             'data' => $this->data,
-            'sender' => new UserResource($this->sender),
+            'sender' => new ConversationParticipantResource($this->sender),
             'participation' => [
                 'id' => $this->participation->id,
                 'conversation_id' => $this->participation->conversation_id,
                 'messageabble_id' => $this->participation->messageable_id,
                 'settings' => $this->participation->settings,
-                'messageable' => new UserResource($this->participation->messageable),
+                'messageable' => new ConversationParticipantResource($this->participation),
                 'created_at' => $this->participation->created_at,
                 'updated_at' => $this->participation->updated_at,
             ]

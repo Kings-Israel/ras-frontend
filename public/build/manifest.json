@@ -1,11 +1,30 @@
 {
+  "public/assets/img/talking.png": {
+    "file": "assets/talking-921b8355.png",
+    "src": "public/assets/img/talking.png"
+  },
+  "public/assets/img/user.png": {
+    "file": "assets/user-bff92b7c.png",
+    "src": "public/assets/img/user.png"
+  },
   "resources/css/app.css": {
-    "file": "assets/app-d949737b.css",
+    "file": "assets/app-dfcdee83.css",
     "isEntry": true,
     "src": "resources/css/app.css"
   },
+  "resources/js/app.css": {
+    "file": "assets/app-b4174579.css",
+    "src": "resources/js/app.css"
+  },
   "resources/js/app.js": {
-    "file": "assets/app-98d598f5.js",
+    "assets": [
+      "assets/user-bff92b7c.png",
+      "assets/talking-921b8355.png"
+    ],
+    "css": [
+      "assets/app-b4174579.css"
+    ],
+    "file": "assets/app-99dc903e.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   }

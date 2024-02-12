@@ -6,11 +6,32 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Notifications\Notifiable;
+use Musonza\Chat\Traits\Messageable;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
-class Warehouse extends Model
+class Warehouse extends Model implements Searchable
 {
-    use HasFactory;
+    use HasFactory, Notifiable, Messageable;
 
+    public function getSearchResult(): SearchResult
+    {
+        if (auth()->check() && auth()->user()->hasRole('vendor')) {
+            $url = route('vendor.warehouse.show', $this->id);
+        } else {
+            $url = '';
+        }
+
+        return new \Spatie\Searchable\SearchResult(
+            $this,
+            $this->name,
+            $url
+        );
+    }
 
     /**
      * The users that belong to the UserWarehouse
@@ -34,5 +55,44 @@ class Warehouse extends Model
     public function city(): BelongsTo
     {
         return $this->belongsTo(City::class);
+    }
+
+    /**
+     * The products that belong to the Warehouse
+     */
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, 'warehouse_products', 'warehouse_id', 'product_id')->withPivot('created_at', 'quantity', 'status', 'payment_status');
+    }
+
+    /**
+     * Get all of the warehouseOrders for the Warehouse
+     */
+    public function warehouseOrders(): HasMany
+    {
+        return $this->hasMany(WarehouseOrder::class);
+    }
+
+    public function orderRequests(): MorphMany
+    {
+        return $this->morphMany(OrderRequest::class, 'requesteable');
+    }
+
+    public function wallet(): MorphOne
+    {
+        return $this->morphOne(Wallet::class, 'walleteable');
+    }
+
+    public function releaseProductRequests(): HasMany
+    {
+        return $this->hasMany(ReleaseProductRequest::class);
+    }
+
+    /**
+     * Get all of the vendorStorageRequests for the Warehouse
+     */
+    public function vendorStorageRequests(): HasMany
+    {
+        return $this->hasMany(VendorStorageRequest::class);
     }
 }

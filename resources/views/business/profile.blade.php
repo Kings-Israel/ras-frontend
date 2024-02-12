@@ -150,7 +150,17 @@
                                 @endif
                             </select>
                         </div>
-                        <x-primary-button class="mt-2 px-8 py-2">
+                        <div class="form-group">
+                            @php($current_countries_of_operation = auth()->user()->business->countriesOfOperation()->get()->pluck('country_id')->toArray())
+                            <x-input-label for="product_link_to_warehouse" :value="__('Countries Of Operation')" class="text-black" />
+                            <select name="countries_of_operation[]" id="select" class="border-2 border-gray-200 rounded-md bg-gray-200 w-full" multiple>
+                                @foreach ($countries as $country)
+                                    <option value="{{ $country->id }}" @if(in_array($country->id, $current_countries_of_operation)) selected @endif>{{ $country->name }}</option>
+                                @endforeach
+                            </select>
+                            <x-input-error :messages="$errors->get('countries_of_operation')" class="mt-2" />
+                        </div>
+                        <x-primary-button class="mt-2 px-8 py-2 float-right">
                             {{ __('Update Details') }}
                         </x-primary-button>
                     </form>
