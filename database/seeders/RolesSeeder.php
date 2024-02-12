@@ -25,6 +25,7 @@ class RolesSeeder extends Seeder
             'update order',
             // 'create product',
             'view product',
+            'manage product',
             // 'update product',
             // 'delete product',
 
@@ -52,6 +53,7 @@ class RolesSeeder extends Seeder
             'delete warehouse product',
             'view warehouse occupation',
             'update warehouse occupation',
+            'view storage requests',
 
             // Financier
             'create financier',
@@ -87,9 +89,27 @@ class RolesSeeder extends Seeder
             'update delivery',
             'delete delivery',
 
+            //vendor
+            'view vendor',
+            'manage vendor',
+
+            //buyer
+            'view buyer',
+
             // Settings
             'view settings',
             'update settings',
+            'setting document',
+            'setting category',
+            'setting units',
+            'setting country',
+
+            //marketing
+            'manage marketing',
+
+            //logistics
+            'view logistics request',
+            'view logistics report',
 
             // Logs
             'view logs',
@@ -126,6 +146,8 @@ class RolesSeeder extends Seeder
             'delete delivery',
             'view stocklift request',
             'update stocklift request',
+            'view buyer',
+            'view storage requests',
         ];
 
         $transaction_permissions = [
@@ -144,6 +166,8 @@ class RolesSeeder extends Seeder
             'delete inspection report',
             'view delivery',
             'update delivery',
+            'view vendor',
+            'view buyer'
         ];
 
         $driver_permissions = [
@@ -159,6 +183,7 @@ class RolesSeeder extends Seeder
             'view stocklift request',
             'update stocklift request',
             'delete stocklift request',
+            'view buyer'
         ];
 
         $deveint_permissions = [
@@ -184,6 +209,18 @@ class RolesSeeder extends Seeder
             'view stocklift request',
             'update stocklift request',
             'delete stocklift request',
+            'view vendor',
+            'view buyer',
+            'view logistics request',
+            'view logistics report',
+            'manage vendor',
+            'manage product',
+            'manage marketing',
+            'setting document',
+            'setting category',
+            'setting units',
+            'setting country',
+            'view storage requests'
         ];
 
         $roles = ['admin', 'buyer', 'vendor', 'warehouse manager', 'financier', 'inspector', 'driver', 'deveint'];
